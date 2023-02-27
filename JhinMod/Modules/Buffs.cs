@@ -8,7 +8,7 @@ namespace JhinMod.Modules
     {
         // armor buff gained during roll
         internal static BuffDef armorBuff;
-
+        internal static BuffDef jhinCritMovespeedBuff;
         internal static void RegisterBuffs()
         {
             armorBuff = AddNewBuff("JhinArmorBuff",
@@ -16,8 +16,15 @@ namespace JhinMod.Modules
                 Color.white, 
                 false, 
                 false);
+
+            jhinCritMovespeedBuff = AddNewBuff("Every Moment Matters",
+                Modules.Assets.mainAssetBundle.LoadAsset<Sprite>("texPassiveIcon"),
+                new Color(1f,0f,0.44f),
+                false,
+                false);
         }
 
+        //new Color(1f,0f,0.44f),
         // simple helper method
         internal static BuffDef AddNewBuff(string buffName, Sprite buffIcon, Color buffColor, bool canStack, bool isDebuff)
         {

@@ -39,7 +39,7 @@ Preset:
   - target: {fileID: 0}
     propertyPath: m_AnimatorParameters.Array.data[0].m_Controller
     value: 
-    objectReference: {fileID: 9100000, guid: f1a82152954bc974895f8ff9f035f84f, type: 2}
+    objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: m_AnimatorParameters.Array.data[1].m_Name
     value: rightSpeed
@@ -63,7 +63,7 @@ Preset:
   - target: {fileID: 0}
     propertyPath: m_AnimatorParameters.Array.data[1].m_Controller
     value: 
-    objectReference: {fileID: 9100000, guid: f1a82152954bc974895f8ff9f035f84f, type: 2}
+    objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: m_AnimatorParameters.Array.data[2].m_Name
     value: walkSpeed
@@ -87,7 +87,7 @@ Preset:
   - target: {fileID: 0}
     propertyPath: m_AnimatorParameters.Array.data[2].m_Controller
     value: 
-    objectReference: {fileID: 9100000, guid: f1a82152954bc974895f8ff9f035f84f, type: 2}
+    objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: m_AnimatorParameters.Array.data[3].m_Name
     value: isMoving
@@ -111,7 +111,7 @@ Preset:
   - target: {fileID: 0}
     propertyPath: m_AnimatorParameters.Array.data[3].m_Controller
     value: 
-    objectReference: {fileID: 9100000, guid: f1a82152954bc974895f8ff9f035f84f, type: 2}
+    objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: m_AnimatorParameters.Array.data[4].m_Name
     value: isSprinting
@@ -135,7 +135,7 @@ Preset:
   - target: {fileID: 0}
     propertyPath: m_AnimatorParameters.Array.data[4].m_Controller
     value: 
-    objectReference: {fileID: 9100000, guid: f1a82152954bc974895f8ff9f035f84f, type: 2}
+    objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: m_AnimatorParameters.Array.data[5].m_Name
     value: isGrounded
@@ -159,7 +159,7 @@ Preset:
   - target: {fileID: 0}
     propertyPath: m_AnimatorParameters.Array.data[5].m_Controller
     value: 
-    objectReference: {fileID: 9100000, guid: f1a82152954bc974895f8ff9f035f84f, type: 2}
+    objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: m_AnimatorParameters.Array.data[6].m_Name
     value: attacking
@@ -183,7 +183,7 @@ Preset:
   - target: {fileID: 0}
     propertyPath: m_AnimatorParameters.Array.data[6].m_Controller
     value: 
-    objectReference: {fileID: 9100000, guid: f1a82152954bc974895f8ff9f035f84f, type: 2}
+    objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: m_AnimatorParameters.Array.data[7].m_Name
     value: inCombat
@@ -207,7 +207,7 @@ Preset:
   - target: {fileID: 0}
     propertyPath: m_AnimatorParameters.Array.data[7].m_Controller
     value: 
-    objectReference: {fileID: 9100000, guid: f1a82152954bc974895f8ff9f035f84f, type: 2}
+    objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: m_AnimatorParameters.Array.data[8].m_Name
     value: inBazooka
@@ -231,7 +231,7 @@ Preset:
   - target: {fileID: 0}
     propertyPath: m_AnimatorParameters.Array.data[8].m_Controller
     value: 
-    objectReference: {fileID: 9100000, guid: f1a82152954bc974895f8ff9f035f84f, type: 2}
+    objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: m_AnimatorParameters.Array.data[9].m_Name
     value: aimYawCycle
@@ -255,7 +255,7 @@ Preset:
   - target: {fileID: 0}
     propertyPath: m_AnimatorParameters.Array.data[9].m_Controller
     value: 
-    objectReference: {fileID: 9100000, guid: f1a82152954bc974895f8ff9f035f84f, type: 2}
+    objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: m_AnimatorParameters.Array.data[10].m_Name
     value: aimPitchCycle
@@ -279,7 +279,7 @@ Preset:
   - target: {fileID: 0}
     propertyPath: m_AnimatorParameters.Array.data[10].m_Controller
     value: 
-    objectReference: {fileID: 9100000, guid: f1a82152954bc974895f8ff9f035f84f, type: 2}
+    objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: m_AnimatorParameters.Array.data[11].m_Name
     value: upSpeed
@@ -303,7 +303,7 @@ Preset:
   - target: {fileID: 0}
     propertyPath: m_AnimatorParameters.Array.data[11].m_Controller
     value: 
-    objectReference: {fileID: 9100000, guid: f1a82152954bc974895f8ff9f035f84f, type: 2}
+    objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: m_AnimatorParameters.Array.data[12].m_Name
     value: inAir
@@ -327,7 +327,7 @@ Preset:
   - target: {fileID: 0}
     propertyPath: m_AnimatorParameters.Array.data[12].m_Controller
     value: 
-    objectReference: {fileID: 9100000, guid: f1a82152954bc974895f8ff9f035f84f, type: 2}
+    objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: m_AnimatorParameters.Array.data[13].m_Name
     value: Emote.playbackRate
@@ -351,7 +351,7 @@ Preset:
   - target: {fileID: 0}
     propertyPath: m_AnimatorParameters.Array.data[13].m_Controller
     value: 
-    objectReference: {fileID: 9100000, guid: f1a82152954bc974895f8ff9f035f84f, type: 2}
+    objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: m_AnimatorParameters.Array.data[14].m_Name
     value: Slash.playbackRate
@@ -375,7 +375,7 @@ Preset:
   - target: {fileID: 0}
     propertyPath: m_AnimatorParameters.Array.data[14].m_Controller
     value: 
-    objectReference: {fileID: 9100000, guid: f1a82152954bc974895f8ff9f035f84f, type: 2}
+    objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: m_AnimatorParameters.Array.data[15].m_Name
     value: ShootGun.playbackRate
@@ -399,7 +399,7 @@ Preset:
   - target: {fileID: 0}
     propertyPath: m_AnimatorParameters.Array.data[15].m_Controller
     value: 
-    objectReference: {fileID: 9100000, guid: f1a82152954bc974895f8ff9f035f84f, type: 2}
+    objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: m_AnimatorParameters.Array.data[16].m_Name
     value: Roll.playbackRate
@@ -423,7 +423,7 @@ Preset:
   - target: {fileID: 0}
     propertyPath: m_AnimatorParameters.Array.data[16].m_Controller
     value: 
-    objectReference: {fileID: 9100000, guid: f1a82152954bc974895f8ff9f035f84f, type: 2}
+    objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: m_AnimatorParameters.Array.data[17].m_Name
     value: ThrowBomb.playbackRate
@@ -447,7 +447,7 @@ Preset:
   - target: {fileID: 0}
     propertyPath: m_AnimatorParameters.Array.data[17].m_Controller
     value: 
-    objectReference: {fileID: 9100000, guid: f1a82152954bc974895f8ff9f035f84f, type: 2}
+    objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: m_AnimatorParameters.Array.data[18].m_Name
     value: flinchIndex
@@ -471,7 +471,7 @@ Preset:
   - target: {fileID: 0}
     propertyPath: m_AnimatorParameters.Array.data[18].m_Controller
     value: 
-    objectReference: {fileID: 9100000, guid: f1a82152954bc974895f8ff9f035f84f, type: 2}
+    objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: m_AnimatorLayers.Array.size
     value: 9
@@ -520,7 +520,7 @@ Preset:
   - target: {fileID: 0}
     propertyPath: m_AnimatorLayers.Array.data[0].m_Controller
     value: 
-    objectReference: {fileID: 9100000, guid: f1a82152954bc974895f8ff9f035f84f, type: 2}
+    objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: m_AnimatorLayers.Array.data[1].m_Name
     value: Impact
@@ -565,7 +565,7 @@ Preset:
   - target: {fileID: 0}
     propertyPath: m_AnimatorLayers.Array.data[1].m_Controller
     value: 
-    objectReference: {fileID: 9100000, guid: f1a82152954bc974895f8ff9f035f84f, type: 2}
+    objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: m_AnimatorLayers.Array.data[2].m_Name
     value: Gesture, Override
@@ -610,7 +610,7 @@ Preset:
   - target: {fileID: 0}
     propertyPath: m_AnimatorLayers.Array.data[2].m_Controller
     value: 
-    objectReference: {fileID: 9100000, guid: f1a82152954bc974895f8ff9f035f84f, type: 2}
+    objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: m_AnimatorLayers.Array.data[3].m_Name
     value: LeftArm, Override
@@ -655,7 +655,7 @@ Preset:
   - target: {fileID: 0}
     propertyPath: m_AnimatorLayers.Array.data[3].m_Controller
     value: 
-    objectReference: {fileID: 9100000, guid: f1a82152954bc974895f8ff9f035f84f, type: 2}
+    objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: m_AnimatorLayers.Array.data[4].m_Name
     value: FullBody, Override
@@ -700,7 +700,7 @@ Preset:
   - target: {fileID: 0}
     propertyPath: m_AnimatorLayers.Array.data[4].m_Controller
     value: 
-    objectReference: {fileID: 9100000, guid: f1a82152954bc974895f8ff9f035f84f, type: 2}
+    objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: m_AnimatorLayers.Array.data[5].m_Name
     value: AimPitch
@@ -745,7 +745,7 @@ Preset:
   - target: {fileID: 0}
     propertyPath: m_AnimatorLayers.Array.data[5].m_Controller
     value: 
-    objectReference: {fileID: 9100000, guid: f1a82152954bc974895f8ff9f035f84f, type: 2}
+    objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: m_AnimatorLayers.Array.data[6].m_Name
     value: AimYaw
@@ -790,7 +790,7 @@ Preset:
   - target: {fileID: 0}
     propertyPath: m_AnimatorLayers.Array.data[6].m_Controller
     value: 
-    objectReference: {fileID: 9100000, guid: f1a82152954bc974895f8ff9f035f84f, type: 2}
+    objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: m_AnimatorLayers.Array.data[7].m_Name
     value: Flinch
@@ -835,7 +835,7 @@ Preset:
   - target: {fileID: 0}
     propertyPath: m_AnimatorLayers.Array.data[7].m_Controller
     value: 
-    objectReference: {fileID: 9100000, guid: f1a82152954bc974895f8ff9f035f84f, type: 2}
+    objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: m_AnimatorLayers.Array.data[8].m_Name
     value: Idle, Additive
@@ -880,4 +880,4 @@ Preset:
   - target: {fileID: 0}
     propertyPath: m_AnimatorLayers.Array.data[8].m_Controller
     value: 
-    objectReference: {fileID: 9100000, guid: f1a82152954bc974895f8ff9f035f84f, type: 2}
+    objectReference: {fileID: 0}

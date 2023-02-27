@@ -42,6 +42,10 @@
     </Reference>
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Content\Controllers\" />
+  </ItemGroup>
+
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
     <Exec Command="copy &quot;$(TargetPath)&quot; &quot;C:\Users\tretr\AppData\Roaming\Thunderstore Mod Manager\DataFolder\RiskOfRain2\profiles\ModCreation\BepInEx\plugins&quot;" />
   </Target>

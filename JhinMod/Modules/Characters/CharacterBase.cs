@@ -150,7 +150,7 @@ namespace JhinMod.Modules.Characters
         /// Leave this alone, and you don't need to worry about setting any of the stat growth values. They'll be set at the consistent ratio that all vanilla survivors have.
         /// <para>If You do, healthGrowth should be maxHealth * 0.3f, regenGrowth should be healthRegen * 0.2f, damageGrowth should be damage * 0.2f</para>
         /// </summary>
-        public bool autoCalculateLevelStats = true;
+        public bool autoCalculateLevelStats = false;
 
         public float healthGrowth = 100f * 0.3f;
         public float regenGrowth = 1f * 0.2f;

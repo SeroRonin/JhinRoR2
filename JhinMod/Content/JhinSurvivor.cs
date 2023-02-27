@@ -26,7 +26,7 @@ namespace JhinMod.Modules.Survivors
             subtitleNameToken = JHIN_PREFIX + "SUBTITLE",
 
             characterPortrait = Assets.mainAssetBundle.LoadAsset<Texture>("texJhinIcon"),
-            bodyColor = Color.white,
+            bodyColor = new Color(1f, 0f, 0.44f),
 
             crosshair = Modules.Assets.LoadCrosshair("Standard"),
             podPrefab = RoR2.LegacyResourcesAPI.Load<GameObject>("Prefabs/NetworkedObjects/SurvivorPod"),
@@ -34,6 +34,8 @@ namespace JhinMod.Modules.Survivors
             maxHealth = 110f,
             healthRegen = 1.5f,
             armor = 0f,
+            attackSpeed = 0.625f - 0.019f,
+            attackSpeedGrowth = 0.019f,
 
             jumpCount = 1,
         };
@@ -83,12 +85,20 @@ namespace JhinMod.Modules.Survivors
             Modules.Skills.CreateSkillFamilies(bodyPrefab);
             string prefix = JhinPlugin.DEVELOPER_PREFIX;
 
+            #region Passive
+            SkillLocator skillloc = bodyPrefab.GetComponent<SkillLocator>();
+            skillloc.passiveSkill.enabled = true;
+            skillloc.passiveSkill.skillNameToken = prefix + "_JHIN_BODY_PASSIVE_NAME";
+            skillloc.passiveSkill.skillDescriptionToken = prefix + "_JHIN_BODY_PASSIVE_DESCRIPTION";
+            skillloc.passiveSkill.icon = Modules.Assets.mainAssetBundle.LoadAsset<Sprite>("texPassiveIcon");
+            #endregion
+
             #region Primary
             //Creates a skilldef for a typical primary 
             SkillDef primarySkillDef = Modules.Skills.CreateSkillDef(new SkillDefInfo(prefix + "_JHIN_BODY_PRIMARY_WHISPER_NAME",
                                                                                       prefix + "_JHIN_BODY_PRIMARY_WHISPER_DESCRIPTION",
                                                                                       Modules.Assets.mainAssetBundle.LoadAsset<Sprite>("texPrimaryIcon"),
-                                                                                      new EntityStates.SerializableEntityStateType(typeof(SkillStates.SlashCombo)),
+                                                                                      new EntityStates.SerializableEntityStateType(typeof(SkillStates.WhisperPrimary)),
                                                                                       "Weapon",
                                                                                       true));
 
@@ -103,7 +113,7 @@ namespace JhinMod.Modules.Survivors
                 skillNameToken = prefix + "_JHIN_BODY_SECONDARY_GUN_NAME",
                 skillDescriptionToken = prefix + "_JHIN_BODY_SECONDARY_GUN_DESCRIPTION",
                 skillIcon = Modules.Assets.mainAssetBundle.LoadAsset<Sprite>("texSecondaryIcon"),
-                activationState = new EntityStates.SerializableEntityStateType(typeof(SkillStates.Shoot)),
+                activationState = new EntityStates.SerializableEntityStateType(typeof(SkillStates.DancingGrenade)),
                 activationStateMachineName = "Slide",
                 baseMaxStock = 1,
                 baseRechargeInterval = 1f,
@@ -132,7 +142,7 @@ namespace JhinMod.Modules.Survivors
                 skillNameToken = prefix + "_JHIN_BODY_UTILITY_ROLL_NAME",
                 skillDescriptionToken = prefix + "_JHIN_BODY_UTILITY_ROLL_DESCRIPTION",
                 skillIcon = Modules.Assets.mainAssetBundle.LoadAsset<Sprite>("texUtilityIcon"),
-                activationState = new EntityStates.SerializableEntityStateType(typeof(SkillStates.Roll)),
+                activationState = new EntityStates.SerializableEntityStateType(typeof(SkillStates.DeadlyFlourish)),
                 activationStateMachineName = "Body",
                 baseMaxStock = 1,
                 baseRechargeInterval = 4f,
@@ -147,7 +157,8 @@ namespace JhinMod.Modules.Survivors
                 cancelSprintingOnActivation = false,
                 rechargeStock = 1,
                 requiredStock = 1,
-                stockToConsume = 1
+                stockToConsume = 1,
+                keywordTokens = new string[] { "KEYWORD_STUNNING" }
             });
 
             Modules.Skills.AddUtilitySkills(bodyPrefab, rollSkillDef);
@@ -201,20 +212,39 @@ namespace JhinMod.Modules.Survivors
             //these are your Mesh Replacements. The order here is based on your CustomRendererInfos from earlier
             //pass in meshes as they are named in your assetbundle
             //defaultSkin.meshReplacements = Modules.Skins.getMeshReplacements(defaultRendererinfos,
-            //    "meshJhinSword",
-            //    "meshJhinGun",
-            //    "meshJhin");
+            //    "JhinMesh");
 
             //add new skindef to our list of skindefs. this is what we'll be passing to the SkinController
             skins.Add(defaultSkin);
             #endregion
+
+            #region ProjectSkin
+
+            //creating a new skindef as we did before
+            SkinDef projectSkin = Modules.Skins.CreateSkinDef(JhinPlugin.DEVELOPER_PREFIX + "_JHIN_BODY_PROJECT_SKIN_NAME",
+                Assets.mainAssetBundle.LoadAsset<Sprite>("texProjectSkin"),
+                defaultRendererinfos,
+                prefabCharacterModel.gameObject);
+
+            //adding the mesh replacements as above. 
+            //if you don't want to replace the mesh (for example, you only want to replace the material), pass in null so the order is preserved
+            projectSkin.meshReplacements = Modules.Skins.getMeshReplacements(defaultRendererinfos,
+                "JhinMeshProject");
+
+            //masterySkin has a new set of RendererInfos (based on default rendererinfos)
+            //you can simply access the RendererInfos defaultMaterials and set them to the new materials for your skin.
+            projectSkin.rendererInfos[0].defaultMaterial = Modules.Materials.CreateHopooMaterial("matJhinProject");
+
+            skins.Add(projectSkin);
             
+            #endregion
+
             //uncomment this when you have a mastery skin
             #region MasterySkin
             /*
             //creating a new skindef as we did before
             SkinDef masterySkin = Modules.Skins.CreateSkinDef(JhinPlugin.DEVELOPER_PREFIX + "_JHIN_BODY_MASTERY_SKIN_NAME",
-                Assets.mainAssetBundle.LoadAsset<Sprite>("texMasteryAchievement"),
+                Assets.mainAssetBundle.LoadAsset<Sprite>("texProjectSkin"),
                 defaultRendererinfos,
                 prefabCharacterModel.gameObject,
                 masterySkinUnlockableDef);

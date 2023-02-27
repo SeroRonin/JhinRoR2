@@ -1,4 +1,5 @@
 ﻿using EntityStates;
+using JhinMod.Modules;
 using RoR2;
 using RoR2.Projectile;
 using UnityEngine;
@@ -22,7 +23,7 @@ namespace JhinMod.SkillStates
             //targetmuzzle = "muzzleThrow"
 
             base.attackSoundString = "JhinBombThrow";
-            
+
             base.baseDuration = BaseDuration;
             base.baseDelayBeforeFiringProjectile = BaseDelayDuration;
 

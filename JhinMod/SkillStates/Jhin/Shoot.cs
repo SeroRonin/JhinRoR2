@@ -22,12 +22,12 @@ namespace JhinMod.SkillStates
         public override void OnEnter()
         {
             base.OnEnter();
-            this.duration = Shoot.baseDuration / this.attackSpeedStat;
+            this.duration = DeadlyFlourish.baseDuration / this.attackSpeedStat;
             this.fireTime = 0.2f * this.duration;
             base.characterBody.SetAimTimer(2f);
             this.muzzleString = "Muzzle";
 
-            base.PlayAnimation("LeftArm, Override", "ShootGun", "ShootGun.playbackRate", 1.8f);
+            base.PlayAnimation("UpperBody, Override", "Attack", "ShootGun.playbackRate", 1.8f);
         }
 
         public override void OnExit()

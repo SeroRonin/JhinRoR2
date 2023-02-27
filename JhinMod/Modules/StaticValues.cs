@@ -1,4 +1,5 @@
 ﻿using System;
+using UnityEngine;
 
 namespace JhinMod.Modules
 {
@@ -15,5 +16,13 @@ namespace JhinMod.Modules
         internal const float gunDamageCoefficient = 4.2f;
 
         internal const float bombDamageCoefficient = 16f;
+
+        internal const float whisperDamageCoefficient = 6f;
+
+        internal const float dancingGrenadeDamageCoefficient = 4f;
+
+        internal const float deadlyFlourishDamageCoefficient = 3f;
+
+        internal const float curtainCallDamageCoefficient = 10f;
     }
 }

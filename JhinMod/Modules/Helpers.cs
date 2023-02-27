@@ -6,6 +6,8 @@ namespace JhinMod.Modules
     internal static class Helpers
     {
         internal const string agilePrefix = "<style=cIsUtility>Agile.</style> ";
+        internal const string stunningPrefix = "<style=cIsUtility>Stunning.</style> ";
+        internal const string executingPrefix = "<style=cIsUtility>Executing.</style> ";
 
         internal static string ScepterDescription(string desc)
         {

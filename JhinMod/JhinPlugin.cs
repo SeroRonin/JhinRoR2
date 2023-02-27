@@ -1,10 +1,15 @@
 ﻿using BepInEx;
 using JhinMod.Modules.Survivors;
+using JhinMod.SkillStates;
+using R2API;
 using R2API.Utils;
 using RoR2;
+using System;
 using System.Collections.Generic;
 using System.Security;
 using System.Security.Permissions;
+using UnityEngine;
+using UnityEngine.Networking;
 
 [module: UnverifiableCode]
 [assembly: SecurityPermission(SecurityAction.RequestMinimum, SkipVerification = true)]
@@ -62,21 +67,81 @@ namespace JhinMod
         private void Hook()
         {
             // run hooks here, disabling one is as simple as commenting out the line
+            On.RoR2.GlobalEventManager.OnHitEnemy += GlobalEventManager_OnHitEnemy;
             On.RoR2.CharacterBody.RecalculateStats += CharacterBody_RecalculateStats;
+        }
+        private void GlobalEventManager_OnHitEnemy(On.RoR2.GlobalEventManager.orig_OnHitEnemy orig, GlobalEventManager self, DamageInfo damageInfo, GameObject victim)
+        {
+            orig(self, damageInfo, victim);
+
+            if (damageInfo.crit && damageInfo.attacker && !damageInfo.rejected)
+            {
+                CharacterBody attackerBody = damageInfo.attacker.GetComponent<CharacterBody>();
+                if (attackerBody && attackerBody.baseNameToken == JhinPlugin.DEVELOPER_PREFIX + "_JHIN_BODY_NAME" )
+                {
+                    if (NetworkServer.active)
+                    {
+                        attackerBody.AddTimedBuff(Modules.Buffs.jhinCritMovespeedBuff, 2f);
+                    }
+                }
+            }
         }
 
         private void CharacterBody_RecalculateStats(On.RoR2.CharacterBody.orig_RecalculateStats orig, CharacterBody self)
         {
             orig(self);
-
-            // a simple stat hook, adds armor after stats are recalculated
+            
             if (self)
             {
-                if (self.HasBuff(Modules.Buffs.armorBuff))
+                if (self.baseNameToken == JhinPlugin.DEVELOPER_PREFIX + "_JHIN_BODY_NAME")
                 {
-                    self.armor += 300f;
+                    var premodDam = self.damage;
+                    var premodAtkSpd = self.attackSpeed;
+                    var premodMovespeed = self.moveSpeed;
+
+                    var atkSpdLocked = self.baseAttackSpeed + (self.levelAttackSpeed * self.level);
+                    var atkSpdBonus = Mathf.Max(premodAtkSpd - atkSpdLocked, 0);
+                    var damBonus = CalculateDamageBonus(premodDam, atkSpdBonus, atkSpdLocked);
+
+                    /*
+                    ChatMessage.Send($"Damage Premod: {premodDam}");
+                    ChatMessage.Send($"Damage Bonus: {damBonus}");
+                    ChatMessage.Send($"AS Total: {premodAtkSpd}");
+                    ChatMessage.Send($"AS Locked: {atkSpdLocked}");
+                    ChatMessage.Send($"AS Bonus: {atkSpdBonus}");
+                    */
+
+                    //Apply bonus damage
+                    self.damage += damBonus;
+
+                    //Lock our attackspeed
+                    self.attackSpeed = atkSpdLocked; 
+                    
+                    if (self.HasBuff(Modules.Buffs.jhinCritMovespeedBuff))
+                    {
+                        var movespeedBonus = CalculateMovespeedBonus(premodMovespeed, atkSpdBonus, atkSpdLocked);
+                        self.moveSpeed += movespeedBonus;
+                    }
                 }
+                
             }
+            
+        }
+        public float CalculateDamageBonus( float damage, float attakSpeedBonus, float attackSpeedLocked )
+        {
+            var percentDam = 0.0025f ; //What percentage, as a decimal, of damage do we want to add per percent of bonus attackspeed?
+            var percentAtkSpd = 100 * (attakSpeedBonus / attackSpeedLocked) ; //Convert bonus attack speed from Multiplier to Percent
+            var damageBonus = damage * ( percentDam * percentAtkSpd);
+
+            return damageBonus;
+        }
+        public float CalculateMovespeedBonus(float movespeed, float attakSpeedBonus, float attackSpeedLocked)
+        {
+            var percentMove = 0.004f; //What percentage, as a decimal, of damage do we want to add per percent of bonus attackspeed?
+            var percentAtkSpd = 100 * (attakSpeedBonus / attackSpeedLocked); //Convert bonus attack speed from Multiplier to Percent
+            var movespeedBonus = movespeed * (0.1f + (percentMove * percentAtkSpd) );
+
+            return movespeedBonus;
         }
     }
 }
