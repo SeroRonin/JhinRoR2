@@ -1,4 +1,5 @@
 ﻿using BepInEx.Configuration;
+using IL.RoR2.Orbs;
 using JhinMod.Modules.Characters;
 using RoR2;
 using RoR2.Skills;
@@ -63,6 +64,8 @@ namespace JhinMod.Modules.Survivors
         public override void InitializeCharacter()
         {
             base.InitializeCharacter();
+
+            this.bodyPrefab.AddComponent<HuntressTracker>();
         }
 
         public override void InitializeUnlockables()

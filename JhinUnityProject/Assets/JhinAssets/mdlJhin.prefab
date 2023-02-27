@@ -122,6 +122,36 @@ Transform:
   m_Father: {fileID: 2666820804173091179}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &271285530134293778
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2525492962855717707}
+  m_Layer: 0
+  m_Name: MuzzlePistol
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2525492962855717707
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 271285530134293778}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.03, y: 0.295, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4054080904493372239}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &316405888119583590
 GameObject:
   m_ObjectHideFlags: 0
@@ -2545,8 +2575,14 @@ MonoBehaviour:
   transformPairs:
   - name: MainHurtbox
     transform: {fileID: 7272647285605917437}
+  - name: ShoulderR
+    transform: {fileID: 1371891083701233217}
   - name: JhinMesh
     transform: {fileID: 5066102851675383377}
+  - name: Muzzle
+    transform: {fileID: 2525492962855717707}
+  - name: MuzzleBarrel
+    transform: {fileID: 381247150940447359}
 --- !u!1 &6458046193902962035
 GameObject:
   m_ObjectHideFlags: 0
@@ -2977,6 +3013,7 @@ Transform:
   m_LocalScale: {x: 1.0000001, y: 1.0000001, z: 1.0000001}
   m_Children:
   - {fileID: 1956565516914838814}
+  - {fileID: 2525492962855717707}
   m_Father: {fileID: 8686865093862720152}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -3353,6 +3390,7 @@ Transform:
   m_Children:
   - {fileID: 675636272769551703}
   - {fileID: 8336884600042922629}
+  - {fileID: 381247150940447359}
   m_Father: {fileID: 3093320937819705969}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -3418,6 +3456,36 @@ Transform:
   - {fileID: 8315459979329131731}
   m_Father: {fileID: 6715535189948771916}
   m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &8482015462146113501
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 381247150940447359}
+  m_Layer: 0
+  m_Name: MuzzleBarrel
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &381247150940447359
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8482015462146113501}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0, y: 0.785, z: -0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4099460868850094205}
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8564876331000255392
 GameObject:

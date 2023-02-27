@@ -16,8 +16,9 @@ namespace JhinMod.Modules
         // particle effects
         internal static GameObject swordSwingEffect;
         internal static GameObject swordHitImpactEffect;
-
         internal static GameObject bombExplosionEffect;
+
+        internal static GameObject deadlyFlourishEffect;
 
         // networked hit sounds
         internal static NetworkSoundEventDef swordHitSoundEvent;
@@ -86,7 +87,7 @@ namespace JhinMod.Modules
             
             swordHitSoundEvent = CreateNetworkSoundEventDef("JhinSwordHit");
 
-            bombExplosionEffect = LoadEffect("BombExplosionEffect", "JhinBombExplosion");
+            bombExplosionEffect = LoadEffect("BombExplosionEffect", "HenryBombExplosion");
 
             if (bombExplosionEffect)
             {
@@ -103,6 +104,8 @@ namespace JhinMod.Modules
                     cycleOffset = 0f
                 };
             }
+
+            deadlyFlourishEffect = Assets.LoadEffect("DeadlyFlourishBeam", false);
 
             swordSwingEffect = Assets.LoadEffect("JhinSwordSwingEffect", true);
             swordHitImpactEffect = Assets.LoadEffect("ImpactJhinSlash");

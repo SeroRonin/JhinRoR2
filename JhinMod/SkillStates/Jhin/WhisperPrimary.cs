@@ -32,8 +32,7 @@ namespace JhinMod.SkillStates
         public override void OnEnter()
         {
             base.OnEnter();
-            ChatMessage.Send($"attackSpeedStat: {this.attackSpeedStat}");
-            this.duration = WhisperPrimary.baseDuration / this.attackSpeedStat;
+            this.duration = this.attackSpeedStat / this.characterBody.baseAttackSpeed ;
             this.fireTime = WhisperPrimary.baseFireDelay * this.duration;
             base.characterBody.SetAimTimer(3f);
             this.muzzleString = "Muzzle";

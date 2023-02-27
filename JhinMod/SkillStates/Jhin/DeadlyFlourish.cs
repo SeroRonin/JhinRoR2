@@ -1,4 +1,5 @@
 ﻿using EntityStates;
+using JhinMod.Modules;
 using RoR2;
 using UnityEngine;
 
@@ -14,6 +15,7 @@ namespace JhinMod.SkillStates
         public static float recoil = 3f;
         public static float range = 512f;
         public static GameObject tracerEffectPrefab = RoR2.LegacyResourcesAPI.Load<GameObject>("Prefabs/Effects/Tracers/TracerGoldGat");
+        //public static GameObject tracerEffectPrefab = Assets.deadlyFlourishEffect;
 
         private float duration;
         private float fireTime;
@@ -32,6 +34,8 @@ namespace JhinMod.SkillStates
 
             this.animator = base.GetModelAnimator();
 
+            //FIX, pauses falling to grounded animation if cast midair
+            /*
             if ( !this.animator.GetBool("isGrounded") )
             {
                 base.PlayAnimation("UpperBody, Override", "DeadlyFlourish");
@@ -40,7 +44,9 @@ namespace JhinMod.SkillStates
             {
                 base.PlayAnimation("FullBody, Override", "DeadlyFlourish");
             }
-            
+            */
+
+            base.PlayAnimation("FullBody, Override", "DeadlyFlourish");
         }
 
         public override void OnExit()

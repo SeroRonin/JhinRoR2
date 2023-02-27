@@ -6,24 +6,18 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.Networking;
+using R2API.Utils;
 
-namespace JhinMod.Modules
+namespace JhinMod.Modules.CustomProjectiles
 {
-    internal class ProjectileDancingGrenade
+    public class ProjectileDancingGrenade : LightningOrb
     {
-    }
-}
-namespace JhinMod.Modules
-{
-    // Token: 0x02000B16 RID: 2838
-    public class DancingGrenade : LightningOrb
-    {
-        public float damageCoefficientOnSuccessfulKill = 0.35f;
+        public float damageCoefficientOnSuccessfulKill;
         public override void Begin()
         {
             string path = "Prefabs/Effects/OrbEffects/HuntressGlaiveOrbEffect";
             base.duration = base.distanceToTarget / this.speed;
-            base.lightningType= (LightningOrb.LightningType)LightningType.Count;
+            base.canBounceOnSameTarget = false;
 
             EffectData effectData = new EffectData
             {
@@ -61,13 +55,7 @@ namespace JhinMod.Modules
                 //Did we kill the target we hit?
                 this.failedToKill |= (!healthComponent || healthComponent.alive);
 
-                var damagebonus = 0f;
-
-                if (!this.failedToKill)
-                {
-                    // INCREASE DAMAGE BY PERCENTAGE
-                    damagebonus = this.damageValue * this.damageCoefficientOnSuccessfulKill;
-                }
+                
 
                 if (this.bouncesRemaining > 0)
                 {
@@ -84,21 +72,15 @@ namespace JhinMod.Modules
                         HurtBox hurtBox = this.PickNextTarget(this.target.transform.position);
                         if (hurtBox)
                         {
-                            DancingGrenade lightningOrb = new DancingGrenade();
+                            ProjectileDancingGrenade lightningOrb = new ProjectileDancingGrenade();
                             lightningOrb.search = this.search;
                             lightningOrb.origin = this.target.transform.position;
                             lightningOrb.target = hurtBox;
                             lightningOrb.attacker = this.attacker;
                             lightningOrb.inflictor = this.inflictor;
                             lightningOrb.teamIndex = this.teamIndex;
-                            if (!this.failedToKill)
-                            {
-                                lightningOrb.damageValue = this.damageValue + damagebonus;
-                            }
-                            else
-                            {
-                                lightningOrb.damageValue = this.damageValue;
-                            }
+                            lightningOrb.damageValue = this.damageValue;
+                            
                             lightningOrb.bouncesRemaining = this.bouncesRemaining - 1;
                             lightningOrb.isCrit = this.isCrit;
                             lightningOrb.bouncedObjects = this.bouncedObjects;
@@ -110,37 +92,17 @@ namespace JhinMod.Modules
                             lightningOrb.speed = this.speed;
                             lightningOrb.range = this.range;
                             lightningOrb.damageType = this.damageType;
-                            lightningOrb.failedToKill = this.failedToKill;
+                            lightningOrb.duration = base.distanceToTarget / this.speed;//If we killed, add a percentage of current damage on top
+                            if (!this.failedToKill)
+                            {
+                                lightningOrb.damageValue += this.damageValue * this.damageCoefficientOnSuccessfulKill;
+                            }
                             OrbManager.instance.AddOrb(lightningOrb);
                         }
                     }
                     return;
                 }
             }
-        }
-
-        public HurtBox PickNextTarget(Vector3 position)
-        {
-            if (this.search == null)
-            {
-                this.search = new BullseyeSearch();
-            }
-            this.search.searchOrigin = position;
-            this.search.searchDirection = Vector3.zero;
-            this.search.teamMaskFilter = TeamMask.allButNeutral;
-            this.search.teamMaskFilter.RemoveTeam(this.teamIndex);
-            this.search.filterByLoS = false;
-            this.search.sortMode = BullseyeSearch.SortMode.Distance;
-            this.search.maxDistanceFilter = this.range;
-            this.search.RefreshCandidates();
-            HurtBox hurtBox = (from v in this.search.GetResults()
-                               where !this.bouncedObjects.Contains(v.healthComponent)
-                               select v).FirstOrDefault<HurtBox>();
-            if (hurtBox)
-            {
-                this.bouncedObjects.Add(hurtBox.healthComponent);
-            }
-            return hurtBox;
         }
     }
 }
