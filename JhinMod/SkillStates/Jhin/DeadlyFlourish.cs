@@ -1,4 +1,5 @@
 ﻿using EntityStates;
+using JhinMod.Content.Controllers;
 using JhinMod.Modules;
 using RoR2;
 using UnityEngine;
@@ -22,10 +23,13 @@ namespace JhinMod.SkillStates
         private bool hasFired;
         private string muzzleString;
         private Animator animator;
-
+        private AmmoComponent ammoComponent;
         public override void OnEnter()
         {
             base.OnEnter();
+
+            this.ammoComponent = GetComponent<AmmoComponent>();
+            this.ammoComponent.StopReload();
 
             this.duration = DeadlyFlourish.baseDuration;
             this.fireTime = DeadlyFlourish.baseFireDelay;

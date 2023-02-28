@@ -18,7 +18,7 @@ namespace JhinMod.Modules
                 false);
 
             jhinCritMovespeedBuff = AddNewBuff("Every Moment Matters",
-                Modules.Assets.mainAssetBundle.LoadAsset<Sprite>("texPassiveIcon"),
+                Modules.Assets.mainAssetBundle.LoadAsset<Sprite>("texBuffPassiveIcon"),
                 new Color(1f,0f,0.44f),
                 false,
                 false);

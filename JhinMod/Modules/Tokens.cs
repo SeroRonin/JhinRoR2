@@ -34,33 +34,37 @@ namespace JhinMod.Modules
 
             #region Passive
             LanguageAPI.Add(prefix + "PASSIVE_NAME", "Every Moment Matters");
-            LanguageAPI.Add(prefix + "PASSIVE_DESCRIPTION", "Jhin's attack speed scales differently from other survivors. He cannot gain attackspeed outside of leveling, and instead gains 0.25% bonus damage per 1% of bonus attackspeed. Addtionally, critical hits grant him 10% (+ 0.4% per 1% bonus attack speed) movespeed.");
+            LanguageAPI.Add(prefix + "PASSIVE_DESCRIPTION", "Attackspeed only grows with level, other sources instead give <style=cIsDamage>0.25% bonus damage</style> per <style=cIsDamage>1% of bonus attackspeed</style>. Addtionally, <style=cDeath>critical hits</style> grant <style=cIsUtility>10%</style> + (<style=cIsUtility>0.4%</style> per <style=cIsDamage>1% bonus attack speed</style>) <style=cIsUtility>movespeed</style>.");
             #endregion
 
             #region Primary
             LanguageAPI.Add(prefix + "PRIMARY_WHISPER_NAME", "Whisper");
-            LanguageAPI.Add(prefix + "PRIMARY_WHISPER_DESCRIPTION", Helpers.agilePrefix + $"Fire a bullet for <style=cIsDamage>{100f * StaticValues.swordDamageCoefficient}% damage</style>. The fourth shot crits. Can fire up to 4 shots before needing to reload.");
+            LanguageAPI.Add(prefix + "PRIMARY_WHISPER_DESCRIPTION", Helpers.agilePrefix + $"Fire a bullet for <style=cIsDamage>{100f * StaticValues.whisperDamageCoefficient}% damage</style>. The fourth shot crits. Can fire up to 4 shots before needing to reload.");
             #endregion
 
             #region Secondary
             LanguageAPI.Add(prefix + "SECONDARY_GUN_NAME", "Dancing Grenade");
-            LanguageAPI.Add(prefix + "SECONDARY_GUN_DESCRIPTION", Helpers.agilePrefix + $"Fire a grenade for <style=cIsDamage>{100f * StaticValues.dancingGrenadeDamageCoefficient}% damage</style>. The grenade bounces to nearby enemies up to 3 additional times. Each bounce gains an additional <style=cIsDamage>35% damage</style> if it killed the last enemy it hit.");
+            LanguageAPI.Add(prefix + "SECONDARY_GUN_DESCRIPTION", Helpers.agilePrefix + $"Fire a grenade for <style=cIsDamage>{100f * StaticValues.dancingGrenadeDamageCoefficient}% damage</style>. The grenade bounces to nearby enemies up to 3 additional times. Each bounce gains an additional <style=cIsDamage>35% total damage</style> if it kills the enemy it hits.");
             #endregion
 
             #region Utility
             LanguageAPI.Add(prefix + "UTILITY_ROLL_NAME", "Deadly Flourish");
-            LanguageAPI.Add(prefix + "UTILITY_ROLL_DESCRIPTION", Helpers.stunningPrefix + $"Fire a <style=cIsDamage>piercing</style> beam for <style=cIsDamage>{100f * StaticValues.deadlyFlourishDamageCoefficient}% damage</style>. Stuns enemies hit.");
+            LanguageAPI.Add(prefix + "UTILITY_ROLL_DESCRIPTION", Helpers.stunningPrefix + $"Fire a <style=cIsDamage>piercing</style> beam for <style=cIsDamage>{100f * StaticValues.deadlyFlourishDamageCoefficient}% damage</style>.");
             #endregion
 
             #region Special
             LanguageAPI.Add(prefix + "SPECIAL_BOMB_NAME", "Curtain Call");
-            LanguageAPI.Add(prefix + "SPECIAL_BOMB_DESCRIPTION", Helpers.executingPrefix + $"Reload Whisper and empower your next 4 shots, firing explosive rounds for <style=cIsDamage>{100f * StaticValues.curtainCallDamageCoefficient}% damage</style>. Deals bonus damage based on enemy's missing health. The fourth shot crits.");
+            LanguageAPI.Add(prefix + "SPECIAL_BOMB_DESCRIPTION", Helpers.executingPrefix + $"Reload Whisper and empower your next 4 primary shots, firing explosive rounds for <style=cIsDamage>{100f * StaticValues.curtainCallDamageCoefficient}% damage</style>. Deals bonus damage based on enemy's missing health. The fourth shot crits.");
             #endregion
 
             #region Achievements
             LanguageAPI.Add(prefix + "MASTERYUNLOCKABLE_ACHIEVEMENT_NAME", "Jhin: Mastery");
             LanguageAPI.Add(prefix + "MASTERYUNLOCKABLE_ACHIEVEMENT_DESC", "As Jhin, beat the game or obliterate on Monsoon.");
             LanguageAPI.Add(prefix + "MASTERYUNLOCKABLE_UNLOCKABLE_NAME", "Jhin: Mastery");
+
+
+            LanguageAPI.Add(prefix + "DANCINGGRENADE_ACHIEVEMENT_NAME", "Jhin: Crescendo");
+            LanguageAPI.Add(prefix + "DANCINGGRENADE_ACHIEVEMENT_DESC", "As Jhin, kill an enemy with each bounce of 'Dancing Grenade'");
             #endregion
             #endregion
         }

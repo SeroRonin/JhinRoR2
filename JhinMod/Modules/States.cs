@@ -17,6 +17,18 @@ namespace JhinMod.Modules
             Modules.Content.AddEntityState(typeof(Roll));
 
             Modules.Content.AddEntityState(typeof(ThrowBomb));
+
+            Modules.Content.AddEntityState(typeof(AnimatedDeathState));
+
+            Modules.Content.AddEntityState(typeof(WhisperPrimary));
+            Modules.Content.AddEntityState(typeof(WhisperReload));
+
+            Modules.Content.AddEntityState(typeof(DancingGrenade));
+
+            Modules.Content.AddEntityState(typeof(DeadlyFlourish));
+
+            Modules.Content.AddEntityState(typeof(CurtainCall));
+            Modules.Content.AddEntityState(typeof(CurtainCallShot));
         }
     }
 }

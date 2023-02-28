@@ -1,38 +1,42 @@
 ﻿using EntityStates;
 using RoR2;
+using JhinMod.Content.Controllers;
 using UnityEngine;
+using R2API.Utils;
 
 namespace JhinMod.SkillStates
 {
     public class WhisperReload : BaseState
     {
-        public static float baseDuration = 2.5f;
-
+        private AmmoComponent ammoComponent;
         private float duration;
         private bool hasReloaded;
 
         public override void OnEnter()
         {
             base.OnEnter();
-            this.duration = WhisperReload.baseDuration;
+            this.ammoComponent = base.GetComponent<AmmoComponent>();
+            this.duration = ammoComponent.reloadTime;
 
-            base.PlayAnimation("UpperBody, Override", (base.skillLocator.primary.stock == 0) ? "Reload" : "ReloadCrit", "1f", this.duration);
-            
+            base.PlayCrossfade("UpperBody, Override", (ammoComponent.timeSinceEmpty < 0.5f) ? "Reload_FromFireEmpty" : "Reload", "", this.duration, 0.2f);
+
             //Util.PlayAttackSpeedSound(Reload.enterSoundString, base.gameObject, Reload.enterSoundPitch);
         }
 
         public override void OnExit()
         {
-            base.OnExit();
+            base.OnExit(); 
+            ammoComponent.StopReload();
         }
 
 
         public override void FixedUpdate()
         {
             base.FixedUpdate();
-            if (base.fixedAge >= this.duration )
+            if (ammoComponent.startedReload && base.fixedAge >= this.duration )
             {
-                this.PerformReload();
+                this.PerformReload(); 
+                this.outer.SetNextStateToMain();
             }
             if (!base.isAuthority || base.fixedAge < this.duration)
             {
@@ -40,21 +44,25 @@ namespace JhinMod.SkillStates
             }
 
             //Util.PlayAttackSpeedSound(Reload.exitSoundString, base.gameObject, Reload.exitSoundPitch);
-            this.outer.SetNextStateToMain();
+            
         }
+
         private void PerformReload()
         {
             if (this.hasReloaded)
             {
                 return;
             }
-            base.skillLocator.primary.stock = base.skillLocator.primary.maxStock ;
+            
+            ammoComponent.Reload( true );
+            base.skillLocator.primary.stock = ammoComponent.ammoCount;
+
             this.hasReloaded = true;
         }
 
         public override InterruptPriority GetMinimumInterruptPriority()
         {
-            return InterruptPriority.Skill;
+            return InterruptPriority.Any;
         }
     }
 }

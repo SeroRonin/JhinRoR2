@@ -8,6 +8,7 @@ using UnityEngine;
 using UnityEngine.Networking;
 using static RoR2.BulletAttack;
 using R2API.Utils;
+using JhinMod.Content.Controllers;
 
 namespace JhinMod.SkillStates
 {
@@ -22,24 +23,37 @@ namespace JhinMod.SkillStates
         public static float range = 512f;
         public static GameObject tracerEffectPrefab = RoR2.LegacyResourcesAPI.Load<GameObject>("Prefabs/Effects/Tracers/TracerGoldGat");
 
+        private AmmoComponent ammoComponent;
         private float duration;
-        private float fireTime;
+        private float fireTime = 1f;
         private bool hasFired;
         private bool isCrit;
-        private bool hasBuff;
         private string muzzleString;
 
         public override void OnEnter()
         {
             base.OnEnter();
-            this.duration = this.attackSpeedStat / this.characterBody.baseAttackSpeed ;
-            this.fireTime = WhisperPrimary.baseFireDelay * this.duration;
+            ammoComponent = base.GetComponent<AmmoComponent>();
             base.characterBody.SetAimTimer(3f);
             this.muzzleString = "Muzzle";
 
-            base.PlayAnimation("UpperBody, Override", "Attack", "ShootGun.playbackRate", duration);
+            if ( CanFire() )
+            {
+                this.duration = this.attackSpeedStat / this.characterBody.baseAttackSpeed;
+                this.fireTime = WhisperPrimary.baseFireDelay * this.duration;
+                base.PlayAnimation("UpperBody, Override", "Attack", "ShootGun.playbackRate", duration);
+            }
+            else
+            {
+                duration = 0.1f;
+            }
+                
         }
-
+        
+        public bool CanFire()
+        {
+            return ammoComponent.CanTakeAmmo(1);
+        }
         public override void OnExit()
         {
             base.OnExit();
@@ -50,7 +64,11 @@ namespace JhinMod.SkillStates
             if (!this.hasFired)
             {
                 this.hasFired = true;
+
+                //Roll crit, if we only have the last shot, crit regardless
                 this.isCrit = RollCrit();
+                if (ammoComponent.ammoCount == 1 ) isCrit = true;
+
                 base.characterBody.SetAimTimer(this.duration * 2f);
                 base.characterBody.AddSpreadBloom(1.5f);
                 this.DoFireEffects();
@@ -64,13 +82,9 @@ namespace JhinMod.SkillStates
                     this.ModifyBullet(bulletAttack);
                     bulletAttack.Fire();
                     this.OnFireBulletAuthority(aimRay);
-
-                    //Temp, until I figure out how to make it only trigger on hits
-                    if (isCrit)
-                    {
-                        
-                    }
                 }
+
+                ammoComponent.TakeAmmo(1);
             }
         }
         protected BulletAttack GenerateBulletAttack(Ray aimRay)
@@ -117,6 +131,7 @@ namespace JhinMod.SkillStates
 
         protected virtual void ModifyBullet(BulletAttack bulletAttack)
         {
+            //Make 4th shot deal % missing health damage
         }
 
         private bool BulletHitCallback(BulletAttack bulletAttack, ref BulletHit hitInfo)
@@ -125,7 +140,7 @@ namespace JhinMod.SkillStates
             var result = BulletAttack.defaultHitCallback(bulletAttack, ref hitInfo);
             HealthComponent healthComponent = hitInfo.hitHurtBox ? hitInfo.hitHurtBox.healthComponent : null;
             /*
-            if (isCrit && healthComponent && hitInfo.hitHurtBox.teamIndex != base.teamComponent.teamIndex)
+            if (ammoComponent.ammoCount == 1 && healthComponent && hitInfo.hitHurtBox.teamIndex != base.teamComponent.teamIndex)
             {
                 
             }*/
@@ -137,7 +152,7 @@ namespace JhinMod.SkillStates
         {
             base.FixedUpdate();
 
-            if (base.fixedAge >= this.fireTime)
+            if ( CanFire() && base.fixedAge >= this.fireTime)
             {
                 this.Fire();
             }
