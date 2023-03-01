@@ -29,7 +29,7 @@ namespace JhinMod.SkillStates
             base.OnEnter();
 
             this.ammoComponent = GetComponent<AmmoComponent>();
-            this.ammoComponent.StopReload();
+            this.ammoComponent.StopReload( true, 2f );
 
             this.duration = DeadlyFlourish.baseDuration;
             this.fireTime = DeadlyFlourish.baseFireDelay;
@@ -37,18 +37,7 @@ namespace JhinMod.SkillStates
             this.muzzleString = "Muzzle";
 
             this.animator = base.GetModelAnimator();
-
-            //FIX, pauses falling to grounded animation if cast midair
-            /*
-            if ( !this.animator.GetBool("isGrounded") )
-            {
-                base.PlayAnimation("UpperBody, Override", "DeadlyFlourish");
-            }
-            else
-            {
-                base.PlayAnimation("FullBody, Override", "DeadlyFlourish");
-            }
-            */
+            Util.PlaySound("JhinWCast", base.gameObject);
 
             base.PlayAnimation("FullBody, Override", "DeadlyFlourish");
         }
@@ -66,7 +55,7 @@ namespace JhinMod.SkillStates
 
                 base.characterBody.AddSpreadBloom(1.5f);
                 EffectManager.SimpleMuzzleFlash(EntityStates.Commando.CommandoWeapon.FirePistol2.muzzleEffectPrefab, base.gameObject, this.muzzleString, false);
-                Util.PlaySound("HenryShootPistol", base.gameObject);
+                
 
                 if (base.isAuthority)
                 {

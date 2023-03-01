@@ -17,23 +17,23 @@ namespace JhinMod.SkillStates
             base.OnEnter();
             this.ammoComponent = base.GetComponent<AmmoComponent>();
             this.duration = ammoComponent.reloadTime;
-
-            base.PlayCrossfade("UpperBody, Override", (ammoComponent.timeSinceEmpty < 0.5f) ? "Reload_FromFireEmpty" : "Reload", "", this.duration, 0.2f);
+            var recentlyEmpty = this.ammoComponent.timeSinceEmpty < 0.5f;
+            base.PlayCrossfade("UpperBody, Override", recentlyEmpty ? "Reload_FromFireEmpty" : "Reload", "", this.duration, 0.2f);
+            Util.PlaySound(recentlyEmpty ? "JhinReloadEmpty" : "JhinReload", base.gameObject);
 
             //Util.PlayAttackSpeedSound(Reload.enterSoundString, base.gameObject, Reload.enterSoundPitch);
         }
 
         public override void OnExit()
         {
-            base.OnExit(); 
-            ammoComponent.StopReload();
+            base.OnExit();
         }
 
 
         public override void FixedUpdate()
         {
             base.FixedUpdate();
-            if (ammoComponent.startedReload && base.fixedAge >= this.duration )
+            if (this.ammoComponent.startedReload && base.fixedAge >= this.duration )
             {
                 this.PerformReload(); 
                 this.outer.SetNextStateToMain();
@@ -53,9 +53,9 @@ namespace JhinMod.SkillStates
             {
                 return;
             }
-            
-            ammoComponent.Reload( true );
-            base.skillLocator.primary.stock = ammoComponent.ammoCount;
+
+            this.ammoComponent.Reload( true );
+            base.skillLocator.primary.stock = this.ammoComponent.ammoCount;
 
             this.hasReloaded = true;
         }

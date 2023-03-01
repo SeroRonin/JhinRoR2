@@ -17,11 +17,6 @@ namespace JhinMod.Content.Controllers
     [RequireComponent(typeof(TeamComponent))]
     public class AmmoComponent : NetworkBehaviour
     {
-        private CharacterBody characterBody;
-        private InputBankTest inputBank;
-        private TeamComponent teamComponent;
-        private EntityStateMachine entityStateMachine;
-
         public int ammoCount;     //How much ammo do we currently have?
         public int ammoMax = 4;  //How much ammo can we store?
 
@@ -32,82 +27,86 @@ namespace JhinMod.Content.Controllers
         public float reloadStopwatch;
         public float timeSinceEmpty;
 
-        public bool needsReload;
         public bool startedReload;
-        public bool interruptReload;
+        public bool interrupted;
 
         public SerializableEntityStateType reloadState;
 
         private void Awake()
         {
-            //this.indicator = new Indicator(base.gameObject, LegacyResourcesAPI.Load<GameObject>(indicatorPrefab));
         }
 
         private void Start()
         {
-            this.characterBody = base.GetComponent<CharacterBody>();
-            this.inputBank = base.GetComponent<InputBankTest>();
-            this.teamComponent = base.GetComponent<TeamComponent>();
-            this.entityStateMachine = base.GetComponent<EntityStateMachine>();
             this.ammoCount = ammoMax;
             this.reloadStopwatch = 0f;
         }
 
-        private void OnEnable()
-        {
-            //this.indicator.active = true;
-        }
-
-        private void OnDisable()
-        {
-            //this.indicator.active = false;
-        }
-
         private void FixedUpdate()
         {
-            if (ammoCount == 0)
+            this.UpdateTimers();
+
+            //Start reload from autoreload timer
+            if (!this.startedReload && this.reloadStopwatch >= this.reloadAutoDelay )
             {
-                timeSinceEmpty += Time.deltaTime;
+                this.EnterReloadState();
             }
-            if (CanStartReload())
+
+            //Start reload from empty criteria
+            if (!this.startedReload && this.ammoCount <= 0 )
+            {
+                //Start reload from last bullet fired
+                if (!this.interrupted && this.timeSinceEmpty < 0.5f)
+                {
+                    this.EnterReloadState();
+                }
+                //Start reload from grace delay, used to adjust how long to wait after interrupting reload with another skill
+                else if (this.reloadStopwatch > this.reloadGraceDelay)
+                {
+                    this.EnterReloadState();
+                }
+            }
+        }
+
+        private void UpdateTimers()
+        {
+            //Just exhausted our last bullet, start timer
+            if (this.ammoCount == 0)
+            {
+                this.timeSinceEmpty += Time.deltaTime;
+            }
+            //We still have bullets, reset timer if not already reset
+            else if (timeSinceEmpty != 0f)
+            {
+                this.timeSinceEmpty = 0f;
+            }
+
+            if (this.CanStartReload())
             {
                 this.reloadStopwatch += Time.deltaTime;
             }
+            //We have max bullets, reset timer if not already reset
             else if (this.reloadStopwatch != 0)
             {
                 this.reloadStopwatch = 0f;
-            }
-            if (!this.startedReload && this.reloadStopwatch >= this.reloadAutoDelay )
-            {
-                EnterReloadState();
-            }
-            if (!this.startedReload && ammoCount <= 0 )
-            {
-                if (timeSinceEmpty < 0.5f)
-                {
-                    EnterReloadState();
-                }
-                else if (this.reloadStopwatch > this.reloadGraceDelay)
-                {
-                    EnterReloadState();
-                }
             }
         }
 
         public bool CanStartReload()
         {
-            if (startedReload) return false;
-            if (ammoCount < ammoMax) return true;
+            if (this.startedReload) return false;
+            if (this.ammoCount < this.ammoMax) return true;
             return false;
         }
 
         public void EnterReloadState()
         {
             //this.entityStateMachine.SetNextState(new WhisperReload()); //FIX, Freezes character movement
+            ChatMessage.Send($"Reloading, Grace: {this.reloadGraceDelay}");
             var skillLocator = GetComponent<SkillLocator>();
             skillLocator.primary.stateMachine.SetNextState( new WhisperReload());
 
-            startedReload = true;
+            this.startedReload = true;
         }
 
         public void Reload( bool full = false, int count = 1)
@@ -115,22 +114,32 @@ namespace JhinMod.Content.Controllers
             if (full) ammoCount = ammoMax;
             else ammoCount += count;
 
-            ChatMessage.Send($"Reloaded, ammoCount: {ammoCount}");
-            startedReload = false;
+            this.ResetReload();
         }
 
-        public void StopReload()
+        public void StopReload( bool interrupt = false, float delay = 1f )
         {
             var skillLocator = GetComponent<SkillLocator>();
             skillLocator.primary.stateMachine.SetNextStateToMain();
 
-            if (startedReload) startedReload = false;
-            reloadStopwatch = 0;
+            Util.PlaySound("JhinStopReload", base.gameObject);
+            Util.PlaySound("JhinStopReloadEmpty", base.gameObject);
+            if (this.startedReload) this.startedReload = false;
+            this.reloadGraceDelay = delay;
+            this.reloadStopwatch = 0f;
+            this.interrupted = interrupt;
+        }
+        public void ResetReload()
+        {
+            this.startedReload = false;
+            this.interrupted = false;
+            this.reloadStopwatch = 0f;
+            this.reloadGraceDelay = 1f;
         }
 
         public void TakeAmmo( int ammo )
         {
-            if ( CanTakeAmmo(ammo) )
+            if (this.CanTakeAmmo(ammo) )
             {
                 ammoCount -= ammo;
                 ChatMessage.Send($"Ammo taken, ammoCount: {ammoCount}");

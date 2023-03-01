@@ -17,9 +17,9 @@ namespace JhinMod.SkillStates
 {
     public class DancingGrenade : BaseState
     {
-        public static float baseDuration = 0.2f;
+        public static float baseDuration = 1f;
 
-        public static float baseDelay = 0.05f;
+        public static float baseDelay = 0.25f;
 
         public static GameObject muzzleFlashPrefab;
 
@@ -79,6 +79,8 @@ namespace JhinMod.SkillStates
 
             this.ammoComponent.StopReload();
             base.PlayAnimation("UpperBody, Override", "DancingGrenade");
+            Util.PlaySound("JhinQCast", base.gameObject);
+
         }
 
         public override void OnExit()
@@ -139,7 +141,7 @@ namespace JhinMod.SkillStates
             dancingGrenade.speed = DancingGrenade.projectileTravelSpeed;
             dancingGrenade.bouncedObjects = new List<HealthComponent>();
             dancingGrenade.range = DancingGrenade.projectileBounceRange;
-            dancingGrenade.damageCoefficientOnSuccessfulKill = this.damageCoefficientOnBounceKill;
+            dancingGrenade.damageCoefficientOnBounceKill = this.damageCoefficientOnBounceKill;
             HurtBox hurtBox = this.initialOrbTarget;
             if (hurtBox)
             {
@@ -150,6 +152,7 @@ namespace JhinMod.SkillStates
                 dancingGrenade.target = hurtBox;
                 OrbManager.instance.AddOrb(dancingGrenade);
             }
+            Util.PlaySound("JhinQFire", base.gameObject);
         }
 
         public override InterruptPriority GetMinimumInterruptPriority()

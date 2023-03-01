@@ -28,7 +28,7 @@ namespace JhinMod.Modules
             Modules.Content.AddEntityState(typeof(DeadlyFlourish));
 
             Modules.Content.AddEntityState(typeof(CurtainCall));
-            Modules.Content.AddEntityState(typeof(CurtainCallShot));
+            Modules.Content.AddEntityState(typeof(CurtainCallShoot));
         }
     }
 }

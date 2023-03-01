@@ -8,6 +8,7 @@ using EntityStates;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using JhinMod.SkillStates.BaseStates;
 
 namespace JhinMod.Modules.Survivors
 {
@@ -69,6 +70,9 @@ namespace JhinMod.Modules.Survivors
 
             this.bodyPrefab.AddComponent<JhinTracker>();
             this.bodyPrefab.AddComponent<AmmoComponent>();
+            var ultStateMachine = this.bodyPrefab.AddComponent<EntityStateMachine>();
+            ultStateMachine.customName = "UltMode";
+            ultStateMachine.mainStateType = new SerializableEntityStateType(typeof(JhinUltMainState));
 
             CharacterDeathBehavior characterDeathBehavior = bodyPrefab.GetComponent<CharacterDeathBehavior>();
             characterDeathBehavior.deathState = new SerializableEntityStateType(typeof(JhinMod.SkillStates.BaseStates.AnimatedDeathState));
@@ -184,7 +188,7 @@ namespace JhinMod.Modules.Survivors
                 activationStateMachineName = "Slide",
                 baseMaxStock = 1,
                 baseRechargeInterval = 10f,
-                beginSkillCooldownOnSkillEnd = false,
+                beginSkillCooldownOnSkillEnd = true,
                 canceledFromSprinting = false,
                 forceSprintDuringState = false,
                 fullRestockOnAssign = true,

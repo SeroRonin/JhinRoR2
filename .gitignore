@@ -264,3 +264,4 @@ __pycache__/
 # Custom assets and such
 JhinAssetsRaw/
 JhinLeagueExtract/
+*.lnk

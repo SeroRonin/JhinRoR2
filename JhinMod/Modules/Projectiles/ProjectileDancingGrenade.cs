@@ -12,7 +12,7 @@ namespace JhinMod.Modules.CustomProjectiles
 {
     public class ProjectileDancingGrenade : LightningOrb
     {
-        public float damageCoefficientOnSuccessfulKill;
+        public float damageCoefficientOnBounceKill;
         public override void Begin()
         {
             string path = "Prefabs/Effects/OrbEffects/HuntressGlaiveOrbEffect";
@@ -55,8 +55,6 @@ namespace JhinMod.Modules.CustomProjectiles
                 //Did we kill the target we hit?
                 this.failedToKill |= (!healthComponent || healthComponent.alive);
 
-                
-
                 if (this.bouncesRemaining > 0)
                 {
                     for (int i = 0; i < this.targetsToFindPerBounce; i++)
@@ -88,14 +86,16 @@ namespace JhinMod.Modules.CustomProjectiles
                             lightningOrb.procChainMask = this.procChainMask;
                             lightningOrb.procCoefficient = this.procCoefficient;
                             lightningOrb.damageColorIndex = this.damageColorIndex;
-                            lightningOrb.damageCoefficientPerBounce = this.damageCoefficientPerBounce;
+                            lightningOrb.damageCoefficientOnBounceKill = this.damageCoefficientOnBounceKill;
                             lightningOrb.speed = this.speed;
                             lightningOrb.range = this.range;
                             lightningOrb.damageType = this.damageType;
-                            lightningOrb.duration = base.distanceToTarget / this.speed;//If we killed, add a percentage of current damage on top
+                            lightningOrb.duration = base.distanceToTarget / this.speed;
+
+                            //If we killed, add a percentage of current damage on top
                             if (!this.failedToKill)
                             {
-                                lightningOrb.damageValue += this.damageValue * this.damageCoefficientOnSuccessfulKill;
+                                lightningOrb.damageValue += this.damageValue * this.damageCoefficientOnBounceKill;
                             }
                             OrbManager.instance.AddOrb(lightningOrb);
                         }

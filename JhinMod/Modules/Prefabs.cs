@@ -372,12 +372,12 @@ namespace JhinMod.Modules {
         {
             AimAnimator aimAnimator = model.AddComponent<AimAnimator>();
             aimAnimator.directionComponent = prefab.GetComponent<CharacterDirection>();
-            aimAnimator.pitchRangeMax = 60f;
-            aimAnimator.pitchRangeMin = -60f;
-            aimAnimator.yawRangeMin = -80f;
-            aimAnimator.yawRangeMax = 80f;
-            aimAnimator.pitchGiveupRange = 30f;
-            aimAnimator.yawGiveupRange = 10f;
+            aimAnimator.pitchRangeMax = 45f;
+            aimAnimator.pitchRangeMin = -45f;
+            aimAnimator.yawRangeMin = -60f;
+            aimAnimator.yawRangeMax = 60f;
+            aimAnimator.pitchGiveupRange = 45f;
+            aimAnimator.yawGiveupRange = 30f;
             aimAnimator.giveupDuration = 3f;
             aimAnimator.inputBank = prefab.GetComponent<InputBankTest>();
         }

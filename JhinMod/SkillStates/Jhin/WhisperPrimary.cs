@@ -16,8 +16,9 @@ namespace JhinMod.SkillStates
     {
         public static float damageCoefficient = Modules.StaticValues.whisperDamageCoefficient;
         public static float procCoefficient = 1f;
-        public static float baseDuration = 1.6f;
-        public static float baseFireDelay = 0.15625f;
+        public static float baseDuration = 2.57f;
+        //public static float baseFireDelayPercent = 0.15625f; //League value, is actually 4ish frames late
+        public static float baseFireDelayPercent = 0.1f;
         public static float force = 800f;
         public static float recoil = 3f;
         public static float range = 512f;
@@ -25,7 +26,8 @@ namespace JhinMod.SkillStates
 
         private AmmoComponent ammoComponent;
         private float duration;
-        private float fireTime = 1f;
+        private float earlyExitTime;
+        private float fireTime;
         private bool hasFired;
         private bool isCrit;
         private string muzzleString;
@@ -36,24 +38,38 @@ namespace JhinMod.SkillStates
             ammoComponent = base.GetComponent<AmmoComponent>();
             base.characterBody.SetAimTimer(3f);
             this.muzzleString = "Muzzle";
+            this.isCrit = RollCrit();
+            this.earlyExitTime = 1 / this.characterBody.attackSpeed;
 
-            if ( CanFire() )
+            this.duration = WhisperPrimary.baseDuration * (this.characterBody.baseAttackSpeed / this.characterBody.attackSpeed);
+            this.fireTime = WhisperPrimary.baseFireDelayPercent * this.duration;
+            this.PlayFireAnimation();
+            Util.PlaySound("JhinAttackCast", base.gameObject);
+              
+        }
+        public void PlayFireAnimation()
+        {
+            var shotIndex = this.ammoComponent.ammoMax - (this.ammoComponent.ammoCount - 1 );
+            ChatMessage.Send($"shot index {shotIndex}");
+            if (shotIndex == 4)
             {
-                this.duration = this.attackSpeedStat / this.characterBody.baseAttackSpeed;
-                this.fireTime = WhisperPrimary.baseFireDelay * this.duration;
-                base.PlayAnimation("UpperBody, Override", "Attack", "ShootGun.playbackRate", duration);
+                var animatorComponent = this.GetModelAnimator();
+                var layerIndex = animatorComponent.GetLayerIndex("UpperBody, Override");
+                animatorComponent.SetLayerWeight(layerIndex, 0f);
+                base.PlayAnimation("FullBody Passive Crit, Override", "AttackPassiveCrit", "ShootGun.playbackRate", duration);
+            }
+            else if (this.isCrit)
+            {
+                    
+                base.PlayAnimation("UpperBody, Override", "AttackCrit", "ShootGun.playbackRate", duration);
             }
             else
             {
-                duration = 0.1f;
+                base.PlayAnimation("UpperBody, Override", $"Attack{shotIndex}", "ShootGun.playbackRate", duration);
             }
-                
+            
         }
-        
-        public bool CanFire()
-        {
-            return ammoComponent.CanTakeAmmo(1);
-        }
+
         public override void OnExit()
         {
             base.OnExit();
@@ -65,9 +81,14 @@ namespace JhinMod.SkillStates
             {
                 this.hasFired = true;
 
-                //Roll crit, if we only have the last shot, crit regardless
-                this.isCrit = RollCrit();
-                if (ammoComponent.ammoCount == 1 ) isCrit = true;
+                //If we only have the last shot, crit regardless
+                if (ammoComponent.ammoCount == 1)
+                {
+                    isCrit = true;
+                    var animatorComponent = this.GetModelAnimator();
+                    var layerIndex = animatorComponent.GetLayerIndex("UpperBody, Override");
+                    animatorComponent.SetLayerWeight(layerIndex, 1f);
+                }
 
                 base.characterBody.SetAimTimer(this.duration * 2f);
                 base.characterBody.AddSpreadBloom(1.5f);
@@ -122,7 +143,14 @@ namespace JhinMod.SkillStates
 
         protected virtual void DoFireEffects()
         {
-            Util.PlaySound("HenryShootPistol", base.gameObject);
+            if (this.isCrit)
+            {
+                Util.PlaySound("JhinAttackCritFire", base.gameObject);
+            }
+            else
+            {
+                Util.PlaySound("JhinAttackFire", base.gameObject);
+            }
             EffectManager.SimpleMuzzleFlash(EntityStates.Commando.CommandoWeapon.FirePistol2.muzzleEffectPrefab, base.gameObject, this.muzzleString, false);
         }
         protected virtual void OnFireBulletAuthority(Ray aimRay)
@@ -152,11 +180,18 @@ namespace JhinMod.SkillStates
         {
             base.FixedUpdate();
 
-            if ( CanFire() && base.fixedAge >= this.fireTime)
+            if ( base.fixedAge >= this.fireTime)
             {
                 this.Fire();
             }
+            if ( hasFired && base.fixedAge >= this.earlyExitTime)
+            {
+                if (this.inputBank.skill1.down)
+                {
+                    this.outer.SetNextState(new WhisperPrimary());
+                }
 
+            }
 
             if (base.fixedAge >= this.duration && base.isAuthority)
             {

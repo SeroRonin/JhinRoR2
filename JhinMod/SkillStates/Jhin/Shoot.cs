@@ -43,7 +43,7 @@ namespace JhinMod.SkillStates
 
                 base.characterBody.AddSpreadBloom(1.5f);
                 EffectManager.SimpleMuzzleFlash(EntityStates.Commando.CommandoWeapon.FirePistol2.muzzleEffectPrefab, base.gameObject, this.muzzleString, false);
-                Util.PlaySound("JhinShootPistol", base.gameObject);
+                Util.PlaySound("JhinAttackCast", base.gameObject);
 
                 if (base.isAuthority)
                 {
