@@ -24,7 +24,7 @@ namespace JhinMod.SkillStates
         public static float range = 512f;
         public static GameObject tracerEffectPrefab = RoR2.LegacyResourcesAPI.Load<GameObject>("Prefabs/Effects/Tracers/TracerGoldGat");
 
-        private AmmoComponent ammoComponent;
+        private JhinStateController jhinStateController;
         private float duration;
         private float earlyExitTime;
         private float fireTime;
@@ -35,7 +35,10 @@ namespace JhinMod.SkillStates
         public override void OnEnter()
         {
             base.OnEnter();
-            ammoComponent = base.GetComponent<AmmoComponent>();
+            jhinStateController = base.GetComponent<JhinStateController>();
+            jhinStateController.timeSinceFire = 0f;
+            jhinStateController.ResetReload();
+
             base.characterBody.SetAimTimer(3f);
             this.muzzleString = "Muzzle";
             this.isCrit = RollCrit();
@@ -44,12 +47,15 @@ namespace JhinMod.SkillStates
             this.duration = WhisperPrimary.baseDuration * (this.characterBody.baseAttackSpeed / this.characterBody.attackSpeed);
             this.fireTime = WhisperPrimary.baseFireDelayPercent * this.duration;
             this.PlayFireAnimation();
+
             Util.PlaySound("JhinAttackCast", base.gameObject);
-              
+            Util.PlaySound("JhinStopPassiveCritSpin", base.gameObject);
+            Util.PlaySound("JhinStopPassiveCritMusic", base.gameObject);
+
         }
         public void PlayFireAnimation()
         {
-            var shotIndex = this.ammoComponent.ammoMax - (this.ammoComponent.ammoCount - 1 );
+            var shotIndex = this.jhinStateController.ammoMax - (this.jhinStateController.ammoCount - 1 );
             ChatMessage.Send($"shot index {shotIndex}");
             if (shotIndex == 4)
             {
@@ -82,7 +88,7 @@ namespace JhinMod.SkillStates
                 this.hasFired = true;
 
                 //If we only have the last shot, crit regardless
-                if (ammoComponent.ammoCount == 1)
+                if (jhinStateController.ammoCount == 1)
                 {
                     isCrit = true;
                     var animatorComponent = this.GetModelAnimator();
@@ -105,7 +111,7 @@ namespace JhinMod.SkillStates
                     this.OnFireBulletAuthority(aimRay);
                 }
 
-                ammoComponent.TakeAmmo(1);
+                jhinStateController.TakeAmmo(1);
             }
         }
         protected BulletAttack GenerateBulletAttack(Ray aimRay)
@@ -120,7 +126,7 @@ namespace JhinMod.SkillStates
                 damage = this.damageStat * WhisperPrimary.damageCoefficient,
                 damageColorIndex = DamageColorIndex.Default,
                 damageType = DamageType.Generic,
-                falloffModel = BulletAttack.FalloffModel.Buckshot,
+                falloffModel = BulletAttack.FalloffModel.DefaultBullet,
                 force = WhisperPrimary.force,
                 HitEffectNormal = false,
                 procChainMask = default(ProcChainMask),
@@ -168,7 +174,7 @@ namespace JhinMod.SkillStates
             var result = BulletAttack.defaultHitCallback(bulletAttack, ref hitInfo);
             HealthComponent healthComponent = hitInfo.hitHurtBox ? hitInfo.hitHurtBox.healthComponent : null;
             /*
-            if (ammoComponent.ammoCount == 1 && healthComponent && hitInfo.hitHurtBox.teamIndex != base.teamComponent.teamIndex)
+            if (jhinStateController.ammoCount == 1 && healthComponent && hitInfo.hitHurtBox.teamIndex != base.teamComponent.teamIndex)
             {
                 
             }*/

@@ -56,7 +56,7 @@ namespace JhinMod.SkillStates
         private bool hasFired;
 
         private HurtBox initialOrbTarget;
-        private AmmoComponent ammoComponent;
+        private JhinStateController jhinStateController;
         public override void OnEnter()
         {
             base.OnEnter();
@@ -68,7 +68,7 @@ namespace JhinMod.SkillStates
             this.animator = base.GetModelAnimator();
             this.tracker = base.GetComponent<JhinTracker>();
             this.childLocator = this.modelTransform.GetComponent<ChildLocator>();
-            this.ammoComponent = GetComponent<AmmoComponent>();
+            this.jhinStateController = GetComponent<JhinStateController>();
 
             //Util.PlayAttackSpeedSound(ThrowDancingGrenade.attackSoundString, base.gameObject, this.attackSpeedStat);
 
@@ -77,7 +77,7 @@ namespace JhinMod.SkillStates
                 this.initialOrbTarget = this.tracker.GetTrackingTarget();
             }
 
-            this.ammoComponent.StopReload();
+            this.jhinStateController.StopReload();
             base.PlayAnimation("UpperBody, Override", "DancingGrenade");
             Util.PlaySound("JhinQCast", base.gameObject);
 

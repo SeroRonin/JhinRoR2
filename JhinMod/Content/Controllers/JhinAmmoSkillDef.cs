@@ -13,13 +13,13 @@ namespace JhinMod.Content.Controllers
         {
             return new JhinAmmoSkillDef.InstanceData
             {
-                jhinAmmoComponent = skillSlot.GetComponent<AmmoComponent>()
+                jhinAmmoComponent = skillSlot.GetComponent<JhinStateController>()
             };
         }
 
         private static bool HasAmmo([NotNull] GenericSkill skillSlot)
         {
-            AmmoComponent jhinAmmoComponent = ((JhinAmmoSkillDef.InstanceData)skillSlot.skillInstanceData).jhinAmmoComponent;
+            JhinStateController jhinAmmoComponent = ((JhinAmmoSkillDef.InstanceData)skillSlot.skillInstanceData).jhinAmmoComponent;
             return (jhinAmmoComponent.ammoCount != 0);
         }
 
@@ -35,7 +35,7 @@ namespace JhinMod.Content.Controllers
 
         protected class InstanceData : SkillDef.BaseSkillInstanceData
         {
-            public AmmoComponent jhinAmmoComponent;
+            public JhinStateController jhinAmmoComponent;
         }
     }
 }

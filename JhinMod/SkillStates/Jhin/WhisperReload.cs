@@ -8,20 +8,21 @@ namespace JhinMod.SkillStates
 {
     public class WhisperReload : BaseState
     {
-        private AmmoComponent ammoComponent;
+        private JhinStateController jhinStateController;
         private float duration;
         private bool hasReloaded;
 
         public override void OnEnter()
         {
             base.OnEnter();
-            this.ammoComponent = base.GetComponent<AmmoComponent>();
-            this.duration = ammoComponent.reloadTime;
-            var recentlyEmpty = this.ammoComponent.timeSinceEmpty < 0.5f;
+            this.jhinStateController = base.GetComponent<JhinStateController>();
+            this.duration = jhinStateController.reloadTime;
+            var recentlyEmpty = this.jhinStateController.ammoCount == 0 && this.jhinStateController.timeSinceFire < 0.5f;
             base.PlayCrossfade("UpperBody, Override", recentlyEmpty ? "Reload_FromFireEmpty" : "Reload", "", this.duration, 0.2f);
+            
             Util.PlaySound(recentlyEmpty ? "JhinReloadEmpty" : "JhinReload", base.gameObject);
-
-            //Util.PlayAttackSpeedSound(Reload.enterSoundString, base.gameObject, Reload.enterSoundPitch);
+            Util.PlaySound("JhinStopPassiveCritSpin", base.gameObject);
+            Util.PlaySound("JhinStopPassiveCritMusic", base.gameObject);
         }
 
         public override void OnExit()
@@ -33,7 +34,7 @@ namespace JhinMod.SkillStates
         public override void FixedUpdate()
         {
             base.FixedUpdate();
-            if (this.ammoComponent.startedReload && base.fixedAge >= this.duration )
+            if (this.jhinStateController.startedReload && base.fixedAge >= this.duration )
             {
                 this.PerformReload(); 
                 this.outer.SetNextStateToMain();
@@ -54,8 +55,8 @@ namespace JhinMod.SkillStates
                 return;
             }
 
-            this.ammoComponent.Reload( true );
-            base.skillLocator.primary.stock = this.ammoComponent.ammoCount;
+            this.jhinStateController.Reload( true );
+            base.skillLocator.primary.stock = this.jhinStateController.ammoCount;
 
             this.hasReloaded = true;
         }

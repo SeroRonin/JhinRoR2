@@ -303,11 +303,22 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 319461082181685346, guid: 94b43fa5ea11e604abc4acddf9af1da6,
+        type: 3}
+      propertyPath: m_Avatar
+      value: 
+      objectReference: {fileID: 9000000, guid: fbf7e3e7f7fdff748a6e33a84f824935, type: 3}
     - target: {fileID: 5114870494547815080, guid: 94b43fa5ea11e604abc4acddf9af1da6,
         type: 3}
       propertyPath: m_Mesh
       value: 
-      objectReference: {fileID: -7476985432568996647, guid: 16bf33a2816fe29468a1e15358a2538a,
+      objectReference: {fileID: -7476985432568996647, guid: fbf7e3e7f7fdff748a6e33a84f824935,
+        type: 3}
+    - target: {fileID: 5114870494547815080, guid: 94b43fa5ea11e604abc4acddf9af1da6,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: -8426098527479566561, guid: fbf7e3e7f7fdff748a6e33a84f824935,
         type: 3}
     - target: {fileID: 5948930742808316440, guid: 94b43fa5ea11e604abc4acddf9af1da6,
         type: 3}

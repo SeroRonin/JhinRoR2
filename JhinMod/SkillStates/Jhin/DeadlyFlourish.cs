@@ -23,13 +23,13 @@ namespace JhinMod.SkillStates
         private bool hasFired;
         private string muzzleString;
         private Animator animator;
-        private AmmoComponent ammoComponent;
+        private JhinStateController jhinStateController;
         public override void OnEnter()
         {
             base.OnEnter();
 
-            this.ammoComponent = GetComponent<AmmoComponent>();
-            this.ammoComponent.StopReload( true, 2f );
+            this.jhinStateController = GetComponent<JhinStateController>();
+            this.jhinStateController.StopReload( true, 2f );
 
             this.duration = DeadlyFlourish.baseDuration;
             this.fireTime = DeadlyFlourish.baseFireDelay;

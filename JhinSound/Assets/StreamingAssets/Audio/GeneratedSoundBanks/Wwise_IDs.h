@@ -19,11 +19,14 @@ namespace AK
         static const AkUniqueID JHINDEATHSFX = 4176659657U;
         static const AkUniqueID JHINPASSIVECRITCAST = 1936789700U;
         static const AkUniqueID JHINPASSIVECRITFIRE = 2432551397U;
-        static const AkUniqueID JHINPASSIVECRITREADY = 3863701598U;
+        static const AkUniqueID JHINPASSIVECRITMUSIC = 2358240378U;
+        static const AkUniqueID JHINPASSIVECRITSPIN = 3109027061U;
         static const AkUniqueID JHINQCAST = 235668226U;
         static const AkUniqueID JHINQFIRE = 3607364443U;
         static const AkUniqueID JHINRELOAD = 1766860929U;
         static const AkUniqueID JHINRELOADEMPTY = 1717072320U;
+        static const AkUniqueID JHINSTOPPASSIVECRITMUSIC = 96333634U;
+        static const AkUniqueID JHINSTOPPASSIVECRITSPIN = 2487544525U;
         static const AkUniqueID JHINSTOPRELOAD = 2420416169U;
         static const AkUniqueID JHINSTOPRELOADEMPTY = 261833336U;
         static const AkUniqueID JHINSTOPULTMUSIC = 3684434072U;

@@ -69,10 +69,10 @@ namespace JhinMod.Modules.Survivors
             base.InitializeCharacter();
 
             this.bodyPrefab.AddComponent<JhinTracker>();
-            this.bodyPrefab.AddComponent<AmmoComponent>();
+            this.bodyPrefab.AddComponent<JhinStateController>();
             var ultStateMachine = this.bodyPrefab.AddComponent<EntityStateMachine>();
-            ultStateMachine.customName = "UltMode";
-            ultStateMachine.mainStateType = new SerializableEntityStateType(typeof(JhinUltMainState));
+            ultStateMachine.customName = "WeaponMode";
+            ultStateMachine.mainStateType = new SerializableEntityStateType(typeof(JhinWeaponMainState));
 
             CharacterDeathBehavior characterDeathBehavior = bodyPrefab.GetComponent<CharacterDeathBehavior>();
             characterDeathBehavior.deathState = new SerializableEntityStateType(typeof(JhinMod.SkillStates.BaseStates.AnimatedDeathState));

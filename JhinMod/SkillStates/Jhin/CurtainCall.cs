@@ -17,22 +17,23 @@ namespace JhinMod.SkillStates
     public class CurtainCall : BaseSkillState
     {
         private float duration = 10f;
-        private AmmoComponent ammoComponent;
+        private JhinStateController jhinStateController;
         private EntityStateMachine ultStateMachine;
         private int shotsRemaining;
         public override void OnEnter()
         {
             base.OnEnter();
-            ammoComponent = base.GetComponent<AmmoComponent>();
+            jhinStateController = base.GetComponent<JhinStateController>();
             var allSMs = this.gameObject.GetComponents<EntityStateMachine>();
 
             //Stop our current reload state if active, and fill our ammo manually
-            ammoComponent.StopReload( true );
-            ammoComponent.Reload(true);
+            jhinStateController.StopReload( true );
+            jhinStateController.Reload(true);
+            jhinStateController.isUlting= true;
 
             foreach ( EntityStateMachine entSM in allSMs )
             {
-                if (entSM.customName == "UltMode" )
+                if (entSM.customName == "WeaponMode")
                 {
                     ultStateMachine = entSM;
                     break;
@@ -47,6 +48,7 @@ namespace JhinMod.SkillStates
 
         public override void OnExit()
         {
+            jhinStateController.isUlting = false;
             this.ultStateMachine.SetNextStateToMain();
 
             Util.PlaySound("JhinStopUltMusic", base.gameObject);

@@ -15,13 +15,13 @@ namespace JhinMod.SkillStates.BaseStates
 
         [SerializeField]
         public SkillDef primaryOverrideSkillDef;
-        protected AmmoComponent ammoComponent;
+        protected JhinStateController jhinStateController;
         protected Animator animatorComponent;
 
         public override void OnEnter()
         {
             base.OnEnter();
-            this.ammoComponent = base.GetComponent<AmmoComponent>();
+            this.jhinStateController = base.GetComponent<JhinStateController>();
             this.animatorComponent = base.GetModelAnimator();
 
             string prefix = JhinPlugin.DEVELOPER_PREFIX;
