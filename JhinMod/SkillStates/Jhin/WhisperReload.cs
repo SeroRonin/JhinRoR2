@@ -20,9 +20,9 @@ namespace JhinMod.SkillStates
             var recentlyEmpty = this.jhinStateController.ammoCount == 0 && this.jhinStateController.timeSinceFire < 0.5f;
             base.PlayCrossfade("UpperBody, Override", recentlyEmpty ? "Reload_FromFireEmpty" : "Reload", "", this.duration, 0.2f);
             
-            Util.PlaySound(recentlyEmpty ? "JhinReloadEmpty" : "JhinReload", base.gameObject);
-            Util.PlaySound("JhinStopPassiveCritSpin", base.gameObject);
-            Util.PlaySound("JhinStopPassiveCritMusic", base.gameObject);
+            Util.PlaySound(recentlyEmpty ? "Play_Seroronin_Jhin_ReloadEmpty" : "Play_Seroronin_Jhin_Reload", base.gameObject);
+            Util.PlaySound("Stop_Seroronin_Jhin_PassiveCritSpin", base.gameObject);
+            Util.PlaySound("Stop_Seroronin_Jhin_PassiveCritMusic", base.gameObject);
         }
 
         public override void OnExit()

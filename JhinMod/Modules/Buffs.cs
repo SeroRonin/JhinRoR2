@@ -8,7 +8,12 @@ namespace JhinMod.Modules
     {
         // armor buff gained during roll
         internal static BuffDef armorBuff;
+
+        /// <summary>
+        /// Movespeed buff Jhin gets weapon he crits
+        /// </summary>
         internal static BuffDef jhinCritMovespeedBuff;
+
         internal static void RegisterBuffs()
         {
             armorBuff = AddNewBuff("JhinArmorBuff",
@@ -24,7 +29,6 @@ namespace JhinMod.Modules
                 false);
         }
 
-        //new Color(1f,0f,0.44f),
         // simple helper method
         internal static BuffDef AddNewBuff(string buffName, Sprite buffIcon, Color buffColor, bool canStack, bool isDebuff)
         {

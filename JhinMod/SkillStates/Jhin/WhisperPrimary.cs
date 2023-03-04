@@ -48,9 +48,9 @@ namespace JhinMod.SkillStates
             this.fireTime = WhisperPrimary.baseFireDelayPercent * this.duration;
             this.PlayFireAnimation();
 
-            Util.PlaySound("JhinAttackCast", base.gameObject);
-            Util.PlaySound("JhinStopPassiveCritSpin", base.gameObject);
-            Util.PlaySound("JhinStopPassiveCritMusic", base.gameObject);
+            Util.PlaySound("Play_Seroronin_Jhin_AttackCast", base.gameObject);
+            Util.PlaySound("Stop_Seroronin_Jhin_PassiveCritSpin", base.gameObject);
+            Util.PlaySound("Stop_Seroronin_Jhin_PassiveCritMusic", base.gameObject);
 
         }
         public void PlayFireAnimation()
@@ -151,11 +151,11 @@ namespace JhinMod.SkillStates
         {
             if (this.isCrit)
             {
-                Util.PlaySound("JhinAttackCritFire", base.gameObject);
+                Util.PlaySound("Play_Seroronin_Jhin_AttackCritFire", base.gameObject);
             }
             else
             {
-                Util.PlaySound("JhinAttackFire", base.gameObject);
+                Util.PlaySound("Play_Seroronin_Jhin_AttackFire", base.gameObject);
             }
             EffectManager.SimpleMuzzleFlash(EntityStates.Commando.CommandoWeapon.FirePistol2.muzzleEffectPrefab, base.gameObject, this.muzzleString, false);
         }

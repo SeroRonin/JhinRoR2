@@ -18,7 +18,6 @@ namespace JhinMod.Modules.CustomProjectiles
             string path = "Prefabs/Effects/OrbEffects/HuntressGlaiveOrbEffect";
             base.duration = base.distanceToTarget / this.speed;
             base.canBounceOnSameTarget = false;
-
             EffectData effectData = new EffectData
             {
                 origin = this.origin,
@@ -55,6 +54,8 @@ namespace JhinMod.Modules.CustomProjectiles
                 //Did we kill the target we hit?
                 this.failedToKill |= (!healthComponent || healthComponent.alive);
 
+                Util.PlaySound("Play_Seroronin_Jhin_QHitLast", this.target.gameObject);
+                
                 if (this.bouncesRemaining > 0)
                 {
                     for (int i = 0; i < this.targetsToFindPerBounce; i++)
@@ -98,6 +99,11 @@ namespace JhinMod.Modules.CustomProjectiles
                                 lightningOrb.damageValue += this.damageValue * this.damageCoefficientOnBounceKill;
                             }
                             OrbManager.instance.AddOrb(lightningOrb);
+                            Util.PlaySound("Play_Seroronin_Jhin_QBounce", this.target.gameObject );
+                        }
+                        else
+                        {
+                            Util.PlaySound("Play_Seroronin_Jhin_QHitLast", this.target.gameObject);
                         }
                     }
                     return;

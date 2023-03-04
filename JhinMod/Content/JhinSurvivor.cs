@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using JhinMod.SkillStates.BaseStates;
+using JhinMod.Modules.SkillDefs;
 
 namespace JhinMod.Modules.Survivors
 {

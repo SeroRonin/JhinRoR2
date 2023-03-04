@@ -28,10 +28,14 @@ namespace JhinMod.Content.Controllers
         public float reloadStopwatch;
         public float timeSinceFire;
 
+        public bool passiveCritArmed;
+
         public bool startedReload;
         public bool interrupted;
         public bool isUlting;
-        public bool passiveCritArmed;
+
+        public bool ultHasSetLastShot;
+        public bool ultHasFiredLastShot;
 
         public SerializableEntityStateType reloadState;
 
@@ -89,7 +93,7 @@ namespace JhinMod.Content.Controllers
                     if ( !passiveCritArmed )
                     {
                         passiveCritArmed = true;
-                        jhinStateMachine.SetNextState(new JhinPassiveCritReadyState());
+                        jhinStateMachine.SetNextState(new JhinWeaponPassiveCritReadyState());
                     }
                 }
                 else if ( passiveCritArmed )
@@ -152,8 +156,8 @@ namespace JhinMod.Content.Controllers
 
         public void ResetReload( bool interrupt = false, float delay = 1f)
         {
-            Util.PlaySound("JhinStopReload", base.gameObject);
-            Util.PlaySound("JhinStopReloadEmpty", base.gameObject);
+            Util.PlaySound("Stop_Seroronin_Jhin_Reloads", base.gameObject);
+
             this.startedReload = false;
             this.reloadGraceDelay = delay;
             this.reloadStopwatch = 0f;
@@ -174,6 +178,12 @@ namespace JhinMod.Content.Controllers
             if (ammoCount <= 0) return false;
             if (ammo > ammoCount) return false;
             return true;
+        }
+
+        public void ResetUlt()
+        {
+            this.ultHasSetLastShot = false;
+            this.ultHasFiredLastShot = false;
         }
 
         /*

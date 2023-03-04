@@ -7,15 +7,16 @@ using RoR2;
 
 namespace JhinMod.Content.Controllers
 {
+    /// <summary>
+    /// Tracker Component used by JhinTrackingSkillDef and DancingGrenade. Almost 1:1 with HuntressTracker, but we can't access the base Unity methods so we need a custom MonoBehavior.
+    /// </summary>
     [RequireComponent(typeof(InputBankTest))]
     [RequireComponent(typeof(CharacterBody))]
     [RequireComponent(typeof(TeamComponent))]
     public class JhinTracker : MonoBehaviour
     {
         public float maxTrackingDistance = 25f;
-
         public float maxTrackingAngle = 25f;
-
         public float trackerUpdateFrequency = 10f;
 
         private HurtBox trackingTarget;

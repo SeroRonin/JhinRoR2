@@ -13,28 +13,31 @@ namespace AK
 {
     namespace EVENTS
     {
-        static const AkUniqueID JHINATTACKCAST = 570477395U;
-        static const AkUniqueID JHINATTACKCRITFIRE = 20969806U;
-        static const AkUniqueID JHINATTACKFIRE = 1527439466U;
-        static const AkUniqueID JHINDEATHSFX = 4176659657U;
-        static const AkUniqueID JHINPASSIVECRITCAST = 1936789700U;
-        static const AkUniqueID JHINPASSIVECRITFIRE = 2432551397U;
-        static const AkUniqueID JHINPASSIVECRITMUSIC = 2358240378U;
-        static const AkUniqueID JHINPASSIVECRITSPIN = 3109027061U;
-        static const AkUniqueID JHINQCAST = 235668226U;
-        static const AkUniqueID JHINQFIRE = 3607364443U;
-        static const AkUniqueID JHINRELOAD = 1766860929U;
-        static const AkUniqueID JHINRELOADEMPTY = 1717072320U;
-        static const AkUniqueID JHINSTOPPASSIVECRITMUSIC = 96333634U;
-        static const AkUniqueID JHINSTOPPASSIVECRITSPIN = 2487544525U;
-        static const AkUniqueID JHINSTOPRELOAD = 2420416169U;
-        static const AkUniqueID JHINSTOPRELOADEMPTY = 261833336U;
-        static const AkUniqueID JHINSTOPULTMUSIC = 3684434072U;
-        static const AkUniqueID JHINULTCAST = 2176232942U;
-        static const AkUniqueID JHINULTFIRE = 2713571087U;
-        static const AkUniqueID JHINULTLOADSHOT = 1845718103U;
-        static const AkUniqueID JHINULTMUSIC = 2338941312U;
-        static const AkUniqueID JHINWCAST = 3552175756U;
+        static const AkUniqueID PLAY_SERORONIN_JHIN_ATTACKCAST = 1397535151U;
+        static const AkUniqueID PLAY_SERORONIN_JHIN_ATTACKCRITFIRE = 2953896586U;
+        static const AkUniqueID PLAY_SERORONIN_JHIN_ATTACKFIRE = 860196974U;
+        static const AkUniqueID PLAY_SERORONIN_JHIN_DEATHSFX = 2942804221U;
+        static const AkUniqueID PLAY_SERORONIN_JHIN_PASSIVECRITCAST = 1291919424U;
+        static const AkUniqueID PLAY_SERORONIN_JHIN_PASSIVECRITFIRE = 4134617481U;
+        static const AkUniqueID PLAY_SERORONIN_JHIN_PASSIVECRITMUSIC = 1128125334U;
+        static const AkUniqueID PLAY_SERORONIN_JHIN_PASSIVECRITSPIN = 2237188225U;
+        static const AkUniqueID PLAY_SERORONIN_JHIN_QBOUNCE = 4019119667U;
+        static const AkUniqueID PLAY_SERORONIN_JHIN_QCAST = 1721268966U;
+        static const AkUniqueID PLAY_SERORONIN_JHIN_QFIRE = 2261167031U;
+        static const AkUniqueID PLAY_SERORONIN_JHIN_QHITLAST = 1809449902U;
+        static const AkUniqueID PLAY_SERORONIN_JHIN_RELOAD = 569618501U;
+        static const AkUniqueID PLAY_SERORONIN_JHIN_RELOADEMPTY = 56827156U;
+        static const AkUniqueID PLAY_SERORONIN_JHIN_ULTCAST = 3405698154U;
+        static const AkUniqueID PLAY_SERORONIN_JHIN_ULTFIRE = 1911852211U;
+        static const AkUniqueID PLAY_SERORONIN_JHIN_ULTHIT = 553371870U;
+        static const AkUniqueID PLAY_SERORONIN_JHIN_ULTHITLAST = 4068608074U;
+        static const AkUniqueID PLAY_SERORONIN_JHIN_ULTLOADSHOT = 1432882243U;
+        static const AkUniqueID PLAY_SERORONIN_JHIN_ULTMUSIC = 3196043244U;
+        static const AkUniqueID PLAY_SERORONIN_JHIN_WCAST = 3583589032U;
+        static const AkUniqueID STOP_SERORONIN_JHIN_PASSIVECRITMUSIC = 805177280U;
+        static const AkUniqueID STOP_SERORONIN_JHIN_PASSIVECRITSPIN = 1415986247U;
+        static const AkUniqueID STOP_SERORONIN_JHIN_RELOADS = 2422114066U;
+        static const AkUniqueID STOP_SERORONIN_JHIN_ULTMUSIC = 248368426U;
     } // namespace EVENTS
 
     namespace GAME_PARAMETERS

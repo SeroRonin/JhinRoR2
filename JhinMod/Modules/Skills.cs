@@ -111,9 +111,15 @@ namespace JhinMod.Modules
             return CreateSkillDef<SkillDef>(skillDefInfo);
         }
 
+        /// <summary>
+        /// Pass in a type for a custom SkillDef, e.g. HuntressTrackingSkillDef
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="skillDefInfo"></param>
+        /// <returns></returns>
         public static T CreateSkillDef<T>(SkillDefInfo skillDefInfo) where T : SkillDef
         {
-            //pass in a type for a custom skilldef, e.g. HuntressTrackingSkillDef
+            
             T skillDef = ScriptableObject.CreateInstance<T>();
 
             skillDef.skillName = skillDefInfo.skillName;

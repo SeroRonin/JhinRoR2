@@ -2,6 +2,7 @@
 using JhinMod.SkillStates.BaseStates;
 using System.Collections.Generic;
 using System;
+using JhinMod.SkillStates.Henry;
 
 namespace JhinMod.Modules
 {
@@ -18,6 +19,8 @@ namespace JhinMod.Modules
 
             Modules.Content.AddEntityState(typeof(ThrowBomb));
 
+            //Jhin EntityStates
+
             Modules.Content.AddEntityState(typeof(AnimatedDeathState));
 
             Modules.Content.AddEntityState(typeof(WhisperPrimary));
@@ -29,6 +32,10 @@ namespace JhinMod.Modules
 
             Modules.Content.AddEntityState(typeof(CurtainCall));
             Modules.Content.AddEntityState(typeof(CurtainCallShoot));
+
+            Modules.Content.AddEntityState(typeof(JhinWeaponMainState));
+            Modules.Content.AddEntityState(typeof(JhinWeaponPassiveCritReadyState));
+            Modules.Content.AddEntityState(typeof(JhinWeaponUltActiveState));
         }
     }
 }

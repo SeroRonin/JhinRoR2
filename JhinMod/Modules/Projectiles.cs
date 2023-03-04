@@ -2,6 +2,7 @@
 using RoR2;
 using RoR2.Projectile;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 using UnityEngine.Networking;
 
 namespace JhinMod.Modules
@@ -9,17 +10,89 @@ namespace JhinMod.Modules
     internal static class Projectiles
     {
         internal static GameObject bombPrefab;
+        internal static GameObject missilePrefab;
+        internal static GameObject ultMissilePrefab;
 
         internal static void RegisterProjectiles()
         {
             CreateBomb();
+            CreateRocket();
 
             AddProjectile(bombPrefab);
+            AddProjectile(ultMissilePrefab);
         }
 
         internal static void AddProjectile(GameObject projectileToAdd)
         {
             Modules.Content.AddProjectilePrefab(projectileToAdd);
+        }
+
+
+        //CREDIT BASE: ROCKET SURVIVOR
+        private static void CreateRocket()
+        {
+            //GameObject rocketPrefab = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Toolbot/ToolbotGrenadeLauncherProjectile.prefab").WaitForCompletion().InstantiateClone("RocketSurvivorRocketProjectile", true);//"RoR2/Base/Drones/PaladinRocket.prefab"
+            //REPLACE, using default assets
+            GameObject rocketPrefab = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Toolbot/ToolbotGrenadeLauncherProjectile.prefab").WaitForCompletion();//"RoR2/Base/Drones/PaladinRocket.prefab"
+
+            ProjectileSimple ps = rocketPrefab.GetComponent<ProjectileSimple>();
+            ps.desiredForwardSpeed = 150f;
+            ps.lifetime = 20f;
+
+            ProjectileImpactExplosion pie = rocketPrefab.GetComponent<ProjectileImpactExplosion>();
+            InitializeImpactExplosion(pie);
+
+            //GameObject explosionEffect = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Common/VFX/OmniExplosionVFXQuick.prefab").WaitForCompletion().InstantiateClone("RocketSurvivorRocketExplosionVFX", false);
+            //REPLACE, using default assets
+            GameObject explosionEffect = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Common/VFX/OmniExplosionVFXQuick.prefab").WaitForCompletion();
+            EffectComponent ec = explosionEffect.GetComponent<EffectComponent>();
+            ec.soundName = "Play_Seroronin_Jhin_UltHit"; //INVESTIGATE, make this sound change based on last shot
+            Modules.Content.AddEffectDef(new EffectDef(explosionEffect));
+            //EntityStates.RocketSurvivorSkills.Primary.FireRocket.explosionEffectPrefab = explosionEffect;
+
+            pie.blastDamageCoefficient = 1f;
+            pie.blastRadius = 8f;
+            pie.destroyOnEnemy = true;
+            pie.destroyOnWorld = true;
+            pie.lifetime = 12f;
+            pie.impactEffect = explosionEffect;
+            pie.timerAfterImpact = false;
+            pie.lifetimeAfterImpact = 0f;
+            pie.blastAttackerFiltering = AttackerFiltering.NeverHitSelf;
+            pie.falloffModel = BlastAttack.FalloffModel.Linear;
+
+            //Remove built-in sounds
+            /*AkEvent[] akEvents = rocketPrefab.GetComponentsInChildren<AkEvent>();
+            for (int i = 0; i < akEvents.Length; i++)
+            {
+                UnityEngine.Object.Destroy(akEvents[i]);
+            }
+            AkGameObj akgo = rocketPrefab.GetComponent<AkGameObj>();
+            if (akgo)
+            {
+                UnityEngine.Object.Destroy(akgo);
+            }*/
+
+            /*
+            rocketPrefab.AddComponent<AddToRocketTrackerComponent>();
+            BlastJumpComponent bjc = rocketPrefab.AddComponent<BlastJumpComponent>();
+            bjc.force = 2000f;
+            bjc.horizontalMultiplier = 1.5f;
+            bjc.aoe = 8f;
+            bjc.requireAirborne = true;
+            */
+
+            /*
+            DamageAPI.ModdedDamageTypeHolderComponent mdc = rocketPrefab.AddComponent<DamageAPI.ModdedDamageTypeHolderComponent>();
+            mdc.Add(DamageTypes.ScaleForceToMass);
+            mdc.Add(DamageTypes.SweetSpotModifier);
+            */
+
+            ultMissilePrefab = rocketPrefab;
+
+            /*
+            EntityStates.RocketSurvivorSkills.Primary.FireRocket.projectilePrefab = rocketPrefab;
+            */
         }
 
         private static void CreateBomb()

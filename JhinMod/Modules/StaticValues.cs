@@ -17,14 +17,14 @@ namespace JhinMod.Modules
 
         internal const float bombDamageCoefficient = 16f;
 
-        internal const float whisperDamageCoefficient = 6f;
+        internal const float whisperDamageCoefficient = 8f;
 
-        internal const float dancingGrenadeDamageCoefficient = 4f;
+        internal const float dancingGrenadeDamageCoefficient = 6f;
 
         internal const float dancingGrenadeBounceKillDamageCoefficient = 0.35f;
 
-        internal const float deadlyFlourishDamageCoefficient = 3f;
+        internal const float deadlyFlourishDamageCoefficient = 5f;
 
-        internal const float curtainCallDamageCoefficient = 10f;
+        internal const float curtainCallDamageCoefficient = 16f;
     }
 }

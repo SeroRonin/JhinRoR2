@@ -37,7 +37,7 @@ namespace JhinMod.SkillStates
             this.muzzleString = "Muzzle";
 
             this.animator = base.GetModelAnimator();
-            Util.PlaySound("JhinWCast", base.gameObject);
+            Util.PlaySound("Play_Seroronin_Jhin_WCast", base.gameObject);
 
             base.PlayAnimation("FullBody, Override", "DeadlyFlourish");
         }

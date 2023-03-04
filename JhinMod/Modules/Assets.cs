@@ -12,24 +12,27 @@ namespace JhinMod.Modules
 {
     internal static class Assets
     {
-        #region jhin's stuff
+        #region Henry's Stuff
         // particle effects
         internal static GameObject swordSwingEffect;
         internal static GameObject swordHitImpactEffect;
         internal static GameObject bombExplosionEffect;
 
+        // networked hit sounds
+        internal static NetworkSoundEventDef swordHitSoundEvent;
+        #endregion
+
+        #region Jhin's Stuff
+        // particle effects
         internal static GameObject deadlyFlourishEffect;
 
         // networked hit sounds
-        internal static NetworkSoundEventDef swordHitSoundEvent;
         #endregion
 
         // the assetbundle to load assets from
         internal static AssetBundle mainAssetBundle;
 
-        // CHANGE THIS
         private const string assetbundleName = "jhinassetbundle";
-        //change this to your project's name if/when you've renamed it
         private const string csProjName = "JhinMod";
         
         internal static void Initialize()

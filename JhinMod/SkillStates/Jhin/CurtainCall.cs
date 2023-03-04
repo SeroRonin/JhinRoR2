@@ -19,7 +19,7 @@ namespace JhinMod.SkillStates
         private float duration = 10f;
         private JhinStateController jhinStateController;
         private EntityStateMachine ultStateMachine;
-        private int shotsRemaining;
+
         public override void OnEnter()
         {
             base.OnEnter();
@@ -40,18 +40,17 @@ namespace JhinMod.SkillStates
                 }
             }
 
-            Util.PlaySound("JhinUltCast", base.gameObject);
-            Util.PlaySound("JhinUltMusic", base.gameObject);
+            Util.PlaySound("Play_Seroronin_Jhin_UltCast", base.gameObject);
+            Util.PlaySound("Play_Seroronin_Jhin_UltMusic", base.gameObject);
 
-            this.ultStateMachine.SetNextState( new JhinUltActiveState() );
+            this.ultStateMachine.SetNextState( new JhinWeaponUltActiveState() );
         }
 
         public override void OnExit()
         {
             jhinStateController.isUlting = false;
-            this.ultStateMachine.SetNextStateToMain();
 
-            Util.PlaySound("JhinStopUltMusic", base.gameObject);
+            Util.PlaySound("Stop_Seroronin_Jhin_UltMusic", base.gameObject);
 
             base.OnExit();
         }
@@ -59,9 +58,10 @@ namespace JhinMod.SkillStates
         public override void FixedUpdate()
         {
             base.FixedUpdate();
-            if (base.isAuthority && this.fixedAge > this.duration)
+            if (base.isAuthority && ( !jhinStateController.isUlting || this.fixedAge > this.duration ))
             {
-                this.outer.SetNextState(this.GetNextState());
+                this.ultStateMachine.SetNextStateToMain();
+                this.outer.SetNextStateToMain();
             }
         }
 

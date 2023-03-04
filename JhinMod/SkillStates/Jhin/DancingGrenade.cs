@@ -79,7 +79,7 @@ namespace JhinMod.SkillStates
 
             this.jhinStateController.StopReload();
             base.PlayAnimation("UpperBody, Override", "DancingGrenade");
-            Util.PlaySound("JhinQCast", base.gameObject);
+            Util.PlaySound("Play_Seroronin_Jhin_QCast", base.gameObject);
 
         }
 
@@ -152,7 +152,7 @@ namespace JhinMod.SkillStates
                 dancingGrenade.target = hurtBox;
                 OrbManager.instance.AddOrb(dancingGrenade);
             }
-            Util.PlaySound("JhinQFire", base.gameObject);
+            Util.PlaySound("Play_Seroronin_Jhin_QFire", base.gameObject);
         }
 
         public override InterruptPriority GetMinimumInterruptPriority()
