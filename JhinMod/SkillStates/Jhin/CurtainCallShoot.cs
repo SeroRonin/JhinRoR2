@@ -6,7 +6,10 @@ using static UnityEngine.UI.GridLayoutGroup;
 using UnityEngine.UIElements;
 using UnityEngine.Networking;
 using JhinMod.Modules;
-using JhinMod.Content.Controllers;
+using JhinMod.Content.Components;
+using UnityEngine.AddressableAssets;
+using R2API.Utils;
+using R2API;
 
 namespace JhinMod.SkillStates
 {
@@ -18,9 +21,8 @@ namespace JhinMod.SkillStates
         public static float force = 800f;
         public static float recoil = 3f;
         public static float range = 256f;
-        public static float projectileSpeed = 100f;
+        public static float projectileSpeed = 200f;
         public static GameObject tracerEffectPrefab = RoR2.LegacyResourcesAPI.Load<GameObject>("Prefabs/Effects/Tracers/TracerGoldGat");
-        public string explosionSoundEffect = "Play_Seroronin_Jhin_UltHit";
 
         private float duration;
         private float fireTime;
@@ -60,14 +62,10 @@ namespace JhinMod.SkillStates
                 this.hasFired = true;
 
                 var tempPrefab = Modules.Projectiles.ultMissilePrefab;
-                ProjectileImpactExplosion pie = tempPrefab.GetComponent<ProjectileImpactExplosion>();
-                GameObject explosionEffect = pie.impactEffect;
-                EffectComponent ec = explosionEffect.GetComponent<EffectComponent>();
-                ec.soundName= explosionSoundEffect;
 
                 base.characterBody.AddSpreadBloom(1.5f);
                 EffectManager.SimpleMuzzleFlash(EntityStates.Commando.CommandoWeapon.FirePistol2.muzzleEffectPrefab, base.gameObject, this.muzzleString, false);
-                //Util.PlaySound("Play_Seroronin_Jhin_UltFire", base.gameObject);
+                Util.PlaySound("Play_Seroronin_Jhin_UltFire", base.gameObject);
 
                 if (base.isAuthority)
                 {

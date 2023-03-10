@@ -2,7 +2,7 @@
 using RoR2;
 using RoR2.Skills;
 using EntityStates;
-using JhinMod.Content.Controllers;
+using JhinMod.Content.Components;
 using UnityEngine.Networking;
 using UnityEngine;
 using JhinMod.Modules;
@@ -98,8 +98,6 @@ namespace JhinMod.SkillStates.BaseStates
                 base.skillLocator.primary.UnsetSkillOverride(this, this.primaryOverrideSkillDef, GenericSkill.SkillOverridePriority.Replacement);
                 base.skillLocator.primary.UnsetSkillOverride(this, this.primaryOverrideCritSkillDef, GenericSkill.SkillOverridePriority.Replacement);
             }
-
-            jhinStateController.ResetUlt();
 
             base.OnExit();
         }

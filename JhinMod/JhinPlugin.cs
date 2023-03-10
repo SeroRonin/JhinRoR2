@@ -70,13 +70,17 @@ namespace JhinMod
             On.RoR2.GlobalEventManager.OnHitEnemy += GlobalEventManager_OnHitEnemy;
             On.RoR2.CharacterBody.RecalculateStats += CharacterBody_RecalculateStats;
         }
+
         private void GlobalEventManager_OnHitEnemy(On.RoR2.GlobalEventManager.orig_OnHitEnemy orig, GlobalEventManager self, DamageInfo damageInfo, GameObject victim)
         {
             orig(self, damageInfo, victim);
 
+            //Did we succesfully crit?
             if (damageInfo.crit && damageInfo.attacker && !damageInfo.rejected)
             {
                 CharacterBody attackerBody = damageInfo.attacker.GetComponent<CharacterBody>();
+
+                //If we are the right survivor, add the movespeed buff
                 if (attackerBody && attackerBody.baseNameToken == JhinPlugin.DEVELOPER_PREFIX + "_JHIN_BODY_NAME" )
                 {
                     if (NetworkServer.active)
@@ -93,6 +97,7 @@ namespace JhinMod
             
             if (self)
             {
+                //If we are the right survivor, recalculate our states
                 if (self.baseNameToken == JhinPlugin.DEVELOPER_PREFIX + "_JHIN_BODY_NAME")
                 {
                     var premodDam = self.damage;
@@ -127,6 +132,14 @@ namespace JhinMod
             }
             
         }
+
+        /// <summary>
+        /// Calculates additional base damage based on attack speed bonus
+        /// </summary>
+        /// <param name="damage"></param>
+        /// <param name="attakSpeedBonus"></param>
+        /// <param name="attackSpeedLocked"></param>
+        /// <returns></returns>
         public float CalculateDamageBonus( float damage, float attakSpeedBonus, float attackSpeedLocked )
         {
             var percentDam = 0.0025f ; //What percentage, as a decimal, of damage do we want to add per percent of bonus attackspeed?
@@ -135,6 +148,14 @@ namespace JhinMod
 
             return damageBonus;
         }
+
+        /// <summary>
+        /// Calculates additional movespeed granted by critical hit buff
+        /// </summary>
+        /// <param name="movespeed"></param>
+        /// <param name="attakSpeedBonus"></param>
+        /// <param name="attackSpeedLocked"></param>
+        /// <returns></returns>
         public float CalculateMovespeedBonus(float movespeed, float attakSpeedBonus, float attackSpeedLocked)
         {
             var percentMove = 0.004f; //What percentage, as a decimal, of damage do we want to add per percent of bonus attackspeed?

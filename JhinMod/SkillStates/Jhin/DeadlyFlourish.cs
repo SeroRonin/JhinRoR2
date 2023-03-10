@@ -1,5 +1,5 @@
 ﻿using EntityStates;
-using JhinMod.Content.Controllers;
+using JhinMod.Content.Components;
 using JhinMod.Modules;
 using RoR2;
 using UnityEngine;
@@ -22,7 +22,6 @@ namespace JhinMod.SkillStates
         private float fireTime;
         private bool hasFired;
         private string muzzleString;
-        private Animator animator;
         private JhinStateController jhinStateController;
         public override void OnEnter()
         {
@@ -36,7 +35,15 @@ namespace JhinMod.SkillStates
             base.StartAimMode(duration, true);
             this.muzzleString = "Muzzle";
 
-            this.animator = base.GetModelAnimator();
+            if (base.characterDirection)
+            {
+                base.characterDirection.moveVector = base.characterDirection.forward;
+            }
+            if (base.rigidbodyMotor)
+            {
+                base.rigidbodyMotor.moveVector = Vector3.zero;
+            }
+
             Util.PlaySound("Play_Seroronin_Jhin_WCast", base.gameObject);
 
             base.PlayAnimation("FullBody, Override", "DeadlyFlourish");

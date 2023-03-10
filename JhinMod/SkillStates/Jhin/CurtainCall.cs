@@ -4,7 +4,7 @@ using RoR2.Audio;
 using RoR2.Skills;
 using UnityEngine;
 using EntityStates.Railgunner.Scope;
-using JhinMod.Content.Controllers;
+using JhinMod.Content.Components;
 using JhinMod.Modules;
 using EntityStates;
 using EntityStates.Mage;
@@ -62,6 +62,7 @@ namespace JhinMod.SkillStates
             {
                 this.ultStateMachine.SetNextStateToMain();
                 this.outer.SetNextStateToMain();
+                jhinStateController.ResetUlt();
             }
         }
 

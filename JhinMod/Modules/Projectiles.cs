@@ -10,7 +10,6 @@ namespace JhinMod.Modules
     internal static class Projectiles
     {
         internal static GameObject bombPrefab;
-        internal static GameObject missilePrefab;
         internal static GameObject ultMissilePrefab;
 
         internal static void RegisterProjectiles()
@@ -31,9 +30,8 @@ namespace JhinMod.Modules
         //CREDIT BASE: ROCKET SURVIVOR
         private static void CreateRocket()
         {
-            //GameObject rocketPrefab = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Toolbot/ToolbotGrenadeLauncherProjectile.prefab").WaitForCompletion().InstantiateClone("RocketSurvivorRocketProjectile", true);//"RoR2/Base/Drones/PaladinRocket.prefab"
             //REPLACE, using default assets
-            GameObject rocketPrefab = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Toolbot/ToolbotGrenadeLauncherProjectile.prefab").WaitForCompletion();//"RoR2/Base/Drones/PaladinRocket.prefab"
+            GameObject rocketPrefab = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Toolbot/ToolbotGrenadeLauncherProjectile.prefab").WaitForCompletion().InstantiateClone("JhinUltProjectile", true);//"RoR2/Base/Drones/PaladinRocket.prefab"
 
             ProjectileSimple ps = rocketPrefab.GetComponent<ProjectileSimple>();
             ps.desiredForwardSpeed = 150f;
@@ -42,9 +40,8 @@ namespace JhinMod.Modules
             ProjectileImpactExplosion pie = rocketPrefab.GetComponent<ProjectileImpactExplosion>();
             InitializeImpactExplosion(pie);
 
-            //GameObject explosionEffect = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Common/VFX/OmniExplosionVFXQuick.prefab").WaitForCompletion().InstantiateClone("RocketSurvivorRocketExplosionVFX", false);
             //REPLACE, using default assets
-            GameObject explosionEffect = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Common/VFX/OmniExplosionVFXQuick.prefab").WaitForCompletion();
+            GameObject explosionEffect = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Common/VFX/OmniExplosionVFXQuick.prefab").WaitForCompletion().InstantiateClone("JhinUltExplosionVFX", false);
             EffectComponent ec = explosionEffect.GetComponent<EffectComponent>();
             ec.soundName = "Play_Seroronin_Jhin_UltHit"; //INVESTIGATE, make this sound change based on last shot
             Modules.Content.AddEffectDef(new EffectDef(explosionEffect));
@@ -62,7 +59,7 @@ namespace JhinMod.Modules
             pie.falloffModel = BlastAttack.FalloffModel.Linear;
 
             //Remove built-in sounds
-            /*AkEvent[] akEvents = rocketPrefab.GetComponentsInChildren<AkEvent>();
+            AkEvent[] akEvents = rocketPrefab.GetComponentsInChildren<AkEvent>();
             for (int i = 0; i < akEvents.Length; i++)
             {
                 UnityEngine.Object.Destroy(akEvents[i]);
@@ -71,7 +68,7 @@ namespace JhinMod.Modules
             if (akgo)
             {
                 UnityEngine.Object.Destroy(akgo);
-            }*/
+            }
 
             /*
             rocketPrefab.AddComponent<AddToRocketTrackerComponent>();
@@ -138,7 +135,7 @@ namespace JhinMod.Modules
             projectileImpactExplosion.GetComponent<ProjectileDamage>().damageType = DamageType.Generic;
         }
 
-        private static GameObject CreateGhostPrefab(string ghostName)
+        public static GameObject CreateGhostPrefab(string ghostName)
         {
             GameObject ghostPrefab = Modules.Assets.mainAssetBundle.LoadAsset<GameObject>(ghostName);
             if (!ghostPrefab.GetComponent<NetworkIdentity>()) ghostPrefab.AddComponent<NetworkIdentity>();

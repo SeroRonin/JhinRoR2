@@ -11,7 +11,7 @@ using JhinMod.Modules;
 using R2API.Utils;
 using UnityEngine.UIElements;
 using R2API.Networking.Interfaces;
-using JhinMod.Content.Controllers;
+using JhinMod.Content.Components;
 
 namespace JhinMod.SkillStates
 {

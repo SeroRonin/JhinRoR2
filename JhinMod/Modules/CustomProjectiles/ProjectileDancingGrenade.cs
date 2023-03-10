@@ -4,20 +4,35 @@ using RoR2.Projectile;
 using RoR2.Orbs;
 using System.Collections.Generic;
 using System.Linq;
+using System;
 using UnityEngine;
 using UnityEngine.Networking;
 using R2API.Utils;
+using UnityEngine.AddressableAssets;
+using JhinMod.Content.Components;
 
 namespace JhinMod.Modules.CustomProjectiles
 {
     public class ProjectileDancingGrenade : LightningOrb
     {
         public float damageCoefficientOnBounceKill;
+        public GameObject ghostPrefab;
+        public float initialDistance;
+        public BounceVisualizer bounceVis;
+        public float spawnTime;
+
         public override void Begin()
         {
-            string path = "Prefabs/Effects/OrbEffects/HuntressGlaiveOrbEffect";
             base.duration = base.distanceToTarget / this.speed;
             base.canBounceOnSameTarget = false;
+
+            ghostPrefab = Assets.dancingGrenadeEffect;
+
+            bounceVis = ghostPrefab.GetComponent<BounceVisualizer>();
+            bounceVis.projectileSpeed = this.speed;
+            bounceVis.initialDistance = base.distanceToTarget;
+            bounceVis.isActive = (this.bouncesRemaining < 3);
+
             EffectData effectData = new EffectData
             {
                 origin = this.origin,
@@ -25,7 +40,7 @@ namespace JhinMod.Modules.CustomProjectiles
             };
 
             effectData.SetHurtBoxReference(this.target);
-            EffectManager.SpawnEffect(LegacyResourcesAPI.Load<GameObject>(path), effectData, true);
+            EffectManager.SpawnEffect(ghostPrefab, effectData, true);
         }
 
         public override void OnArrival()
@@ -79,7 +94,10 @@ namespace JhinMod.Modules.CustomProjectiles
                             lightningOrb.inflictor = this.inflictor;
                             lightningOrb.teamIndex = this.teamIndex;
                             lightningOrb.damageValue = this.damageValue;
-                            
+
+                            var speedModif = 3f;
+                            var speedSet = Math.Min(lightningOrb.distanceToTarget * speedModif, JhinMod.SkillStates.DancingGrenade.projectileTravelSpeed);
+
                             lightningOrb.bouncesRemaining = this.bouncesRemaining - 1;
                             lightningOrb.isCrit = this.isCrit;
                             lightningOrb.bouncedObjects = this.bouncedObjects;
@@ -88,10 +106,12 @@ namespace JhinMod.Modules.CustomProjectiles
                             lightningOrb.procCoefficient = this.procCoefficient;
                             lightningOrb.damageColorIndex = this.damageColorIndex;
                             lightningOrb.damageCoefficientOnBounceKill = this.damageCoefficientOnBounceKill;
-                            lightningOrb.speed = this.speed;
+                            lightningOrb.speed = speedSet;
                             lightningOrb.range = this.range;
                             lightningOrb.damageType = this.damageType;
-                            lightningOrb.duration = base.distanceToTarget / this.speed;
+                            lightningOrb.duration = speedSet;
+                            lightningOrb.initialDistance = distanceToTarget;
+
 
                             //If we killed, add a percentage of current damage on top
                             if (!this.failedToKill)

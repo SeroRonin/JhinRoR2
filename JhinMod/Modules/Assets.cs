@@ -7,6 +7,9 @@ using System.IO;
 using System.Collections.Generic;
 using RoR2.UI;
 using System;
+using IL.RoR2.Orbs;
+using RoR2.Orbs;
+using JhinMod.Content.Components;
 
 namespace JhinMod.Modules
 {
@@ -25,6 +28,7 @@ namespace JhinMod.Modules
         #region Jhin's Stuff
         // particle effects
         internal static GameObject deadlyFlourishEffect;
+        internal static GameObject dancingGrenadeEffect;
 
         // networked hit sounds
         #endregion
@@ -109,9 +113,36 @@ namespace JhinMod.Modules
             }
 
             deadlyFlourishEffect = Assets.LoadEffect("DeadlyFlourishBeam", false);
+            dancingGrenadeEffect = Assets.CreateDancingGrenadeEffect("JhinGrenadeGhost");
 
             swordSwingEffect = Assets.LoadEffect("JhinSwordSwingEffect", true);
             swordHitImpactEffect = Assets.LoadEffect("ImpactJhinSlash");
+        }
+
+        private static GameObject CreateDancingGrenadeEffect(string resourceName)
+        {
+            GameObject newEffect = mainAssetBundle.LoadAsset<GameObject>(resourceName);
+
+            if (!newEffect)
+            {
+                Log.Error("Failed to load effect: " + resourceName + " because it does not exist in the AssetBundle");
+                return null;
+            }
+
+            string path = "Prefabs/Effects/OrbEffects/HuntressGlaiveOrbEffect";
+            GameObject huntressEffect = LegacyResourcesAPI.Load<GameObject>(path).InstantiateClone("DancingGrenadeEffect");
+
+            newEffect.AddComponent<VFXAttributes>().vfxPriority = VFXAttributes.VFXPriority.Always;
+            newEffect.AddComponent<BounceVisualizer>();
+            newEffect.AddComponent<EffectComponent>(huntressEffect.GetComponent<EffectComponent>());
+            newEffect.AddComponent<RoR2.Orbs.OrbEffect>(huntressEffect.GetComponent<RoR2.Orbs.OrbEffect>());
+
+            var rotateComponent = newEffect.transform.GetChild(0).gameObject.AddComponent<RotateObject>();
+            rotateComponent.rotationSpeed = new Vector3(360, 100, 20);
+
+            AddNewEffectDef(newEffect, "");
+
+            return newEffect;
         }
 
         private static GameObject CreateTracer(string originalTracerName, string newTracerName)

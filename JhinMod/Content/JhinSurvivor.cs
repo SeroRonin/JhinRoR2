@@ -1,6 +1,6 @@
 ﻿using BepInEx.Configuration;
 using IL.RoR2.Orbs;
-using JhinMod.Content.Controllers;
+using JhinMod.Content.Components;
 using JhinMod.Modules.Characters;
 using RoR2;
 using RoR2.Skills;
@@ -26,7 +26,7 @@ namespace JhinMod.Modules.Survivors
 
         public override BodyInfo bodyInfo { get; set; } = new BodyInfo
         {
-            bodyName = "JhinTutorialBody",
+            bodyName = "JhinBody",
             bodyNameToken = JHIN_PREFIX + "NAME",
             subtitleNameToken = JHIN_PREFIX + "SUBTITLE",
 

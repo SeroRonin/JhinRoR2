@@ -3,7 +3,7 @@ using JetBrains.Annotations;
 using UnityEngine;
 using RoR2.Skills;
 using RoR2;
-using JhinMod.Content.Controllers;
+using JhinMod.Content.Components;
 
 namespace JhinMod.Modules.SkillDefs
 {

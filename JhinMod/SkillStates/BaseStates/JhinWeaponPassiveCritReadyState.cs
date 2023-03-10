@@ -2,7 +2,7 @@
 using RoR2;
 using RoR2.Skills;
 using EntityStates;
-using JhinMod.Content.Controllers;
+using JhinMod.Content.Components;
 using UnityEngine.Networking;
 using UnityEngine;
 using JhinMod.Modules;

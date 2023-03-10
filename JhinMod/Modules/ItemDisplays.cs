@@ -17,6 +17,7 @@ namespace JhinMod.Modules
             PopulateCustomLightningArm();
 
             //if you have any custom item displays to add here I would be very impressed
+
         }
 
         private static void PopulateFromBody(string bodyName)
@@ -57,9 +58,9 @@ namespace JhinMod.Modules
 
             LimbMatcher limbMatcher = display.GetComponent<LimbMatcher>();
 
-            limbMatcher.limbPairs[0].targetChildLimb = "LightningArm1";
-            limbMatcher.limbPairs[1].targetChildLimb = "LightningArm2";
-            limbMatcher.limbPairs[2].targetChildLimb = "LightningArmEnd";
+            limbMatcher.limbPairs[0].targetChildLimb = "ShoulderRLightning";
+            limbMatcher.limbPairs[1].targetChildLimb = "ElbowR";
+            limbMatcher.limbPairs[2].targetChildLimb = "HandR";
 
             itemDisplayPrefabs["displaylightningarmcustom"] = display;
             #endregion

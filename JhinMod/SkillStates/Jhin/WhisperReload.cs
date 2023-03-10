@@ -1,6 +1,6 @@
 ﻿using EntityStates;
 using RoR2;
-using JhinMod.Content.Controllers;
+using JhinMod.Content.Components;
 using UnityEngine;
 using R2API.Utils;
 
@@ -30,7 +30,6 @@ namespace JhinMod.SkillStates
             base.OnExit();
         }
 
-
         public override void FixedUpdate()
         {
             base.FixedUpdate();
@@ -43,9 +42,6 @@ namespace JhinMod.SkillStates
             {
                 return;
             }
-
-            //Util.PlayAttackSpeedSound(Reload.exitSoundString, base.gameObject, Reload.exitSoundPitch);
-            
         }
 
         private void PerformReload()

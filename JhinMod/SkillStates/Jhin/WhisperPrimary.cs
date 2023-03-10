@@ -8,7 +8,7 @@ using UnityEngine;
 using UnityEngine.Networking;
 using static RoR2.BulletAttack;
 using R2API.Utils;
-using JhinMod.Content.Controllers;
+using JhinMod.Content.Components;
 
 namespace JhinMod.SkillStates
 {
@@ -48,7 +48,7 @@ namespace JhinMod.SkillStates
             this.fireTime = WhisperPrimary.baseFireDelayPercent * this.duration;
             this.PlayFireAnimation();
 
-            Util.PlaySound("Play_Seroronin_Jhin_AttackCast", base.gameObject);
+            Util.PlaySound(jhinStateController.ammoCount == 1 ? "Play_Seroronin_Jhin_PassiveCritCast" : "Play_Seroronin_Jhin_AttackCast", base.gameObject);
             Util.PlaySound("Stop_Seroronin_Jhin_PassiveCritSpin", base.gameObject);
             Util.PlaySound("Stop_Seroronin_Jhin_PassiveCritMusic", base.gameObject);
 
@@ -73,7 +73,6 @@ namespace JhinMod.SkillStates
             {
                 base.PlayAnimation("UpperBody, Override", $"Attack{shotIndex}", "ShootGun.playbackRate", duration);
             }
-            
         }
 
         public override void OnExit()
@@ -114,6 +113,7 @@ namespace JhinMod.SkillStates
                 jhinStateController.TakeAmmo(1);
             }
         }
+
         protected BulletAttack GenerateBulletAttack(Ray aimRay)
         {
             return new BulletAttack
@@ -179,7 +179,6 @@ namespace JhinMod.SkillStates
                 
             }*/
             return result;
-            
         }
 
         public override void FixedUpdate()
@@ -196,7 +195,6 @@ namespace JhinMod.SkillStates
                 {
                     this.outer.SetNextState(new WhisperPrimary());
                 }
-
             }
 
             if (base.fixedAge >= this.duration && base.isAuthority)
