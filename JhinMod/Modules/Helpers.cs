@@ -10,6 +10,10 @@ namespace JhinMod.Modules
         internal const string agilePrefix = "<style=cIsUtility>Agile.</style> ";
         internal const string stunningPrefix = "<style=cIsUtility>Stunning.</style> ";
         internal const string executingPrefix = "<style=cIsUtility>Executing.</style> ";
+        internal static string KeywordText(string keyword, string sub)
+        {
+            return $"<style=cKeywordName>{keyword}</style><style=cSub>{sub}</style>";
+        }
 
         internal static string ScepterDescription(string desc)
         {

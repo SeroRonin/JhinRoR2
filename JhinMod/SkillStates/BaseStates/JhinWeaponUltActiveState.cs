@@ -28,9 +28,9 @@ namespace JhinMod.SkillStates.BaseStates
             string prefix = JhinPlugin.DEVELOPER_PREFIX;
             primaryOverrideSkillDef = Modules.Skills.CreateSkillDef(new SkillDefInfo
             {
-                skillName = prefix + "_JHIN_BODY_SPECIAL_BOMB_NAME",
-                skillNameToken = prefix + "_JHIN_BODY_SPECIAL_BOMB_NAME",
-                skillDescriptionToken = prefix + "_JHIN_BODY_SPECIAL_BOMB_DESCRIPTION",
+                skillName = prefix + "_JHIN_BODY_SPECIAL_ULT_NAME",
+                skillNameToken = prefix + "_JHIN_BODY_SPECIAL_ULT_NAME",
+                skillDescriptionToken = prefix + "_JHIN_BODY_SPECIAL_ULT_SHOT_DESCRIPTION",
                 skillIcon = Modules.Assets.mainAssetBundle.LoadAsset<Sprite>("texSpecialShotIcon"),
                 activationState = new EntityStates.SerializableEntityStateType(typeof(CurtainCallShoot)),
                 activationStateMachineName = "Weapon",
@@ -51,9 +51,9 @@ namespace JhinMod.SkillStates.BaseStates
             });
             primaryOverrideCritSkillDef = Modules.Skills.CreateSkillDef(new SkillDefInfo
             {
-                skillName = prefix + "_JHIN_BODY_SPECIAL_BOMB_NAME",
-                skillNameToken = prefix + "_JHIN_BODY_SPECIAL_BOMB_NAME",
-                skillDescriptionToken = prefix + "_JHIN_BODY_SPECIAL_BOMB_DESCRIPTION",
+                skillName = prefix + "_JHIN_BODY_SPECIAL_ULT_NAME",
+                skillNameToken = prefix + "_JHIN_BODY_SPECIAL_ULT_NAME",
+                skillDescriptionToken = prefix + "_JHIN_BODY_SPECIAL_ULT_SHOT_CRIT_DESCRIPTION",
                 skillIcon = Modules.Assets.mainAssetBundle.LoadAsset<Sprite>("texSpecialShotCritIcon"),
                 activationState = new EntityStates.SerializableEntityStateType(typeof(CurtainCallShootCrit)),
                 activationStateMachineName = "Weapon",

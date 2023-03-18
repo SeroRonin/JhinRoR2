@@ -9,6 +9,8 @@ using UnityEngine.Networking;
 using static RoR2.BulletAttack;
 using R2API.Utils;
 using JhinMod.Content.Components;
+using static RoR2.DotController;
+using JhinMod.Modules;
 
 namespace JhinMod.SkillStates
 {
@@ -105,7 +107,7 @@ namespace JhinMod.SkillStates
                     Ray aimRay = base.GetAimRay();
 
                     BulletAttack bulletAttack = this.GenerateBulletAttack(aimRay);
-                    this.ModifyBullet(bulletAttack);
+                    //this.ModifyBullet(bulletAttack);
                     bulletAttack.Fire();
                     this.OnFireBulletAuthority(aimRay);
                 }
@@ -143,7 +145,8 @@ namespace JhinMod.SkillStates
                 spreadPitchScale = 0f,
                 spreadYawScale = 0f,
                 tracerEffectPrefab = WhisperPrimary.tracerEffectPrefab,
-                hitCallback = BulletHitCallback
+                hitCallback = BulletHitCallback,
+                modifyOutgoingDamageCallback = ModifyDamage
             };
         }
 
@@ -159,26 +162,52 @@ namespace JhinMod.SkillStates
             }
             EffectManager.SimpleMuzzleFlash(EntityStates.Commando.CommandoWeapon.FirePistol2.muzzleEffectPrefab, base.gameObject, this.muzzleString, false);
         }
+
         protected virtual void OnFireBulletAuthority(Ray aimRay)
         {
         }
-
+        
+        /*
         protected virtual void ModifyBullet(BulletAttack bulletAttack)
         {
             //Make 4th shot deal % missing health damage
         }
+        */
 
         private bool BulletHitCallback(BulletAttack bulletAttack, ref BulletHit hitInfo)
         {
             
             var result = BulletAttack.defaultHitCallback(bulletAttack, ref hitInfo);
             HealthComponent healthComponent = hitInfo.hitHurtBox ? hitInfo.hitHurtBox.healthComponent : null;
+            
             /*
             if (jhinStateController.ammoCount == 1 && healthComponent && hitInfo.hitHurtBox.teamIndex != base.teamComponent.teamIndex)
             {
                 
-            }*/
+            }
+            */
+
             return result;
+        }
+        
+        private void ModifyDamage(BulletAttack _bulletAttack, ref BulletAttack.BulletHit hitInfo, DamageInfo damageInfo)
+        {
+            var shotIndex = this.jhinStateController.ammoMax - (this.jhinStateController.ammoCount - 1);
+            var targetHealthComponent = hitInfo.hitHurtBox ? hitInfo.hitHurtBox.healthComponent : null;
+
+            if (targetHealthComponent && hitInfo.hitHurtBox.teamIndex != base.teamComponent.teamIndex)
+            {
+                if (shotIndex == 4)
+                {
+                    var executeDamage = (targetHealthComponent.fullHealth - targetHealthComponent.health) * StaticValues.executeMissingHealthDamagePercent;
+                    var maxDamage = (damageInfo.damage * StaticValues.executeDamagePercentCap);
+
+                    damageInfo.damage += Math.Min(executeDamage, maxDamage);
+                    ChatMessage.Send($"Execute: {executeDamage}");
+                    ChatMessage.Send($"Max Execute: {maxDamage}");
+                    ChatMessage.Send($"Total Execute: {Math.Min(executeDamage, maxDamage)}");
+                }
+            }
         }
 
         public override void FixedUpdate()

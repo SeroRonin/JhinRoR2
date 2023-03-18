@@ -34,7 +34,6 @@ namespace JhinMod.Content.Components
             timeActive += Time.deltaTime;
 
             var distanceTravelled = initialDistance - (projectileSpeed * timeActive);
-            ChatMessage.Send($"initial {initialDistance}, speed {projectileSpeed}, travelled {distanceTravelled}");
             var y = Helpers.GetParabolaHeight(initialDistance, distanceTravelled);
 
             gameObject.transform.GetChild(0).localPosition = new Vector3(0, y, 0);

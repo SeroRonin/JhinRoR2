@@ -2,6 +2,7 @@ Jhinmod temp readme
 
 To DO:
 - number tweaking for balance
+- Ult execution damage mechanics
 - Ult rocket jumping?
 - Emote and Vo systems (via Lemonlust survivors)
 - Better VFX

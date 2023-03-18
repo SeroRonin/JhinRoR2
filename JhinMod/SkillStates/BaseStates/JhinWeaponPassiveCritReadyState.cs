@@ -26,12 +26,35 @@ namespace JhinMod.SkillStates.BaseStates
             this.animatorComponent = base.GetModelAnimator();
 
             string prefix = JhinPlugin.DEVELOPER_PREFIX + "_JHIN_BODY_";
+            /*
             primaryOverrideSkillDef = Modules.Skills.CreateSkillDef<JhinAmmoSkillDef>(new SkillDefInfo(prefix + "PRIMARY_WHISPER_NAME",
                                                                                       prefix + "PRIMARY_WHISPER_DESCRIPTION",
                                                                                       Modules.Assets.mainAssetBundle.LoadAsset<Sprite>("texPrimaryCritIcon"),
                                                                                       new EntityStates.SerializableEntityStateType(typeof(SkillStates.WhisperPrimary)),
                                                                                       "Weapon",
                                                                                       true));
+            */
+            primaryOverrideSkillDef = Modules.Skills.CreateSkillDef<JhinAmmoSkillDef>(new SkillDefInfo
+            {
+                skillName = prefix + "PRIMARY_WHISPER_NAME",
+                skillNameToken = prefix + "PRIMARY_WHISPER_NAME",
+                skillDescriptionToken = prefix + "PRIMARY_WHISPER_CRIT_DESCRIPTION",
+                skillIcon = Modules.Assets.mainAssetBundle.LoadAsset<Sprite>("texPrimaryCritIcon"),
+
+                activationState = new EntityStates.SerializableEntityStateType(typeof(SkillStates.WhisperPrimary)),
+                activationStateMachineName = "Weapon",
+
+                interruptPriority = EntityStates.InterruptPriority.Any,
+                isCombatSkill = true,
+                baseRechargeInterval = 0,
+
+                requiredStock = 0,
+                stockToConsume = 0,
+
+                cancelSprintingOnActivation = false,
+
+                keywordTokens = new string[] { "KEYWORD_AGILE", "KEYWORD_EXECUTING" }
+            });
 
             Util.PlaySound("Play_Seroronin_Jhin_PassiveCritSpin", base.gameObject);
             Util.PlaySound("Play_Seroronin_Jhin_PassiveCritMusic", base.gameObject);

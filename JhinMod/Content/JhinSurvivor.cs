@@ -109,13 +109,36 @@ namespace JhinMod.Modules.Survivors
 
             #region Primary
             //Creates a skilldef for a typical primary 
+            /*
             SkillDef primarySkillDef = Modules.Skills.CreateSkillDef<JhinAmmoSkillDef>(new SkillDefInfo(JHIN_PREFIX + "PRIMARY_WHISPER_NAME",
                                                                                       JHIN_PREFIX + "PRIMARY_WHISPER_DESCRIPTION",
                                                                                       Modules.Assets.mainAssetBundle.LoadAsset<Sprite>("texPrimaryIcon"),
                                                                                       new EntityStates.SerializableEntityStateType(typeof(SkillStates.WhisperPrimary)),
                                                                                       "Weapon",
                                                                                       true));
+            */
 
+            SkillDef primarySkillDef = Modules.Skills.CreateSkillDef<JhinAmmoSkillDef>(new SkillDefInfo
+            {
+                skillName = JHIN_PREFIX + "PRIMARY_WHISPER_NAME",
+                skillNameToken = JHIN_PREFIX + "PRIMARY_WHISPER_NAME",
+                skillDescriptionToken = JHIN_PREFIX + "PRIMARY_WHISPER_DESCRIPTION",
+                skillIcon = Modules.Assets.mainAssetBundle.LoadAsset<Sprite>("texPrimaryIcon"),
+
+                activationState = new EntityStates.SerializableEntityStateType(typeof(SkillStates.WhisperPrimary)),
+                activationStateMachineName = "Weapon",
+                
+                interruptPriority = EntityStates.InterruptPriority.Any,
+                isCombatSkill = true,
+                baseRechargeInterval = 0,
+
+                requiredStock = 0,
+                stockToConsume = 0,
+
+                cancelSprintingOnActivation = false,
+                
+                keywordTokens = new string[] { "KEYWORD_AGILE", "KEYWORD_EXECUTING", "KEYWORD_RELOAD" }
+            });
 
             Modules.Skills.AddPrimarySkills(bodyPrefab, primarySkillDef);
             #endregion
@@ -123,14 +146,14 @@ namespace JhinMod.Modules.Survivors
             #region Secondary
             SkillDef shootSkillDef = Modules.Skills.CreateSkillDef<JhinTrackingSkillDef>(new SkillDefInfo
             {
-                skillName = JHIN_PREFIX + "SECONDARY_GUN_NAME",
-                skillNameToken = JHIN_PREFIX + "SECONDARY_GUN_NAME",
-                skillDescriptionToken = JHIN_PREFIX + "SECONDARY_GUN_DESCRIPTION",
+                skillName = JHIN_PREFIX + "SECONDARY_GRENADE_NAME",
+                skillNameToken = JHIN_PREFIX + "SECONDARY_GRENADE_NAME",
+                skillDescriptionToken = JHIN_PREFIX + "SECONDARY_GRENADE_DESCRIPTION",
                 skillIcon = Modules.Assets.mainAssetBundle.LoadAsset<Sprite>("texSecondaryIcon"),
                 activationState = new EntityStates.SerializableEntityStateType(typeof(SkillStates.DancingGrenade)),
                 activationStateMachineName = "Slide",
                 baseMaxStock = 1,
-                baseRechargeInterval = 1f,
+                baseRechargeInterval = 7f,
                 beginSkillCooldownOnSkillEnd = false,
                 canceledFromSprinting = false,
                 forceSprintDuringState = false,
@@ -152,9 +175,9 @@ namespace JhinMod.Modules.Survivors
             #region Utility
             SkillDef rollSkillDef = Modules.Skills.CreateSkillDef(new SkillDefInfo
             {
-                skillName = JHIN_PREFIX + "UTILITY_ROLL_NAME",
-                skillNameToken = JHIN_PREFIX + "UTILITY_ROLL_NAME",
-                skillDescriptionToken = JHIN_PREFIX + "UTILITY_ROLL_DESCRIPTION",
+                skillName = JHIN_PREFIX + "UTILITY_FLOURISH_NAME",
+                skillNameToken = JHIN_PREFIX + "UTILITY_FLOURISH_NAME",
+                skillDescriptionToken = JHIN_PREFIX + "UTILITY_FLOURISH_DESCRIPTION",
                 skillIcon = Modules.Assets.mainAssetBundle.LoadAsset<Sprite>("texUtilityIcon"),
                 activationState = new EntityStates.SerializableEntityStateType(typeof(SkillStates.DeadlyFlourish)),
                 activationStateMachineName = "Body",
@@ -181,9 +204,9 @@ namespace JhinMod.Modules.Survivors
             #region Special
             SkillDef bombSkillDef = Modules.Skills.CreateSkillDef(new SkillDefInfo
             {
-                skillName = JHIN_PREFIX + "SPECIAL_BOMB_NAME",
-                skillNameToken = JHIN_PREFIX + "SPECIAL_BOMB_NAME",
-                skillDescriptionToken = JHIN_PREFIX + "SPECIAL_BOMB_DESCRIPTION",
+                skillName = JHIN_PREFIX + "SPECIAL_ULT_NAME",
+                skillNameToken = JHIN_PREFIX + "SPECIAL_ULT_NAME",
+                skillDescriptionToken = JHIN_PREFIX + "SPECIAL_ULT_DESCRIPTION",
                 skillIcon = Modules.Assets.mainAssetBundle.LoadAsset<Sprite>("texSpecialIcon"),
                 activationState = new EntityStates.SerializableEntityStateType(typeof(SkillStates.CurtainCall)),
                 activationStateMachineName = "Slide",
@@ -200,7 +223,8 @@ namespace JhinMod.Modules.Survivors
                 cancelSprintingOnActivation = true,
                 rechargeStock = 1,
                 requiredStock = 1,
-                stockToConsume = 1
+                stockToConsume = 1,
+                keywordTokens = new string[] { "KEYWORD_EXECUTING" }
             });
 
             Modules.Skills.AddSpecialSkills(bodyPrefab, bombSkillDef);

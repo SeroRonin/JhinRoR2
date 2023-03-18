@@ -26,5 +26,15 @@ namespace JhinMod.Modules
         internal const float deadlyFlourishDamageCoefficient = 5f;
 
         internal const float curtainCallDamageCoefficient = 16f;
+
+        /// <summary>
+        /// The percent of missing health Execute skills use as bonus damage
+        /// </summary>
+        internal const float executeMissingHealthDamagePercent = 0.3f;
+
+        /// <summary>
+        /// The maximum percentage of our damage that Execute skills can add as additional damage.
+        /// </summary>
+        internal const float executeDamagePercentCap = 1f;
     }
 }
