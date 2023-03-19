@@ -11,6 +11,7 @@ using EntityStates.Mage;
 using EntityStates.Mage.Weapon;
 using EntityStates.LemurianMonster;
 using JhinMod.SkillStates.BaseStates;
+using R2API.Utils;
 
 namespace JhinMod.SkillStates
 {
@@ -40,8 +41,11 @@ namespace JhinMod.SkillStates
                 }
             }
 
-            Util.PlaySound("Play_Seroronin_Jhin_UltCast", base.gameObject);
-            Util.PlaySound("Play_Seroronin_Jhin_UltMusic", base.gameObject);
+            Helpers.PlaySoundDynamic("UltCast",base.gameObject);
+            Helpers.PlaySoundDynamic("UltMusic", base.gameObject);
+
+            //Util.PlaySound("Play_Seroronin_Jhin_UltCast", base.gameObject);
+            //Util.PlaySound("Play_Seroronin_Jhin_UltMusic", base.gameObject);
 
             this.ultStateMachine.SetNextState( new JhinWeaponUltActiveState() );
         }
@@ -50,7 +54,8 @@ namespace JhinMod.SkillStates
         {
             jhinStateController.isUlting = false;
 
-            Util.PlaySound("Stop_Seroronin_Jhin_UltMusic", base.gameObject);
+            Helpers.StopSoundDynamic("UltMusic", base.gameObject);
+            //Util.PlaySound("Stop_Seroronin_Jhin_UltMusic", base.gameObject);
 
             base.OnExit();
         }

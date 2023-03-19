@@ -41,6 +41,11 @@ namespace JhinMod.Modules.CustomProjectiles
 
             effectData.SetHurtBoxReference(this.target);
             EffectManager.SpawnEffect(ghostPrefab, effectData, true);
+
+            if (this.bouncesRemaining < 3)
+                Helpers.PlaySoundDynamic("QTravelBounce", this.attacker, this.target.gameObject);
+            else
+                Helpers.PlaySoundDynamic("QTravel", this.attacker, this.target.gameObject);
         }
 
         public override void OnArrival()
@@ -69,8 +74,12 @@ namespace JhinMod.Modules.CustomProjectiles
                 //Did we kill the target we hit?
                 this.failedToKill |= (!healthComponent || healthComponent.alive);
 
-                Util.PlaySound("Play_Seroronin_Jhin_QHitLast", this.target.gameObject);
-                
+                if (this.bouncesRemaining == 0)
+                {
+                    Helpers.PlaySoundDynamic("QHitLast", this.attacker, this.target.gameObject);
+                    //Util.PlaySound("Play_Seroronin_Jhin_QHitLast", this.target.gameObject);
+                }
+
                 if (this.bouncesRemaining > 0)
                 {
                     for (int i = 0; i < this.targetsToFindPerBounce; i++)
@@ -119,11 +128,14 @@ namespace JhinMod.Modules.CustomProjectiles
                                 lightningOrb.damageValue += this.damageValue * this.damageCoefficientOnBounceKill;
                             }
                             OrbManager.instance.AddOrb(lightningOrb);
-                            Util.PlaySound("Play_Seroronin_Jhin_QBounce", this.target.gameObject );
+
+                            Helpers.PlaySoundDynamic("QHit", this.attacker, this.target.gameObject);
+                            //Util.PlaySound("Play_Seroronin_Jhin_QHit", this.target.gameObject );
                         }
                         else
                         {
-                            Util.PlaySound("Play_Seroronin_Jhin_QHitLast", this.target.gameObject);
+                            Helpers.PlaySoundDynamic("QHitLast", this.attacker, this.target.gameObject);
+                            //Util.PlaySound("Play_Seroronin_Jhin_QHitLast", this.target.gameObject);
                         }
                     }
                     return;

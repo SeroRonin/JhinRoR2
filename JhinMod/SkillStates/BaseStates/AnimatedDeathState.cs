@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using UnityEngine;
+using JhinMod.Modules;
 
 namespace JhinMod.SkillStates.BaseStates
 {
@@ -23,7 +24,8 @@ namespace JhinMod.SkillStates.BaseStates
         {
             base.OnEnter();
 
-            Util.PlaySound("Play_Seroronin_Jhin_DeathSFX", base.gameObject);
+            Helpers.PlaySoundDynamic("DeathSFX", base.gameObject);
+            //Util.PlaySound("Play_Seroronin_Jhin_DeathSFX", base.gameObject);
 
             Animator modelAnimator = base.GetModelAnimator();
             if (modelAnimator)

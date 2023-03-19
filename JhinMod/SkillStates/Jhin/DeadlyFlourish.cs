@@ -44,7 +44,8 @@ namespace JhinMod.SkillStates
                 base.rigidbodyMotor.moveVector = Vector3.zero;
             }
 
-            Util.PlaySound("Play_Seroronin_Jhin_WCast", base.gameObject);
+            Helpers.PlaySoundDynamic("WCast", base.gameObject);
+            //Util.PlaySound("Play_Seroronin_Jhin_WCast", base.gameObject);
 
             base.PlayAnimation("FullBody, Override", "DeadlyFlourish");
         }

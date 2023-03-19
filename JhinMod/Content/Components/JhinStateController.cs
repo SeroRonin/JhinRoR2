@@ -10,6 +10,7 @@ using R2API.Utils;
 using System.Xml;
 using UnityEngine.Networking;
 using JhinMod.SkillStates.BaseStates;
+using JhinMod.Modules;
 
 namespace JhinMod.Content.Components
 {
@@ -156,7 +157,8 @@ namespace JhinMod.Content.Components
 
         public void ResetReload( bool interrupt = false, float delay = 1f)
         {
-            Util.PlaySound("Stop_Seroronin_Jhin_Reloads", base.gameObject);
+            Helpers.StopSoundDynamic("Reloads", base.gameObject);
+            //Util.PlaySound("Stop_Seroronin_Jhin_Reloads", base.gameObject);
 
             this.startedReload = false;
             this.reloadGraceDelay = delay;

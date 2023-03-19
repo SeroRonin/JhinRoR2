@@ -56,8 +56,10 @@ namespace JhinMod.SkillStates.BaseStates
                 keywordTokens = new string[] { "KEYWORD_AGILE", "KEYWORD_EXECUTING" }
             });
 
-            Util.PlaySound("Play_Seroronin_Jhin_PassiveCritSpin", base.gameObject);
-            Util.PlaySound("Play_Seroronin_Jhin_PassiveCritMusic", base.gameObject);
+            Helpers.PlaySoundDynamic("PassiveCritSpin", base.gameObject);
+            Helpers.PlaySoundDynamic("PassiveCritMusic", base.gameObject);
+            //Util.PlaySound("Play_Seroronin_Jhin_PassiveCritSpin", base.gameObject);
+            //Util.PlaySound("Play_Seroronin_Jhin_PassiveCritMusic", base.gameObject);
 
             if (animatorComponent)
             {
@@ -73,8 +75,10 @@ namespace JhinMod.SkillStates.BaseStates
         }
         public override void OnExit()
         {
-            Util.PlaySound("Stop_Seroronin_Jhin_PassiveCritSpin", base.gameObject);
-            Util.PlaySound("Stop_Seroronin_Jhin_PassiveCritMusic", base.gameObject);
+            Helpers.StopSoundDynamic("PassiveCritSpin", base.gameObject);
+            Helpers.StopSoundDynamic("PassiveCritMusic", base.gameObject);
+            //Util.PlaySound("Stop_Seroronin_Jhin_PassiveCritSpin", base.gameObject);
+            //Util.PlaySound("Stop_Seroronin_Jhin_PassiveCritMusic", base.gameObject);
 
             if (animatorComponent)
             {

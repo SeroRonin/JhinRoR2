@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Reflection;
 using UnityEngine;
+using RoR2;
 
 namespace JhinMod.Modules
 {
@@ -66,7 +67,7 @@ namespace JhinMod.Modules
         /// <param name="totalDistance"></param>
         /// <param name="currentDistance"></param>
         /// <returns></returns>
-        public static float GetParabolaHeight( float totalDistance, float currentDistance)
+        public static float GetParabolaHeight(float totalDistance, float currentDistance)
         {
             // a(x - b)^2 + c
             // a * sqrd + c
@@ -77,8 +78,25 @@ namespace JhinMod.Modules
             float x = currentDistance;
             float squared = (float)Math.Pow((x - b), 2f);
 
-            
+
             return (float)((a * squared) + c);
+        }
+        public static void PlaySoundDynamic(string soundID, GameObject player, GameObject parent = null)
+        {
+            if ( parent == null) parent = player;
+            int skinIndex = (int)player.GetComponent<CharacterBody>().skinIndex;
+            Util.PlaySound($"Play_Seroronin_{GetSkinName(skinIndex)}_{soundID}", parent);
+        }
+        public static void StopSoundDynamic(string soundID, GameObject player, GameObject parent = null)
+        {
+            if (parent == null) parent = player;
+            int skinIndex = (int)player.GetComponent<CharacterBody>().skinIndex;
+            Util.PlaySound($"Stop_Seroronin_{GetSkinName(skinIndex)}_{soundID}", parent);
+        }
+        public static string GetSkinName(int skinIndex)
+        {
+            if (skinIndex == 1) return "ProjectJhin";
+            return "Jhin";
         }
     }
 }

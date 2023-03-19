@@ -50,9 +50,14 @@ namespace JhinMod.SkillStates
             this.fireTime = WhisperPrimary.baseFireDelayPercent * this.duration;
             this.PlayFireAnimation();
 
-            Util.PlaySound(jhinStateController.ammoCount == 1 ? "Play_Seroronin_Jhin_PassiveCritCast" : "Play_Seroronin_Jhin_AttackCast", base.gameObject);
-            Util.PlaySound("Stop_Seroronin_Jhin_PassiveCritSpin", base.gameObject);
-            Util.PlaySound("Stop_Seroronin_Jhin_PassiveCritMusic", base.gameObject);
+            var shotIndex = this.jhinStateController.ammoMax - (this.jhinStateController.ammoCount - 1);
+
+            Helpers.PlaySoundDynamic(shotIndex == 4 ? "PassiveCritCast" : $"AttackCast{shotIndex}", base.gameObject);
+            Helpers.StopSoundDynamic("PassiveCritSpin", base.gameObject);
+            Helpers.StopSoundDynamic("PassiveCritMusic", base.gameObject);
+            //Util.PlaySound(shotIndex == 4 ? "Play_Seroronin_Jhin_PassiveCritCast" : $"Play_Seroronin_Jhin_AttackCast{shotIndex}", base.gameObject);
+            //Util.PlaySound("Stop_Seroronin_Jhin_PassiveCritSpin", base.gameObject);
+            //Util.PlaySound("Stop_Seroronin_Jhin_PassiveCritMusic", base.gameObject);
 
         }
         public void PlayFireAnimation()
@@ -149,16 +154,23 @@ namespace JhinMod.SkillStates
                 modifyOutgoingDamageCallback = ModifyDamage
             };
         }
-
         protected virtual void DoFireEffects()
         {
-            if (this.isCrit)
+            var shotIndex = this.jhinStateController.ammoMax - (this.jhinStateController.ammoCount - 1);
+            if (shotIndex ==  4)
             {
-                Util.PlaySound("Play_Seroronin_Jhin_AttackCritFire", base.gameObject);
+                Helpers.PlaySoundDynamic("PassiveCritFire", base.gameObject);
+                //Util.PlaySound("Play_Seroronin_Jhin_PassiveCritFire", base.gameObject);
+            }
+            else if (this.isCrit)
+            {
+                Helpers.PlaySoundDynamic("AttackCritFire", base.gameObject);
+                //Util.PlaySound("Play_Seroronin_Jhin_AttackCritFire", base.gameObject);
             }
             else
             {
-                Util.PlaySound("Play_Seroronin_Jhin_AttackFire", base.gameObject);
+                Helpers.PlaySoundDynamic($"AttackFire{shotIndex}", base.gameObject);
+                //Util.PlaySound($"Play_Seroronin_Jhin_AttackFire{shotIndex}", base.gameObject);
             }
             EffectManager.SimpleMuzzleFlash(EntityStates.Commando.CommandoWeapon.FirePistol2.muzzleEffectPrefab, base.gameObject, this.muzzleString, false);
         }
