@@ -211,8 +211,8 @@ namespace JhinMod.SkillStates
             {
                 if (shotIndex == 4)
                 {
-                    var executeDamage = (targetHealthComponent.fullHealth - targetHealthComponent.health) * StaticValues.executeMissingHealthDamagePercent;
-                    var maxDamage = (damageInfo.damage * StaticValues.executeDamagePercentCap);
+                    var executeDamage = (targetHealthComponent.fullHealth - targetHealthComponent.health) * StaticValues.executePrimaryMissingHealthDamagePercent;
+                    var maxDamage = (damageInfo.damage * StaticValues.executePrimaryDamagePercentCap);
 
                     damageInfo.damage += Math.Min(executeDamage, maxDamage);
                     ChatMessage.Send($"Execute: {executeDamage}");

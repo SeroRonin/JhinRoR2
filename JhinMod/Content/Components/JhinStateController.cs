@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using UnityEngine;
-using RoR2;
-using JhinMod.SkillStates;
-using EntityStates;
-using R2API.Utils;
-using System.Xml;
+﻿using UnityEngine;
 using UnityEngine.Networking;
+using RoR2;
+using R2API.Utils;
+using EntityStates;
+using JhinMod.SkillStates;
 using JhinMod.SkillStates.BaseStates;
 using JhinMod.Modules;
 
@@ -188,7 +183,7 @@ namespace JhinMod.Content.Components
             this.ultHasFiredLastShot = false;
         }
 
-        /*
+        
         public override bool OnSerialize(NetworkWriter writer, bool forceAll)
         {
             if (forceAll)
@@ -225,6 +220,6 @@ namespace JhinMod.Content.Components
             {
                 this.ammoCount = reader.ReadInt16();
             }
-        }*/
+        }
     }
 }

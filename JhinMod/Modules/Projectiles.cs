@@ -1,4 +1,5 @@
-﻿using R2API;
+﻿using JhinMod.Content.Components;
+using R2API;
 using RoR2;
 using RoR2.Projectile;
 using UnityEngine;
@@ -37,8 +38,14 @@ namespace JhinMod.Modules
             ps.desiredForwardSpeed = 150f;
             ps.lifetime = 20f;
 
-            ProjectileImpactExplosion pie = rocketPrefab.GetComponent<ProjectileImpactExplosion>();
-            InitializeImpactExplosion(pie);
+            //ProjectileImpactExplosion pie = rocketPrefab.GetComponent<ProjectileImpactExplosion>();
+            ProjectileImpactExplosion[] impactEvents = rocketPrefab.GetComponentsInChildren<ProjectileImpactExplosion>();
+            for (int i = 0; i < impactEvents.Length; i++)
+            {
+                UnityEngine.Object.Destroy(impactEvents[i]);
+            }
+            CustomProjectileImpactExplosion custompie = rocketPrefab.AddComponent<CustomProjectileImpactExplosion>();
+            InitializeImpactExplosion(custompie);
 
             //REPLACE, using default assets
             GameObject explosionEffect = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Common/VFX/OmniExplosionVFXQuick.prefab").WaitForCompletion().InstantiateClone("JhinUltExplosionVFX", false);
@@ -47,16 +54,16 @@ namespace JhinMod.Modules
             Modules.Content.AddEffectDef(new EffectDef(explosionEffect));
             //EntityStates.RocketSurvivorSkills.Primary.FireRocket.explosionEffectPrefab = explosionEffect;
 
-            pie.blastDamageCoefficient = 1f;
-            pie.blastRadius = 8f;
-            pie.destroyOnEnemy = true;
-            pie.destroyOnWorld = true;
-            pie.lifetime = 12f;
-            pie.impactEffect = explosionEffect;
-            pie.timerAfterImpact = false;
-            pie.lifetimeAfterImpact = 0f;
-            pie.blastAttackerFiltering = AttackerFiltering.NeverHitSelf;
-            pie.falloffModel = BlastAttack.FalloffModel.Linear;
+            custompie.blastDamageCoefficient = 1f;
+            custompie.blastRadius = 8f;
+            custompie.destroyOnEnemy = true;
+            custompie.destroyOnWorld = true;
+            custompie.lifetime = 12f;
+            custompie.impactEffect = explosionEffect;
+            custompie.timerAfterImpact = false;
+            custompie.lifetimeAfterImpact = 0f;
+            custompie.blastAttackerFiltering = AttackerFiltering.NeverHitSelf;
+            custompie.falloffModel = BlastAttack.FalloffModel.Linear;
 
             //Remove built-in sounds
             AkEvent[] akEvents = rocketPrefab.GetComponentsInChildren<AkEvent>();

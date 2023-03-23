@@ -1,4 +1,5 @@
 ﻿using BepInEx;
+using JhinMod.Content.UI;
 using JhinMod.Modules.Survivors;
 using JhinMod.SkillStates;
 using R2API;
@@ -10,6 +11,8 @@ using System.Security;
 using System.Security.Permissions;
 using UnityEngine;
 using UnityEngine.Networking;
+using JhinMod.Content.UI;
+using JhinMod.Content.Components;
 
 [module: UnverifiableCode]
 [assembly: SecurityPermission(SecurityAction.RequestMinimum, SkipVerification = true)]
@@ -64,12 +67,88 @@ namespace JhinMod
             Hook();
         }
 
+        public void OnDestroy()
+        {
+            try
+            {
+                UnHooks();
+            }
+            catch (Exception e)
+            {
+                Logger.LogError(e.Message + " - " + e.StackTrace);
+            }
+        }
+
         private void Hook()
         {
             // run hooks here, disabling one is as simple as commenting out the line
             On.RoR2.GlobalEventManager.OnHitEnemy += GlobalEventManager_OnHitEnemy;
             On.RoR2.CharacterBody.RecalculateStats += CharacterBody_RecalculateStats;
+            On.RoR2.UI.HUD.Awake += HUD_Awake;
+            RoR2.UI.HUD.onHudTargetChangedGlobal += HUD_onHudTargetChangedGlobal;
         }
+
+        /*
+        private void GlobalEventManager_OnHitAll(On.RoR2.GlobalEventManager.orig_OnHitAll orig, GlobalEventManager self, DamageInfo damageInfo, GameObject hitObject)
+        {
+            orig(self, damageInfo, hitObject);
+
+            bool active = NetworkServer.active;
+            if (damageInfo.attacker)
+            {
+                CharacterBody component = damageInfo.attacker.GetComponent<CharacterBody>();
+                if (component)
+                {
+                    CharacterMaster master = component.master;
+                    if (master)
+                    {
+                        Inventory inventory = master.inventory;
+                        if (master.inventory)
+                        {
+                            if (!damageInfo.procChainMask.HasProc(ProcType.Behemoth))
+                            {
+                                int itemCount = inventory.GetItemCount(RoR2Content.Items.Behemoth);
+                                if (itemCount > 0 && damageInfo.procCoefficient != 0f)
+                                {
+                                    float num = (1.5f + 2.5f * (float)itemCount) * damageInfo.procCoefficient;
+                                    float damageCoefficient = 0.6f;
+                                    float baseDamage = Util.OnHitProcDamage(damageInfo.damage, component.damage, damageCoefficient);
+                                    EffectManager.SpawnEffect(LegacyResourcesAPI.Load<GameObject>("Prefabs/Effects/OmniEffect/OmniExplosionVFXQuick"), new EffectData
+                                    {
+                                        origin = damageInfo.position,
+                                        scale = num,
+                                        rotation = Util.QuaternionSafeLookRotation(damageInfo.force)
+                                    }, true);
+                                    BlastAttack blastAttack = new BlastAttack();
+                                    blastAttack.position = damageInfo.position;
+                                    blastAttack.baseDamage = baseDamage;
+                                    blastAttack.baseForce = 0f;
+                                    blastAttack.radius = num;
+                                    blastAttack.attacker = damageInfo.attacker;
+                                    blastAttack.inflictor = null;
+                                    blastAttack.teamIndex = TeamComponent.GetObjectTeam(blastAttack.attacker);
+                                    blastAttack.crit = damageInfo.crit;
+                                    blastAttack.procChainMask = damageInfo.procChainMask;
+                                    blastAttack.procCoefficient = 0f;
+                                    blastAttack.damageColorIndex = DamageColorIndex.Item;
+                                    blastAttack.falloffModel = BlastAttack.FalloffModel.None;
+                                    blastAttack.damageType = damageInfo.damageType;
+                                    blastAttack.Fire();
+                                }
+                            }
+                            if ((component.HasBuff(RoR2Content.Buffs.AffixBlue) ? 1 : 0) > 0)
+                            {
+                                float damageCoefficient2 = 0.5f;
+                                float damage = Util.OnHitProcDamage(damageInfo.damage, component.damage, damageCoefficient2);
+                                float force = 0f;
+                                Vector3 position = damageInfo.position;
+                                ProjectileManager.instance.FireProjectile(LegacyResourcesAPI.Load<GameObject>("Prefabs/Projectiles/LightningStake"), position, Quaternion.identity, damageInfo.attacker, damage, force, damageInfo.crit, DamageColorIndex.Item, null, -1f);
+                            }
+                        }
+                    }
+                }
+            }
+        }*/
 
         private void GlobalEventManager_OnHitEnemy(On.RoR2.GlobalEventManager.orig_OnHitEnemy orig, GlobalEventManager self, DamageInfo damageInfo, GameObject victim)
         {
@@ -87,6 +166,63 @@ namespace JhinMod
                     {
                         attackerBody.AddTimedBuff(Modules.Buffs.jhinCritMovespeedBuff, 2f);
                     }
+                }
+            }
+        }
+
+        private JhinAmmoUI ammoUI;
+
+        private void CreateAmmoUI(RoR2.UI.HUD hud)
+        {
+            if (!ammoUI)
+            {
+                if (hud != null && hud.mainUIPanel != null)
+                {
+                    ammoUI = hud.mainUIPanel.GetComponentInChildren<JhinAmmoUI>();
+                    if (!ammoUI)
+                    {
+                        var ammoUIinstance = Instantiate(Modules.Assets.mainAssetBundle.LoadAsset<GameObject>("JhinAmmoUI"));
+                        ammoUI = ammoUIinstance.AddComponent<JhinAmmoUI>();
+                        ammoUIinstance.transform.SetParent(hud.mainUIPanel.transform);
+
+                        var rectTransform = ammoUIinstance.GetComponent<RectTransform>();
+                        rectTransform.anchorMin = new Vector2(0.5f, 0.5f);
+                        rectTransform.anchorMax = new Vector2(0.5f, 0.5f);
+                        rectTransform.pivot = new Vector2(0.5f, 0.5f);
+                        rectTransform.sizeDelta = new Vector2(1, 1);
+                        rectTransform.anchoredPosition = new Vector2(530, -355);
+                        rectTransform.localRotation = Quaternion.Euler(0, 0, 0);
+                        rectTransform.localScale = new Vector3(0.2f, 0.2f, 0.2f);
+
+                        ammoUIinstance.gameObject.SetActive(false);
+                    }
+                }
+            }
+        }
+
+        private void HUD_Awake(On.RoR2.UI.HUD.orig_Awake orig, RoR2.UI.HUD self)
+        {
+            CreateAmmoUI(self);
+            orig(self);
+        }
+
+        private void HUD_onHudTargetChangedGlobal(RoR2.UI.HUD obj)
+        {
+            if (obj && obj.targetBodyObject && ammoUI)
+            {
+                var ammoComponent = obj.targetBodyObject.GetComponent<JhinStateController>();
+                var skillLocator = obj.targetBodyObject.GetComponent<SkillLocator>();
+                if (ammoComponent)
+                {
+                    ammoUI.gameObject.SetActive(true);
+                    ammoUI.ammoComponent = ammoComponent;
+                    ammoUI.skillLocator = skillLocator;
+                }
+                else
+                {
+                    ammoUI.gameObject.SetActive(false);
+                    ammoUI.ammoComponent = null;
+                    ammoUI.skillLocator = null;
                 }
             }
         }
@@ -163,6 +299,15 @@ namespace JhinMod
             var movespeedBonus = movespeed * (0.1f + (percentMove * percentAtkSpd) );
 
             return movespeedBonus;
+        }
+
+        private void UnHooks()
+        {
+            // run hooks here, disabling one is as simple as commenting out the line
+            On.RoR2.GlobalEventManager.OnHitEnemy -= GlobalEventManager_OnHitEnemy;
+            On.RoR2.CharacterBody.RecalculateStats -= CharacterBody_RecalculateStats;
+            On.RoR2.UI.HUD.Awake -= HUD_Awake;
+            RoR2.UI.HUD.onHudTargetChangedGlobal -= HUD_onHudTargetChangedGlobal;
         }
     }
 }

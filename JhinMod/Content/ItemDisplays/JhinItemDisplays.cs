@@ -296,9 +296,9 @@ localScale = new Vector3(0.4749F, 0.4749F, 0.4749F),
                             ruleType = ItemDisplayRuleType.ParentedPrefab,
                             followerPrefab = ItemDisplays.LoadDisplay("DisplayMask"),
 childName = "Mask",
-localPos = new Vector3(0F, 0.01503F, 0.03537F),
+localPos = new Vector3(0F, 0.02656F, 0.04528F),
 localAngles = new Vector3(0F, 180F, 0F),
-localScale = new Vector3(0.30742F, 0.30742F, 0.30742F),
+localScale = new Vector3(0.35F, 0.35F, 0.35F),
                             limbMask = LimbFlags.None
                         }
                     }

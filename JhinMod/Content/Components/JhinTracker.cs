@@ -24,7 +24,7 @@ namespace JhinMod.Content.Components
         private CharacterBody characterBody;
         private TeamComponent teamComponent;
         private InputBankTest inputBank;
-
+        private SkillLocator skillLocator;
         private float trackerUpdateStopwatch;
 
         private Indicator indicator;
@@ -42,6 +42,7 @@ namespace JhinMod.Content.Components
             this.characterBody = base.GetComponent<CharacterBody>();
             this.inputBank = base.GetComponent<InputBankTest>();
             this.teamComponent = base.GetComponent<TeamComponent>();
+            this.skillLocator = base.GetComponent<SkillLocator>();
         }
 
         public HurtBox GetTrackingTarget()
@@ -61,6 +62,11 @@ namespace JhinMod.Content.Components
 
         private void FixedUpdate()
         {
+            if (this.skillLocator.secondary.skillOverrides.Length > 0)
+                this.indicator.active = false;
+            else 
+                this.indicator.active = true;
+
             this.trackerUpdateStopwatch += Time.fixedDeltaTime;
             if (this.trackerUpdateStopwatch >= 1f / this.trackerUpdateFrequency)
             {

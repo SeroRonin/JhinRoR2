@@ -8,6 +8,9 @@ using R2API.Utils;
 
 namespace JhinMod.Content.Components
 {
+    /// <summary>
+    /// Component that adds the arcing motion seen on Dancing Grenade bounces
+    /// </summary>
     public class BounceVisualizer : MonoBehaviour
     {
         public float initialDistance;

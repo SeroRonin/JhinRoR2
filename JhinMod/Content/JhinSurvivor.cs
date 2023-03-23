@@ -137,7 +137,7 @@ namespace JhinMod.Modules.Survivors
 
                 cancelSprintingOnActivation = false,
                 
-                keywordTokens = new string[] { "KEYWORD_AGILE", "KEYWORD_EXECUTING", "KEYWORD_RELOAD" }
+                keywordTokens = new string[] { "KEYWORD_AGILE", "KEYWORD_EXECUTING_WHISPER", "KEYWORD_RELOAD" }
             });
 
             Modules.Skills.AddPrimarySkills(bodyPrefab, primarySkillDef);
@@ -224,7 +224,7 @@ namespace JhinMod.Modules.Survivors
                 rechargeStock = 1,
                 requiredStock = 1,
                 stockToConsume = 1,
-                keywordTokens = new string[] { "KEYWORD_EXECUTING" }
+                keywordTokens = new string[] { "KEYWORD_EXECUTING_SPECIAL", "KEYWORD_RELOAD" }
             });
 
             Modules.Skills.AddSpecialSkills(bodyPrefab, bombSkillDef);

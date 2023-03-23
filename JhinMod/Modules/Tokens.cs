@@ -26,8 +26,10 @@ namespace JhinMod.Modules
             LanguageAPI.Add(prefix + "OUTRO_FLAVOR", outro);
             LanguageAPI.Add(prefix + "OUTRO_FAILURE", outroFailure);
 
-            LanguageAPI.Add("KEYWORD_EXECUTING", Helpers.KeywordText("Executing", $"Deals <style=cIsDamage>bonus damage</style> equal to <style=cIsHealth>30% of the target's missing health</style>. This bonus caps at <style=cIsDamage>100% of the original damage</style>."));
-            LanguageAPI.Add("KEYWORD_RELOAD", Helpers.KeywordText("Reload", $"Enter a reload state after firing 4 shots, or after 10 seconds. The timer is reset after using any skill."));
+            //LanguageAPI.Add("KEYWORD_EXECUTING", Helpers.KeywordText("Executing", $"Deals <style=cIsDamage>bonus damage</style> based on <style=cIsHealth> target's missing health</style>."));
+            LanguageAPI.Add("KEYWORD_EXECUTING_WHISPER", Helpers.KeywordText("Executing: Primary", $"Deals <style=cIsDamage>bonus damage</style> equal to <style=cIsHealth>{100f * StaticValues.executePrimaryMissingHealthDamagePercent}% of the target's missing health</style>. This bonus caps at <style=cIsDamage>{100f * StaticValues.executePrimaryDamagePercentCap}% of the original damage</style>."));
+            LanguageAPI.Add("KEYWORD_EXECUTING_SPECIAL", Helpers.KeywordText("Executing: Special", $"Deals <style=cIsDamage>{100f * StaticValues.executeSpecialMissingHealthPercentToDamagePercent}% bonus damage</style> per <style=cIsHealth>1% of target's missing health</style>."));
+            LanguageAPI.Add("KEYWORD_RELOAD", Helpers.KeywordText("Reload", $"Enter a reload state after firing 4 <style=cIsUtility>Primary</style> shots, or after 10 seconds. The timer is reset after using any skill."));
 
             #region Skins
             LanguageAPI.Add(prefix + "DEFAULT_SKIN_NAME", "Jhin");
@@ -58,7 +60,7 @@ namespace JhinMod.Modules
 
             #region Special
             LanguageAPI.Add(prefix + "SPECIAL_ULT_NAME", "Curtain Call");
-            LanguageAPI.Add(prefix + "SPECIAL_ULT_DESCRIPTION", Helpers.executingPrefix + $"Instantly reload and empower your next 4 primary shots, firing explosive rounds for <style=cIsDamage>{100f * StaticValues.curtainCallDamageCoefficient}% damage</style>. Deals bonus damage based on enemy's missing health. <style=cDeath>The fourth shot critically strikes</style>.");
+            LanguageAPI.Add(prefix + "SPECIAL_ULT_DESCRIPTION", Helpers.executingPrefix + $"Instantly <style=cIsUtility>reload</style> and empower your next 4 primary shots, firing explosive rounds for <style=cIsDamage>{100f * StaticValues.curtainCallDamageCoefficient}% damage</style>. <style=cDeath>The fourth shot critically strikes</style>.");
 
             LanguageAPI.Add(prefix + "SPECIAL_ULT_SHOT_DESCRIPTION", Helpers.executingPrefix + $"Fire an explosive round for <style=cIsDamage>{100f * StaticValues.curtainCallDamageCoefficient}% damage</style>.");
             LanguageAPI.Add(prefix + "SPECIAL_ULT_SHOT_CRIT_DESCRIPTION", Helpers.executingPrefix + $"Fire an explosive round for <style=cIsDamage>{100f * StaticValues.curtainCallDamageCoefficient}% damage</style>. <style=cDeath>This shot critically strikes</style>.");
