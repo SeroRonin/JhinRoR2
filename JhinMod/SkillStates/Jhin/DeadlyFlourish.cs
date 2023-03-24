@@ -8,7 +8,7 @@ namespace JhinMod.SkillStates
 {
     public class DeadlyFlourish : BaseSkillState
     {
-        public static float damageCoefficient = Modules.StaticValues.deadlyFlourishDamageCoefficient;
+        public static float damageCoefficient = Config.utilityDamageCoefficient.Value;
         public static float procCoefficient = 1f;
         public static float baseDuration = 1.15f;
         public static float baseFireDelay = 0.75f;

@@ -16,7 +16,7 @@ namespace JhinMod.SkillStates
 {
     public class WhisperPrimary : BaseSkillState
     {
-        public static float damageCoefficient = Modules.StaticValues.whisperDamageCoefficient;
+        public static float damageCoefficient = Modules.Config.primaryDamageCoefficient.Value;
         public static float procCoefficient = 1f;
         public static float baseDuration = 2.57f;
         //public static float baseFireDelayPercent = 0.15625f; //League value, is actually 4ish frames late
@@ -211,8 +211,8 @@ namespace JhinMod.SkillStates
             {
                 if (shotIndex == 4)
                 {
-                    var executeDamage = (targetHealthComponent.fullHealth - targetHealthComponent.health) * StaticValues.executePrimaryMissingHealthDamagePercent;
-                    var maxDamage = (damageInfo.damage * StaticValues.executePrimaryDamagePercentCap);
+                    var executeDamage = (targetHealthComponent.fullHealth - targetHealthComponent.health) * Config.primaryExecuteMissingHealthPercentage.Value;
+                    var maxDamage = (damageInfo.damage * Config.primaryExecuteDamageCap.Value);
 
                     damageInfo.damage += Math.Min(executeDamage, maxDamage);
                     ChatMessage.Send($"Execute: {executeDamage}");

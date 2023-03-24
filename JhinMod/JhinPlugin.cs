@@ -21,6 +21,7 @@ using JhinMod.Content.Components;
 namespace JhinMod
 {
     [BepInDependency("com.bepis.r2api", BepInDependency.DependencyFlags.HardDependency)]
+    [BepInDependency("com.rune580.riskofoptions", BepInDependency.DependencyFlags.SoftDependency)]
     [NetworkCompatibility(CompatibilityLevel.EveryoneMustHaveMod, VersionStrictness.EveryoneNeedSameModVersion)]
     [BepInPlugin(MODUID, MODNAME, MODVERSION)]
     [R2APISubmoduleDependency(new string[]
@@ -44,7 +45,7 @@ namespace JhinMod
         public const string DEVELOPER_PREFIX = "SERORONIN";
 
         public static JhinPlugin instance;
-
+        public bool RoR2OptionsEnabled;
         private void Awake()
         {
             instance = this;
@@ -52,6 +53,13 @@ namespace JhinMod
             Log.Init(Logger);
             Modules.Assets.Initialize(); // load assets and read config
             Modules.Config.ReadConfig();
+
+            if (BepInEx.Bootstrap.Chainloader.PluginInfos.ContainsKey("com.rune580.riskofoptions")) RoR2OptionsEnabled = true;
+            if (RoR2OptionsEnabled)
+            {
+                Modules.Config.CreateRiskofOptionsCompat();
+            }
+
             Modules.States.RegisterStates(); // register states for networking
             Modules.Buffs.RegisterBuffs(); // add and register custom buffs/debuffs
             Modules.Projectiles.RegisterProjectiles(); // add and register custom projectiles

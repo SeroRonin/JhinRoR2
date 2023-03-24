@@ -74,7 +74,7 @@ namespace JhinMod.Content.Components
                     var currentHigh = damage;
                     var missingHealth = healthComponent.fullHealth - healthComponent.health;
                     var missingHealthPercent = missingHealth / healthComponent.fullHealth;
-                    damage = blastAttack.baseDamage * (missingHealthPercent * StaticValues.executeSpecialMissingHealthPercentToDamagePercent);
+                    damage = blastAttack.baseDamage * (missingHealthPercent * Config.specialExecutePercentage.Value);
                     
                     //Band-aid patch that fixes execute damage critting AFTER already scaling off a crit, creating up to 600% bonus damage instead of the intended 300%
                     if (blastAttack.crit)

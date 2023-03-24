@@ -15,7 +15,7 @@ namespace JhinMod.SkillStates
 {
     public class CurtainCallShoot : BaseSkillState
     {
-        public static float damageCoefficient = Modules.StaticValues.gunDamageCoefficient;
+        public static float damageCoefficient = Config.specialDamageCoefficient.Value;
         public static float procCoefficient = 1f;
         public static float baseDuration = 0.6f;
         public static float force = 800f;
@@ -80,7 +80,7 @@ namespace JhinMod.SkillStates
                         position = aimRay.origin,
                         rotation = Util.QuaternionSafeLookRotation(aimRay.direction),
                         owner = this.gameObject,
-                        damage = this.characterBody.damage * StaticValues.curtainCallDamageCoefficient,
+                        damage = this.characterBody.damage * CurtainCallShoot.damageCoefficient,
                         force = CurtainCallShoot.force,
                         crit = CheckCrit(),
                         damageColorIndex = DamageColorIndex.Default,

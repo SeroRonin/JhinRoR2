@@ -27,8 +27,8 @@ namespace JhinMod.Modules
             LanguageAPI.Add(prefix + "OUTRO_FAILURE", outroFailure);
 
             //LanguageAPI.Add("KEYWORD_EXECUTING", Helpers.KeywordText("Executing", $"Deals <style=cIsDamage>bonus damage</style> based on <style=cIsHealth> target's missing health</style>."));
-            LanguageAPI.Add("KEYWORD_EXECUTING_WHISPER", Helpers.KeywordText("Executing: Primary", $"Deals <style=cIsDamage>bonus damage</style> equal to <style=cIsHealth>{100f * StaticValues.executePrimaryMissingHealthDamagePercent}% of the target's missing health</style>. This bonus caps at <style=cIsDamage>{100f * StaticValues.executePrimaryDamagePercentCap}% of the original damage</style>."));
-            LanguageAPI.Add("KEYWORD_EXECUTING_SPECIAL", Helpers.KeywordText("Executing: Special", $"Deals <style=cIsDamage>{100f * StaticValues.executeSpecialMissingHealthPercentToDamagePercent}% bonus damage</style> per <style=cIsHealth>1% of target's missing health</style>."));
+            LanguageAPI.Add("KEYWORD_EXECUTING_WHISPER", Helpers.KeywordText("Executing: Primary", $"Deals <style=cIsDamage>bonus damage</style> equal to <style=cIsHealth>{100f * Config.primaryExecuteMissingHealthPercentage.Value}% of the target's missing health</style>. This bonus caps at <style=cIsDamage>{100f * Config.primaryExecuteDamageCap.Value}% of the original damage</style>."));
+            LanguageAPI.Add("KEYWORD_EXECUTING_SPECIAL", Helpers.KeywordText("Executing: Special", $"Deals <style=cIsDamage>{100f * Config.specialExecutePercentage.Value}% bonus damage</style> per <style=cIsHealth>1% of target's missing health</style>."));
             LanguageAPI.Add("KEYWORD_RELOAD", Helpers.KeywordText("Reload", $"Enter a reload state after firing 4 <style=cIsUtility>Primary</style> shots, or after 10 seconds. The timer is reset after using any skill."));
 
             #region Skins
@@ -44,26 +44,26 @@ namespace JhinMod.Modules
 
             #region Primary
             LanguageAPI.Add(prefix + "PRIMARY_WHISPER_NAME", "Whisper");
-            LanguageAPI.Add(prefix + "PRIMARY_WHISPER_DESCRIPTION", Helpers.agilePrefix + $"Fire a bullet for <style=cIsDamage>{100f * StaticValues.whisperDamageCoefficient}% damage</style>. The fourth shot <style=cDeath>critically strikes</style> and is {Helpers.executingPrefix}Can fire up to 4 shots before needing to <style=cIsUtility>reload</style>.");
-            LanguageAPI.Add(prefix + "PRIMARY_WHISPER_CRIT_DESCRIPTION", Helpers.agilePrefix + Helpers.executingPrefix + $"Fire a bullet for <style=cIsDamage>{100f * StaticValues.whisperDamageCoefficient}% damage</style>. <style=cDeath>This shot critically strikes</style>.");
+            LanguageAPI.Add(prefix + "PRIMARY_WHISPER_DESCRIPTION", Helpers.agilePrefix + $"Fire a bullet for <style=cIsDamage>{100f * Modules.Config.primaryDamageCoefficient.Value}% damage</style>. The fourth shot <style=cDeath>critically strikes</style> and is {Helpers.executingPrefix}Can fire up to 4 shots before needing to <style=cIsUtility>reload</style>.");
+            LanguageAPI.Add(prefix + "PRIMARY_WHISPER_CRIT_DESCRIPTION", Helpers.agilePrefix + Helpers.executingPrefix + $"Fire a bullet for <style=cIsDamage>{100f * Modules.Config.primaryDamageCoefficient.Value}% damage</style>. <style=cDeath>This shot critically strikes</style>.");
             #endregion
 
             #region Secondary
             LanguageAPI.Add(prefix + "SECONDARY_GRENADE_NAME", "Dancing Grenade");
-            LanguageAPI.Add(prefix + "SECONDARY_GRENADE_DESCRIPTION", Helpers.agilePrefix + $"Fire a grenade for <style=cIsDamage>{100f * StaticValues.dancingGrenadeDamageCoefficient}% damage</style>. The grenade bounces to nearby enemies up to 3 additional times. Each bounce gains an additional <style=cIsDamage>35% total damage</style> if it kills the enemy it hits.");
+            LanguageAPI.Add(prefix + "SECONDARY_GRENADE_DESCRIPTION", Helpers.agilePrefix + $"Fire a grenade for <style=cIsDamage>{100f * Config.secondaryDamageCoefficient.Value}% damage</style>. The grenade bounces to nearby enemies up to 3 additional times. Each bounce gains an additional <style=cIsDamage>{100f * Config.secondaryDamageBounceCoefficient.Value}% total damage</style> if it kills the enemy it hits.");
             #endregion
 
             #region Utility
             LanguageAPI.Add(prefix + "UTILITY_FLOURISH_NAME", "Deadly Flourish");
-            LanguageAPI.Add(prefix + "UTILITY_FLOURISH_DESCRIPTION", Helpers.stunningPrefix + $"Fire a <style=cIsDamage>piercing</style> beam for <style=cIsDamage>{100f * StaticValues.deadlyFlourishDamageCoefficient}% damage</style>.");
+            LanguageAPI.Add(prefix + "UTILITY_FLOURISH_DESCRIPTION", Helpers.stunningPrefix + $"Fire a <style=cIsDamage>piercing</style> beam for <style=cIsDamage>{100f * Config.utilityDamageCoefficient.Value}% damage</style>.");
             #endregion
 
             #region Special
             LanguageAPI.Add(prefix + "SPECIAL_ULT_NAME", "Curtain Call");
-            LanguageAPI.Add(prefix + "SPECIAL_ULT_DESCRIPTION", Helpers.executingPrefix + $"Instantly <style=cIsUtility>reload</style> and empower your next 4 primary shots, firing explosive rounds for <style=cIsDamage>{100f * StaticValues.curtainCallDamageCoefficient}% damage</style>. <style=cDeath>The fourth shot critically strikes</style>.");
+            LanguageAPI.Add(prefix + "SPECIAL_ULT_DESCRIPTION", Helpers.executingPrefix + $"Instantly <style=cIsUtility>reload</style> and empower your next 4 primary shots, firing explosive rounds for <style=cIsDamage>{100f * Config.specialDamageCoefficient.Value}% damage</style>. <style=cDeath>The fourth shot critically strikes</style>.");
 
-            LanguageAPI.Add(prefix + "SPECIAL_ULT_SHOT_DESCRIPTION", Helpers.executingPrefix + $"Fire an explosive round for <style=cIsDamage>{100f * StaticValues.curtainCallDamageCoefficient}% damage</style>.");
-            LanguageAPI.Add(prefix + "SPECIAL_ULT_SHOT_CRIT_DESCRIPTION", Helpers.executingPrefix + $"Fire an explosive round for <style=cIsDamage>{100f * StaticValues.curtainCallDamageCoefficient}% damage</style>. <style=cDeath>This shot critically strikes</style>.");
+            LanguageAPI.Add(prefix + "SPECIAL_ULT_SHOT_DESCRIPTION", Helpers.executingPrefix + $"Fire an explosive round for <style=cIsDamage>{100f * Config.specialDamageCoefficient.Value}% damage</style>.");
+            LanguageAPI.Add(prefix + "SPECIAL_ULT_SHOT_CRIT_DESCRIPTION", Helpers.executingPrefix + $"Fire an explosive round for <style=cIsDamage>{100f * Config.specialDamageCoefficient.Value}% damage</style>. <style=cDeath>This shot critically strikes</style>.");
 
             #endregion
 

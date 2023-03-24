@@ -15,10 +15,17 @@ To DO:
 Non-standard Features:
 - Dynamic skin-based SFX
 
+Mod Compatibility:
+- Risk Of Options
+- (To Be Considered) BetterUI
+- (To Be Considered) CustomEmoteAPI
+
 Known Bugs:
 - Ult VFX sometimes does not appear
 - Ult applies execute damage as an additional instance of damage (this is due to explosions not supporting post-hit pre-damage modifications)
 - Heresy items permanently interrupt reload if cast during a 4th shot reload. Can be fixed by casting any other ability
+- Shuriken is triggered very sparsely
+- (Unknown, happened once) Skin randomly gets set to default, but SFX stays intact, meaning skin index does not change
 
 Credits:
 - Riot Games: Jhin (Character assets including Models, Textures, SFX, and a majority of Animations)

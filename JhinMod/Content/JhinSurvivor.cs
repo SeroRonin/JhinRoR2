@@ -36,11 +36,27 @@ namespace JhinMod.Modules.Survivors
             crosshair = Modules.Assets.LoadCrosshair("Standard"),
             podPrefab = RoR2.LegacyResourcesAPI.Load<GameObject>("Prefabs/NetworkedObjects/SurvivorPod"),
 
-            maxHealth = 110f,
-            healthRegen = 1.5f,
-            armor = 0f,
-            attackSpeed = 0.625f - 0.019f,
-            attackSpeedGrowth = 0.019f,
+            //Stats
+            maxHealth = Modules.Config.healthBase.Value,
+            healthGrowth = Modules.Config.healthGrowth.Value,
+
+            healthRegen = Modules.Config.regenBase.Value,
+            regenGrowth = Modules.Config.regenGrowth.Value,
+
+            armor = Modules.Config.armorBase.Value,
+            armorGrowth = Modules.Config.armorGrowth.Value,
+
+            damage = Modules.Config.damageBase.Value,
+            damageGrowth = Modules.Config.damageGrowth.Value,
+
+            attackSpeed = Modules.Config.attackSpeedBase.Value - Modules.Config.attackSpeedGrowth.Value,
+            attackSpeedGrowth = Modules.Config.attackSpeedGrowth.Value,
+
+            crit = Modules.Config.critBase.Value,
+            critGrowth = Modules.Config.critGrowth.Value,
+
+            moveSpeed = Modules.Config.movementSpeedBase.Value,
+            moveSpeedGrowth = Modules.Config.movementSpeedGrowth.Value,
 
             jumpCount = 1,
         };
@@ -144,7 +160,7 @@ namespace JhinMod.Modules.Survivors
             #endregion
 
             #region Secondary
-            SkillDef shootSkillDef = Modules.Skills.CreateSkillDef<JhinTrackingSkillDef>(new SkillDefInfo
+            SkillDef secondarySkillDef = Modules.Skills.CreateSkillDef<JhinTrackingSkillDef>(new SkillDefInfo
             {
                 skillName = JHIN_PREFIX + "SECONDARY_GRENADE_NAME",
                 skillNameToken = JHIN_PREFIX + "SECONDARY_GRENADE_NAME",
@@ -153,7 +169,7 @@ namespace JhinMod.Modules.Survivors
                 activationState = new EntityStates.SerializableEntityStateType(typeof(SkillStates.DancingGrenade)),
                 activationStateMachineName = "Slide",
                 baseMaxStock = 1,
-                baseRechargeInterval = 7f,
+                baseRechargeInterval = Config.secondaryCD.Value,
                 beginSkillCooldownOnSkillEnd = false,
                 canceledFromSprinting = false,
                 forceSprintDuringState = false,
@@ -169,11 +185,11 @@ namespace JhinMod.Modules.Survivors
                 keywordTokens = new string[] { "KEYWORD_AGILE" }
             });
 
-            Modules.Skills.AddSecondarySkills(bodyPrefab, shootSkillDef);
+            Modules.Skills.AddSecondarySkills(bodyPrefab, secondarySkillDef);
             #endregion
 
             #region Utility
-            SkillDef rollSkillDef = Modules.Skills.CreateSkillDef(new SkillDefInfo
+            SkillDef utilitySkillDef = Modules.Skills.CreateSkillDef(new SkillDefInfo
             {
                 skillName = JHIN_PREFIX + "UTILITY_FLOURISH_NAME",
                 skillNameToken = JHIN_PREFIX + "UTILITY_FLOURISH_NAME",
@@ -182,7 +198,7 @@ namespace JhinMod.Modules.Survivors
                 activationState = new EntityStates.SerializableEntityStateType(typeof(SkillStates.DeadlyFlourish)),
                 activationStateMachineName = "Body",
                 baseMaxStock = 1,
-                baseRechargeInterval = 4f,
+                baseRechargeInterval = Config.utilityCD.Value,
                 beginSkillCooldownOnSkillEnd = false,
                 canceledFromSprinting = false,
                 forceSprintDuringState = true,
@@ -198,11 +214,11 @@ namespace JhinMod.Modules.Survivors
                 keywordTokens = new string[] { "KEYWORD_STUNNING" }
             });
 
-            Modules.Skills.AddUtilitySkills(bodyPrefab, rollSkillDef);
+            Modules.Skills.AddUtilitySkills(bodyPrefab, utilitySkillDef);
             #endregion
 
             #region Special
-            SkillDef bombSkillDef = Modules.Skills.CreateSkillDef(new SkillDefInfo
+            SkillDef specialSkillDef = Modules.Skills.CreateSkillDef<JhinUltSkillDef>(new SkillDefInfo
             {
                 skillName = JHIN_PREFIX + "SPECIAL_ULT_NAME",
                 skillNameToken = JHIN_PREFIX + "SPECIAL_ULT_NAME",
@@ -211,7 +227,7 @@ namespace JhinMod.Modules.Survivors
                 activationState = new EntityStates.SerializableEntityStateType(typeof(SkillStates.CurtainCall)),
                 activationStateMachineName = "Slide",
                 baseMaxStock = 1,
-                baseRechargeInterval = 10f,
+                baseRechargeInterval = Config.specialCD.Value,
                 beginSkillCooldownOnSkillEnd = true,
                 canceledFromSprinting = false,
                 forceSprintDuringState = false,
@@ -219,7 +235,7 @@ namespace JhinMod.Modules.Survivors
                 interruptPriority = EntityStates.InterruptPriority.Vehicle,
                 resetCooldownTimerOnUse = false,
                 isCombatSkill = true,
-                mustKeyPress = false,
+                mustKeyPress = true,
                 cancelSprintingOnActivation = true,
                 rechargeStock = 1,
                 requiredStock = 1,
@@ -227,7 +243,7 @@ namespace JhinMod.Modules.Survivors
                 keywordTokens = new string[] { "KEYWORD_EXECUTING_SPECIAL", "KEYWORD_RELOAD" }
             });
 
-            Modules.Skills.AddSpecialSkills(bodyPrefab, bombSkillDef);
+            Modules.Skills.AddSpecialSkills(bodyPrefab, specialSkillDef);
             #endregion
 
             #region Non-selectable

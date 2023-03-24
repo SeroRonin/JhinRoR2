@@ -62,8 +62,8 @@ namespace JhinMod.SkillStates
             base.OnEnter();
             this.stopwatch = 0f;
             this.duration = DancingGrenade.baseDuration;
-            this.damageCoefficient = StaticValues.dancingGrenadeDamageCoefficient;
-            this.damageCoefficientOnBounceKill = StaticValues.dancingGrenadeBounceKillDamageCoefficient;
+            this.damageCoefficient = Config.secondaryDamageCoefficient.Value;
+            this.damageCoefficientOnBounceKill = Config.secondaryDamageBounceCoefficient.Value;
             this.modelTransform = base.GetModelTransform();
             this.animator = base.GetModelAnimator();
             this.tracker = base.GetComponent<JhinTracker>();
