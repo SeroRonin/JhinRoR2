@@ -31,6 +31,8 @@ namespace JhinMod.Modules
         public static ConfigEntry<float> movementSpeedBase;
         public static ConfigEntry<float> movementSpeedGrowth;
 
+        public static ConfigEntry<float> passiveDuration;
+
         public static ConfigEntry<float> primaryDamageCoefficient;
         public static ConfigEntry<float> primaryExecuteMissingHealthPercentage;
         public static ConfigEntry<float> primaryExecuteDamageCap;
@@ -83,6 +85,12 @@ namespace JhinMod.Modules
             #endregion
 
             #region Skills
+            //Every Moment Matters
+            passiveDuration = JhinPlugin.instance.Config.Bind<float>(
+                new ConfigDefinition("Skills", "Every Moment Matters: Buff Duration"),
+                2f,
+                new ConfigDescription(CreateOptionDesc("How long the movement speed buff gained from critical strikes lasts", 2f)));
+
             //Whisper
             primaryDamageCoefficient = JhinPlugin.instance.Config.Bind<float>(
                 new ConfigDefinition("Skills", "Whisper: Damage Coefficient"), 
@@ -119,12 +127,12 @@ namespace JhinMod.Modules
             utilityCD = JhinPlugin.instance.Config.Bind<float>(
                 new ConfigDefinition("Skills", "Deadly Flourish: Cooldown"), 
                 4f, 
-                new ConfigDescription(CreateOptionDesc("", 4f)));
+                new ConfigDescription(CreateOptionDesc("", 8f)));
 
             utilityDamageCoefficient = JhinPlugin.instance.Config.Bind<float>(
                 new ConfigDefinition("Skills", "Deadly Flourish: Damage Coefficient"), 
                 5f, 
-                new ConfigDescription(CreateOptionDesc("", 5f)));
+                new ConfigDescription(CreateOptionDesc("", 9f)));
 
             //CurtainCall
             specialCD = JhinPlugin.instance.Config.Bind<float>(
@@ -187,6 +195,8 @@ namespace JhinMod.Modules
             CreateOptionEntry(damageGrowth);
             CreateOptionEntry(attackSpeedBase);
             CreateOptionEntry(attackSpeedGrowth);
+
+            CreateOptionEntry(passiveDuration);
 
             CreateOptionEntry(primaryDamageCoefficient);
             CreateOptionEntry(primaryExecuteMissingHealthPercentage);

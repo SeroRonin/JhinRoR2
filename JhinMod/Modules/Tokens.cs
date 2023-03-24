@@ -39,7 +39,7 @@ namespace JhinMod.Modules
 
             #region Passive
             LanguageAPI.Add(prefix + "PASSIVE_NAME", "Every Moment Matters");
-            LanguageAPI.Add(prefix + "PASSIVE_DESCRIPTION", "Attackspeed only grows with level, other sources instead give <style=cIsDamage>0.25% bonus damage</style> per <style=cIsDamage>1% of bonus attackspeed</style>. Addtionally, <style=cDeath>critical hits</style> grant <style=cIsUtility>10%</style> + (<style=cIsUtility>0.4%</style> per <style=cIsDamage>1% bonus attack speed</style>) <style=cIsUtility>movespeed</style>.");
+            LanguageAPI.Add(prefix + "PASSIVE_DESCRIPTION", "Attack speed only grows with level, other sources instead give <style=cIsDamage>0.25% bonus damage</style> per <style=cIsDamage>1% of bonus attack speed</style>. Addtionally, <style=cDeath>critical hits</style> grant <style=cIsUtility>10%</style> + (<style=cIsUtility>0.4%</style> per <style=cIsDamage>1% bonus attack speed</style>) <style=cIsUtility>bonus movement speed</style>.");
             #endregion
 
             #region Primary
@@ -50,12 +50,12 @@ namespace JhinMod.Modules
 
             #region Secondary
             LanguageAPI.Add(prefix + "SECONDARY_GRENADE_NAME", "Dancing Grenade");
-            LanguageAPI.Add(prefix + "SECONDARY_GRENADE_DESCRIPTION", Helpers.agilePrefix + $"Fire a grenade for <style=cIsDamage>{100f * Config.secondaryDamageCoefficient.Value}% damage</style>. The grenade bounces to nearby enemies up to 3 additional times. Each bounce gains an additional <style=cIsDamage>{100f * Config.secondaryDamageBounceCoefficient.Value}% total damage</style> if it kills the enemy it hits.");
+            LanguageAPI.Add(prefix + "SECONDARY_GRENADE_DESCRIPTION", Helpers.agilePrefix + $"Fire a grenade for <style=cIsDamage>{100f * Config.secondaryDamageCoefficient.Value}% damage</style>. The grenade bounces to nearby enemies up to <style=cIsDamage>3</style> additional times. Each bounce gains an additional <style=cIsDamage>{100f * Config.secondaryDamageBounceCoefficient.Value}% TOTAL damage</style> if it kills the enemy it hits.");
             #endregion
 
             #region Utility
             LanguageAPI.Add(prefix + "UTILITY_FLOURISH_NAME", "Deadly Flourish");
-            LanguageAPI.Add(prefix + "UTILITY_FLOURISH_DESCRIPTION", Helpers.stunningPrefix + $"Fire a <style=cIsDamage>piercing</style> beam for <style=cIsDamage>{100f * Config.utilityDamageCoefficient.Value}% damage</style>.");
+            LanguageAPI.Add(prefix + "UTILITY_FLOURISH_DESCRIPTION", Helpers.stunningPrefix + $"Fire a <style=cIsDamage>piercing</style> beam for <style=cIsDamage>{100f * Config.utilityDamageCoefficient.Value}% damage</style>. Triggers <style=cIsUtility>Every Moment Matters</style> as if Jhin had crit.");
             #endregion
 
             #region Special

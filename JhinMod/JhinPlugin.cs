@@ -13,6 +13,7 @@ using UnityEngine;
 using UnityEngine.Networking;
 using JhinMod.Content.UI;
 using JhinMod.Content.Components;
+using JhinMod.Modules;
 
 [module: UnverifiableCode]
 [assembly: SecurityPermission(SecurityAction.RequestMinimum, SkipVerification = true)]
@@ -172,7 +173,7 @@ namespace JhinMod
                 {
                     if (NetworkServer.active)
                     {
-                        attackerBody.AddTimedBuff(Modules.Buffs.jhinCritMovespeedBuff, 2f);
+                        attackerBody.AddTimedBuff(Modules.Buffs.jhinCritMovespeedBuff, Modules.Config.passiveDuration.Value);
                     }
                 }
             }

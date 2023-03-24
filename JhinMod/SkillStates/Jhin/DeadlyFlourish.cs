@@ -3,6 +3,7 @@ using JhinMod.Content.Components;
 using JhinMod.Modules;
 using RoR2;
 using UnityEngine;
+using static RoR2.BulletAttack;
 
 namespace JhinMod.SkillStates
 {
@@ -98,10 +99,26 @@ namespace JhinMod.SkillStates
                         spreadPitchScale = 0f,
                         spreadYawScale = 0f,
                         queryTriggerInteraction = QueryTriggerInteraction.UseGlobal,
+                        hitCallback = BulletHitCallback,
                         hitEffectPrefab = EntityStates.Commando.CommandoWeapon.FirePistol2.hitEffectPrefab,
                     }.Fire();
                 }
             }
+        }
+        private bool BulletHitCallback(BulletAttack bulletAttack, ref BulletHit hitInfo)
+        {
+
+            var result = BulletAttack.defaultHitCallback(bulletAttack, ref hitInfo);
+            HealthComponent healthComponent = hitInfo.hitHurtBox ? hitInfo.hitHurtBox.healthComponent : null;
+
+            
+            if (healthComponent && hitInfo.hitHurtBox.teamIndex != base.teamComponent.teamIndex)
+            {
+                base.characterBody.AddTimedBuff(Modules.Buffs.jhinCritMovespeedBuff, Config.passiveDuration.Value * 2f );
+            }
+            
+
+            return result;
         }
 
         public override void FixedUpdate()
