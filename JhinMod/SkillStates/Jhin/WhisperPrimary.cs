@@ -139,7 +139,7 @@ namespace JhinMod.SkillStates
                 procChainMask = default(ProcChainMask),
                 procCoefficient = WhisperPrimary.procCoefficient,
                 maxDistance = WhisperPrimary.range,
-                radius = 0.75f,
+                radius = 0.25f,
                 isCrit = isCrit,
                 muzzleName = muzzleString,
                 minSpread = 0f,
@@ -178,13 +178,6 @@ namespace JhinMod.SkillStates
         protected virtual void OnFireBulletAuthority(Ray aimRay)
         {
         }
-        
-        /*
-        protected virtual void ModifyBullet(BulletAttack bulletAttack)
-        {
-            //Make 4th shot deal % missing health damage
-        }
-        */
 
         private bool BulletHitCallback(BulletAttack bulletAttack, ref BulletHit hitInfo)
         {

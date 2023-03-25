@@ -276,7 +276,49 @@ namespace JhinMod.Modules.Survivors
             skins.Add(defaultSkin);
             #endregion
 
-            #region ProjectSkin
+            #region High Noon
+
+            //creating a new skindef as we did before
+            SkinDef highnoonSkin = Modules.Skins.CreateSkinDef(JHIN_PREFIX + "HIGHNOON_SKIN_NAME",
+                Assets.mainAssetBundle.LoadAsset<Sprite>("texHighNoonSkinIcon"),
+                defaultRendererinfos,
+                prefabCharacterModel.gameObject);
+
+            //adding the mesh replacements as above. 
+            //if you don't want to replace the mesh (for example, you only want to replace the material), pass in null so the order is preserved
+            highnoonSkin.meshReplacements = Modules.Skins.getMeshReplacements(defaultRendererinfos,
+                "JhinMeshProject");
+
+            //masterySkin has a new set of RendererInfos (based on default rendererinfos)
+            //you can simply access the RendererInfos defaultMaterials and set them to the new materials for your skin.
+            highnoonSkin.rendererInfos[0].defaultMaterial = Modules.Materials.CreateHopooMaterial("matJhinProject");
+
+            skins.Add(highnoonSkin);
+
+            #endregion
+
+            #region Blood Moon
+
+            //creating a new skindef as we did before
+            SkinDef bloodmoonSkin = Modules.Skins.CreateSkinDef(JHIN_PREFIX + "BLOODMOON_SKIN_NAME",
+                Assets.mainAssetBundle.LoadAsset<Sprite>("texBloodMoonSkinIcon"),
+                defaultRendererinfos,
+                prefabCharacterModel.gameObject);
+
+            //adding the mesh replacements as above. 
+            //if you don't want to replace the mesh (for example, you only want to replace the material), pass in null so the order is preserved
+            bloodmoonSkin.meshReplacements = Modules.Skins.getMeshReplacements(defaultRendererinfos,
+                "JhinMeshProject");
+
+            //masterySkin has a new set of RendererInfos (based on default rendererinfos)
+            //you can simply access the RendererInfos defaultMaterials and set them to the new materials for your skin.
+            bloodmoonSkin.rendererInfos[0].defaultMaterial = Modules.Materials.CreateHopooMaterial("matJhinProject");
+
+            skins.Add(bloodmoonSkin);
+
+            #endregion
+
+            #region PROJECT
 
             //creating a new skindef as we did before
             SkinDef projectSkin = Modules.Skins.CreateSkinDef(JHIN_PREFIX + "PROJECT_SKIN_NAME",

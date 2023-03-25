@@ -77,10 +77,11 @@ namespace JhinMod.Content.Components
                     damage = blastAttack.baseDamage * (missingHealthPercent * Config.specialExecutePercentage.Value);
                     
                     //Band-aid patch that fixes execute damage critting AFTER already scaling off a crit, creating up to 600% bonus damage instead of the intended 300%
-                    if (blastAttack.crit)
-                    {
-                        damage = damage / 2;
-                    }
+                    //Didn't work, only nerfed crits
+                    //if (blastAttack.crit)
+                    //{
+                    //    damage = damage / 2;
+                    //}
 
                     ChatMessage.Send($"ult base {blastAttack.baseDamage}");
                     ChatMessage.Send($"ult bonus {damage}");

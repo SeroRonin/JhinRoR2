@@ -35,18 +35,15 @@ namespace JhinMod
 
     public class JhinPlugin : BaseUnityPlugin
     {
-        // if you don't change these you're giving permission to deprecate the mod-
-        //  please change the names to your own stuff, thanks
-        //   this shouldn't even have to be said
         public const string MODUID = "com.seroronin.JhinMod";
         public const string MODNAME = "JhinMod";
         public const string MODVERSION = "1.0.0";
 
-        // a prefix for name tokens to prevent conflicts- please capitalize all name tokens for convention
         public const string DEVELOPER_PREFIX = "SERORONIN";
 
         public static JhinPlugin instance;
         public bool RoR2OptionsEnabled;
+
         private void Awake()
         {
             instance = this;
@@ -90,7 +87,6 @@ namespace JhinMod
 
         private void Hook()
         {
-            // run hooks here, disabling one is as simple as commenting out the line
             On.RoR2.GlobalEventManager.OnHitEnemy += GlobalEventManager_OnHitEnemy;
             On.RoR2.CharacterBody.RecalculateStats += CharacterBody_RecalculateStats;
             On.RoR2.UI.HUD.Awake += HUD_Awake;
@@ -179,6 +175,81 @@ namespace JhinMod
             }
         }
 
+        private void CharacterBody_RecalculateStats(On.RoR2.CharacterBody.orig_RecalculateStats orig, CharacterBody self)
+        {
+            orig(self);
+
+            if (self)
+            {
+                //If we are the right survivor, recalculate our states
+                if (self.baseNameToken == JhinPlugin.DEVELOPER_PREFIX + "_JHIN_BODY_NAME")
+                {
+                    var premodDam = self.damage;
+                    var premodAtkSpd = self.attackSpeed;
+                    var premodMovespeed = self.moveSpeed;
+
+                    var atkSpdLocked = self.baseAttackSpeed + (self.levelAttackSpeed * self.level);
+                    var atkSpdBonus = Mathf.Max(premodAtkSpd - atkSpdLocked, 0);
+                    var damBonus = CalculateDamageBonus(premodDam, atkSpdBonus, atkSpdLocked);
+
+                    /*
+                    ChatMessage.Send($"Damage Premod: {premodDam}");
+                    ChatMessage.Send($"Damage Bonus: {damBonus}");
+                    ChatMessage.Send($"AS Total: {premodAtkSpd}");
+                    ChatMessage.Send($"AS Locked: {atkSpdLocked}");
+                    ChatMessage.Send($"AS Bonus: {atkSpdBonus}");
+                    */
+
+                    //Apply bonus damage
+                    self.damage += damBonus;
+
+                    //Lock our attackspeed
+                    self.attackSpeed = atkSpdLocked;
+
+                    if (self.HasBuff(Modules.Buffs.jhinCritMovespeedBuff))
+                    {
+                        var movespeedBonus = CalculateMovespeedBonus(premodMovespeed, atkSpdBonus, atkSpdLocked);
+                        self.moveSpeed += movespeedBonus;
+                    }
+                }
+
+            }
+
+        }
+
+        /// <summary>
+        /// Calculates additional base damage based on attack speed bonus
+        /// </summary>
+        /// <param name="damage"></param>
+        /// <param name="attakSpeedBonus"></param>
+        /// <param name="attackSpeedLocked"></param>
+        /// <returns></returns>
+        public float CalculateDamageBonus(float damage, float attakSpeedBonus, float attackSpeedLocked)
+        {
+            var percentDam = 0.0025f; //What percentage, as a decimal, of damage do we want to add per percent of bonus attackspeed?
+            var percentAtkSpd = 100 * (attakSpeedBonus / attackSpeedLocked); //Convert bonus attack speed from Multiplier to Percent
+            var damageBonus = damage * (percentDam * percentAtkSpd);
+
+            return damageBonus;
+        }
+
+        /// <summary>
+        /// Calculates additional movespeed granted by critical hit buff
+        /// </summary>
+        /// <param name="movespeed"></param>
+        /// <param name="attakSpeedBonus"></param>
+        /// <param name="attackSpeedLocked"></param>
+        /// <returns></returns>
+        public float CalculateMovespeedBonus(float movespeed, float attakSpeedBonus, float attackSpeedLocked)
+        {
+            var percentMove = 0.004f; //What percentage, as a decimal, of damage do we want to add per percent of bonus attackspeed?
+            var percentAtkSpd = 100 * (attakSpeedBonus / attackSpeedLocked); //Convert bonus attack speed from Multiplier to Percent
+            var movespeedBonus = movespeed * (0.1f + (percentMove * percentAtkSpd));
+
+            return movespeedBonus;
+        }
+
+        #region UI
         private JhinAmmoUI ammoUI;
 
         private void CreateAmmoUI(RoR2.UI.HUD hud)
@@ -236,83 +307,10 @@ namespace JhinMod
             }
         }
 
-        private void CharacterBody_RecalculateStats(On.RoR2.CharacterBody.orig_RecalculateStats orig, CharacterBody self)
-        {
-            orig(self);
-            
-            if (self)
-            {
-                //If we are the right survivor, recalculate our states
-                if (self.baseNameToken == JhinPlugin.DEVELOPER_PREFIX + "_JHIN_BODY_NAME")
-                {
-                    var premodDam = self.damage;
-                    var premodAtkSpd = self.attackSpeed;
-                    var premodMovespeed = self.moveSpeed;
-
-                    var atkSpdLocked = self.baseAttackSpeed + (self.levelAttackSpeed * self.level);
-                    var atkSpdBonus = Mathf.Max(premodAtkSpd - atkSpdLocked, 0);
-                    var damBonus = CalculateDamageBonus(premodDam, atkSpdBonus, atkSpdLocked);
-
-                    /*
-                    ChatMessage.Send($"Damage Premod: {premodDam}");
-                    ChatMessage.Send($"Damage Bonus: {damBonus}");
-                    ChatMessage.Send($"AS Total: {premodAtkSpd}");
-                    ChatMessage.Send($"AS Locked: {atkSpdLocked}");
-                    ChatMessage.Send($"AS Bonus: {atkSpdBonus}");
-                    */
-
-                    //Apply bonus damage
-                    self.damage += damBonus;
-
-                    //Lock our attackspeed
-                    self.attackSpeed = atkSpdLocked; 
-                    
-                    if (self.HasBuff(Modules.Buffs.jhinCritMovespeedBuff))
-                    {
-                        var movespeedBonus = CalculateMovespeedBonus(premodMovespeed, atkSpdBonus, atkSpdLocked);
-                        self.moveSpeed += movespeedBonus;
-                    }
-                }
-                
-            }
-            
-        }
-
-        /// <summary>
-        /// Calculates additional base damage based on attack speed bonus
-        /// </summary>
-        /// <param name="damage"></param>
-        /// <param name="attakSpeedBonus"></param>
-        /// <param name="attackSpeedLocked"></param>
-        /// <returns></returns>
-        public float CalculateDamageBonus( float damage, float attakSpeedBonus, float attackSpeedLocked )
-        {
-            var percentDam = 0.0025f ; //What percentage, as a decimal, of damage do we want to add per percent of bonus attackspeed?
-            var percentAtkSpd = 100 * (attakSpeedBonus / attackSpeedLocked) ; //Convert bonus attack speed from Multiplier to Percent
-            var damageBonus = damage * ( percentDam * percentAtkSpd);
-
-            return damageBonus;
-        }
-
-        /// <summary>
-        /// Calculates additional movespeed granted by critical hit buff
-        /// </summary>
-        /// <param name="movespeed"></param>
-        /// <param name="attakSpeedBonus"></param>
-        /// <param name="attackSpeedLocked"></param>
-        /// <returns></returns>
-        public float CalculateMovespeedBonus(float movespeed, float attakSpeedBonus, float attackSpeedLocked)
-        {
-            var percentMove = 0.004f; //What percentage, as a decimal, of damage do we want to add per percent of bonus attackspeed?
-            var percentAtkSpd = 100 * (attakSpeedBonus / attackSpeedLocked); //Convert bonus attack speed from Multiplier to Percent
-            var movespeedBonus = movespeed * (0.1f + (percentMove * percentAtkSpd) );
-
-            return movespeedBonus;
-        }
+        #endregion
 
         private void UnHooks()
         {
-            // run hooks here, disabling one is as simple as commenting out the line
             On.RoR2.GlobalEventManager.OnHitEnemy -= GlobalEventManager_OnHitEnemy;
             On.RoR2.CharacterBody.RecalculateStats -= CharacterBody_RecalculateStats;
             On.RoR2.UI.HUD.Awake -= HUD_Awake;

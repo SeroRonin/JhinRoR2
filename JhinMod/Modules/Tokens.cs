@@ -33,7 +33,9 @@ namespace JhinMod.Modules
 
             #region Skins
             LanguageAPI.Add(prefix + "DEFAULT_SKIN_NAME", "Jhin");
-            LanguageAPI.Add(prefix + "PROJECT_SKIN_NAME", "Project: Jhin");
+            LanguageAPI.Add(prefix + "HIGHNOON_SKIN_NAME", "High Noon Jhin");
+            LanguageAPI.Add(prefix + "BLOODMOON_SKIN_NAME", "Blood Moon Jhin");
+            LanguageAPI.Add(prefix + "PROJECT_SKIN_NAME", "PROJECT: Jhin");
             LanguageAPI.Add(prefix + "MASTERY_SKIN_NAME", "Alternate");
             #endregion
 

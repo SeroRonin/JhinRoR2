@@ -96,7 +96,15 @@ namespace JhinMod.Modules
         }
         public static string GetSkinName(int skinIndex)
         {
-            if (skinIndex == 1) return "ProjectJhin";
+            var index = skinIndex;
+            if (Config.sfxChoice.Value != Config.SFXChoice.SkinDependent) index = (int)Config.sfxChoice.Value;
+
+            //returns skin String based on Enum found in Modules.Config
+            //if we don't get a match, just use the base name
+
+            //if (index == 1) return "HighnoonJhin";
+            //if (index == 2) return "BloodmoonJhin";
+            if (index == 3) return "ProjectJhin";
             return "Jhin";
         }
     }

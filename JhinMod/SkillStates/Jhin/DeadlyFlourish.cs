@@ -91,7 +91,7 @@ namespace JhinMod.SkillStates
                         smartCollision = false,
                         procChainMask = default(ProcChainMask),
                         procCoefficient = procCoefficient,
-                        radius = 0.75f,
+                        radius = 1.5f,
                         sniper = false,
                         stopperMask = LayerIndex.world.mask,
                         weapon = null,

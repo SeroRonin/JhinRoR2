@@ -168,6 +168,13 @@ namespace JhinMod.Modules
             */
         }
 
+        /// <summary>
+        /// Helper function
+        /// Creates Config description entries that include default values as a part of the description
+        /// </summary>
+        /// <param name="desc"></param>
+        /// <param name="defaultVal"></param>
+        /// <returns></returns>
         internal static String CreateOptionDesc(string desc, float defaultVal)
         {
             if (String.IsNullOrEmpty(desc))
@@ -175,6 +182,14 @@ namespace JhinMod.Modules
             else
                 return desc + Environment.NewLine + Environment.NewLine + $"Default: {defaultVal}";
         }
+
+        /// <summary>
+        /// Helper function
+        /// Creates Config description entries that include default values as a part of the description
+        /// </summary>
+        /// <param name="desc"></param>
+        /// <param name="defaultVal"></param>
+        /// <returns></returns>
         internal static String CreateOptionDesc(string desc, SFXChoice defaultVal)
         {
             return desc + Environment.NewLine + Environment.NewLine + $"Default: {defaultVal}";
@@ -216,6 +231,14 @@ namespace JhinMod.Modules
 
             CreateOptionEntry(sfxChoice);
         }
+
+        /// <summary>
+        /// Helper function that creates Risk of Rain Options entries without having to do a bunch of specification
+        /// </summary>
+        /// <param name="configEntry"></param>
+        /// <param name="autoScale"></param>
+        /// <param name="max"></param>
+        /// <param name="increment"></param>
         internal static void CreateOptionEntry(ConfigEntryBase configEntry, bool autoScale = true, float max = 100, float increment = 10)
         {
             var maxOut = max;
@@ -272,11 +295,11 @@ namespace JhinMod.Modules
         }
         public enum SFXChoice
         {
-            SkinDependent,
             Base,
             HighNoon,
             BloodMoon,
-            Project
+            Project,
+            SkinDependent
         }
     }
 }
