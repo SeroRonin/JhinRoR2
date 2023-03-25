@@ -13,42 +13,61 @@ Jhin as a survivor is meant to deliver a low APM, high damage experience. He has
 ### Features
 * Unique scaling iconic to Jhin's playstyle in League of Legends
 * Custom animations paired with animations from League to bridge the difference in game styles
-* SFX based on which skin you use (or optionally set a specific skins' SFX in config)
+* SFX based on which skin you use[^skinSFX]
 * Item Display support up to SOTV
 
 ### Planned Features
-> Features I intend to add, should I have the motivation to continue working on this
+> Features I would like to add, should I have the motivation to continue working on this
 * Custom VFX, with skin-dependancy if possible
 * VO and Emotes built off of LemonLust's designs
 * An alternate ability based off of Captive Audience[^altAbility]
 
 ---
-### Skills
-#### Passive: Every Moment Matters
-> Add Image
+# Skills
+![Passive](https://user-images.githubusercontent.com/8404018/227687730-699d33f8-4600-4c5f-8b23-0a9fe804f999.png)
 
+<details>
+<summary> Passive </summary>
 Jhin has a unique interaction with Attack Speed. Unlike other survivors, he gains attack speed with levels, but he CANNOT gain any from other sources. Instead, bonus attack speed increases his base damage, as well as increasing the movespeed bonus he gains from landing critical hits. Speaking of which, critical hits grant bonus movespeed for 2 seconds.
+</details>
 
-#### Primary: Whisper
+#
+
+![Primary](https://user-images.githubusercontent.com/8404018/227687917-98b7b76e-0619-4720-9201-f7d44f52bace.png)
+
+<details>
+<summary> Primary </summary>
 <img src="https://user-images.githubusercontent.com/8404018/227470478-574e16f1-0d46-4de2-9b27-a5201b1fb423.png" width="100" />
-> Add Image
 
 Whisper has a unique ammo and reload system, utilizing shots represented by the tally marks and a reload timer represented by the ring. Jhin reloads after the 4th shot, or after 10 seconds without firing. Casting any skill will reset the automatic reload timer and interrupt an active reload.
+</details>
 
-#### Secondary: Dancing Grenade
-> Add Image
+#
+ 
+![Secondary](https://user-images.githubusercontent.com/8404018/227687928-de015921-986f-4886-96b0-a3eff4b96cb1.png)
 
+<details>
+<summary> Secondary </summary>
 Dancing Grenade functions similarly to Huntress' Glaive, but it cannot bounce to enemies it has already hit. Instead of gaining a small percentage of base damage per bounce, Dancing Grenade gains %35 TOTAL damage for each kill it gets.
+</details>
 
-#### Utility: Deadly Flourish
-> Add Image
+#
 
+![Utility](https://user-images.githubusercontent.com/8404018/227687935-c44c2ba0-e6d8-478b-9788-2496a45a78e4.png)
+ 
+<details>
+<summary> Utility </summary>
 Deadly Flourish is a simple beam attack that stuns every enemy it hits. It triggers Jhin's passive as if he had landed a crit, with double the duration.
+</details>
 
-#### Special: Curtain Call
-> Add Image
+#
 
+![Special](https://user-images.githubusercontent.com/8404018/227687962-42b5dfea-f03f-4e7d-b432-884f8ecb7e0a.png)
+ 
+<details>
+<summary> Special </summary>
 Curtain Call is a primary skill override, like that of Railgunner's scope. For 10 seconds, it replaces Whisper with 4 shots that deal massive AOE damage. It automatically reloads Whisper as well, so you don't have to worry about reloading after firing all 4 shots.
+</details>
 
 ---
 
@@ -64,7 +83,7 @@ Curtain Call is a primary skill override, like that of Railgunner's scope. For 1
 * Empyrean [Not Planned]
 
 
-## Credits
+## Special Credits and Thanks
 * **Riot Games**: Jhin
   * Character assets including Models, Textures, SFX, and a majority of Animations
 * **TimeSweeper**: HenryTutorial 
@@ -109,6 +128,8 @@ Curtain Call is a primary skill override, like that of Railgunner's scope. For 1
 `1.0.0`
 * Initial Release
 
+[^skinSFX]:
+    There is also the option to override which set of SFX to use in the config.
 [^altAbility]:
     The planned ability would have jhin place down his traps, which would function as expected.
     Additionally, I want to implement shooting the traps to detonate the instantly, pushing the player back if they are close enough
