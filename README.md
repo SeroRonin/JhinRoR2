@@ -14,7 +14,7 @@ Jhin as a survivor is meant to deliver a low APM, high damage experience. He has
 * Unique scaling iconic to Jhin's playstyle in League of Legends
 * Custom animations paired with animations from League to bridge the difference in game styles
 * SFX based on which skin you use[^skinSFX]
-* Item Display support up to SOTV
+* Item Display support up to SOTV[^itemDisplay]
 
 ### Planned Features
 > Features I would like to add, should I have the motivation to continue working on this
@@ -72,15 +72,15 @@ Curtain Call is a primary skill override, like that of Railgunner's scope. For 1
 ---
 
 ## Skins
-> Each skin has it's own unique SFX, and if possible, VFX (when implemented). Creating the soundbanks for each is a pain-staking process, and as such, only a few skins will be supported at launch. others are not planned, and will be added only if I have the motivation to do so.
-* High Noon [Not Implemented Yet]
-* Blood Moon [Not Implemented Yet]
-* SKT T1 [Not Planned]
+> Each skin has it's own unique SFX, and if possible, VFX (when implemented). Creating the soundbanks for each is a pain-staking process, and as such, only a few skins will have unique SFX at launch. Others are not planned, and will be added only if I have the motivation to do so.
+* High Noon [No SFX yet]
+* Blood Moon [No SFX yet]
+* SKT T1 [Not Implemented Yet, SFX not planned]
 * PROJECT: Jhin
-* Dark Cosmic [Not Possbile][^darkcosmic]
-* Shan Hai Scrolls [Not Planned]
-* DWG [Not Planned]
-* Empyrean [Not Planned]
+* Dark Cosmic [Not Possbile?][^darkcosmic]
+* Shan Hai Scrolls [Not Implemented Yet, SFX not planned]
+* DWG [Not Implemented Yet, SFX not planned]
+* Empyrean [Not Implemented Yet, SFX not planned]
 
 
 ## Special Credits and Thanks
@@ -130,8 +130,10 @@ Curtain Call is a primary skill override, like that of Railgunner's scope. For 1
 
 [^skinSFX]:
     There is also the option to override which set of SFX to use in the config.
+[^itemDisplay]:
+    Some items with minimal or lackluster visuals, such as Leeching Seed, are simply hidden. I simply could not find extra space to place certain items without non-sensically placing them around the cloak.
 [^altAbility]:
     The planned ability would have jhin place down his traps, which would function as expected.
-    Additionally, I want to implement shooting the traps to detonate the instantly, pushing the player back if they are close enough
+    Additionally, I want to implement shooting the traps to detonate the instantly, pushing the player back if they are close enough.
 [^darkcosmic]:
-    Skins do not support custom animation overrides, so unfortunately Dark Cosmic Jhin with its unique animations is not possible. It may be possible to create a     custom version that uses the default animations, but it may not look very appealing and as such will not be entertained until there is nothing else to do
+    As far as I know, skins in RoR2 do not support custom animation overrides, so unfortunately Dark Cosmic Jhin with its unique animations is not possible without a duplicate survivor. It may be possible to create a custom version that uses the default animations, but it may not look very appealing and as such will not be entertained until there is nothing else to do

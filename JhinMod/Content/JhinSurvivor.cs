@@ -287,11 +287,11 @@ namespace JhinMod.Modules.Survivors
             //adding the mesh replacements as above. 
             //if you don't want to replace the mesh (for example, you only want to replace the material), pass in null so the order is preserved
             highnoonSkin.meshReplacements = Modules.Skins.getMeshReplacements(defaultRendererinfos,
-                "JhinMeshProject");
+                "jhinMeshHighNoon");
 
             //masterySkin has a new set of RendererInfos (based on default rendererinfos)
             //you can simply access the RendererInfos defaultMaterials and set them to the new materials for your skin.
-            highnoonSkin.rendererInfos[0].defaultMaterial = Modules.Materials.CreateHopooMaterial("matJhinProject");
+            highnoonSkin.rendererInfos[0].defaultMaterial = Modules.Materials.CreateHopooMaterial("matJhinHighNoon");
 
             skins.Add(highnoonSkin);
 
@@ -308,11 +308,11 @@ namespace JhinMod.Modules.Survivors
             //adding the mesh replacements as above. 
             //if you don't want to replace the mesh (for example, you only want to replace the material), pass in null so the order is preserved
             bloodmoonSkin.meshReplacements = Modules.Skins.getMeshReplacements(defaultRendererinfos,
-                "JhinMeshProject");
+                "jhinMeshBloodMoon");
 
             //masterySkin has a new set of RendererInfos (based on default rendererinfos)
             //you can simply access the RendererInfos defaultMaterials and set them to the new materials for your skin.
-            bloodmoonSkin.rendererInfos[0].defaultMaterial = Modules.Materials.CreateHopooMaterial("matJhinProject");
+            bloodmoonSkin.rendererInfos[0].defaultMaterial = Modules.Materials.CreateHopooMaterial("matJhinBloodMoon");
 
             skins.Add(bloodmoonSkin);
 
@@ -329,7 +329,7 @@ namespace JhinMod.Modules.Survivors
             //adding the mesh replacements as above. 
             //if you don't want to replace the mesh (for example, you only want to replace the material), pass in null so the order is preserved
             projectSkin.meshReplacements = Modules.Skins.getMeshReplacements(defaultRendererinfos,
-                "JhinMeshProject");
+                "jhinMeshProject");
 
             //masterySkin has a new set of RendererInfos (based on default rendererinfos)
             //you can simply access the RendererInfos defaultMaterials and set them to the new materials for your skin.
