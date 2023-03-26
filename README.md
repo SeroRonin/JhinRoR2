@@ -1,3 +1,10 @@
+If you like my mods, consider supporting me!
+
+[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/V7V7JC77Y)
+
+[![Patreon](https://c5.patreon.com/external/logo/become_a_patron_button.png)](https://www.patreon.com/SeroRonin)
+---
+
 ### This mod was created under Riot Games' "Legal Jibber Jabber" policy using assets owned by Riot Games.  Riot Games does not endorse or sponsor this project.
 ---
 
@@ -12,7 +19,7 @@ Jhin as a survivor is meant to deliver a low APM, high damage experience. He has
 
 ### Features
 * Unique scaling iconic to Jhin's playstyle in League of Legends
-* Custom animations paired with animations from League to bridge the difference in game styles
+* Animations from League, with custom animations to bridge the difference in game styles
 * SFX based on which skin you use[^skinSFX]
 * Item Display support up to SOTV[^itemDisplay]
 
@@ -21,6 +28,34 @@ Jhin as a survivor is meant to deliver a low APM, high damage experience. He has
 * Custom VFX, with skin-dependancy if possible
 * VO and Emotes built off of LemonLust's designs
 * An alternate ability based off of Captive Audience[^altAbility]
+
+### Stats[^armorFootnote] 
+<table>
+  <tr>
+    <th></th>
+    <th>Health</th>
+    <th>Regen</th>
+    <th>Armor</th>
+    <th>Damage</th>
+    <th>Attack Speed</th>
+  </tr>
+  <tr>
+    <th>Base</th>
+    <td>110</td>
+    <td>1.5</td>
+    <td>0</td>
+    <td>12</td>
+    <td>0.625</td>
+  </tr>
+   <tr>
+    <th>Growth</th>
+    <td>33</td>
+    <td>0.2</td>
+    <td>0</td>
+    <td>0.24</td>
+    <td>0.019</td>
+  </tr>
+</table>
 
 ---
 # Skills
@@ -91,16 +126,16 @@ Curtain Call is a primary skill override, like that of Railgunner's scope. For 1
 * **Lemonlust**: Sett Survivor 
   * Referenced this mod a lot to help me learn RoR2 modding
 * **EnforcerGang**: Rocket Survivor 
-  * Referenced code for custom missle prefab spawning
+  * Referenced code for custom missile prefab spawning
 
 ## Mod Compatibility:
-> Suggest compatibilities and report compatibility issues under Github Issues, or through my Discord: [NOT CREATED YET]
+> Suggest compatibilities and report compatibility issues under Github Issues, or through my Discord: [https://discord.gg/RSs2kA7yRu](https://discord.gg/RSs2kA7yRu)
 * Risk Of Options
 * (To Be Considered) BetterUI
 * (To Be Considered) CustomEmoteAPI
 
 ## Known Issues
-> Bugs can be reported under Github Issues, or through my Discord: [NOT CREATED YET]
+> Bugs can be reported under Github Issues, or through my Discord: [https://discord.gg/RSs2kA7yRu](https://discord.gg/RSs2kA7yRu)
 * Ult VFX sometimes does not appear
 * Ult projectile sometimes passes through enemies due to its speed
 * Ult applies execute damage as an additional instance of damage (this is due to explosions not supporting post-hit pre-damage modifications)
@@ -129,11 +164,13 @@ Curtain Call is a primary skill override, like that of Railgunner's scope. For 1
 * Initial Release
 
 [^skinSFX]:
-    There is also the option to override which set of SFX to use in the config.
+    There is also the option to override which set of SFX to use in the config. This does not require a restart.
 [^itemDisplay]:
     Some items with minimal or lackluster visuals, such as Leeching Seed, are simply hidden. I simply could not find extra space to place certain items without non-sensically placing them around the cloak.
 [^altAbility]:
     The planned ability would have jhin place down his traps, which would function as expected.
     Additionally, I want to implement shooting the traps to detonate the instantly, pushing the player back if they are close enough.
+[^armorFootnote]:
+    Jhin does not have any armor at the moment, but I may add some later, should his lack of mobility be too punishing. All stats can be modified via Config, but require a restart to take effect
 [^darkcosmic]:
     As far as I know, skins in RoR2 do not support custom animation overrides, so unfortunately Dark Cosmic Jhin with its unique animations is not possible without a duplicate survivor. It may be possible to create a custom version that uses the default animations, but it may not look very appealing and as such will not be entertained until there is nothing else to do

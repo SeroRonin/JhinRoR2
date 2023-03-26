@@ -13,8 +13,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="JhinBank.bnk" />
-    <None Remove="ProjectJhinBank.bnk" />
+    <None Remove="SoundBanks\JhinBank.bnk" />
+    <None Remove="SoundBanks\ProjectJhinBank.bnk" />
     <None Remove="Modules\Characters\Jhin.cs~RF6221a098.TMP" />
     <None Remove="jhinassetbundle" />
   </ItemGroup>
@@ -30,8 +30,8 @@
 	</ItemGroup>
 	
   <ItemGroup>
-    <EmbeddedResource Include="JhinBank.bnk" />
-    <EmbeddedResource Include="ProjectJhinBank.bnk" />
+    <EmbeddedResource Include="SoundBanks\JhinBank.bnk" />
+    <EmbeddedResource Include="SoundBanks\ProjectJhinBank.bnk" />
     <EmbeddedResource Include="jhinassetbundle" />
   </ItemGroup>
 
