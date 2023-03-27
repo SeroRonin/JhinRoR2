@@ -198,7 +198,7 @@ namespace JhinMod.Modules
         internal static void CreateRiskofOptionsCompat()
         {
             ModSettingsManager.SetModDescription("Jhin Survivor Mod Configuration. ANY CHANGES WILL REQUIRE A RESTART.");
-            ModSettingsManager.SetModIcon(Assets.mainAssetBundle.LoadAsset<Sprite>("texMainSkinIcon"));
+            ModSettingsManager.SetModIcon(Assets.mainAssetBundle.LoadAsset<Sprite>("texJhinIcon"));
 
             CreateOptionEntry(healthBase);
             CreateOptionEntry(healthGrowth);
