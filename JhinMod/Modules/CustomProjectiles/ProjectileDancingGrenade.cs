@@ -74,6 +74,8 @@ namespace JhinMod.Modules.CustomProjectiles
                 //Did we kill the target we hit?
                 this.failedToKill |= (!healthComponent || healthComponent.alive);
 
+                Helpers.PlaySoundDynamic("QHit", this.attacker, this.target.gameObject);
+
                 if (this.bouncesRemaining == 0)
                 {
                     Helpers.PlaySoundDynamic("QHitLast", this.attacker, this.target.gameObject);
@@ -121,7 +123,6 @@ namespace JhinMod.Modules.CustomProjectiles
                             lightningOrb.duration = speedSet;
                             lightningOrb.initialDistance = distanceToTarget;
 
-
                             //If we killed, add a percentage of current damage on top
                             if (!this.failedToKill)
                             {
@@ -129,8 +130,6 @@ namespace JhinMod.Modules.CustomProjectiles
                             }
                             OrbManager.instance.AddOrb(lightningOrb);
 
-                            Helpers.PlaySoundDynamic("QHit", this.attacker, this.target.gameObject);
-                            //Util.PlaySound("Play_Seroronin_Jhin_QHit", this.target.gameObject );
                         }
                         else
                         {

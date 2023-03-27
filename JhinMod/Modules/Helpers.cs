@@ -102,8 +102,8 @@ namespace JhinMod.Modules
             //returns skin String based on Enum found in Modules.Config
             //if we don't get a match, just use the base name
 
-            //if (index == 1) return "HighnoonJhin";
-            //if (index == 2) return "BloodmoonJhin";
+            if (index == 1) return "HighNoonJhin";
+            //if (index == 2) return "BloodMoonJhin";
             if (index == 3) return "ProjectJhin";
             return "Jhin";
         }

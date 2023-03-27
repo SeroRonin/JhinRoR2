@@ -85,12 +85,14 @@ namespace JhinMod.Modules.Survivors
         {
             base.InitializeCharacter();
 
+            //Create + add custom components
             this.bodyPrefab.AddComponent<JhinTracker>();
             this.bodyPrefab.AddComponent<JhinStateController>();
             var ultStateMachine = this.bodyPrefab.AddComponent<EntityStateMachine>();
             ultStateMachine.customName = "WeaponMode";
             ultStateMachine.mainStateType = new SerializableEntityStateType(typeof(JhinWeaponMainState));
 
+            //Override ragdoll death behavior with animated death EntityState
             CharacterDeathBehavior characterDeathBehavior = bodyPrefab.GetComponent<CharacterDeathBehavior>();
             characterDeathBehavior.deathState = new SerializableEntityStateType(typeof(JhinMod.SkillStates.BaseStates.AnimatedDeathState));
         }
@@ -299,19 +301,17 @@ namespace JhinMod.Modules.Survivors
 
             #region Blood Moon
 
-            //creating a new skindef as we did before
+            //Create SkinDef
             SkinDef bloodmoonSkin = Modules.Skins.CreateSkinDef(JHIN_PREFIX + "BLOODMOON_SKIN_NAME",
                 Assets.mainAssetBundle.LoadAsset<Sprite>("texBloodMoonSkinIcon"),
                 defaultRendererinfos,
                 prefabCharacterModel.gameObject);
 
-            //adding the mesh replacements as above. 
-            //if you don't want to replace the mesh (for example, you only want to replace the material), pass in null so the order is preserved
+            //Replace mesh
             bloodmoonSkin.meshReplacements = Modules.Skins.getMeshReplacements(defaultRendererinfos,
                 "jhinMeshBloodMoon");
 
-            //masterySkin has a new set of RendererInfos (based on default rendererinfos)
-            //you can simply access the RendererInfos defaultMaterials and set them to the new materials for your skin.
+            //Replace material
             bloodmoonSkin.rendererInfos[0].defaultMaterial = Modules.Materials.CreateHopooMaterial("matJhinBloodMoon");
 
             skins.Add(bloodmoonSkin);
@@ -320,19 +320,17 @@ namespace JhinMod.Modules.Survivors
 
             #region PROJECT
 
-            //creating a new skindef as we did before
+            //Create SkinDef
             SkinDef projectSkin = Modules.Skins.CreateSkinDef(JHIN_PREFIX + "PROJECT_SKIN_NAME",
                 Assets.mainAssetBundle.LoadAsset<Sprite>("texProjectSkinIcon"),
                 defaultRendererinfos,
                 prefabCharacterModel.gameObject);
 
-            //adding the mesh replacements as above. 
-            //if you don't want to replace the mesh (for example, you only want to replace the material), pass in null so the order is preserved
+            //Replace mesh
             projectSkin.meshReplacements = Modules.Skins.getMeshReplacements(defaultRendererinfos,
                 "jhinMeshProject");
 
-            //masterySkin has a new set of RendererInfos (based on default rendererinfos)
-            //you can simply access the RendererInfos defaultMaterials and set them to the new materials for your skin.
+            //Replace material
             projectSkin.rendererInfos[0].defaultMaterial = Modules.Materials.CreateHopooMaterial("matJhinProject");
 
             skins.Add(projectSkin);
