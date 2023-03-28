@@ -8,11 +8,10 @@ using JhinMod.Content.Components;
 namespace JhinMod.Modules.SkillDefs
 {
     /// <summary>
-    /// This SkillDef is used to disable the special skill while in use via JhinStateController
-    /// This prevents casting the special multiple times without any benefit
+    /// This SkillDef is used to disable the primary skill when we run out of ammo via JhinStateController
     /// </summary>
-    [CreateAssetMenu(menuName = "RoR2/SkillDef/JhinUltSkillDefSkillDef")]
-    public class JhinUltSkillDef : SkillDef
+    [CreateAssetMenu(menuName = "RoR2/SkillDef/JhinAmmoSkillDefSkillDef")]
+    public class JhinAmmoSkillDef : SkillDef
     {
         public override BaseSkillInstanceData OnAssigned([NotNull] GenericSkill skillSlot)
         {
@@ -22,20 +21,20 @@ namespace JhinMod.Modules.SkillDefs
             };
         }
 
-        private static bool IsUlting([NotNull] GenericSkill skillSlot)
+        private static bool HasAmmo([NotNull] GenericSkill skillSlot)
         {
             JhinStateController jhinAmmoComponent = ((InstanceData)skillSlot.skillInstanceData).jhinAmmoComponent;
-            return jhinAmmoComponent.isUlting;
+            return jhinAmmoComponent.ammoCount != 0;
         }
 
         public override bool CanExecute([NotNull] GenericSkill skillSlot)
         {
-            return !IsUlting(skillSlot) && base.CanExecute(skillSlot);
+            return HasAmmo(skillSlot) && base.CanExecute(skillSlot);
         }
 
         public override bool IsReady([NotNull] GenericSkill skillSlot)
         {
-            return base.IsReady(skillSlot) && !IsUlting(skillSlot);
+            return base.IsReady(skillSlot) && HasAmmo(skillSlot);
         }
 
         protected class InstanceData : BaseSkillInstanceData

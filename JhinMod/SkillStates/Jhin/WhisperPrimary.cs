@@ -204,7 +204,7 @@ namespace JhinMod.SkillStates
             {
                 if (shotIndex == 4)
                 {
-                    var executeDamage = (targetHealthComponent.fullHealth - targetHealthComponent.health) * Config.primaryExecuteMissingHealthPercentage.Value;
+                    var executeDamage = (targetHealthComponent.missingCombinedHealth) * Config.primaryExecuteMissingHealthPercentage.Value;
                     var maxDamage = (damageInfo.damage * Config.primaryExecuteDamageCap.Value);
 
                     damageInfo.damage += Math.Min(executeDamage, maxDamage);

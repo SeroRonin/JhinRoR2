@@ -34,7 +34,7 @@ namespace JhinMod.SkillStates.BaseStates
                 skillIcon = Modules.Assets.mainAssetBundle.LoadAsset<Sprite>("texSpecialShotIcon"),
                 activationState = new EntityStates.SerializableEntityStateType(typeof(CurtainCallShoot)),
                 activationStateMachineName = "Weapon",
-                baseMaxStock = 4,
+                baseMaxStock = 1,
                 baseRechargeInterval = 10f,
                 beginSkillCooldownOnSkillEnd = false,
                 canceledFromSprinting = false,
@@ -46,8 +46,8 @@ namespace JhinMod.SkillStates.BaseStates
                 mustKeyPress = true,
                 cancelSprintingOnActivation = true,
                 rechargeStock = 0,
-                requiredStock = 1,
-                stockToConsume = 1
+                requiredStock = 0,
+                stockToConsume = 0
             });
             primaryOverrideCritSkillDef = Modules.Skills.CreateSkillDef(new SkillDefInfo
             {
@@ -118,7 +118,7 @@ namespace JhinMod.SkillStates.BaseStates
         {
             base.FixedUpdate();
 
-            if (!jhinStateController.ultHasSetLastShot && base.skillLocator.primary.stock == 1)
+            if (!jhinStateController.ultHasSetLastShot && this.jhinStateController.ammoCount == 1)
             {
                 jhinStateController.ultHasSetLastShot = true;
                 SetOverride( primaryOverrideCritSkillDef );

@@ -10,11 +10,11 @@ namespace JhinMod.Modules
             #region Jhin
             string prefix = JhinPlugin.DEVELOPER_PREFIX + "_JHIN_BODY_";
 
-            string desc = "Jhin is a high single-target burst survivor, with an emphasis on heavy hitting shots instead of rapid damage.<color=#CCD3E0>" + Environment.NewLine + Environment.NewLine;
-            desc = desc + "< ! > Jhin can only gain attackspeed from leveling. Any other sources instead increase the effectiveness of his other abilities." + Environment.NewLine + Environment.NewLine;
-            desc = desc + "< ! > Jhin's crits grant him bonus movement speed! Use this to escape tricky situations." + Environment.NewLine + Environment.NewLine;
-            desc = desc + "< ! > Items like Crowbar and Elemental Bands synergize well with Jhin's high burst damage potential." + Environment.NewLine + Environment.NewLine;
-            desc = desc + "< ! > Dancing Grenade and Curtain Call can be used to deal with crowds, which Jhin struggles with during the early game." + Environment.NewLine + Environment.NewLine;
+            string desc = "Jhin is a high damage, single-target burst survivor, with an emphasis on heavy hitting shots instead of rapid damage.<color=#CCD3E0>" + Environment.NewLine + Environment.NewLine;
+            desc = desc + "< ! > Jhin can only gain attack speed from leveling. Any other sources instead increase the damage effectiveness of his other abilities." + Environment.NewLine + Environment.NewLine;
+            desc = desc + "< ! > Jhin's crits grant him bonus movement speed! Use the guaranteed crit from his fourth shot to escape tricky situations." + Environment.NewLine + Environment.NewLine;
+            desc = desc + "< ! > Deadly Flourish can be used to interrupt attacks you otherwise aren't able to avoid. Useful for tripping up those pesky golems!" + Environment.NewLine + Environment.NewLine;
+            desc = desc + "< ! > Dancing Grenade and Curtain Call can be used to deal with crowds, which Jhin can struggle with during the early game." + Environment.NewLine + Environment.NewLine;
 
             string outro = "..and so he left, searching for a canvas upon which to paint his next masterpiece.";
             string outroFailure = "..and so he vanished, forever seeking the perfect canvas.";
@@ -62,7 +62,7 @@ namespace JhinMod.Modules
 
             #region Special
             LanguageAPI.Add(prefix + "SPECIAL_ULT_NAME", "Curtain Call");
-            LanguageAPI.Add(prefix + "SPECIAL_ULT_DESCRIPTION", Helpers.executingPrefix + $"Instantly <style=cIsUtility>reload</style> and empower your next 4 primary shots, firing explosive rounds for <style=cIsDamage>{100f * Config.specialDamageCoefficient.Value}% damage</style>. <style=cDeath>The fourth shot critically strikes</style>.");
+            LanguageAPI.Add(prefix + "SPECIAL_ULT_DESCRIPTION", Helpers.executingPrefix + $"Instantly <style=cIsUtility>reload</style> and empower your primary skill. For the next <style=cIsUtility>10 seconds</style>, using your primary skill fires explosive rounds for <style=cIsDamage>{100f * Config.specialDamageCoefficient.Value}% damage</style>. <style=cDeath>The fourth shot critically strikes</style>.");
 
             LanguageAPI.Add(prefix + "SPECIAL_ULT_SHOT_DESCRIPTION", Helpers.executingPrefix + $"Fire an explosive round for <style=cIsDamage>{100f * Config.specialDamageCoefficient.Value}% damage</style>.");
             LanguageAPI.Add(prefix + "SPECIAL_ULT_SHOT_CRIT_DESCRIPTION", Helpers.executingPrefix + $"Fire an explosive round for <style=cIsDamage>{100f * Config.specialDamageCoefficient.Value}% damage</style>. <style=cDeath>This shot critically strikes</style>.");

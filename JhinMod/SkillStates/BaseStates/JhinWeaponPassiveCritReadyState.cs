@@ -58,8 +58,6 @@ namespace JhinMod.SkillStates.BaseStates
 
             Helpers.PlaySoundDynamic("PassiveCritSpin", base.gameObject);
             Helpers.PlaySoundDynamic("PassiveCritMusic", base.gameObject);
-            //Util.PlaySound("Play_Seroronin_Jhin_PassiveCritSpin", base.gameObject);
-            //Util.PlaySound("Play_Seroronin_Jhin_PassiveCritMusic", base.gameObject);
 
             if (animatorComponent)
             {
@@ -77,8 +75,6 @@ namespace JhinMod.SkillStates.BaseStates
         {
             Helpers.StopSoundDynamic("PassiveCritSpin", base.gameObject);
             Helpers.StopSoundDynamic("PassiveCritMusic", base.gameObject);
-            //Util.PlaySound("Stop_Seroronin_Jhin_PassiveCritSpin", base.gameObject);
-            //Util.PlaySound("Stop_Seroronin_Jhin_PassiveCritMusic", base.gameObject);
 
             if (animatorComponent)
             {
@@ -102,11 +98,6 @@ namespace JhinMod.SkillStates.BaseStates
         public override void FixedUpdate()
         {
             base.FixedUpdate();
-            /*
-            if (base.isAuthority && this.voidSurvivorController && this.voidSurvivorController.corruption <= this.voidSurvivorController.minimumCorruption && !this.voidSurvivorController.isPermanentlyCorrupted && this.voidSurvivorController.bodyStateMachine)
-            {
-                this.voidSurvivorController.bodyStateMachine.SetInterruptState(new ExitCorruptionTransition(), InterruptPriority.Skill);
-            }*/
         }
 
     }

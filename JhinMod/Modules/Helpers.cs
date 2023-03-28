@@ -33,6 +33,21 @@ namespace JhinMod.Modules
 
         public static Func<T[], T[]> AppendDel<T>(List<T> list) => (r) => Append(ref r, list);
 
+        public static EntityStateMachine GetEntityStateMachine( GameObject gameObject, string stateMachineName)
+        {
+            var allSMs = gameObject.GetComponents<EntityStateMachine>();
+            EntityStateMachine stateMachine = null;
+            foreach (EntityStateMachine entSM in allSMs)
+            {
+                if (entSM.customName == stateMachineName)
+                {
+                    stateMachine = entSM;
+                    break;
+                }
+            }
+            return stateMachine;
+        }
+
         public static T GetCopyOf<T>(this Component comp, T other) where T : Component
         {
             Type type = comp.GetType();
@@ -103,7 +118,7 @@ namespace JhinMod.Modules
             //if we don't get a match, just use the base name
 
             if (index == 1) return "HighNoonJhin";
-            //if (index == 2) return "BloodMoonJhin";
+            if (index == 2) return "BloodMoonJhin";
             if (index == 3) return "ProjectJhin";
             return "Jhin";
         }

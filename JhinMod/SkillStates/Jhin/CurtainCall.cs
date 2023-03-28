@@ -17,7 +17,7 @@ namespace JhinMod.SkillStates
 {
     public class CurtainCall : BaseSkillState
     {
-        private float duration = 10f;
+        public float duration = 10f;
         private JhinStateController jhinStateController;
         private EntityStateMachine ultStateMachine;
 
@@ -25,27 +25,15 @@ namespace JhinMod.SkillStates
         {
             base.OnEnter();
             jhinStateController = base.GetComponent<JhinStateController>();
-            var allSMs = this.gameObject.GetComponents<EntityStateMachine>();
+            ultStateMachine = Helpers.GetEntityStateMachine(this.gameObject, "WeaponMode");
 
             //Stop our current reload state if active, and fill our ammo manually
             jhinStateController.StopReload( true );
             jhinStateController.Reload(true);
             jhinStateController.isUlting= true;
 
-            foreach ( EntityStateMachine entSM in allSMs )
-            {
-                if (entSM.customName == "WeaponMode")
-                {
-                    ultStateMachine = entSM;
-                    break;
-                }
-            }
-
             Helpers.PlaySoundDynamic("UltCast",base.gameObject);
             Helpers.PlaySoundDynamic("UltMusic", base.gameObject);
-
-            //Util.PlaySound("Play_Seroronin_Jhin_UltCast", base.gameObject);
-            //Util.PlaySound("Play_Seroronin_Jhin_UltMusic", base.gameObject);
 
             this.ultStateMachine.SetNextState( new JhinWeaponUltActiveState() );
         }
@@ -55,7 +43,6 @@ namespace JhinMod.SkillStates
             jhinStateController.isUlting = false;
 
             Helpers.StopSoundDynamic("UltMusic", base.gameObject);
-            //Util.PlaySound("Stop_Seroronin_Jhin_UltMusic", base.gameObject);
 
             base.OnExit();
         }

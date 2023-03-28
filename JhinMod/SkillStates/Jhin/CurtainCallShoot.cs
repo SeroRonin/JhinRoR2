@@ -67,7 +67,6 @@ namespace JhinMod.SkillStates
                 base.characterBody.AddSpreadBloom(1.5f);
                 EffectManager.SimpleMuzzleFlash(EntityStates.Commando.CommandoWeapon.FirePistol2.muzzleEffectPrefab, base.gameObject, this.muzzleString, false);
                 Helpers.PlaySoundDynamic("UltFire", base.gameObject);
-                //Util.PlaySound("Play_Seroronin_Jhin_UltFire", base.gameObject);
 
                 if (base.isAuthority)
                 {
@@ -92,6 +91,8 @@ namespace JhinMod.SkillStates
 
                     ProjectileManager.instance.FireProjectile( fireProjectileInfo );
                 }
+
+                jhinStateController.TakeAmmo(1);
             }
         }
 

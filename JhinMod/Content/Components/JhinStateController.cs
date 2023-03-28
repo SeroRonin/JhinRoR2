@@ -127,7 +127,6 @@ namespace JhinMod.Content.Components
 
         public void EnterReloadState()
         {
-            //this.entityStateMachine.SetNextState(new WhisperReload()); //FIX, Freezes character movement
             var skillLocator = GetComponent<SkillLocator>();
             skillLocator.primary.stateMachine.SetNextState( new WhisperReload());
 
@@ -142,10 +141,13 @@ namespace JhinMod.Content.Components
             this.ResetReload();
         }
 
-        public void StopReload( bool interrupt = false, float delay = 1f )
+        public void StopReload( bool interrupt = false, float delay = 1f, bool ignoreStateChange = false )
         {
             var skillLocator = GetComponent<SkillLocator>();
-            skillLocator.primary.stateMachine.SetNextStateToMain();
+
+            //ignoreStateChange is to prevent interrupting Heresy skills that hijack the "weapon" StateMachine
+            if (!ignoreStateChange)
+                skillLocator.primary.stateMachine.SetNextStateToMain();
 
             this.ResetReload( interrupt, delay );
         }
@@ -153,7 +155,6 @@ namespace JhinMod.Content.Components
         public void ResetReload( bool interrupt = false, float delay = 1f)
         {
             Helpers.StopSoundDynamic("Reloads", base.gameObject);
-            //Util.PlaySound("Stop_Seroronin_Jhin_Reloads", base.gameObject);
 
             this.startedReload = false;
             this.reloadGraceDelay = delay;
@@ -181,9 +182,11 @@ namespace JhinMod.Content.Components
         {
             this.ultHasSetLastShot = false;
             this.ultHasFiredLastShot = false;
+            this.StopReload( true );
+            this.Reload( true );
         }
 
-        
+
         public override bool OnSerialize(NetworkWriter writer, bool forceAll)
         {
             if (forceAll)

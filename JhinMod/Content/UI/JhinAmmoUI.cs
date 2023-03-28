@@ -7,6 +7,7 @@ using JhinMod.Content.Components;
 using UnityEngine.UI;
 using R2API.Utils;
 using RoR2;
+using JhinMod.SkillStates;
 
 namespace JhinMod.Content.UI
 {
@@ -33,20 +34,6 @@ namespace JhinMod.Content.UI
 
         private void Awake()
         {
-            /*
-            var _text = this.gameObject.GetComponentInChildren<Transform>().Find("Text");
-            var _currentGrit = _text.GetComponentInChildren<Transform>().Find("CurrentGrit");
-            var _currentText = _currentGrit.GetComponent<TextMeshProUGUI>();
-            var _maxGrit = _text.GetComponentInChildren<Transform>().Find("MaxGrit");
-            var _maxText = _maxGrit.GetComponent<TextMeshProUGUI>();
-            var _gritBar = this.gameObject.GetComponentInChildren<Transform>().Find("Grit");
-            gritBar = _gritBar.GetComponent<Image>();
-            var _gritBarBG = this.gameObject.GetComponentInChildren<Transform>().Find("Background");
-            gritBarBG = _gritBarBG.GetComponent<Image>();
-            if (_currentText) currentGritText = _currentText;
-            if (_maxText) maxGritText = _maxText;
-            */
-
             Circle = this.gameObject.GetComponentInChildren<Transform>().Find("circle").GetComponent<Image>();
             CircleBG = this.gameObject.GetComponentInChildren<Transform>().Find("circle_bg").GetComponent<Image>();
             Shot1 = this.gameObject.GetComponentInChildren<Transform>().Find("shot1").GetComponent<Image>();
@@ -68,7 +55,7 @@ namespace JhinMod.Content.UI
 
                 //Disable UI if we have don't have base primary available
                 var hasOverride = skillLocator.primary.HasSkillOverrideOfPriority(GenericSkill.SkillOverridePriority.Replacement);
-                if ( hasOverride )
+                if ( hasOverride && !ammoComponent.isUlting )
                 {
                     if (!hidden)
                     {
@@ -113,14 +100,32 @@ namespace JhinMod.Content.UI
                     CircleBG.color = Color.grey;
                 }
 
-                //Animate circle based on Autoreload timer
-                if ( ammoComponent.startedReload || ammoComponent.ammoCount == 0)
+                
+
+                //Animate circle based on various situations
+                //Display remaining ult time
+                if ( ammoComponent.isUlting )
                 {
-                    Circle.fillAmount = 0f;
+                    var ultSkill = skillLocator.special.stateMachine.state as CurtainCall;
+                    Circle.fillAmount = (ultSkill.duration - ultSkill.fixedAge) / ultSkill.duration;
                 }
+                //Display remaining auto-reload time
                 else if ( ammoComponent.CanStartReload() )
                 {
-                    Circle.fillAmount = (ammoComponent.reloadAutoDelay - ammoComponent.reloadStopwatch) / ammoComponent.reloadAutoDelay;
+                    if (ammoComponent.ammoCount != 0)
+                    {
+                        Circle.fillAmount = (ammoComponent.reloadAutoDelay - ammoComponent.reloadStopwatch) / ammoComponent.reloadAutoDelay;
+                    }
+                    else
+                    {
+                        Circle.fillAmount = 0f;
+                    }
+                }
+                //Display reload duration
+                else if ( ammoComponent.startedReload )
+                {
+                    var primarySkill = skillLocator.primary.stateMachine.state as WhisperReload;
+                    Circle.fillAmount = primarySkill.fixedAge / primarySkill.duration;
                 }
                 else
                 {

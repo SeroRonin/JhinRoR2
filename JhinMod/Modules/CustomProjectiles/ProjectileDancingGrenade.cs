@@ -67,20 +67,15 @@ namespace JhinMod.Modules.CustomProjectiles
                     damageInfo.damageColorIndex = this.damageColorIndex;
                     damageInfo.damageType = this.damageType;
                     healthComponent.TakeDamage(damageInfo);
+
                     GlobalEventManager.instance.OnHitEnemy(damageInfo, healthComponent.gameObject);
                     GlobalEventManager.instance.OnHitAll(damageInfo, healthComponent.gameObject);
+
+                    Helpers.PlaySoundDynamic("QHit", this.attacker, this.target.gameObject);
                 }
 
                 //Did we kill the target we hit?
                 this.failedToKill |= (!healthComponent || healthComponent.alive);
-
-                Helpers.PlaySoundDynamic("QHit", this.attacker, this.target.gameObject);
-
-                if (this.bouncesRemaining == 0)
-                {
-                    Helpers.PlaySoundDynamic("QHitLast", this.attacker, this.target.gameObject);
-                    //Util.PlaySound("Play_Seroronin_Jhin_QHitLast", this.target.gameObject);
-                }
 
                 if (this.bouncesRemaining > 0)
                 {
@@ -94,6 +89,7 @@ namespace JhinMod.Modules.CustomProjectiles
                             }
                             this.bouncedObjects.Add(this.target.healthComponent);
                         }
+
                         HurtBox hurtBox = this.PickNextTarget(this.target.transform.position);
                         if (hurtBox)
                         {
@@ -134,10 +130,12 @@ namespace JhinMod.Modules.CustomProjectiles
                         else
                         {
                             Helpers.PlaySoundDynamic("QHitLast", this.attacker, this.target.gameObject);
-                            //Util.PlaySound("Play_Seroronin_Jhin_QHitLast", this.target.gameObject);
                         }
                     }
-                    return;
+                }
+                else if (this.bouncesRemaining == 0)
+                {
+                    Helpers.PlaySoundDynamic("QHitLast", this.attacker, this.target.gameObject);
                 }
             }
         }

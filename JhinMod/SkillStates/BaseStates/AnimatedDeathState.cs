@@ -25,7 +25,6 @@ namespace JhinMod.SkillStates.BaseStates
             base.OnEnter();
 
             Helpers.PlaySoundDynamic("DeathSFX", base.gameObject);
-            //Util.PlaySound("Play_Seroronin_Jhin_DeathSFX", base.gameObject);
 
             Animator modelAnimator = base.GetModelAnimator();
             if (modelAnimator)

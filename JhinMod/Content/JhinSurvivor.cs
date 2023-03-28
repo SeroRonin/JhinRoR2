@@ -24,6 +24,8 @@ namespace JhinMod.Modules.Survivors
         //used when registering your survivor's language tokens
         public override string survivorTokenPrefix => JHIN_PREFIX;
 
+        //public EntityStateMachine ultStateMachine;
+
         public override BodyInfo bodyInfo { get; set; } = new BodyInfo
         {
             bodyName = "JhinBody",

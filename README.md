@@ -59,6 +59,11 @@ Jhin as a survivor is meant to deliver a low APM, high damage experience. He has
 
 ---
 # Skills
+
+Please note that skill values and effects may change over the course of this mod's lifespan, and the images displayed here may not reflect those changes.
+
+#
+
 ![Passive](https://user-images.githubusercontent.com/8404018/227687730-699d33f8-4600-4c5f-8b23-0a9fe804f999.png)
 
 <details>
@@ -72,8 +77,9 @@ Jhin has a unique interaction with Attack Speed. Unlike other survivors, he gain
 
 <details>
 <summary> Primary </summary>
-<img src="https://user-images.githubusercontent.com/8404018/227470478-574e16f1-0d46-4de2-9b27-a5201b1fb423.png" width="100" />
 
+![ammoUIpreview](https://user-images.githubusercontent.com/8404018/228163857-ed99db22-ca2a-4aaf-bde1-d749ae322fe5.gif)
+  
 Whisper has a unique ammo and reload system, utilizing shots represented by the tally marks and a reload timer represented by the ring. Jhin reloads after the 4th shot, or after 10 seconds without firing. Casting any skill will reset the automatic reload timer and interrupt an active reload.
 </details>
 
@@ -101,21 +107,27 @@ Deadly Flourish is a simple beam attack that stuns every enemy it hits. It trigg
  
 <details>
 <summary> Special </summary>
+
+![ammoUIpreview2](https://user-images.githubusercontent.com/8404018/228164250-abe1fa86-4619-4044-81b1-d824592ad9f2.gif)
+
 Curtain Call is a primary skill override, like that of Railgunner's scope. For 10 seconds, it replaces Whisper with 4 shots that deal massive AOE damage. It automatically reloads Whisper as well, so you don't have to worry about reloading after firing all 4 shots.
 </details>
 
 ---
 
 ## Skins
-> Each skin has it's own unique SFX, and if possible, VFX (when implemented). Creating the soundbanks for each is a pain-staking process, and as such, only a few skins will have unique SFX at launch. Others are not planned, and will be added only if I have the motivation to do so.
-* High Noon [No SFX yet]
-* Blood Moon [No SFX yet]
-* SKT T1 [Not Implemented Yet, SFX not planned]
-* PROJECT: Jhin
+> Each skin has it's own unique SFX, and if possible, VFX (when implemented). Creating the soundbanks for each is a painfully tedious process, and as such, only a few skins will have unique SFX at launch. Others are not planned, and will be added only if I have the motivation to do so.
+### Implemented
+* High Noon
+* Blood Moon
+* Project
+
+### Not Implemented
+* SKT T1 [SFX not planned]
+* Shan Hai Scrolls [SFX not planned]
+* DWG [SFX not planned]
+* Empyrean [SFX not planned]
 * Dark Cosmic [Not Possbile?][^darkcosmic]
-* Shan Hai Scrolls [Not Implemented Yet, SFX not planned]
-* DWG [Not Implemented Yet, SFX not planned]
-* Empyrean [Not Implemented Yet, SFX not planned]
 
 
 ## Special Credits and Thanks
@@ -128,31 +140,39 @@ Curtain Call is a primary skill override, like that of Railgunner's scope. For 1
 * **EnforcerGang**: Rocket Survivor 
   * Referenced code for custom missile prefab spawning
 
-## Mod Compatibility:
+## Mod Compatibility
 > Suggest compatibilities and report compatibility issues under Github Issues, or through my Discord: [https://discord.gg/RSs2kA7yRu](https://discord.gg/RSs2kA7yRu)
+
+#### Compatible
+> Built-in functionality support
 * Risk Of Options
-* (To Be Considered) BetterUI
-* (To Be Considered) CustomEmoteAPI
+
+#### To be considered
+> No direct functionality support, but also don't break the game. May be added later.
+* BetterUI
+* CustomEmoteAPI
+
+#### Incompatible
+> Currently have issues or otherwise break when used with this mod. Will generally need to be fixed in patches.
+* None so far
 
 ## Known Issues
 > Bugs can be reported under Github Issues, or through my Discord: [https://discord.gg/RSs2kA7yRu](https://discord.gg/RSs2kA7yRu)
-* Ult VFX sometimes does not appear
-* Ult projectile sometimes passes through enemies due to its speed
-* Ult applies execute damage as an additional instance of damage (this is due to explosions not supporting post-hit pre-damage modifications)
-* Heresy items permanently interrupt reload if cast during a 4th shot reload. Can be fixed by casting any other ability
-* Shuriken is triggered very sparsely
+* **[Skill]** Ult VFX sometimes does not appear
+* **[Skill]** Ult projectile sometimes passes through enemies due to its speed
+* **[Skill]** Ult applies execute damage as an additional instance of damage (this is due to explosions not supporting post-hit pre-damage modifications)
+* **[Item]** Heresy items do not reset the autoreload timer
+* **[Item]** Shuriken is triggered very sparsely, rather than on every primary attack. Likely due to custom ammo system?
 * (Unknown, happened once) Skin gets set to default randomly, but SFX stays intact, meaning skin index does not change
 
 ## To Do
 * Balancing
 * Better Movespeed Buff Icon?
 * Deadly Flourish Root Mechanic
-* Implement higher quality icons
 * Custom Indicator for Dancing Grenade
-* Make Ult use Ammo system + UI instead of stocks
 * Make Ult Execute group with base damage
 * Ult rocket jumping?
-* Other skins + Hopoo-eqsue skin (Project with flat textures?)
+* Hopoo-eqsue/RoR2-friendly skin
 * Achievments + Unlockable criteria (other abilties, skins, etc)
 * Test multiplayer functionality
 

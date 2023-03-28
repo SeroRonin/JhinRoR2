@@ -18,45 +18,31 @@ namespace JhinMod.SkillStates
     public class DancingGrenade : BaseState
     {
         public static float baseDuration = 1f;
-
         public static float baseDelay = 0.25f;
 
-        public static GameObject muzzleFlashPrefab;
-
         public static float projectileProcCoefficient = 1f;
-
-        public static int maxBounceCount = 3;
-
         public static float projectileTravelSpeed = 40f;
-
         public static float projectileBounceRange = 25f;
+        public static int maxBounceCount = 3;
 
         public static string attackSoundString;
 
         public float damageCoefficient;
-
         public float damageCoefficientOnBounceKill;
 
         private float duration;
-
         private float stopwatch;
 
-        private Animator animator;
-
-        private GameObject chargeEffect;
-
         private Transform modelTransform;
-
         private JhinTracker tracker;
-
         private ChildLocator childLocator;
+        private JhinStateController jhinStateController;
 
         private bool hasTriedToFire;
-
         private bool hasFired;
 
         private HurtBox initialOrbTarget;
-        private JhinStateController jhinStateController;
+
         public override void OnEnter()
         {
             base.OnEnter();
@@ -65,39 +51,25 @@ namespace JhinMod.SkillStates
             this.damageCoefficient = Config.secondaryDamageCoefficient.Value;
             this.damageCoefficientOnBounceKill = Config.secondaryDamageBounceCoefficient.Value;
             this.modelTransform = base.GetModelTransform();
-            this.animator = base.GetModelAnimator();
             this.tracker = base.GetComponent<JhinTracker>();
             this.childLocator = this.modelTransform.GetComponent<ChildLocator>();
             this.jhinStateController = GetComponent<JhinStateController>();
-
-            //Util.PlayAttackSpeedSound(ThrowDancingGrenade.attackSoundString, base.gameObject, this.attackSpeedStat);
 
             if (this.tracker && base.isAuthority)
             {
                 this.initialOrbTarget = this.tracker.GetTrackingTarget();
             }
 
-            this.jhinStateController.StopReload();
+            this.jhinStateController.StopReload( true );
             base.PlayAnimation("UpperBody, Override", "DancingGrenade");
+
             Helpers.PlaySoundDynamic("QCast", base.gameObject);
-            //Util.PlaySound("Play_Seroronin_Jhin_QCast", base.gameObject);
         }
 
         public override void OnExit()
         {
             base.OnExit();
-            /*
-            if (this.chargeEffect)
-            {
-                EntityState.Destroy(this.chargeEffect);
-            }
-            int layerIndex = this.animator.GetLayerIndex("Impact");
-            if (layerIndex >= 0)
-            {
-                this.animator.SetLayerWeight(layerIndex, 1.5f);
-                this.animator.PlayInFixedTime("LightImpact", layerIndex, 0f);
-            }
-            */
+
             if (!this.hasFired && NetworkServer.active)
             {
                 base.skillLocator.secondary.AddOneStock();
@@ -107,14 +79,13 @@ namespace JhinMod.SkillStates
         public override void FixedUpdate()
         {
             base.FixedUpdate();
+
             this.stopwatch += Time.fixedDeltaTime;
+
             if (!this.hasTriedToFire && !hasFired && this.stopwatch > DancingGrenade.baseDelay )
             {
                 this.FireOrbDancingGrenade();
             }
-
-            //CharacterMotor characterMotor = base.characterMotor;
-            //characterMotor.velocity.y = characterMotor.velocity.y + ThrowDancingGrenade.antigravityStrength * Time.fixedDeltaTime * (1f - this.stopwatch / this.duration);
 
             if (this.stopwatch >= this.duration && base.isAuthority)
             {
@@ -142,18 +113,18 @@ namespace JhinMod.SkillStates
             dancingGrenade.bouncedObjects = new List<HealthComponent>();
             dancingGrenade.range = DancingGrenade.projectileBounceRange;
             dancingGrenade.damageCoefficientOnBounceKill = this.damageCoefficientOnBounceKill;
+
             HurtBox hurtBox = this.initialOrbTarget;
             if (hurtBox)
             {
                 this.hasFired = true;
                 Transform transform = this.childLocator.FindChild("ShoulderR");
-                //EffectManager.SimpleMuzzleFlash(DancingGrenade.muzzleFlashPrefab, base.gameObject, "HandR", true);
                 dancingGrenade.origin = transform.position;
                 dancingGrenade.target = hurtBox;
                 OrbManager.instance.AddOrb(dancingGrenade);
             }
+
             Helpers.PlaySoundDynamic("QFire", base.gameObject);
-            //Util.PlaySound("Play_Seroronin_Jhin_QFire", base.gameObject);
         }
 
         public override InterruptPriority GetMinimumInterruptPriority()

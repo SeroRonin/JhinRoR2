@@ -10,7 +10,7 @@ namespace JhinMod.SkillStates
     public class WhisperReload : BaseState
     {
         private JhinStateController jhinStateController;
-        private float duration;
+        public float duration;
         private bool hasReloaded;
 
         public override void OnEnter()
@@ -24,13 +24,15 @@ namespace JhinMod.SkillStates
             Helpers.PlaySoundDynamic(recentlyEmpty ? "ReloadEmpty" : "Reload", base.gameObject);
             Helpers.StopSoundDynamic("PassiveCritSpin", base.gameObject);
             Helpers.StopSoundDynamic("PassiveCritMusic", base.gameObject);
-            //Util.PlaySound(recentlyEmpty ? "Play_Seroronin_Jhin_ReloadEmpty" : "Play_Seroronin_Jhin_Reload", base.gameObject);
-            //Util.PlaySound("Stop_Seroronin_Jhin_PassiveCritSpin", base.gameObject);
-            //Util.PlaySound("Stop_Seroronin_Jhin_PassiveCritMusic", base.gameObject);
         }
 
         public override void OnExit()
         {
+            if (!this.hasReloaded)
+            {
+                this.jhinStateController.StopReload(true, 2f, true);
+            }
+
             base.OnExit();
         }
 
@@ -50,15 +52,12 @@ namespace JhinMod.SkillStates
 
         private void PerformReload()
         {
-            if (this.hasReloaded)
+            if (!this.hasReloaded)
             {
-                return;
+                this.hasReloaded = true;
+                this.jhinStateController.Reload(true);
             }
 
-            this.jhinStateController.Reload( true );
-            base.skillLocator.primary.stock = this.jhinStateController.ammoCount;
-
-            this.hasReloaded = true;
         }
 
         public override InterruptPriority GetMinimumInterruptPriority()
