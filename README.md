@@ -11,14 +11,15 @@ If you like my mods, consider supporting me!
 # Jhin
 <img src="https://static.wikia.nocookie.net/leagueoflegends/images/5/52/Jhin_OriginalSkin.jpg">
 
-> Add Images
+<img src="https://user-images.githubusercontent.com/8404018/228172988-b4116336-3644-4088-ad75-37b589e89e22.jpg" width="50%" /><img src="https://user-images.githubusercontent.com/8404018/228172991-4547522d-b41c-42bc-82c9-f4f3487126a7.jpg" width="50%" />
+<img src="https://user-images.githubusercontent.com/8404018/228172986-9d094fb9-c96e-4b2a-beed-b2beab3d1259.jpg" width="50%" /><img src="https://user-images.githubusercontent.com/8404018/228172984-ada1911e-3461-4404-aca9-db38803cb35c.jpg" width="50%" />
 
 ###### Jhin is a meticulous criminal psychopath who believes murder is art. Once an Ionian prisoner, but freed by shadowy elements within Ionia's ruling council, the serial killer now works as their cabal's assassin. Using his gun gun as his paintbrush, Jhin creates works of artistic brutality, horrifying victims and onlookers. He gains a cruel pleasure from putting on his gruesome theater, making him the ideal choice to send the most powerful of messages: terror.
 
 Jhin as a survivor is meant to deliver a low APM, high damage experience. He has high damage scaling, but lacks sufficient means to deal with large groups of enemies.
 
 ### Features
-* Unique scaling iconic to Jhin's playstyle in League of Legends
+* Unique scaling and ammo system iconic to Jhin's playstyle in League of Legends
 * Animations from League, with custom animations to bridge the difference in game styles
 * SFX based on which skin you use[^skinSFX]
 * Item Display support up to SOTV[^itemDisplay]
