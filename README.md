@@ -147,11 +147,12 @@ Curtain Call is a primary skill override, like that of Railgunner's scope. For 1
 #### Compatible
 > Built-in functionality support
 * Risk Of Options
+* CustomEmoteAPI
 
 #### To be considered
 > No direct functionality support, but also don't break the game. May be added later.
-* BetterUI
-* CustomEmoteAPI
+* None so far
+
 
 #### Incompatible
 > Currently have issues or otherwise break when used with this mod. Will generally need to be fixed in patches.

@@ -69,6 +69,11 @@ namespace JhinMod.Modules.Survivors
                 {
                     childName = "JhinMesh",
                     material = Materials.CreateHopooMaterial("matJhin"),
+                },
+                new CustomRendererInfo
+                {
+                    childName = "JhinMeshWeapon",
+                    material = Materials.CreateHopooMaterial("matJhin"),
                 }
         };
 
@@ -291,7 +296,8 @@ namespace JhinMod.Modules.Survivors
             //adding the mesh replacements as above. 
             //if you don't want to replace the mesh (for example, you only want to replace the material), pass in null so the order is preserved
             highnoonSkin.meshReplacements = Modules.Skins.getMeshReplacements(defaultRendererinfos,
-                "jhinMeshHighNoon");
+                "jhinMeshHighNoon",
+                "jhinMeshHighNoon_weapon");
 
             //masterySkin has a new set of RendererInfos (based on default rendererinfos)
             //you can simply access the RendererInfos defaultMaterials and set them to the new materials for your skin.
@@ -299,6 +305,7 @@ namespace JhinMod.Modules.Survivors
             tempMat.EnableKeyword("CUTOUT");
             tempMat.SetFloat("_Cutoff", 1f);
             highnoonSkin.rendererInfos[0].defaultMaterial = tempMat;
+            highnoonSkin.rendererInfos[1].defaultMaterial = tempMat;
 
             skins.Add(highnoonSkin);
 
@@ -314,10 +321,12 @@ namespace JhinMod.Modules.Survivors
 
             //Replace mesh
             bloodmoonSkin.meshReplacements = Modules.Skins.getMeshReplacements(defaultRendererinfos,
-                "jhinMeshBloodMoon");
+                "jhinMeshBloodMoon",
+                "jhinMeshBloodMoon_weapon");
 
             //Replace material
             bloodmoonSkin.rendererInfos[0].defaultMaterial = Modules.Materials.CreateHopooMaterial("matJhinBloodMoon");
+            bloodmoonSkin.rendererInfos[1].defaultMaterial = Modules.Materials.CreateHopooMaterial("matJhinBloodMoon");
 
             skins.Add(bloodmoonSkin);
 
@@ -333,10 +342,12 @@ namespace JhinMod.Modules.Survivors
 
             //Replace mesh
             projectSkin.meshReplacements = Modules.Skins.getMeshReplacements(defaultRendererinfos,
-                "jhinMeshProject");
+                "jhinMeshProject",
+                "jhinMeshProject_weapon");
 
             //Replace material
             projectSkin.rendererInfos[0].defaultMaterial = Modules.Materials.CreateHopooMaterial("matJhinProject");
+            projectSkin.rendererInfos[1].defaultMaterial = Modules.Materials.CreateHopooMaterial("matJhinProject");
 
             skins.Add(projectSkin);
             

@@ -197,36 +197,36 @@ namespace JhinMod.Modules
 
         internal static void CreateRiskofOptionsCompat()
         {
-            ModSettingsManager.SetModDescription("Jhin Survivor Mod Configuration. ANY CHANGES WILL REQUIRE A RESTART.");
+            ModSettingsManager.SetModDescription("Jhin Survivor Mod Configuration.");
             ModSettingsManager.SetModIcon(Assets.mainAssetBundle.LoadAsset<Sprite>("texJhinIcon"));
 
-            CreateOptionEntry(healthBase);
-            CreateOptionEntry(healthGrowth);
-            CreateOptionEntry(regenBase);
-            CreateOptionEntry(regenGrowth);
-            CreateOptionEntry(armorBase);
-            CreateOptionEntry(armorGrowth);
-            CreateOptionEntry(damageBase);
-            CreateOptionEntry(damageGrowth);
-            CreateOptionEntry(attackSpeedBase);
-            CreateOptionEntry(attackSpeedGrowth);
+            CreateOptionEntry(healthBase, restartRequired: true);
+            CreateOptionEntry(healthGrowth, restartRequired: true);
+            CreateOptionEntry(regenBase, restartRequired: true);
+            CreateOptionEntry(regenGrowth, restartRequired: true);
+            CreateOptionEntry(armorBase, restartRequired: true);
+            CreateOptionEntry(armorGrowth, restartRequired: true);
+            CreateOptionEntry(damageBase, restartRequired: true);
+            CreateOptionEntry(damageGrowth, restartRequired: true);
+            CreateOptionEntry(attackSpeedBase, restartRequired: true);
+            CreateOptionEntry(attackSpeedGrowth, restartRequired: true);
 
-            CreateOptionEntry(passiveDuration);
+            CreateOptionEntry(passiveDuration, restartRequired: true);
 
-            CreateOptionEntry(primaryDamageCoefficient);
-            CreateOptionEntry(primaryExecuteMissingHealthPercentage);
-            CreateOptionEntry(primaryExecuteDamageCap);
+            CreateOptionEntry(primaryDamageCoefficient, restartRequired: true);
+            CreateOptionEntry(primaryExecuteMissingHealthPercentage, restartRequired: true);
+            CreateOptionEntry(primaryExecuteDamageCap, restartRequired: true);
 
-            CreateOptionEntry(secondaryCD);
-            CreateOptionEntry(secondaryDamageCoefficient);
-            CreateOptionEntry(secondaryDamageBounceCoefficient);
+            CreateOptionEntry(secondaryCD, restartRequired: true);
+            CreateOptionEntry(secondaryDamageCoefficient, restartRequired: true);
+            CreateOptionEntry(secondaryDamageBounceCoefficient, restartRequired: true);
 
-            CreateOptionEntry(utilityCD);
-            CreateOptionEntry(utilityDamageCoefficient);
+            CreateOptionEntry(utilityCD, restartRequired: true);
+            CreateOptionEntry(utilityDamageCoefficient, restartRequired: true);
 
-            CreateOptionEntry(specialCD);
-            CreateOptionEntry(specialDamageCoefficient);
-            CreateOptionEntry(specialExecutePercentage);
+            CreateOptionEntry(specialCD, restartRequired: true);
+            CreateOptionEntry(specialDamageCoefficient, restartRequired: true);
+            CreateOptionEntry(specialExecutePercentage, restartRequired: true);
 
 
             CreateOptionEntry(sfxChoice);
@@ -239,20 +239,20 @@ namespace JhinMod.Modules
         /// <param name="autoScale"></param>
         /// <param name="max"></param>
         /// <param name="increment"></param>
-        internal static void CreateOptionEntry(ConfigEntryBase configEntry, bool autoScale = true, float max = 100, float increment = 10)
+        internal static void CreateOptionEntry(ConfigEntryBase configEntry, bool autoScale = true, float max = 100, float increment = 10, bool restartRequired = false )
         {
             var maxOut = max;
             var incrementOut = increment;
 
             if (configEntry.DefaultValue.GetType() == typeof(SFXChoice))
             {
-                ModSettingsManager.AddOption(new ChoiceOption(configEntry));
+                ModSettingsManager.AddOption(new ChoiceOption(configEntry, restartRequired));
                 return;
             }
 
             if (configEntry.DefaultValue.GetType() == typeof(bool))
             {
-                ModSettingsManager.AddOption(new CheckBoxOption((ConfigEntry<bool>)configEntry));
+                ModSettingsManager.AddOption(new CheckBoxOption((ConfigEntry<bool>)configEntry, restartRequired));
                 return;
             }
 
@@ -266,7 +266,7 @@ namespace JhinMod.Modules
                 {
                     maxOut = (int)Math.Floor(maxOut);
                 }
-                ModSettingsManager.AddOption(new IntSliderOption((ConfigEntry<int>)configEntry, new IntSliderConfig() { min = 0, max = (int)maxOut }));
+                ModSettingsManager.AddOption(new IntSliderOption((ConfigEntry<int>)configEntry, new IntSliderConfig() { min = 0, max = (int)maxOut, restartRequired = restartRequired }));
                 return;
             }
 
@@ -277,9 +277,8 @@ namespace JhinMod.Modules
                     maxOut = ((ConfigEntry<float>)configEntry).Value * 10f;
                     incrementOut = ((ConfigEntry<float>)configEntry).Value / 10f;
                 }
-                ModSettingsManager.AddOption(new StepSliderOption((ConfigEntry<float>)configEntry, new StepSliderConfig() { min = 0, max = maxOut, increment = incrementOut }));
+                ModSettingsManager.AddOption(new StepSliderOption((ConfigEntry<float>)configEntry, new StepSliderConfig() { min = 0, max = maxOut, increment = incrementOut, restartRequired = restartRequired }));
                 return;
-                //ModSettingsManager.AddOption(new StepSliderOption((ConfigEntry<float>)configEntry, new StepSliderConfig() { min = 0, max = ((ConfigEntry<float>)configEntry).Value * 10f, increment = ((ConfigEntry<float>)configEntry).Value / 10 }));
             }
         }
 

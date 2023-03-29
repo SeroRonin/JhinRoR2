@@ -15,6 +15,8 @@ using JhinMod.Content.UI;
 using JhinMod.Content.Components;
 using JhinMod.Modules;
 using EntityStates;
+using EmotesAPI;
+
 
 [module: UnverifiableCode]
 [assembly: SecurityPermission(SecurityAction.RequestMinimum, SkipVerification = true)]
@@ -24,6 +26,7 @@ namespace JhinMod
 {
     [BepInDependency("com.bepis.r2api", BepInDependency.DependencyFlags.HardDependency)]
     [BepInDependency("com.rune580.riskofoptions", BepInDependency.DependencyFlags.SoftDependency)]
+    [BepInDependency("com.weliveinasociety.CustomEmotesAPI", BepInDependency.DependencyFlags.SoftDependency)]
     [NetworkCompatibility(CompatibilityLevel.EveryoneMustHaveMod, VersionStrictness.EveryoneNeedSameModVersion)]
     [BepInPlugin(MODUID, MODNAME, MODVERSION)]
     [R2APISubmoduleDependency(new string[]
@@ -43,7 +46,7 @@ namespace JhinMod
         public const string DEVELOPER_PREFIX = "SERORONIN";
 
         public static JhinPlugin instance;
-        public bool RoR2OptionsEnabled;
+        public bool emoteSetup;
 
         private void Awake()
         {
@@ -53,8 +56,7 @@ namespace JhinMod
             Modules.Assets.Initialize(); // load assets and read config
             Modules.Config.ReadConfig();
 
-            if (BepInEx.Bootstrap.Chainloader.PluginInfos.ContainsKey("com.rune580.riskofoptions")) RoR2OptionsEnabled = true;
-            if (RoR2OptionsEnabled)
+            if (BepInEx.Bootstrap.Chainloader.PluginInfos.ContainsKey("com.rune580.riskofoptions"))
             {
                 Modules.Config.CreateRiskofOptionsCompat();
             }
@@ -100,7 +102,13 @@ namespace JhinMod
             On.EntityStates.GhostUtilitySkillState.OnEnter += Shadowfade_OnEnter;
             On.EntityStates.GhostUtilitySkillState.OnExit += Shadowfade_OnExit;
             //Essence of Heresy
-            On.EntityStates.GlobalSkills.LunarDetonator.Detonate.OnEnter += Ruin_OnEnter;
+            On.EntityStates.GlobalSkills.LunarDetonator.Detonate.OnEnter += Ruin_OnEnter; 
+            
+            if (BepInEx.Bootstrap.Chainloader.PluginInfos.ContainsKey("com.weliveinasociety.CustomEmotesAPI"))
+            {
+                On.RoR2.SurvivorCatalog.Init += SurvivorCatalog_Init;
+                CustomEmotesAPI.animChanged += CustomEmotesAPI_animChanged;
+            }
         }
 
         private void UnHooks()
@@ -118,9 +126,13 @@ namespace JhinMod
             On.EntityStates.GhostUtilitySkillState.OnExit -= Shadowfade_OnExit;
             //Essence of Heresy
             On.EntityStates.GlobalSkills.LunarDetonator.Detonate.OnEnter -= Ruin_OnEnter;
-        }
 
-        #region Hook Methods
+            if (BepInEx.Bootstrap.Chainloader.PluginInfos.ContainsKey("com.weliveinasociety.CustomEmotesAPI"))
+            {
+                On.RoR2.SurvivorCatalog.Init -= SurvivorCatalog_Init;
+                CustomEmotesAPI.animChanged -= CustomEmotesAPI_animChanged;
+            }
+        }
 
         private void GlobalEventManager_OnHitEnemy(On.RoR2.GlobalEventManager.orig_OnHitEnemy orig, GlobalEventManager self, DamageInfo damageInfo, GameObject victim)
         {
@@ -279,8 +291,38 @@ namespace JhinMod
         }
         #endregion
 
-        #endregion
+        private void SurvivorCatalog_Init(On.RoR2.SurvivorCatalog.orig_Init orig)
+        {
+            orig();
 
+            foreach (var item in SurvivorCatalog.allSurvivorDefs)
+            {
+                if (item.bodyPrefab.name == "JhinBody")
+                {
+                    var skele = Modules.Assets.mainAssetBundle.LoadAsset<GameObject>("emoteJhin");
+                    CustomEmotesAPI.ImportArmature(item.bodyPrefab, skele);
+                    skele.GetComponentInChildren<BoneMapper>().scale = 1.1f;
+                }
+            }
+        }
+
+        private void CustomEmotesAPI_animChanged(string newAnimation, BoneMapper mapper)
+        {
+            if (newAnimation != "none")
+            {
+                if (mapper.transform.name == "emoteJhin")
+                {
+                    mapper.transform.parent.Find("JhinMeshWeapon").gameObject.SetActive(false);
+                }
+            }
+            else
+            {
+                if (mapper.transform.name == "emoteJhin")
+                {
+                    mapper.transform.parent.Find("JhinMeshWeapon").gameObject.SetActive(true);
+                }
+            }
+        }
 
         #region UI
         private JhinAmmoUI ammoUI;

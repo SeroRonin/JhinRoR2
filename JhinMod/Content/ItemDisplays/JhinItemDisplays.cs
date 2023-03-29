@@ -3213,7 +3213,7 @@ localScale = new Vector3(0.01F, 0.01F, 0.01F),
                         new ItemDisplayRule
                         {
                             ruleType = ItemDisplayRuleType.ParentedPrefab,
-                            followerPrefab = ItemDisplays.LoadDisplay("OddlyShapedOpal"), //HIDDEN
+                            followerPrefab = ItemDisplays.LoadDisplay("DisplayOddlyShapedOpal"), //HIDDEN
 childName = "Pelvis",
 localPos = new Vector3(0F, 0F, 0F),
 localAngles = new Vector3(0F, 0F, 0F),
