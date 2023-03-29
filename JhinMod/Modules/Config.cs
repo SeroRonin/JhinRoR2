@@ -105,7 +105,7 @@ namespace JhinMod.Modules
             primaryExecuteDamageCap = JhinPlugin.instance.Config.Bind<float>(
                 new ConfigDefinition("Skills", "Whisper: Execute Damage Cap"), 
                 1f, 
-                new ConfigDescription(CreateOptionDesc("Percent of bonus damage, based on Whisper's damage, allowed to be dealt by Whisper's Execute mechanic", 1f)));
+                new ConfigDescription(CreateOptionDesc("Percent of bonus damage, based on Whisper's damage, allowed to be dealt by Whisper's Execute mechanic. 0 Uncaps this damage.", 1f)));
 
             //Dancing Grenade
             secondaryCD = JhinPlugin.instance.Config.Bind<float>(
@@ -180,7 +180,7 @@ namespace JhinMod.Modules
             if (String.IsNullOrEmpty(desc))
                 return $"Default: {defaultVal}";
             else
-                return desc + Environment.NewLine + Environment.NewLine + $"Default: {defaultVal}";
+                return desc + Environment.NewLine + Environment.NewLine + "Requires Restart" + Environment.NewLine + $"Default: {defaultVal}";
         }
 
         /// <summary>

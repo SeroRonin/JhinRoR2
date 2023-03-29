@@ -28,6 +28,7 @@ namespace JhinMod.Content.Components
 
         public bool startedReload;
         public bool interrupted;
+        public bool paused;
         public bool isUlting;
 
         public bool ultHasSetLastShot;
@@ -39,16 +40,7 @@ namespace JhinMod.Content.Components
 
         private void Awake()
         {
-            var allSMs = this.gameObject.GetComponents<EntityStateMachine>();
-
-            foreach (EntityStateMachine entSM in allSMs)
-            {
-                if (entSM.customName == "WeaponMode")
-                {
-                    jhinStateMachine = entSM;
-                    break;
-                }
-            }
+            jhinStateMachine = Helpers.GetEntityStateMachine(this.gameObject, "WeaponMode");
         }
 
         private void Start()
@@ -103,18 +95,30 @@ namespace JhinMod.Content.Components
 
         private void UpdateTimers()
         {
-            this.timeSinceFire += Time.deltaTime;
-
-            //We still have bullets, reset timer if not already reset
-
-            if (this.CanStartReload())
+            if (!paused)
             {
-                this.reloadStopwatch += Time.deltaTime;
+                this.timeSinceFire += Time.deltaTime;
+
+                //We still have bullets, reset timer if not already reset
+                if ( this.CanStartReload() && !paused )
+                {
+                    this.reloadStopwatch += Time.deltaTime;
+                }
+                //We have max bullets, reset timer if not already reset
+                else if ( this.reloadStopwatch != 0  )
+                {
+                    this.reloadStopwatch = 0f;
+                }
             }
-            //We have max bullets, reset timer if not already reset
-            else if (this.reloadStopwatch != 0)
+            else 
             {
-                this.reloadStopwatch = 0f;
+                if ( ammoCount >= 0 )
+                {
+                    this.reloadStopwatch = 0f;
+                }
+                else
+                    this.reloadStopwatch = 10f;
+
             }
         }
 
@@ -141,13 +145,19 @@ namespace JhinMod.Content.Components
             this.ResetReload();
         }
 
+        public void PauseReload(bool interrupt = false, float delay = 1f )
+        {
+            this.paused = true;
+            this.ResetReload(interrupt, delay);
+        }
+
         public void StopReload( bool interrupt = false, float delay = 1f, bool ignoreStateChange = false )
         {
             var skillLocator = GetComponent<SkillLocator>();
 
-            //ignoreStateChange is to prevent interrupting Heresy skills that hijack the "weapon" StateMachine
-            if (!ignoreStateChange)
-                skillLocator.primary.stateMachine.SetNextStateToMain();
+            skillLocator.primary.stateMachine.SetNextStateToMain();
+
+            this.paused = false;
 
             this.ResetReload( interrupt, delay );
         }
@@ -167,7 +177,6 @@ namespace JhinMod.Content.Components
             if (this.CanTakeAmmo(ammo) )
             {
                 ammoCount -= ammo;
-                ChatMessage.Send($"Ammo taken, ammoCount: {ammoCount}");
             }
         }
 

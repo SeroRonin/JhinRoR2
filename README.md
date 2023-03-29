@@ -162,7 +162,6 @@ Curtain Call is a primary skill override, like that of Railgunner's scope. For 1
 * **[Skill]** Ult VFX sometimes does not appear
 * **[Skill]** Ult projectile sometimes passes through enemies due to its speed
 * **[Skill]** Ult applies execute damage as an additional instance of damage (this is due to explosions not supporting post-hit pre-damage modifications)
-* **[Item]** Heresy items do not reset the autoreload timer
 * **[Item]** Shuriken is triggered very sparsely, rather than on every primary attack. Likely due to custom ammo system?
 * (Unknown, happened once) Skin gets set to default randomly, but SFX stays intact, meaning skin index does not change
 

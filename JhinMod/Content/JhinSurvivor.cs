@@ -295,7 +295,10 @@ namespace JhinMod.Modules.Survivors
 
             //masterySkin has a new set of RendererInfos (based on default rendererinfos)
             //you can simply access the RendererInfos defaultMaterials and set them to the new materials for your skin.
-            highnoonSkin.rendererInfos[0].defaultMaterial = Modules.Materials.CreateHopooMaterial("matJhinHighNoon");
+            var tempMat = Modules.Materials.CreateHopooMaterial("matJhinHighNoon");
+            tempMat.EnableKeyword("CUTOUT");
+            tempMat.SetFloat("_Cutoff", 1f);
+            highnoonSkin.rendererInfos[0].defaultMaterial = tempMat;
 
             skins.Add(highnoonSkin);
 

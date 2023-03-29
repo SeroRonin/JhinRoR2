@@ -30,7 +30,7 @@ namespace JhinMod.SkillStates
         {
             if (!this.hasReloaded)
             {
-                this.jhinStateController.StopReload(true, 2f, true);
+                //this.jhinStateController.StopReload(true, 2f, true);
             }
 
             base.OnExit();

@@ -14,6 +14,7 @@ using UnityEngine.Networking;
 using JhinMod.Content.UI;
 using JhinMod.Content.Components;
 using JhinMod.Modules;
+using EntityStates;
 
 [module: UnverifiableCode]
 [assembly: SecurityPermission(SecurityAction.RequestMinimum, SkipVerification = true)]
@@ -91,69 +92,35 @@ namespace JhinMod
             On.RoR2.CharacterBody.RecalculateStats += CharacterBody_RecalculateStats;
             On.RoR2.UI.HUD.Awake += HUD_Awake;
             RoR2.UI.HUD.onHudTargetChangedGlobal += HUD_onHudTargetChangedGlobal;
+
+            //Hooks of Heresy
+            On.EntityStates.Mage.Weapon.BaseChargeBombState.OnEnter += SlicingMaelstrom_Charge_OnEnter;
+            On.EntityStates.Mage.Weapon.BaseThrowBombState.OnEnter += SlicingMaelstrom_Throw_OnEnter;
+            //Strides of Heresy
+            On.EntityStates.GhostUtilitySkillState.OnEnter += Shadowfade_OnEnter;
+            On.EntityStates.GhostUtilitySkillState.OnExit += Shadowfade_OnExit;
+            //Essence of Heresy
+            On.EntityStates.GlobalSkills.LunarDetonator.Detonate.OnEnter += Ruin_OnEnter;
         }
 
-        /*
-        private void GlobalEventManager_OnHitAll(On.RoR2.GlobalEventManager.orig_OnHitAll orig, GlobalEventManager self, DamageInfo damageInfo, GameObject hitObject)
+        private void UnHooks()
         {
-            orig(self, damageInfo, hitObject);
+            On.RoR2.GlobalEventManager.OnHitEnemy -= GlobalEventManager_OnHitEnemy;
+            On.RoR2.CharacterBody.RecalculateStats -= CharacterBody_RecalculateStats;
+            On.RoR2.UI.HUD.Awake -= HUD_Awake;
+            RoR2.UI.HUD.onHudTargetChangedGlobal -= HUD_onHudTargetChangedGlobal;
+            
+            //Hooks of Heresy
+            On.EntityStates.Mage.Weapon.BaseChargeBombState.OnEnter -= SlicingMaelstrom_Charge_OnEnter;
+            On.EntityStates.Mage.Weapon.BaseThrowBombState.OnEnter -= SlicingMaelstrom_Throw_OnEnter;
+            //Strides of Heresy
+            On.EntityStates.GhostUtilitySkillState.OnEnter -= Shadowfade_OnEnter;
+            On.EntityStates.GhostUtilitySkillState.OnExit -= Shadowfade_OnExit;
+            //Essence of Heresy
+            On.EntityStates.GlobalSkills.LunarDetonator.Detonate.OnEnter -= Ruin_OnEnter;
+        }
 
-            bool active = NetworkServer.active;
-            if (damageInfo.attacker)
-            {
-                CharacterBody component = damageInfo.attacker.GetComponent<CharacterBody>();
-                if (component)
-                {
-                    CharacterMaster master = component.master;
-                    if (master)
-                    {
-                        Inventory inventory = master.inventory;
-                        if (master.inventory)
-                        {
-                            if (!damageInfo.procChainMask.HasProc(ProcType.Behemoth))
-                            {
-                                int itemCount = inventory.GetItemCount(RoR2Content.Items.Behemoth);
-                                if (itemCount > 0 && damageInfo.procCoefficient != 0f)
-                                {
-                                    float num = (1.5f + 2.5f * (float)itemCount) * damageInfo.procCoefficient;
-                                    float damageCoefficient = 0.6f;
-                                    float baseDamage = Util.OnHitProcDamage(damageInfo.damage, component.damage, damageCoefficient);
-                                    EffectManager.SpawnEffect(LegacyResourcesAPI.Load<GameObject>("Prefabs/Effects/OmniEffect/OmniExplosionVFXQuick"), new EffectData
-                                    {
-                                        origin = damageInfo.position,
-                                        scale = num,
-                                        rotation = Util.QuaternionSafeLookRotation(damageInfo.force)
-                                    }, true);
-                                    BlastAttack blastAttack = new BlastAttack();
-                                    blastAttack.position = damageInfo.position;
-                                    blastAttack.baseDamage = baseDamage;
-                                    blastAttack.baseForce = 0f;
-                                    blastAttack.radius = num;
-                                    blastAttack.attacker = damageInfo.attacker;
-                                    blastAttack.inflictor = null;
-                                    blastAttack.teamIndex = TeamComponent.GetObjectTeam(blastAttack.attacker);
-                                    blastAttack.crit = damageInfo.crit;
-                                    blastAttack.procChainMask = damageInfo.procChainMask;
-                                    blastAttack.procCoefficient = 0f;
-                                    blastAttack.damageColorIndex = DamageColorIndex.Item;
-                                    blastAttack.falloffModel = BlastAttack.FalloffModel.None;
-                                    blastAttack.damageType = damageInfo.damageType;
-                                    blastAttack.Fire();
-                                }
-                            }
-                            if ((component.HasBuff(RoR2Content.Buffs.AffixBlue) ? 1 : 0) > 0)
-                            {
-                                float damageCoefficient2 = 0.5f;
-                                float damage = Util.OnHitProcDamage(damageInfo.damage, component.damage, damageCoefficient2);
-                                float force = 0f;
-                                Vector3 position = damageInfo.position;
-                                ProjectileManager.instance.FireProjectile(LegacyResourcesAPI.Load<GameObject>("Prefabs/Projectiles/LightningStake"), position, Quaternion.identity, damageInfo.attacker, damage, force, damageInfo.crit, DamageColorIndex.Item, null, -1f);
-                            }
-                        }
-                    }
-                }
-            }
-        }*/
+        #region Hook Methods
 
         private void GlobalEventManager_OnHitEnemy(On.RoR2.GlobalEventManager.orig_OnHitEnemy orig, GlobalEventManager self, DamageInfo damageInfo, GameObject victim)
         {
@@ -249,6 +216,72 @@ namespace JhinMod
             return movespeedBonus;
         }
 
+        #region Heresy Skill Patches
+        //Here we add hooks that patch some logic into Heresy Skill Overrides, so that they function properly with the custom ammo logic
+        private void SlicingMaelstrom_Charge_OnEnter(On.EntityStates.Mage.Weapon.BaseChargeBombState.orig_OnEnter orig, EntityStates.Mage.Weapon.BaseChargeBombState self)
+        {
+            orig(self);
+
+            if (self is EntityStates.GlobalSkills.LunarNeedle.ChargeLunarSecondary)
+            {
+                var ammoComponent = self.GetComponent<JhinStateController>();
+                if ( ammoComponent )
+                {
+                    ammoComponent.PauseReload();
+                }
+            }
+        }
+        private void SlicingMaelstrom_Throw_OnEnter(On.EntityStates.Mage.Weapon.BaseThrowBombState.orig_OnEnter orig, EntityStates.Mage.Weapon.BaseThrowBombState self)
+        {
+            orig(self);
+
+            if (self is EntityStates.GlobalSkills.LunarNeedle.ThrowLunarSecondary)
+            {
+                var ammoComponent = self.GetComponent<JhinStateController>();
+                if ( ammoComponent )
+                {
+                    ammoComponent.StopReload();
+                }
+            }
+        }
+        private void Shadowfade_OnEnter(On.EntityStates.GhostUtilitySkillState.orig_OnEnter orig, EntityStates.GhostUtilitySkillState self)
+        {
+            ChatMessage.Send("Hook Working");
+            var ammoComponent = self.GetComponent<JhinStateController>();
+            if (ammoComponent != null)
+            {
+                ChatMessage.Send("Hook AmmoComp Working");
+                ammoComponent.PauseReload();
+            }
+            orig(self);
+        }
+        private void Shadowfade_OnExit(On.EntityStates.GhostUtilitySkillState.orig_OnExit orig, EntityStates.GhostUtilitySkillState self)
+        {
+            ChatMessage.Send("Hook Working");
+            var ammoComponent = self.GetComponent<JhinStateController>();
+            if (ammoComponent != null)
+            {
+                ChatMessage.Send("Hook AmmoComp Working");
+                ammoComponent.StopReload();
+            }
+            orig(self);
+        }
+        private void Ruin_OnEnter(On.EntityStates.GlobalSkills.LunarDetonator.Detonate.orig_OnEnter orig, EntityStates.GlobalSkills.LunarDetonator.Detonate self)
+        {
+            ChatMessage.Send("Hook Working");
+            var ammoComponent = self.GetComponent<JhinStateController>();
+            if (ammoComponent != null)
+            {
+                ChatMessage.Send("Hook AmmoComp Working");
+                ammoComponent.StopReload();
+            }
+            orig(self);
+        }
+        #endregion
+
+        #endregion
+
+
         #region UI
         private JhinAmmoUI ammoUI;
 
@@ -308,13 +341,5 @@ namespace JhinMod
         }
 
         #endregion
-
-        private void UnHooks()
-        {
-            On.RoR2.GlobalEventManager.OnHitEnemy -= GlobalEventManager_OnHitEnemy;
-            On.RoR2.CharacterBody.RecalculateStats -= CharacterBody_RecalculateStats;
-            On.RoR2.UI.HUD.Awake -= HUD_Awake;
-            RoR2.UI.HUD.onHudTargetChangedGlobal -= HUD_onHudTargetChangedGlobal;
-        }
     }
 }

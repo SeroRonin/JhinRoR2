@@ -107,7 +107,10 @@ namespace JhinMod.Content.UI
                 if ( ammoComponent.isUlting )
                 {
                     var ultSkill = skillLocator.special.stateMachine.state as CurtainCall;
-                    Circle.fillAmount = (ultSkill.duration - ultSkill.fixedAge) / ultSkill.duration;
+                    if (ultSkill != null)
+                    {
+                        Circle.fillAmount = (ultSkill.duration - ultSkill.fixedAge) / ultSkill.duration;
+                    }
                 }
                 //Display remaining auto-reload time
                 else if ( ammoComponent.CanStartReload() )
@@ -125,7 +128,10 @@ namespace JhinMod.Content.UI
                 else if ( ammoComponent.startedReload )
                 {
                     var primarySkill = skillLocator.primary.stateMachine.state as WhisperReload;
-                    Circle.fillAmount = primarySkill.fixedAge / primarySkill.duration;
+                    if (primarySkill != null)
+                    {
+                        Circle.fillAmount = primarySkill.fixedAge / primarySkill.duration;
+                    }
                 }
                 else
                 {

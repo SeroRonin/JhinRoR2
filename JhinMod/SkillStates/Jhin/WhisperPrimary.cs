@@ -63,7 +63,7 @@ namespace JhinMod.SkillStates
         public void PlayFireAnimation()
         {
             var shotIndex = this.jhinStateController.ammoMax - (this.jhinStateController.ammoCount - 1 );
-            ChatMessage.Send($"shot index {shotIndex}");
+
             if (shotIndex == 4)
             {
                 var animatorComponent = this.GetModelAnimator();
@@ -207,10 +207,10 @@ namespace JhinMod.SkillStates
                     var executeDamage = (targetHealthComponent.missingCombinedHealth) * Config.primaryExecuteMissingHealthPercentage.Value;
                     var maxDamage = (damageInfo.damage * Config.primaryExecuteDamageCap.Value);
 
-                    damageInfo.damage += Math.Min(executeDamage, maxDamage);
-                    ChatMessage.Send($"Execute: {executeDamage}");
-                    ChatMessage.Send($"Max Execute: {maxDamage}");
-                    ChatMessage.Send($"Total Execute: {Math.Min(executeDamage, maxDamage)}");
+                    if (Config.primaryExecuteDamageCap.Value != 0f)
+                       damageInfo.damage += Math.Min(executeDamage, maxDamage);
+                    else
+                        damageInfo.damage += executeDamage;
                 }
             }
         }
