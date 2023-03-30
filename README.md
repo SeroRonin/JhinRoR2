@@ -118,16 +118,16 @@ Curtain Call is a primary skill override, like that of Railgunner's scope. For 1
 
 ## Skins
 > Each skin has it's own unique SFX, and if possible, VFX (when implemented). Creating the soundbanks for each is a painfully tedious process, and as such, only a few skins will have unique SFX at launch. Others are not planned, and will be added only if I have the motivation to do so.
-### Implemented
+### Available
 * High Noon
 * Blood Moon
-* Project
-
-### Not Implemented
 * SKT T1 [SFX not planned]
+* Project
 * Shan Hai Scrolls [SFX not planned]
 * DWG [SFX not planned]
 * Empyrean [SFX not planned]
+
+### Not Available
 * Dark Cosmic [Not Possbile?][^darkcosmic]
 
 

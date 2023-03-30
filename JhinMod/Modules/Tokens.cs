@@ -35,7 +35,11 @@ namespace JhinMod.Modules
             LanguageAPI.Add(prefix + "DEFAULT_SKIN_NAME", "Jhin");
             LanguageAPI.Add(prefix + "HIGHNOON_SKIN_NAME", "High Noon Jhin");
             LanguageAPI.Add(prefix + "BLOODMOON_SKIN_NAME", "Blood Moon Jhin");
+            LanguageAPI.Add(prefix + "SKTT1_SKIN_NAME", "SKT T1 Jhin");
             LanguageAPI.Add(prefix + "PROJECT_SKIN_NAME", "PROJECT: Jhin");
+            LanguageAPI.Add(prefix + "SHANHAI_SKIN_NAME", "Shan Hai Scrolls Jhin");
+            LanguageAPI.Add(prefix + "DWG_SKIN_NAME", "DWG Jhin");
+            LanguageAPI.Add(prefix + "EMPYREAN_SKIN_NAME", "Empyrean Jhin");
             LanguageAPI.Add(prefix + "MASTERY_SKIN_NAME", "Alternate");
             #endregion
 

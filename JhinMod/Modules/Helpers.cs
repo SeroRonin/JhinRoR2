@@ -119,7 +119,11 @@ namespace JhinMod.Modules
 
             if (index == 1) return "HighNoonJhin";
             if (index == 2) return "BloodMoonJhin";
-            if (index == 3) return "ProjectJhin";
+            //if (index == 3) return "SKTT1Jhin";
+            if (index == 4) return "ProjectJhin";
+            if (index == 5) return "ShanHaiJhin";
+            //if (index == 6) return "DWGJhin";
+            //if (index == 7) return "EmpyreanJhin";
             return "Jhin";
         }
     }

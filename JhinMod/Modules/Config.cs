@@ -155,7 +155,7 @@ namespace JhinMod.Modules
             sfxChoice = JhinPlugin.instance.Config.Bind<SFXChoice>(
                 new ConfigDefinition("Audio", "SFX Choice"),
                 SFXChoice.SkinDependent,
-                new ConfigDescription(CreateOptionDesc("If set, forces the mod to use SFX from a specific skin. Otherwise uses SFX from the player's respestive skin", SFXChoice.SkinDependent)));
+                new ConfigDescription(CreateOptionDesc("If set, forces the mod to use SFX from a specific skin. Otherwise uses SFX from the player's respestive skin" + Environment.NewLine + Environment.NewLine + "Currently not implemented (use base SFX): SKTT1, ShanHai, DWG, Empyrean", SFXChoice.SkinDependent)));
 
             //Not Implemented
             /*
@@ -297,7 +297,11 @@ namespace JhinMod.Modules
             Base,
             HighNoon,
             BloodMoon,
+            SKTT1,
             Project,
+            ShanHai,
+            DWG,
+            Empyrean,
             SkinDependent
         }
     }

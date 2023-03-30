@@ -332,6 +332,27 @@ namespace JhinMod.Modules.Survivors
 
             #endregion
 
+            #region SKT T1
+
+            //Create SkinDef
+            SkinDef sktt1Skin = Modules.Skins.CreateSkinDef(JHIN_PREFIX + "SKTT1_SKIN_NAME",
+                Assets.mainAssetBundle.LoadAsset<Sprite>("texSKTT1SkinIcon"),
+                defaultRendererinfos,
+                prefabCharacterModel.gameObject);
+
+            //Replace mesh
+            sktt1Skin.meshReplacements = Modules.Skins.getMeshReplacements(defaultRendererinfos,
+                "jhinMeshSKTT1",
+                "jhinMeshSKTT1_weapon");
+
+            //Replace material
+            sktt1Skin.rendererInfos[0].defaultMaterial = Modules.Materials.CreateHopooMaterial("matJhinSKTT1");
+            sktt1Skin.rendererInfos[1].defaultMaterial = Modules.Materials.CreateHopooMaterial("matJhinSKTT1");
+
+            skins.Add(sktt1Skin);
+
+            #endregion
+
             #region PROJECT
 
             //Create SkinDef
@@ -350,7 +371,70 @@ namespace JhinMod.Modules.Survivors
             projectSkin.rendererInfos[1].defaultMaterial = Modules.Materials.CreateHopooMaterial("matJhinProject");
 
             skins.Add(projectSkin);
-            
+
+            #endregion
+
+            #region ShanHai
+
+            //Create SkinDef
+            SkinDef shanhaiSkin = Modules.Skins.CreateSkinDef(JHIN_PREFIX + "SHANHAI_SKIN_NAME",
+                Assets.mainAssetBundle.LoadAsset<Sprite>("texShanHaiSkinIcon"),
+                defaultRendererinfos,
+                prefabCharacterModel.gameObject);
+
+            //Replace mesh
+            shanhaiSkin.meshReplacements = Modules.Skins.getMeshReplacements(defaultRendererinfos,
+                "jhinMeshShanHai",
+                "jhinMeshShanHai_weapon");
+
+            //Replace material
+            shanhaiSkin.rendererInfos[0].defaultMaterial = Modules.Materials.CreateHopooMaterial("matJhinShanHai");
+            shanhaiSkin.rendererInfos[1].defaultMaterial = Modules.Materials.CreateHopooMaterial("matJhinShanHai");
+
+            skins.Add(shanhaiSkin);
+
+            #endregion
+
+            #region DWG
+
+            //Create SkinDef
+            SkinDef dwgSkin = Modules.Skins.CreateSkinDef(JHIN_PREFIX + "DWG_SKIN_NAME",
+                Assets.mainAssetBundle.LoadAsset<Sprite>("texDWGSkinIcon"),
+                defaultRendererinfos,
+                prefabCharacterModel.gameObject);
+
+            //Replace mesh
+            dwgSkin.meshReplacements = Modules.Skins.getMeshReplacements(defaultRendererinfos,
+                "jhinMeshDWG",
+                "jhinMeshDWG_weapon");
+
+            //Replace material
+            dwgSkin.rendererInfos[0].defaultMaterial = Modules.Materials.CreateHopooMaterial("matJhinDWG");
+            dwgSkin.rendererInfos[1].defaultMaterial = Modules.Materials.CreateHopooMaterial("matJhinDWG");
+
+            skins.Add(dwgSkin);
+
+            #endregion
+
+            #region Empyrean
+
+            //Create SkinDef
+            SkinDef empyreanSkin = Modules.Skins.CreateSkinDef(JHIN_PREFIX + "EMPYREAN_SKIN_NAME",
+                Assets.mainAssetBundle.LoadAsset<Sprite>("texEmpyreanSkinIcon"),
+                defaultRendererinfos,
+                prefabCharacterModel.gameObject);
+
+            //Replace mesh
+            empyreanSkin.meshReplacements = Modules.Skins.getMeshReplacements(defaultRendererinfos,
+                "jhinMeshEmpyrean",
+                "jhinMeshEmpyrean_weapon");
+
+            //Replace material
+            empyreanSkin.rendererInfos[0].defaultMaterial = Modules.Materials.CreateHopooMaterial("matJhinEmpyrean");
+            empyreanSkin.rendererInfos[1].defaultMaterial = Modules.Materials.CreateHopooMaterial("matJhinEmpyrean");
+
+            skins.Add(empyreanSkin);
+
             #endregion
 
             //uncomment this when you have a mastery skin
