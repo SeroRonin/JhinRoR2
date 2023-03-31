@@ -15,7 +15,7 @@ namespace JhinMod.Content.Components
     public class JhinStateController : NetworkBehaviour
     {
         public int ammoCount;     //How much ammo do we currently have?
-        public int ammoMax = 4;  //How much ammo can we store?
+        public int ammoMax = 4;  //How much ammo can we store? DON'T CHANGE, GAME IS NOT SET UP TO SUPPORT MORE
 
         public float reloadTime = 2.5f; //How long does our reload take?
         public float reloadGraceDelay = 1f; //How long after emptying our ammo do we attempt a reload?
@@ -37,10 +37,13 @@ namespace JhinMod.Content.Components
         public SerializableEntityStateType reloadState;
 
         private EntityStateMachine jhinStateMachine;
+        private Animator modelAnimator;
 
         private void Awake()
         {
             jhinStateMachine = Helpers.GetEntityStateMachine(this.gameObject, "WeaponMode");
+            var modelLocator = this.GetComponent<ModelLocator>();
+            modelAnimator = modelLocator.modelTransform.GetComponent<Animator>();
         }
 
         private void Start()
@@ -90,6 +93,9 @@ namespace JhinMod.Content.Components
                     jhinStateMachine.SetNextStateToMain();
                 }
             }
+
+            modelAnimator.SetFloat("Reload.playbackRate", this.paused ? 0f : 1f);
+
         }
 
 

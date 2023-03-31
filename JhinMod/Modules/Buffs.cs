@@ -14,11 +14,6 @@ namespace JhinMod.Modules
         /// </summary>
         internal static BuffDef jhinCritMovespeedBuff;
 
-        /// <summary>
-        /// Buff that displays Jhin's reload auto timer
-        /// </summary>
-        internal static BuffDef jhinReloadTimerBuff;
-
         internal static void RegisterBuffs()
         {
             armorBuff = AddNewBuff("JhinArmorBuff",

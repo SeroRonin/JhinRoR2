@@ -102,13 +102,19 @@ namespace JhinMod
             On.EntityStates.GhostUtilitySkillState.OnEnter += Shadowfade_OnEnter;
             On.EntityStates.GhostUtilitySkillState.OnExit += Shadowfade_OnExit;
             //Essence of Heresy
-            On.EntityStates.GlobalSkills.LunarDetonator.Detonate.OnEnter += Ruin_OnEnter; 
-            
+            On.EntityStates.GlobalSkills.LunarDetonator.Detonate.OnEnter += Ruin_OnEnter;
+
+            On.EntityStates.FrozenState.OnEnter += FrozenState_OnEnter;
+            On.EntityStates.FrozenState.OnExit += FrozenState_OnExit;
+
             if (BepInEx.Bootstrap.Chainloader.PluginInfos.ContainsKey("com.weliveinasociety.CustomEmotesAPI"))
             {
                 On.RoR2.SurvivorCatalog.Init += SurvivorCatalog_Init;
                 CustomEmotesAPI.animChanged += CustomEmotesAPI_animChanged;
             }
+
+            //MP testings, disable when not testing on local machine
+            On.RoR2.Networking.NetworkManagerSystemSteam.OnClientConnect += (s, u, t) => { };
         }
 
         private void UnHooks()
@@ -126,6 +132,9 @@ namespace JhinMod
             On.EntityStates.GhostUtilitySkillState.OnExit -= Shadowfade_OnExit;
             //Essence of Heresy
             On.EntityStates.GlobalSkills.LunarDetonator.Detonate.OnEnter -= Ruin_OnEnter;
+
+            On.EntityStates.FrozenState.OnEnter -= FrozenState_OnEnter;
+            On.EntityStates.FrozenState.OnExit -= FrozenState_OnExit;
 
             if (BepInEx.Bootstrap.Chainloader.PluginInfos.ContainsKey("com.weliveinasociety.CustomEmotesAPI"))
             {
@@ -258,38 +267,53 @@ namespace JhinMod
         }
         private void Shadowfade_OnEnter(On.EntityStates.GhostUtilitySkillState.orig_OnEnter orig, EntityStates.GhostUtilitySkillState self)
         {
-            ChatMessage.Send("Hook Working");
             var ammoComponent = self.GetComponent<JhinStateController>();
             if (ammoComponent != null)
             {
-                ChatMessage.Send("Hook AmmoComp Working");
                 ammoComponent.PauseReload();
             }
             orig(self);
         }
         private void Shadowfade_OnExit(On.EntityStates.GhostUtilitySkillState.orig_OnExit orig, EntityStates.GhostUtilitySkillState self)
         {
-            ChatMessage.Send("Hook Working");
             var ammoComponent = self.GetComponent<JhinStateController>();
             if (ammoComponent != null)
             {
-                ChatMessage.Send("Hook AmmoComp Working");
                 ammoComponent.StopReload();
             }
             orig(self);
         }
         private void Ruin_OnEnter(On.EntityStates.GlobalSkills.LunarDetonator.Detonate.orig_OnEnter orig, EntityStates.GlobalSkills.LunarDetonator.Detonate self)
         {
-            ChatMessage.Send("Hook Working");
             var ammoComponent = self.GetComponent<JhinStateController>();
             if (ammoComponent != null)
             {
-                ChatMessage.Send("Hook AmmoComp Working");
                 ammoComponent.StopReload();
             }
             orig(self);
         }
         #endregion
+
+        public void FrozenState_OnEnter(On.EntityStates.FrozenState.orig_OnEnter orig, EntityStates.FrozenState self )
+        {
+            orig(self);
+
+            var ammoComponent = self.GetComponent<JhinStateController>();
+            if ( ammoComponent )
+            {
+                ammoComponent.PauseReload();
+            }
+        }
+        public void FrozenState_OnExit(On.EntityStates.FrozenState.orig_OnExit orig, EntityStates.FrozenState self)
+        {
+            var ammoComponent = self.GetComponent<JhinStateController>();
+            if (ammoComponent)
+            {
+                ammoComponent.StopReload();
+            }
+
+            orig(self);
+        }
 
         private void SurvivorCatalog_Init(On.RoR2.SurvivorCatalog.orig_Init orig)
         {
