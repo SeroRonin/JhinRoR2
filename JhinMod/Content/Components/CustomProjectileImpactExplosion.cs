@@ -75,8 +75,8 @@ namespace JhinMod.Content.Components
                     var missingHealthPercent = healthComponent.combinedHealthFraction;
                     damage = blastAttack.baseDamage * (missingHealthPercent * Config.specialExecutePercentage.Value);
 
-                    ChatMessage.Send($"ult base {blastAttack.baseDamage}");
-                    ChatMessage.Send($"ult bonus {damage}");
+                    //ChatMessage.Send($"ult base {blastAttack.baseDamage}");
+                    //ChatMessage.Send($"ult bonus {damage}");
 
                     BlastAttack.BlastAttackDamageInfo blastAttackDamageInfo = new BlastAttack.BlastAttackDamageInfo
                     {
