@@ -18,6 +18,12 @@ If you like my mods, consider supporting me!
 
 Jhin as a survivor is meant to deliver a low APM, high damage experience. He has high damage scaling, but lacks sufficient means to deal with large groups of enemies. This is my first mod for a RoR2, so it's likely to be either under or overpowered. If you have any concerns or feedback, please feel free to reach out via a discord channel I made specifically for things like this: [https://discord.gg/RSs2kA7yRu](https://discord.gg/RSs2kA7yRu)
 
+
+### Video Showcase 
+Since markdown doesn't support embedding youtube videos, the showcase can be found on youtube directly from [this link](https://www.youtube.com/watch?v=rlJhe3pvIV8), or by clicking the icon below
+
+<a href="https://www.youtube.com/watch?v=rlJhe3pvIV8"><img src="https://freepngimg.com/thumb/united_states/76268-play-united-button-youtube-states-logo-transparent.png" alt="[Risk of Rain 2] Jhin Survivor Mod Showcase" style="width:100px;height:100px;"></a>
+
 ### Features
 * Unique scaling and ammo system iconic to Jhin's playstyle in League of Legends
 * Animations from League, with custom animations to bridge the difference in game styles
@@ -82,6 +88,8 @@ Jhin has a unique interaction with Attack Speed. Unlike other survivors, he gain
 ![ammoUIpreview](https://user-images.githubusercontent.com/8404018/228163857-ed99db22-ca2a-4aaf-bde1-d749ae322fe5.gif)
   
 Whisper has a unique ammo and reload system, utilizing shots represented by the tally marks and a reload timer represented by the ring. Jhin reloads after the 4th shot, or after 10 seconds without firing. Casting any skill will reset the automatic reload timer and interrupt an active reload.
+
+Execute as a keyword means the ability has special effects and modifiers based on the enemies missing health. I don't have a readily available screenshot, but this effect differs between skills and is listed ingame like other keywords with the specifics.
 </details>
 
 #
@@ -112,6 +120,8 @@ Deadly Flourish is a simple beam attack that stuns every enemy it hits. It trigg
 ![ammoUIpreview2](https://user-images.githubusercontent.com/8404018/228164250-abe1fa86-4619-4044-81b1-d824592ad9f2.gif)
 
 Curtain Call is a primary skill override, like that of Railgunner's scope. For 10 seconds, it replaces Whisper with 4 shots that deal massive AOE damage. It automatically reloads Whisper as well, so you don't have to worry about reloading after firing all 4 shots.
+
+Execute as a keyword means the ability has special effects and modifiers based on the enemies missing health. I don't have a readily available screenshot, but this effect differs between skills and is listed ingame like other keywords with the specifics.
 </details>
 
 ---
