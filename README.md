@@ -22,7 +22,7 @@ Jhin as a survivor is meant to deliver a low APM, high damage experience. He has
 ### Video Showcase 
 Since markdown doesn't support embedding youtube videos, the showcase can be found on youtube directly from [this link](https://www.youtube.com/watch?v=rlJhe3pvIV8), or by clicking the icon below
 
-<a href="https://www.youtube.com/watch?v=rlJhe3pvIV8"><img src="https://freepngimg.com/thumb/united_states/76268-play-united-button-youtube-states-logo-transparent.png" alt="[Risk of Rain 2] Jhin Survivor Mod Showcase" style="width:100px;height:100px;"></a>
+<a href="https://www.youtube.com/watch?v=rlJhe3pvIV8"><img src="https://user-images.githubusercontent.com/8404018/229385495-7235eea9-9b34-43fc-8eec-0aa9c6d2256b.png" alt="[Risk of Rain 2] Jhin Survivor Mod Showcase" style=""></a>
 
 ### Features
 * Unique scaling and ammo system iconic to Jhin's playstyle in League of Legends
