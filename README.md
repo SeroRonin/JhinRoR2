@@ -16,7 +16,7 @@ If you like my mods, consider supporting me!
 
 ###### Jhin is a meticulous criminal psychopath who believes murder is art. Once an Ionian prisoner, but freed by shadowy elements within Ionia's ruling council, the serial killer now works as their cabal's assassin. Using his gun gun as his paintbrush, Jhin creates works of artistic brutality, horrifying victims and onlookers. He gains a cruel pleasure from putting on his gruesome theater, making him the ideal choice to send the most powerful of messages: terror.
 
-Jhin as a survivor is meant to deliver a low APM, high damage experience. He has high damage scaling, but lacks sufficient means to deal with large groups of enemies.
+Jhin as a survivor is meant to deliver a low APM, high damage experience. He has high damage scaling, but lacks sufficient means to deal with large groups of enemies. This is my first mod for a RoR2, so it's likely to be either under or overpowered. If you have any concerns or feedback, please feel free to reach out via a discord channel I made specifically for things like this: [https://discord.gg/RSs2kA7yRu](https://discord.gg/RSs2kA7yRu)
 
 ### Features
 * Unique scaling and ammo system iconic to Jhin's playstyle in League of Legends
