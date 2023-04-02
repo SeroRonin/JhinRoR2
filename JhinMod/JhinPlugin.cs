@@ -114,7 +114,7 @@ namespace JhinMod
             }
 
             //MP testings, disable when not testing on local machine
-            On.RoR2.Networking.NetworkManagerSystemSteam.OnClientConnect += (s, u, t) => { };
+            //On.RoR2.Networking.NetworkManagerSystemSteam.OnClientConnect += (s, u, t) => { };
         }
 
         private void UnHooks()
