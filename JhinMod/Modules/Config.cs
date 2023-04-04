@@ -111,7 +111,7 @@ namespace JhinMod.Modules
             primaryInstantShot = JhinPlugin.instance.Config.Bind<bool>(
                 new ConfigDefinition("Skills", "Whisper: Instant Shot"),
                 false,
-                new ConfigDescription(CreateOptionDesc("Disables the fire delay on Whisper's normal shots. This does not make the skill end faster, and does not apply to the last shot.", false)));
+                new ConfigDescription(CreateOptionDesc("Disables the fire delay on Whisper's normal shots. This does not apply to the last shot.", false)));
 
             //Dancing Grenade
             secondaryCD = JhinPlugin.instance.Config.Bind<float>(
@@ -133,18 +133,18 @@ namespace JhinMod.Modules
             utilityCD = JhinPlugin.instance.Config.Bind<float>(
                 new ConfigDefinition("Skills", "Deadly Flourish: Cooldown"), 
                 4f, 
-                new ConfigDescription(CreateOptionDesc("", 8f)));
+                new ConfigDescription(CreateOptionDesc("", 4f)));
 
             utilityDamageCoefficient = JhinPlugin.instance.Config.Bind<float>(
                 new ConfigDefinition("Skills", "Deadly Flourish: Damage Coefficient"), 
                 5f, 
-                new ConfigDescription(CreateOptionDesc("", 9f)));
+                new ConfigDescription(CreateOptionDesc("", 5f)));
 
             //CurtainCall
             specialCD = JhinPlugin.instance.Config.Bind<float>(
                 new ConfigDefinition("Skills", "Curtain Call: Cooldown"), 
-                10f, 
-                new ConfigDescription(CreateOptionDesc("", 10f)));
+                20f, 
+                new ConfigDescription(CreateOptionDesc("", 20f)));
 
             specialDamageCoefficient = JhinPlugin.instance.Config.Bind<float>(
                 new ConfigDefinition("Skills", "Curtain Call: Damage Coefficient"), 

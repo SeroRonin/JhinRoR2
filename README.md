@@ -150,6 +150,8 @@ Execute as a keyword means the ability has special effects and modifiers based o
   * Referenced this mod a lot to help me learn RoR2 modding
 * **EnforcerGang**: Rocket Survivor 
   * Referenced code for custom missile prefab spawning
+* **Violet Chaolan*: Shader Help
+  * Helped with some shader plugins that allowed me to experiment with VFX
 
 ## Mod Compatibility
 > Suggest compatibilities and report compatibility issues under Github Issues, or through my Discord: [https://discord.gg/RSs2kA7yRu](https://discord.gg/RSs2kA7yRu)
@@ -170,7 +172,6 @@ Execute as a keyword means the ability has special effects and modifiers based o
 
 ## Known Issues
 > Bugs can be reported under Github Issues, or through my Discord: [https://discord.gg/RSs2kA7yRu](https://discord.gg/RSs2kA7yRu)
-* **[Skill]** Ult VFX sometimes does not appear
 * **[Skill]** Ult projectile sometimes passes through enemies due to its speed
 * **[Skill]** Ult applies execute damage as an additional instance of damage (this is due to explosions not supporting post-hit pre-damage modifications)
 * **[Item]** Shuriken is triggered very sparsely, rather than on every primary attack. Likely due to custom ammo system?
