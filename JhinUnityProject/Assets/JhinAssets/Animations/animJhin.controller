@@ -112,14 +112,14 @@ AnimatorState:
   m_Mirror: 0
   m_SpeedParameterActive: 1
   m_MirrorParameterActive: 0
-  m_CycleOffsetParameterActive: 0
+  m_CycleOffsetParameterActive: 1
   m_TimeParameterActive: 0
   m_Motion: {fileID: -457264381137466179, guid: fbf7e3e7f7fdff748a6e33a84f824935,
     type: 3}
   m_Tag: 
   m_SpeedParameter: ShootGun.playbackRate
   m_MirrorParameter: 
-  m_CycleOffsetParameter: 
+  m_CycleOffsetParameter: attackOffset
   m_TimeParameter: 
 --- !u!1102 &-8224981807997865553
 AnimatorState:
@@ -175,7 +175,7 @@ AnimatorState:
   m_Tag: 
   m_SpeedParameter: ShootGun.playbackRate
   m_MirrorParameter: 
-  m_CycleOffsetParameter: 
+  m_CycleOffsetParameter: attackOffset
   m_TimeParameter: 
 --- !u!1101 &-7261209367947966499
 AnimatorStateTransition:
@@ -247,6 +247,25 @@ AnimatorStateTransition:
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
   m_CanTransitionToSelf: 1
+--- !u!1107 &-6302996928888668792
+AnimatorStateMachine:
+  serializedVersion: 5
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: New Layer
+  m_ChildStates: []
+  m_ChildStateMachines: []
+  m_AnyStateTransitions: []
+  m_EntryTransitions: []
+  m_StateMachineTransitions: {}
+  m_StateMachineBehaviours: []
+  m_AnyStatePosition: {x: 50, y: 20, z: 0}
+  m_EntryPosition: {x: 50, y: 120, z: 0}
+  m_ExitPosition: {x: 800, y: 120, z: 0}
+  m_ParentStateMachinePosition: {x: 800, y: 20, z: 0}
+  m_DefaultState: {fileID: 0}
 --- !u!1107 &-6266333917549097067
 AnimatorStateMachine:
   serializedVersion: 5
@@ -288,14 +307,14 @@ AnimatorState:
   m_Mirror: 0
   m_SpeedParameterActive: 1
   m_MirrorParameterActive: 0
-  m_CycleOffsetParameterActive: 0
+  m_CycleOffsetParameterActive: 1
   m_TimeParameterActive: 0
   m_Motion: {fileID: 9041046925229184585, guid: fbf7e3e7f7fdff748a6e33a84f824935,
     type: 3}
   m_Tag: 
   m_SpeedParameter: ShootGun.playbackRate
   m_MirrorParameter: 
-  m_CycleOffsetParameter: 
+  m_CycleOffsetParameter: attackOffset
   m_TimeParameter: 
 --- !u!1101 &-5591233703934719142
 AnimatorStateTransition:
@@ -738,6 +757,12 @@ AnimatorController:
     m_DefaultInt: 0
     m_DefaultBool: 0
     m_Controller: {fileID: 0}
+  - m_Name: attackOffset
+    m_Type: 1
+    m_DefaultFloat: 0
+    m_DefaultInt: 0
+    m_DefaultBool: 0
+    m_Controller: {fileID: 0}
   m_AnimatorLayers:
   - serializedVersion: 5
     m_Name: Body
@@ -827,6 +852,19 @@ AnimatorController:
     m_SyncedLayerAffectsTiming: 0
     m_Controller: {fileID: 9100000}
   - serializedVersion: 5
+    m_Name: FullBody, Override
+    m_StateMachine: {fileID: 1107055535439641488, guid: f1a82152954bc974895f8ff9f035f84f,
+      type: 2}
+    m_Mask: {fileID: 0}
+    m_Motions: []
+    m_Behaviours: []
+    m_BlendingMode: 0
+    m_SyncedLayerIndex: -1
+    m_DefaultWeight: 1
+    m_IKPass: 0
+    m_SyncedLayerAffectsTiming: 0
+    m_Controller: {fileID: 9100000}
+  - serializedVersion: 5
     m_Name: AimYaw
     m_StateMachine: {fileID: 1107717964553556870, guid: f1a82152954bc974895f8ff9f035f84f,
       type: 2}
@@ -847,19 +885,6 @@ AnimatorController:
     m_Motions: []
     m_Behaviours: []
     m_BlendingMode: 1
-    m_SyncedLayerIndex: -1
-    m_DefaultWeight: 1
-    m_IKPass: 0
-    m_SyncedLayerAffectsTiming: 0
-    m_Controller: {fileID: 9100000}
-  - serializedVersion: 5
-    m_Name: FullBody, Override
-    m_StateMachine: {fileID: 1107055535439641488, guid: f1a82152954bc974895f8ff9f035f84f,
-      type: 2}
-    m_Mask: {fileID: 0}
-    m_Motions: []
-    m_Behaviours: []
-    m_BlendingMode: 0
     m_SyncedLayerIndex: -1
     m_DefaultWeight: 1
     m_IKPass: 0
@@ -1081,14 +1106,14 @@ AnimatorState:
   m_Mirror: 0
   m_SpeedParameterActive: 1
   m_MirrorParameterActive: 0
-  m_CycleOffsetParameterActive: 0
+  m_CycleOffsetParameterActive: 1
   m_TimeParameterActive: 0
   m_Motion: {fileID: 2516765661061743395, guid: fbf7e3e7f7fdff748a6e33a84f824935,
     type: 3}
   m_Tag: 
   m_SpeedParameter: ShootGun.playbackRate
   m_MirrorParameter: 
-  m_CycleOffsetParameter: 
+  m_CycleOffsetParameter: attackOffset
   m_TimeParameter: 
 --- !u!1101 &5677798786476950631
 AnimatorStateTransition:
@@ -1141,7 +1166,7 @@ AnimatorState:
   m_Tag: 
   m_SpeedParameter: ShootGun.playbackRate
   m_MirrorParameter: 
-  m_CycleOffsetParameter: 
+  m_CycleOffsetParameter: attackOffset
   m_TimeParameter: 
 --- !u!1101 &6454958642229532848
 AnimatorStateTransition:
@@ -1264,12 +1289,12 @@ AnimatorState:
   m_Mirror: 0
   m_SpeedParameterActive: 1
   m_MirrorParameterActive: 0
-  m_CycleOffsetParameterActive: 0
+  m_CycleOffsetParameterActive: 1
   m_TimeParameterActive: 0
   m_Motion: {fileID: 8074953323990774918, guid: fbf7e3e7f7fdff748a6e33a84f824935,
     type: 3}
   m_Tag: 
   m_SpeedParameter: ShootGun.playbackRate
   m_MirrorParameter: 
-  m_CycleOffsetParameter: 
+  m_CycleOffsetParameter: attackOffset
   m_TimeParameter: 

@@ -41,32 +41,44 @@ namespace JhinMod.SkillStates
             jhinStateController.timeSinceFire = 0f;
             jhinStateController.ResetReload();
 
+            Helpers.StopSoundDynamic("PassiveCritSpin", base.gameObject);
+            Helpers.StopSoundDynamic("PassiveCritMusic", base.gameObject);
+
             base.characterBody.SetAimTimer(3f);
+            
+
+            var shotIndex = this.jhinStateController.ammoMax - (this.jhinStateController.ammoCount - 1);
+
+            this.duration = WhisperPrimary.baseDuration * (this.characterBody.baseAttackSpeed / this.characterBody.attackSpeed);
+            this.fireTime = WhisperPrimary.baseFireDelayPercent * this.duration;
             this.muzzleString = "Muzzle";
             this.isCrit = RollCrit();
             this.earlyExitTime = 1 / this.characterBody.attackSpeed;
 
-            this.duration = WhisperPrimary.baseDuration * (this.characterBody.baseAttackSpeed / this.characterBody.attackSpeed);
-            this.fireTime = WhisperPrimary.baseFireDelayPercent * this.duration;
+            if (Config.primaryInstantShot.Value == true && shotIndex != 4 )
+            {
+                this.fireTime = 0f;
+            }
+            else
+            {
+                Helpers.PlaySoundDynamic(shotIndex == 4 ? "PassiveCritCast" : $"AttackCast{shotIndex}", base.gameObject);
+            }
+
             this.PlayFireAnimation();
 
-            var shotIndex = this.jhinStateController.ammoMax - (this.jhinStateController.ammoCount - 1);
-
-            Helpers.PlaySoundDynamic(shotIndex == 4 ? "PassiveCritCast" : $"AttackCast{shotIndex}", base.gameObject);
-            Helpers.StopSoundDynamic("PassiveCritSpin", base.gameObject);
-            Helpers.StopSoundDynamic("PassiveCritMusic", base.gameObject);
-            //Util.PlaySound(shotIndex == 4 ? "Play_Seroronin_Jhin_PassiveCritCast" : $"Play_Seroronin_Jhin_AttackCast{shotIndex}", base.gameObject);
-            //Util.PlaySound("Stop_Seroronin_Jhin_PassiveCritSpin", base.gameObject);
-            //Util.PlaySound("Stop_Seroronin_Jhin_PassiveCritMusic", base.gameObject);
 
         }
         public void PlayFireAnimation()
         {
             var shotIndex = this.jhinStateController.ammoMax - (this.jhinStateController.ammoCount - 1 );
+            var animatorComponent = this.GetModelAnimator();
+
+            var mult = WhisperPrimary.baseDuration / this.duration;
+            var cycleOffset = Config.primaryInstantShot.Value == true ? 0.15625f * mult : 0f;
 
             if (shotIndex == 4)
             {
-                var animatorComponent = this.GetModelAnimator();
+                
                 var layerIndex = animatorComponent.GetLayerIndex("UpperBody, Override");
                 animatorComponent.SetLayerWeight(layerIndex, 0f);
                 base.PlayAnimation("FullBody Passive Crit, Override", "AttackPassiveCrit", "ShootGun.playbackRate", duration);
@@ -74,11 +86,27 @@ namespace JhinMod.SkillStates
             else if (this.isCrit)
             {
                     
-                base.PlayAnimation("UpperBody, Override", "AttackCrit", "ShootGun.playbackRate", duration);
+                PlayAnimationOnAnimatorCustom(animatorComponent, "UpperBody, Override", "AttackCrit", "ShootGun.playbackRate", duration, cycleOffset);
             }
             else
             {
-                base.PlayAnimation("UpperBody, Override", $"Attack{shotIndex}", "ShootGun.playbackRate", duration);
+                PlayAnimationOnAnimatorCustom(animatorComponent, "UpperBody, Override", $"Attack{shotIndex}", "ShootGun.playbackRate", duration, cycleOffset);
+            }
+
+        }
+
+        protected static void PlayAnimationOnAnimatorCustom(Animator modelAnimator, string layerName, string animationStateName, string playbackRateParam, float duration, float cycleOffset)
+        {
+            modelAnimator.speed = 1f;
+            modelAnimator.Update(0f);
+            int layerIndex = modelAnimator.GetLayerIndex(layerName);
+            if (layerIndex >= 0)
+            {
+                modelAnimator.SetFloat(playbackRateParam, 1f);
+                modelAnimator.PlayInFixedTime(animationStateName, layerIndex, cycleOffset);
+                modelAnimator.Update(0f);
+                float length = modelAnimator.GetCurrentAnimatorStateInfo(layerIndex).length;
+                modelAnimator.SetFloat(playbackRateParam, length / duration);
             }
         }
 

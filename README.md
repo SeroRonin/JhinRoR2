@@ -59,7 +59,7 @@ Since markdown doesn't support embedding youtube videos, the showcase can be fou
     <td>33</td>
     <td>0.2</td>
     <td>0</td>
-    <td>0.24</td>
+    <td>2.4</td>
     <td>0.019</td>
   </tr>
 </table>
@@ -187,12 +187,6 @@ Execute as a keyword means the ability has special effects and modifiers based o
 * Achievments + Unlockable criteria (other abilties, skins, etc)
 * Test multiplayer functionality
 
----
-
-## Patch Notes
-
-`1.0.0`
-* Initial Release
 
 [^skinSFX]:
     There is also the option to override which set of SFX to use in the config. This does not require a restart.

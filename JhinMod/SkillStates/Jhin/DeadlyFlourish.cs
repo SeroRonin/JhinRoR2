@@ -1,9 +1,12 @@
 ﻿using EntityStates;
 using JhinMod.Content.Components;
 using JhinMod.Modules;
+using R2API.Utils;
 using RoR2;
+using System;
 using UnityEngine;
 using static RoR2.BulletAttack;
+using static UnityEngine.SpookyHash;
 
 namespace JhinMod.SkillStates
 {
@@ -17,7 +20,7 @@ namespace JhinMod.SkillStates
         public static float recoil = 3f;
         public static float range = 512f;
         public static GameObject tracerEffectPrefab = RoR2.LegacyResourcesAPI.Load<GameObject>("Prefabs/Effects/Tracers/TracerGoldGat");
-        //public static GameObject tracerEffectPrefab = Assets.deadlyFlourishEffect;
+        public static GameObject beamEffectPrefab = Assets.deadlyFlourishEffect;
 
         private float duration;
         private float fireTime;
@@ -69,7 +72,32 @@ namespace JhinMod.SkillStates
                 if (base.isAuthority)
                 {
                     Ray aimRay = base.GetAimRay();
+
                     base.AddRecoil(-1f * DeadlyFlourish.recoil, -2f * DeadlyFlourish.recoil, -0.5f * DeadlyFlourish.recoil, 0.5f * DeadlyFlourish.recoil);
+
+                    ModelLocator component = this.gameObject.GetComponent<ModelLocator>();
+                    if (component && component.modelTransform)
+                    {
+                        ChildLocator component2 = component.modelTransform.GetComponent<ChildLocator>();
+                        if (component2)
+                        {
+                            int childIndex = component2.FindChildIndex(muzzleString);
+                            Transform transform = component2.FindChild(childIndex);
+
+                            Quaternion rot2 = Quaternion.FromToRotation(this.inputBank.aimOrigin, this.inputBank.aimDirection);
+
+                            if (transform)
+                            {
+                                EffectData effectData = new EffectData
+                                {
+                                    origin = transform.position,
+                                    rotation = Util.QuaternionSafeLookRotation(base.inputBank.aimDirection)
+                                };
+                                //effectData.SetChildLocatorTransformReference(this.gameObject, childIndex);
+                                EffectManager.SpawnEffect(DeadlyFlourish.beamEffectPrefab, effectData, true);
+                            }
+                        }
+                    }
 
                     new BulletAttack
                     {
@@ -91,9 +119,9 @@ namespace JhinMod.SkillStates
                         smartCollision = false,
                         procChainMask = default(ProcChainMask),
                         procCoefficient = procCoefficient,
-                        radius = 1.5f,
+                        radius = 1f,
                         sniper = false,
-                        stopperMask = LayerIndex.world.mask,
+                        stopperMask = 0,
                         weapon = null,
                         tracerEffectPrefab = DeadlyFlourish.tracerEffectPrefab,
                         spreadPitchScale = 0f,
@@ -116,14 +144,18 @@ namespace JhinMod.SkillStates
             {
                 base.characterBody.AddTimedBuff(Modules.Buffs.jhinCritMovespeedBuff, Config.passiveDuration.Value * 2f );
             }
-            
-
             return result;
         }
+
 
         public override void FixedUpdate()
         {
             base.FixedUpdate();
+
+            if (!hasFired)
+            {
+                HandleMovements();
+            }
 
             if (base.fixedAge >= this.fireTime)
             {
@@ -134,6 +166,19 @@ namespace JhinMod.SkillStates
             {
                 this.outer.SetNextStateToMain();
                 return;
+            }
+        }
+
+        public virtual void HandleMovements()
+        {
+            var aimAnimator = GetAimAnimator();
+            if (aimAnimator)
+            {
+                aimAnimator.AimImmediate();
+            }
+            if (base.characterDirection)
+            {
+                base.characterDirection.moveVector = base.inputBank.aimDirection;
             }
         }
 

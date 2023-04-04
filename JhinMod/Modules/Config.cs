@@ -36,6 +36,7 @@ namespace JhinMod.Modules
         public static ConfigEntry<float> primaryDamageCoefficient;
         public static ConfigEntry<float> primaryExecuteMissingHealthPercentage;
         public static ConfigEntry<float> primaryExecuteDamageCap;
+        public static ConfigEntry<bool>  primaryInstantShot;
 
         public static ConfigEntry<float> secondaryCD;
         public static ConfigEntry<float> secondaryDamageCoefficient;
@@ -72,7 +73,7 @@ namespace JhinMod.Modules
             armorGrowth = JhinPlugin.instance.Config.Bind<float>(new ConfigDefinition("Character Stats", "Armor: Growth"), 0f, new ConfigDescription(CreateOptionDesc("", 0f)));
 
             damageBase = JhinPlugin.instance.Config.Bind<float>(new ConfigDefinition("Character Stats", "Damage: Base"), 12f, new ConfigDescription(CreateOptionDesc("", 12f)));
-            damageGrowth = JhinPlugin.instance.Config.Bind<float>(new ConfigDefinition("Character Stats", "Damage: Growth"), 0.24f, new ConfigDescription(CreateOptionDesc("", 0.24f)));
+            damageGrowth = JhinPlugin.instance.Config.Bind<float>(new ConfigDefinition("Character Stats", "Damage: Growth"), 2.4f, new ConfigDescription(CreateOptionDesc("", 2.4f)));
 
             attackSpeedBase = JhinPlugin.instance.Config.Bind<float>(new ConfigDefinition("Character Stats", "Attack Speed: Base"), 0.625f, new ConfigDescription(CreateOptionDesc("", 0.625f)));
             attackSpeedGrowth = JhinPlugin.instance.Config.Bind<float>(new ConfigDefinition("Character Stats", "Attack Speed: Growth"), 0.019f, new ConfigDescription(CreateOptionDesc("", 0.019f)));
@@ -106,6 +107,11 @@ namespace JhinMod.Modules
                 new ConfigDefinition("Skills", "Whisper: Execute Damage Cap"), 
                 1f, 
                 new ConfigDescription(CreateOptionDesc("Percent of bonus damage, based on Whisper's damage, allowed to be dealt by Whisper's Execute mechanic. 0 Uncaps this damage.", 1f)));
+
+            primaryInstantShot = JhinPlugin.instance.Config.Bind<bool>(
+                new ConfigDefinition("Skills", "Whisper: Instant Shot"),
+                false,
+                new ConfigDescription(CreateOptionDesc("Disables the fire delay on Whisper's normal shots. This does not make the skill end faster, and does not apply to the last shot.", false)));
 
             //Dancing Grenade
             secondaryCD = JhinPlugin.instance.Config.Bind<float>(
@@ -180,7 +186,14 @@ namespace JhinMod.Modules
             if (String.IsNullOrEmpty(desc))
                 return $"Default: {defaultVal}";
             else
-                return desc + Environment.NewLine + Environment.NewLine + "Requires Restart" + Environment.NewLine + $"Default: {defaultVal}";
+                return desc + Environment.NewLine + Environment.NewLine + $"Default: {defaultVal}";
+        }
+        internal static String CreateOptionDesc(string desc, bool defaultVal)
+        {
+            if (String.IsNullOrEmpty(desc))
+                return $"Default: {defaultVal}";
+            else
+                return desc + Environment.NewLine + Environment.NewLine + $"Default: {defaultVal}";
         }
 
         /// <summary>
@@ -216,6 +229,7 @@ namespace JhinMod.Modules
             CreateOptionEntry(primaryDamageCoefficient, restartRequired: true);
             CreateOptionEntry(primaryExecuteMissingHealthPercentage, restartRequired: true);
             CreateOptionEntry(primaryExecuteDamageCap, restartRequired: true);
+            CreateOptionEntry(primaryInstantShot, restartRequired: true);
 
             CreateOptionEntry(secondaryCD, restartRequired: true);
             CreateOptionEntry(secondaryDamageCoefficient, restartRequired: true);
