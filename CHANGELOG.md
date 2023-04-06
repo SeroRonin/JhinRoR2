@@ -1,3 +1,6 @@
+`1.1.1`
+* Fixed an issue that caused the mod to malfunction if CustomEmotesAPI was not installed
+
 `1.1.0`
 * [Buff] Increased Dancing Grenade's targeting range from `25` to `40`
 * [Nerf] Changed Curtain Call's cooldown from `10s` to `20s`

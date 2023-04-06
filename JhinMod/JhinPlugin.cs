@@ -41,12 +41,14 @@ namespace JhinMod
     {
         public const string MODUID = "com.seroronin.JhinMod";
         public const string MODNAME = "JhinMod";
-        public const string MODVERSION = "1.1.0";
+        public const string MODVERSION = "1.1.1";
 
         public const string DEVELOPER_PREFIX = "SERORONIN";
 
         public static JhinPlugin instance;
         public bool emoteSetup;
+
+        public bool CustomEmotesActive;
 
         private void Awake()
         {
@@ -59,6 +61,15 @@ namespace JhinMod
             if (BepInEx.Bootstrap.Chainloader.PluginInfos.ContainsKey("com.rune580.riskofoptions"))
             {
                 Modules.Config.CreateRiskofOptionsCompat();
+            }
+            if (BepInEx.Bootstrap.Chainloader.PluginInfos.ContainsKey("com.weliveinasociety.CustomEmotesAPI"))
+            {
+                Log.Warning("EMOTES ACTIVE");
+                CustomEmotesActive = true;
+            }
+            else
+            {
+                Log.Warning("EMOTES INACTIVE");
             }
 
             Modules.States.RegisterStates(); // register states for networking
@@ -107,10 +118,9 @@ namespace JhinMod
             On.EntityStates.FrozenState.OnEnter += FrozenState_OnEnter;
             On.EntityStates.FrozenState.OnExit += FrozenState_OnExit;
 
-            if (BepInEx.Bootstrap.Chainloader.PluginInfos.ContainsKey("com.weliveinasociety.CustomEmotesAPI"))
+            if ( CustomEmotesActive )
             {
-                On.RoR2.SurvivorCatalog.Init += SurvivorCatalog_Init;
-                CustomEmotesAPI.animChanged += CustomEmotesAPI_animChanged;
+                Content.CustomEmotesAPISupport.HookCustomEmoteAPI();
             }
 
             //MP testings, disable when not testing on local machine
@@ -136,10 +146,9 @@ namespace JhinMod
             On.EntityStates.FrozenState.OnEnter -= FrozenState_OnEnter;
             On.EntityStates.FrozenState.OnExit -= FrozenState_OnExit;
 
-            if (BepInEx.Bootstrap.Chainloader.PluginInfos.ContainsKey("com.weliveinasociety.CustomEmotesAPI"))
+            if ( CustomEmotesActive )
             {
-                On.RoR2.SurvivorCatalog.Init -= SurvivorCatalog_Init;
-                CustomEmotesAPI.animChanged -= CustomEmotesAPI_animChanged;
+                Content.CustomEmotesAPISupport.UnhookCustomEmoteAPI();
             }
         }
 
@@ -313,39 +322,6 @@ namespace JhinMod
             }
 
             orig(self);
-        }
-
-        private void SurvivorCatalog_Init(On.RoR2.SurvivorCatalog.orig_Init orig)
-        {
-            orig();
-
-            foreach (var item in SurvivorCatalog.allSurvivorDefs)
-            {
-                if (item.bodyPrefab.name == "JhinBody")
-                {
-                    var skele = Modules.Assets.mainAssetBundle.LoadAsset<GameObject>("emoteJhin");
-                    CustomEmotesAPI.ImportArmature(item.bodyPrefab, skele);
-                    skele.GetComponentInChildren<BoneMapper>().scale = 1.1f;
-                }
-            }
-        }
-
-        private void CustomEmotesAPI_animChanged(string newAnimation, BoneMapper mapper)
-        {
-            if (newAnimation != "none")
-            {
-                if (mapper.transform.name == "emoteJhin")
-                {
-                    mapper.transform.parent.Find("JhinMeshWeapon").gameObject.SetActive(false);
-                }
-            }
-            else
-            {
-                if (mapper.transform.name == "emoteJhin")
-                {
-                    mapper.transform.parent.Find("JhinMeshWeapon").gameObject.SetActive(true);
-                }
-            }
         }
 
         #region UI
