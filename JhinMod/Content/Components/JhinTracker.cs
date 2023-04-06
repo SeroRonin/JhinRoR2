@@ -15,7 +15,7 @@ namespace JhinMod.Content.Components
     [RequireComponent(typeof(TeamComponent))]
     public class JhinTracker : MonoBehaviour
     {
-        public float maxTrackingDistance = 25f;
+        public float maxTrackingDistance = 40f;
         public float maxTrackingAngle = 25f;
         public float trackerUpdateFrequency = 10f;
 

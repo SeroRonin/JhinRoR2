@@ -150,7 +150,7 @@ Execute as a keyword means the ability has special effects and modifiers based o
   * Referenced this mod a lot to help me learn RoR2 modding
 * **EnforcerGang**: Rocket Survivor 
   * Referenced code for custom missile prefab spawning
-* **Violet Chaolan*: Shader Help
+* **Violet Chaolan**: Shader Help
   * Helped with some shader plugins that allowed me to experiment with VFX
 
 ## Mod Compatibility

@@ -23,7 +23,7 @@ namespace JhinMod.SkillStates
         public static float baseFireDelayPercent = 0.1f;
         public static float force = 800f;
         public static float recoil = 3f;
-        public static float range = 512f;
+        public static float range = 256f;
         public static GameObject tracerEffectPrefab = RoR2.LegacyResourcesAPI.Load<GameObject>("Prefabs/Effects/Tracers/TracerGoldGat");
 
         private JhinStateController jhinStateController;

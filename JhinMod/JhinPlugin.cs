@@ -268,7 +268,7 @@ namespace JhinMod
         private void Shadowfade_OnEnter(On.EntityStates.GhostUtilitySkillState.orig_OnEnter orig, EntityStates.GhostUtilitySkillState self)
         {
             var ammoComponent = self.GetComponent<JhinStateController>();
-            if (ammoComponent != null)
+            if (ammoComponent != null && ammoComponent.ammoCount != 0 )
             {
                 ammoComponent.PauseReload();
             }
@@ -277,7 +277,7 @@ namespace JhinMod
         private void Shadowfade_OnExit(On.EntityStates.GhostUtilitySkillState.orig_OnExit orig, EntityStates.GhostUtilitySkillState self)
         {
             var ammoComponent = self.GetComponent<JhinStateController>();
-            if (ammoComponent != null)
+            if (ammoComponent != null && ammoComponent.ammoCount != 0 )
             {
                 ammoComponent.StopReload();
             }
@@ -286,7 +286,7 @@ namespace JhinMod
         private void Ruin_OnEnter(On.EntityStates.GlobalSkills.LunarDetonator.Detonate.orig_OnEnter orig, EntityStates.GlobalSkills.LunarDetonator.Detonate self)
         {
             var ammoComponent = self.GetComponent<JhinStateController>();
-            if (ammoComponent != null)
+            if (ammoComponent != null && ammoComponent.ammoCount != 0)
             {
                 ammoComponent.StopReload();
             }

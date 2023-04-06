@@ -60,7 +60,11 @@ namespace JhinMod.SkillStates
                 this.initialOrbTarget = this.tracker.GetTrackingTarget();
             }
 
-            this.jhinStateController.StopReload( true );
+            if (jhinStateController.ammoCount != 0)
+            {
+                this.jhinStateController.StopReload(true);
+            }
+
             base.PlayAnimation("UpperBody, Override", "DancingGrenade");
 
             Helpers.PlaySoundDynamic("QCast", base.gameObject);

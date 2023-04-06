@@ -18,7 +18,7 @@ namespace JhinMod.SkillStates
         public static float baseFireDelay = 0.75f;
         public static float force = 800f;
         public static float recoil = 3f;
-        public static float range = 512f;
+        public static float range = 256f;
         public static GameObject tracerEffectPrefab = RoR2.LegacyResourcesAPI.Load<GameObject>("Prefabs/Effects/Tracers/TracerGoldGat");
         public static GameObject beamEffectPrefab = Assets.deadlyFlourishEffect;
 
@@ -32,7 +32,11 @@ namespace JhinMod.SkillStates
             base.OnEnter();
 
             this.jhinStateController = GetComponent<JhinStateController>();
-            this.jhinStateController.StopReload( true, 2f );
+
+            if (jhinStateController.ammoCount != 0)
+            {
+                this.jhinStateController.StopReload(true, 2f);
+            }
 
             this.duration = DeadlyFlourish.baseDuration;
             this.fireTime = DeadlyFlourish.baseFireDelay;
@@ -42,10 +46,6 @@ namespace JhinMod.SkillStates
             if (base.characterDirection)
             {
                 base.characterDirection.moveVector = base.characterDirection.forward;
-            }
-            if (base.rigidbodyMotor)
-            {
-                base.rigidbodyMotor.moveVector = Vector3.zero;
             }
 
             Helpers.PlaySoundDynamic("WCast", base.gameObject);
@@ -154,8 +154,25 @@ namespace JhinMod.SkillStates
 
             if (!hasFired)
             {
-                HandleMovements();
+                var aimAnimator = GetAimAnimator();
+                if (aimAnimator)
+                {
+                    aimAnimator.AimImmediate();
+                }
+
+                if (base.characterMotor && base.inputBank)
+                {
+                    base.characterDirection.moveVector = base.inputBank.aimDirection;
+                }
             }
+            /*
+            else
+            {
+                base.characterDirection.moveVector = base.inputBank.moveVector;
+            }*/
+
+            HandleMovements();
+            
 
             if (base.fixedAge >= this.fireTime)
             {
@@ -171,14 +188,13 @@ namespace JhinMod.SkillStates
 
         public virtual void HandleMovements()
         {
-            var aimAnimator = GetAimAnimator();
-            if (aimAnimator)
+            if (!base.characterMotor.isGrounded)
             {
-                aimAnimator.AimImmediate();
+                base.characterMotor.moveDirection = this.inputBank.moveVector;
             }
-            if (base.characterDirection)
+            else
             {
-                base.characterDirection.moveVector = base.inputBank.aimDirection;
+                base.characterMotor.moveDirection = Vector3.zero;
             }
         }
 
