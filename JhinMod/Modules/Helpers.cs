@@ -10,7 +10,8 @@ namespace JhinMod.Modules
     {
         internal const string agilePrefix = "<style=cIsUtility>Agile.</style> ";
         internal const string stunningPrefix = "<style=cIsUtility>Stunning.</style> ";
-        internal const string executingPrefix = "<style=cIsUtility>Executing.</style> ";
+        internal const string captivatingPrefix = "<color=#ff5078>Captivating.</color> ";
+        internal const string executingPrefix = "<color=#ff5078>Executing.</color> ";
 
         internal static string KeywordText(string keyword, string sub)
         {

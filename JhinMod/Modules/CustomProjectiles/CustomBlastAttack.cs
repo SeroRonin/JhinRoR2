@@ -75,7 +75,6 @@ namespace JhinMod.Modules.CustomProjectiles
                     //Custom, calculate execute damage per individual
                     var missingHealth = healthComponent.fullHealth - healthComponent.health;
                     executeDam = missingHealth * Config.specialExecutePercentage.Value;
-                    ChatMessage.Send($"Execute Dam Ult {executeDam}");
 
                     //Custom, apply execute damage per individual
                     blastAttackDamageInfo.damage += Math.Min(this.baseDamage, executeDam);

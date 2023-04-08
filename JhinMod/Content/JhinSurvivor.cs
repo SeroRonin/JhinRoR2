@@ -220,7 +220,7 @@ namespace JhinMod.Modules.Survivors
                 rechargeStock = 1,
                 requiredStock = 1,
                 stockToConsume = 1,
-                keywordTokens = new string[] { "KEYWORD_STUNNING" }
+                keywordTokens = new string[] { "KEYWORD_CAPTIVATING", "KEYWORD_STUNNING" }
             });
 
             Modules.Skills.AddUtilitySkills(bodyPrefab, utilitySkillDef);

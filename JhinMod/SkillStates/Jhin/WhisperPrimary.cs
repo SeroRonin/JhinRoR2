@@ -225,6 +225,13 @@ namespace JhinMod.SkillStates
         
         private void ModifyDamage(BulletAttack _bulletAttack, ref BulletAttack.BulletHit hitInfo, DamageInfo damageInfo)
         {
+            var skillLocator = this.GetComponent<SkillLocator>();
+
+            if ( skillLocator && skillLocator.utility.cooldownRemaining < 4 )
+            {
+                R2API.DamageAPI.AddModdedDamageType(damageInfo, Modules.Buffs.JhinMarkDamage);
+            }
+
             var shotIndex = this.jhinStateController.ammoMax - (this.jhinStateController.ammoCount - 1);
             var targetHealthComponent = hitInfo.hitHurtBox ? hitInfo.hitHurtBox.healthComponent : null;
 

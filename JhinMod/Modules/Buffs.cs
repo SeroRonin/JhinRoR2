@@ -1,4 +1,5 @@
-﻿using RoR2;
+﻿using R2API;
+using RoR2;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -14,6 +15,11 @@ namespace JhinMod.Modules
         /// </summary>
         internal static BuffDef jhinCritMovespeedBuff;
 
+        internal static BuffDef jhinMarkDebuff;
+
+        internal static DamageAPI.ModdedDamageType JhinMarkDamage = DamageAPI.ReserveDamageType();
+        internal static DamageAPI.ModdedDamageType JhinConsumeMarkDamage = DamageAPI.ReserveDamageType();
+
         internal static void RegisterBuffs()
         {
             armorBuff = AddNewBuff("JhinArmorBuff",
@@ -23,10 +29,16 @@ namespace JhinMod.Modules
                 false);
 
             jhinCritMovespeedBuff = AddNewBuff("Every Moment Matters",
-                Modules.Assets.mainAssetBundle.LoadAsset<Sprite>("texBuffPassiveIcon"),
+                LegacyResourcesAPI.Load<BuffDef>("BuffDefs/CloakSpeed").iconSprite,
                 new Color(1f,0f,0.44f),
                 false,
                 false);
+
+            jhinMarkDebuff = AddNewBuff("Marked",
+                Modules.Assets.mainAssetBundle.LoadAsset<Sprite>("texBuffPassiveIcon"),
+                new Color(1f, 0f, 0.44f),
+                false,
+                true);
         }
 
         // simple helper method

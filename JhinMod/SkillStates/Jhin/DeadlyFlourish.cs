@@ -128,6 +128,7 @@ namespace JhinMod.SkillStates
                         spreadYawScale = 0f,
                         queryTriggerInteraction = QueryTriggerInteraction.UseGlobal,
                         hitCallback = BulletHitCallback,
+                        modifyOutgoingDamageCallback = ModifyDamage,
                         hitEffectPrefab = EntityStates.Commando.CommandoWeapon.FirePistol2.hitEffectPrefab,
                     }.Fire();
                 }
@@ -142,9 +143,15 @@ namespace JhinMod.SkillStates
             
             if (healthComponent && hitInfo.hitHurtBox.teamIndex != base.teamComponent.teamIndex)
             {
-                base.characterBody.AddTimedBuff(Modules.Buffs.jhinCritMovespeedBuff, Config.passiveDuration.Value * 2f );
+                base.characterBody.AddTimedBuff(Modules.Buffs.jhinCritMovespeedBuff, Modules.Config.passiveBuffDuration.Value * Modules.Config.utilityBuffMultiplier.Value );
             }
+
             return result;
+        }
+
+        private void ModifyDamage(BulletAttack _bulletAttack, ref BulletAttack.BulletHit hitInfo, DamageInfo damageInfo)
+        {
+            R2API.DamageAPI.AddModdedDamageType(damageInfo, Modules.Buffs.JhinConsumeMarkDamage);
         }
 
 

@@ -95,9 +95,14 @@ namespace JhinMod.Content.Components
                         canRejectForce = blastAttack.canRejectForce
                     };
 
-
                     if (NetworkServer.active)
                     {
+                        var skillLocator = blastAttack.attacker.GetComponent<SkillLocator>();
+                        if (skillLocator && skillLocator.utility.cooldownRemaining < 4)
+                        {
+                            healthComponent.body.AddTimedBuff(Modules.Buffs.jhinMarkDebuff, Modules.Config.utilityMarkDuration.Value);
+                        }
+
                         BlastAttack.PerformDamageServer(blastAttackDamageInfo);
                     }
                     else

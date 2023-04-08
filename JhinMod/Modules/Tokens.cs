@@ -29,7 +29,8 @@ namespace JhinMod.Modules
             //LanguageAPI.Add("KEYWORD_EXECUTING", Helpers.KeywordText("Executing", $"Deals <style=cIsDamage>bonus damage</style> based on <style=cIsHealth> target's missing health</style>."));
             LanguageAPI.Add("KEYWORD_EXECUTING_WHISPER", Helpers.KeywordText("Executing: Primary", $"Deals <style=cIsDamage>bonus damage</style> equal to <style=cIsHealth>{100f * Config.primaryExecuteMissingHealthPercentage.Value}% of the target's missing health</style>. This bonus caps at <style=cIsDamage>{100f * Config.primaryExecuteDamageCap.Value}% of the original damage</style>."));
             LanguageAPI.Add("KEYWORD_EXECUTING_SPECIAL", Helpers.KeywordText("Executing: Special", $"Deals <style=cIsDamage>{100f * Config.specialExecutePercentage.Value}% bonus damage</style> per <style=cIsHealth>1% of target's missing health</style>."));
-            LanguageAPI.Add("KEYWORD_RELOAD", Helpers.KeywordText("Reload", $"Enter a reload state after firing 4 <style=cIsUtility>Primary</style> shots, or after 10 seconds. The timer is reset after using any skill."));
+            LanguageAPI.Add("KEYWORD_RELOAD", Helpers.KeywordText("Reload", $"Enter a reload state after firing 4 <color=#ff5078>Whisper</color> shots, or after <style=cIsUtility>{Config.primaryAutoReloadTime.Value}</style> seconds. <i>The timer is reset after using any skill.</i>"));
+            LanguageAPI.Add("KEYWORD_CAPTIVATING", Helpers.KeywordText("Captivating", $"Jhin's other skills <style=cDeath>mark</style> enemies for <style=cIsUtility>{Config.utilityMarkDuration.Value}</style> seconds. Hitting a marked enemy with <color=#ff5078>Deadly Flourish</color> consumes the mark, <style=cIsDamage>rooting</style> them for <style=cIsUtility>{Config.utilityRootDuration.Value}</style> seconds."));
 
             #region Skins
             LanguageAPI.Add(prefix + "DEFAULT_SKIN_NAME", "Jhin");
@@ -45,31 +46,31 @@ namespace JhinMod.Modules
 
             #region Passive
             LanguageAPI.Add(prefix + "PASSIVE_NAME", "Every Moment Matters");
-            LanguageAPI.Add(prefix + "PASSIVE_DESCRIPTION", "Attack speed only grows with level, other sources instead give <style=cIsDamage>0.25% bonus damage</style> per <style=cIsDamage>1% of bonus attack speed</style>. Addtionally, <style=cDeath>critical hits</style> grant <style=cIsUtility>10%</style> + (<style=cIsUtility>0.4%</style> per <style=cIsDamage>1% bonus attack speed</style>) <style=cIsUtility>bonus movement speed</style>.");
+            LanguageAPI.Add(prefix + "PASSIVE_DESCRIPTION", $"Jhin can only gain <style=cIsDamage>Attack Speed</style> from level growth. <style=cIsDamage>{100 * Modules.Config.passiveDamageConversion.Value}% of additional Attack Speed</style> is instead converted into <style=cDeath>Percent Bonus Damage</style>. Addtionally, <style=cDeath>critical hits</style> grant <style=cIsUtility>10%</style> + (<style=cIsUtility>{Modules.Config.passiveMovespeedConversion.Value}%</style> per <style=cIsDamage>1% bonus attack speed</style>) <style=cIsUtility>bonus movement speed</style> for <style=cIsUtility>{Config.passiveBuffDuration.Value}</style> seconds.");
             #endregion
 
             #region Primary
             LanguageAPI.Add(prefix + "PRIMARY_WHISPER_NAME", "Whisper");
-            LanguageAPI.Add(prefix + "PRIMARY_WHISPER_DESCRIPTION", Helpers.agilePrefix + $"Fire a bullet for <style=cIsDamage>{100f * Modules.Config.primaryDamageCoefficient.Value}% damage</style>. The fourth shot <style=cDeath>critically strikes</style> and is {Helpers.executingPrefix}Can fire up to 4 shots before needing to <style=cIsUtility>reload</style>.");
+            LanguageAPI.Add(prefix + "PRIMARY_WHISPER_DESCRIPTION", Helpers.agilePrefix + $"Fire a bullet for <style=cIsDamage>{100f * Modules.Config.primaryDamageCoefficient.Value}% damage</style>. The fourth shot <style=cDeath>critically strikes</style> and is <color=#ff5078>exectuing</color>. Can fire up to 4 shots before needing to <style=cIsUtility>reload</style>.");
             LanguageAPI.Add(prefix + "PRIMARY_WHISPER_CRIT_DESCRIPTION", Helpers.agilePrefix + Helpers.executingPrefix + $"Fire a bullet for <style=cIsDamage>{100f * Modules.Config.primaryDamageCoefficient.Value}% damage</style>. <style=cDeath>This shot critically strikes</style>.");
             #endregion
 
             #region Secondary
             LanguageAPI.Add(prefix + "SECONDARY_GRENADE_NAME", "Dancing Grenade");
-            LanguageAPI.Add(prefix + "SECONDARY_GRENADE_DESCRIPTION", Helpers.agilePrefix + $"Fire a grenade for <style=cIsDamage>{100f * Config.secondaryDamageCoefficient.Value}% damage</style>. The grenade bounces to nearby enemies up to <style=cIsDamage>3</style> additional times. Each bounce gains an additional <style=cIsDamage>{100f * Config.secondaryDamageBounceCoefficient.Value}% TOTAL damage</style> if it kills the enemy it hits.");
+            LanguageAPI.Add(prefix + "SECONDARY_GRENADE_DESCRIPTION", Helpers.agilePrefix + $"Fire a targeted grenade for <style=cIsDamage>{100f * Config.secondaryDamageCoefficient.Value}% damage</style>. The grenade bounces to a nearby enemy up to <style=cIsDamage>3</style> additional times. Each bounce gains an additional <style=cIsDamage>{100f * Config.secondaryDamageBounceCoefficient.Value}% TOTAL damage</style> if the enemy <style=cDeath>dies</style>.");
             #endregion
 
             #region Utility
             LanguageAPI.Add(prefix + "UTILITY_FLOURISH_NAME", "Deadly Flourish");
-            LanguageAPI.Add(prefix + "UTILITY_FLOURISH_DESCRIPTION", Helpers.stunningPrefix + $"Fire a <style=cIsDamage>piercing</style> beam for <style=cIsDamage>{100f * Config.utilityDamageCoefficient.Value}% damage</style>. Triggers <style=cIsUtility>Every Moment Matters</style> as if Jhin had crit.");
+            LanguageAPI.Add(prefix + "UTILITY_FLOURISH_DESCRIPTION", Helpers.captivatingPrefix + Helpers.stunningPrefix + $"Fire a <style=cIsDamage>piercing</style> beam for <style=cIsDamage>{100f * Config.utilityDamageCoefficient.Value}% damage</style>. Damaging an enemy triggers <color=#ff5078>Every Moment Matters</color> as if Jhin had crit, which lasts <style=cIsUtility>{Modules.Config.passiveBuffDuration.Value * Modules.Config.utilityBuffMultiplier.Value}</style> seconds.");
             #endregion
 
             #region Special
             LanguageAPI.Add(prefix + "SPECIAL_ULT_NAME", "Curtain Call");
-            LanguageAPI.Add(prefix + "SPECIAL_ULT_DESCRIPTION", Helpers.executingPrefix + $"Instantly <style=cIsUtility>reload</style> and empower your primary skill. For the next <style=cIsUtility>10 seconds</style>, using your primary skill fires explosive rounds for <style=cIsDamage>{100f * Config.specialDamageCoefficient.Value}% damage</style>. <style=cDeath>The fourth shot critically strikes</style>.");
+            LanguageAPI.Add(prefix + "SPECIAL_ULT_DESCRIPTION", Helpers.executingPrefix + $"Instantly <style=cIsUtility>reload</style> and empower your primary skill. For the next <style=cIsUtility>10 seconds</style>, using your primary skill fires <style=cIsDamage>explosive</style> rounds for <style=cIsDamage>{100f * Config.specialDamageCoefficient.Value}% damage</style>. This lasts for up to <style=cIsDamage>4</style> shots. <style=cDeath>The fourth shot critically strikes</style>.");
 
-            LanguageAPI.Add(prefix + "SPECIAL_ULT_SHOT_DESCRIPTION", Helpers.executingPrefix + $"Fire an explosive round for <style=cIsDamage>{100f * Config.specialDamageCoefficient.Value}% damage</style>.");
-            LanguageAPI.Add(prefix + "SPECIAL_ULT_SHOT_CRIT_DESCRIPTION", Helpers.executingPrefix + $"Fire an explosive round for <style=cIsDamage>{100f * Config.specialDamageCoefficient.Value}% damage</style>. <style=cDeath>This shot critically strikes</style>.");
+            LanguageAPI.Add(prefix + "SPECIAL_ULT_SHOT_DESCRIPTION", Helpers.executingPrefix + $"Fire an <style=cIsDamage>explosive</style> round for <style=cIsDamage>{100f * Config.specialDamageCoefficient.Value}% damage</style>.");
+            LanguageAPI.Add(prefix + "SPECIAL_ULT_SHOT_CRIT_DESCRIPTION", Helpers.executingPrefix + $"Fire an <style=cIsDamage>explosive</style> round for <style=cIsDamage>{100f * Config.specialDamageCoefficient.Value}% damage</style>. <style=cDeath>This shot critically strikes</style>.");
 
             #endregion
 

@@ -16,10 +16,11 @@ namespace JhinMod.Modules.CustomProjectiles
     public class ProjectileDancingGrenade : LightningOrb
     {
         public float damageCoefficientOnBounceKill;
-        public GameObject ghostPrefab;
         public float initialDistance;
-        public BounceVisualizer bounceVis;
         public float spawnTime;
+
+        public GameObject ghostPrefab;
+        public BounceVisualizer bounceVis;
 
         public override void Begin()
         {
@@ -53,6 +54,8 @@ namespace JhinMod.Modules.CustomProjectiles
             if (this.target)
             {
                 HealthComponent healthComponent = this.target.healthComponent;
+                lastTarget = this.target.healthComponent;
+
                 if (healthComponent)
                 {
                     DamageInfo damageInfo = new DamageInfo();
@@ -66,6 +69,13 @@ namespace JhinMod.Modules.CustomProjectiles
                     damageInfo.position = this.target.transform.position;
                     damageInfo.damageColorIndex = this.damageColorIndex;
                     damageInfo.damageType = this.damageType;
+
+                    var skillLocator = this.attacker.GetComponent<SkillLocator>();
+                    if (skillLocator && skillLocator.utility.cooldownRemaining < 4)
+                    {
+                        R2API.DamageAPI.AddModdedDamageType(damageInfo, Modules.Buffs.JhinMarkDamage);
+                    }
+
                     healthComponent.TakeDamage(damageInfo);
 
                     GlobalEventManager.instance.OnHitEnemy(damageInfo, healthComponent.gameObject);
@@ -83,14 +93,10 @@ namespace JhinMod.Modules.CustomProjectiles
                     {
                         if (this.bouncedObjects != null)
                         {
-                            if (this.canBounceOnSameTarget)
-                            {
-                                this.bouncedObjects.Clear();
-                            }
                             this.bouncedObjects.Add(this.target.healthComponent);
                         }
 
-                        HurtBox hurtBox = this.PickNextTarget(this.target.transform.position);
+                        HurtBox hurtBox = this.PickNextTargetWithNewPriority(this.target.transform.position);
                         if (hurtBox)
                         {
                             ProjectileDancingGrenade lightningOrb = new ProjectileDancingGrenade();
@@ -108,6 +114,7 @@ namespace JhinMod.Modules.CustomProjectiles
                             lightningOrb.bouncesRemaining = this.bouncesRemaining - 1;
                             lightningOrb.isCrit = this.isCrit;
                             lightningOrb.bouncedObjects = this.bouncedObjects;
+                            lightningOrb.deadObjects = this.deadObjects;
                             lightningOrb.lightningType = this.lightningType;
                             lightningOrb.procChainMask = this.procChainMask;
                             lightningOrb.procCoefficient = this.procCoefficient;
@@ -124,6 +131,7 @@ namespace JhinMod.Modules.CustomProjectiles
                             {
                                 lightningOrb.damageValue += this.damageValue * this.damageCoefficientOnBounceKill;
                             }
+
                             OrbManager.instance.AddOrb(lightningOrb);
 
                         }
@@ -138,6 +146,59 @@ namespace JhinMod.Modules.CustomProjectiles
                     Helpers.PlaySoundDynamic("QHitLast", this.attacker, this.target.gameObject);
                 }
             }
+        }
+
+        //These values are specifically used for this custom PickNextTarget method
+        public List<HealthComponent> deadObjects;
+        public HealthComponent lastTarget;
+
+        public HurtBox PickNextTargetWithNewPriority(Vector3 position)
+        {
+            if (this.search == null)
+            {
+                this.search = new BullseyeSearch();
+            }
+            this.search.searchOrigin = position;
+            this.search.searchDirection = Vector3.zero;
+            this.search.teamMaskFilter = TeamMask.allButNeutral;
+            this.search.teamMaskFilter.RemoveTeam(this.teamIndex);
+            this.search.filterByLoS = false;
+            this.search.sortMode = BullseyeSearch.SortMode.Distance;
+            this.search.maxDistanceFilter = this.range;
+            this.search.RefreshCandidates();
+            HurtBox hurtBox = (from v in this.search.GetResults()
+                               where this.bouncedObjects.Contains(v.healthComponent) && !this.deadObjects.Contains(v.healthComponent) && this.lastTarget != v.healthComponent
+                               select v).FirstOrDefault<HurtBox>();
+            HurtBox hurtBoxNew = (from v in this.search.GetResults()
+                               where !this.bouncedObjects.Contains(v.healthComponent) && !this.deadObjects.Contains(v.healthComponent)
+                                  select v).FirstOrDefault<HurtBox>();
+
+            HurtBox outputHurtbox = null;
+
+            //Do we have any new targets? If so, prioritize
+            if (hurtBoxNew)
+            {
+                outputHurtbox = hurtBoxNew;
+            }
+            else if (hurtBox)
+            {
+                outputHurtbox = hurtBox;
+            }
+
+            
+            //Recursively check for non-dead entities to bounce to
+            if (outputHurtbox)
+            {
+                if (!outputHurtbox.healthComponent.alive)
+                {
+                    this.deadObjects.Add(outputHurtbox.healthComponent);
+
+                    var notDead = PickNextTargetWithNewPriority(position);
+                    outputHurtbox = notDead;
+                }
+            }
+
+            return outputHurtbox;
         }
     }
 }

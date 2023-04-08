@@ -19,7 +19,7 @@ namespace JhinMod.Content.Components
 
         public float reloadTime = 2.5f; //How long does our reload take?
         public float reloadGraceDelay = 1f; //How long after emptying our ammo do we attempt a reload?
-        public float reloadAutoDelay = 10f; //How long after doing nothing do we attempt a reload?
+        public float reloadAutoDelay = Config.primaryAutoReloadTime.Value; //How long after doing nothing do we attempt a reload?
 
         public float reloadStopwatch;
         public float timeSinceFire;
@@ -123,7 +123,7 @@ namespace JhinMod.Content.Components
                     this.reloadStopwatch = 0f;
                 }
                 else
-                    this.reloadStopwatch = 10f;
+                    this.reloadStopwatch = reloadAutoDelay;
 
             }
         }

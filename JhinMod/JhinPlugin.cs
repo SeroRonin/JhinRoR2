@@ -16,6 +16,7 @@ using JhinMod.Content.Components;
 using JhinMod.Modules;
 using EntityStates;
 using EmotesAPI;
+using HG;
 
 
 [module: UnverifiableCode]
@@ -41,7 +42,7 @@ namespace JhinMod
     {
         public const string MODUID = "com.seroronin.JhinMod";
         public const string MODNAME = "JhinMod";
-        public const string MODVERSION = "1.1.1";
+        public const string MODVERSION = "1.2.0";
 
         public const string DEVELOPER_PREFIX = "SERORONIN";
 
@@ -102,6 +103,7 @@ namespace JhinMod
         private void Hook()
         {
             On.RoR2.GlobalEventManager.OnHitEnemy += GlobalEventManager_OnHitEnemy;
+            On.RoR2.HealthComponent.TakeDamage += HealthComponent_OnTakeDamage;
             On.RoR2.CharacterBody.RecalculateStats += CharacterBody_RecalculateStats;
             On.RoR2.UI.HUD.Awake += HUD_Awake;
             RoR2.UI.HUD.onHudTargetChangedGlobal += HUD_onHudTargetChangedGlobal;
@@ -152,6 +154,7 @@ namespace JhinMod
             }
         }
 
+        //Handles passive speed boost on crit
         private void GlobalEventManager_OnHitEnemy(On.RoR2.GlobalEventManager.orig_OnHitEnemy orig, GlobalEventManager self, DamageInfo damageInfo, GameObject victim)
         {
             orig(self, damageInfo, victim);
@@ -166,12 +169,34 @@ namespace JhinMod
                 {
                     if (NetworkServer.active)
                     {
-                        attackerBody.AddTimedBuff(Modules.Buffs.jhinCritMovespeedBuff, Modules.Config.passiveDuration.Value);
+                        attackerBody.AddTimedBuff(Modules.Buffs.jhinCritMovespeedBuff, Modules.Config.passiveBuffDuration.Value);
                     }
                 }
             }
         }
 
+        //Handles Deadly Flourish marks
+        private void HealthComponent_OnTakeDamage(On.RoR2.HealthComponent.orig_TakeDamage orig, HealthComponent self, DamageInfo info)
+        {
+            if ( info.HasModdedDamageType(Modules.Buffs.JhinMarkDamage) )
+            {
+                if (NetworkServer.active)
+                {
+                    self.body.AddTimedBuff(Modules.Buffs.jhinMarkDebuff, Modules.Config.utilityMarkDuration.Value);
+                }
+            }
+            if (self.body.HasBuff(Modules.Buffs.jhinMarkDebuff) && info.HasModdedDamageType(Modules.Buffs.JhinConsumeMarkDamage) )
+            {
+                if (NetworkServer.active)
+                {
+                    self.body.RemoveBuff(Modules.Buffs.jhinMarkDebuff);
+                    self.body.AddTimedBuff(RoR2Content.Buffs.Nullified, Modules.Config.utilityRootDuration.Value);
+                }
+            }
+            orig(self, info);
+        }
+
+        //Handles attackspeed to attack damage percent bonus
         private void CharacterBody_RecalculateStats(On.RoR2.CharacterBody.orig_RecalculateStats orig, CharacterBody self)
         {
             orig(self);
@@ -223,8 +248,8 @@ namespace JhinMod
         /// <returns></returns>
         public float CalculateDamageBonus(float damage, float attakSpeedBonus, float attackSpeedLocked)
         {
-            var percentDam = 0.0025f; //What percentage, as a decimal, of damage do we want to add per percent of bonus attackspeed?
-            var percentAtkSpd = 100 * (attakSpeedBonus / attackSpeedLocked); //Convert bonus attack speed from Multiplier to Percent
+            var percentDam = Modules.Config.passiveDamageConversion.Value;
+            var percentAtkSpd = (attakSpeedBonus / attackSpeedLocked);
             var damageBonus = damage * (percentDam * percentAtkSpd);
 
             return damageBonus;
@@ -239,9 +264,9 @@ namespace JhinMod
         /// <returns></returns>
         public float CalculateMovespeedBonus(float movespeed, float attakSpeedBonus, float attackSpeedLocked)
         {
-            var percentMove = 0.004f; //What percentage, as a decimal, of damage do we want to add per percent of bonus attackspeed?
-            var percentAtkSpd = 100 * (attakSpeedBonus / attackSpeedLocked); //Convert bonus attack speed from Multiplier to Percent
-            var movespeedBonus = movespeed * (0.1f + (percentMove * percentAtkSpd));
+            var percentMove = Modules.Config.passiveMovespeedConversion.Value;
+            var percentAtkSpd = (attakSpeedBonus / attackSpeedLocked);
+            var movespeedBonus = movespeed * (0.1f + (percentMove * percentAtkSpd)); //Add a flat +10% movement speed, in case we don't have any attackspeed
 
             return movespeedBonus;
         }

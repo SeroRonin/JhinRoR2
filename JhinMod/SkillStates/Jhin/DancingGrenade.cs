@@ -115,6 +115,7 @@ namespace JhinMod.SkillStates
             dancingGrenade.bouncesRemaining = DancingGrenade.maxBounceCount;
             dancingGrenade.speed = DancingGrenade.projectileTravelSpeed;
             dancingGrenade.bouncedObjects = new List<HealthComponent>();
+            dancingGrenade.deadObjects = new List<HealthComponent>();
             dancingGrenade.range = DancingGrenade.projectileBounceRange;
             dancingGrenade.damageCoefficientOnBounceKill = this.damageCoefficientOnBounceKill;
 

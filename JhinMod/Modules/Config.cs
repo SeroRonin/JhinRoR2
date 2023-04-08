@@ -31,9 +31,13 @@ namespace JhinMod.Modules
         public static ConfigEntry<float> movementSpeedBase;
         public static ConfigEntry<float> movementSpeedGrowth;
 
-        public static ConfigEntry<float> passiveDuration;
+        public static ConfigEntry<float> passiveDamageConversion;
+        public static ConfigEntry<float> passiveMovespeedConversion;
+        public static ConfigEntry<float> passiveBuffDuration;
 
         public static ConfigEntry<float> primaryDamageCoefficient;
+        public static ConfigEntry<float> primaryAutoReloadTime;
+        //public static ConfigEntry<float> primaryReloadTime;
         public static ConfigEntry<float> primaryExecuteMissingHealthPercentage;
         public static ConfigEntry<float> primaryExecuteDamageCap;
         public static ConfigEntry<bool>  primaryInstantShot;
@@ -44,6 +48,9 @@ namespace JhinMod.Modules
 
         public static ConfigEntry<float> utilityCD;
         public static ConfigEntry<float> utilityDamageCoefficient;
+        public static ConfigEntry<float> utilityBuffMultiplier;
+        public static ConfigEntry<float> utilityMarkDuration;
+        public static ConfigEntry<float> utilityRootDuration;
 
         public static ConfigEntry<float> specialCD;
         public static ConfigEntry<float> specialDamageCoefficient;
@@ -87,7 +94,18 @@ namespace JhinMod.Modules
 
             #region Skills
             //Every Moment Matters
-            passiveDuration = JhinPlugin.instance.Config.Bind<float>(
+
+            passiveDamageConversion = JhinPlugin.instance.Config.Bind<float>(
+                new ConfigDefinition("Skills", "Every Moment Matters: Attack Speed to Damage Percent"),
+                0.6f,
+                new ConfigDescription(CreateOptionDesc("How much of Jhin's bonus Attack Speed to convert into bonus Damage percent", 0.6f)));
+
+            passiveMovespeedConversion = JhinPlugin.instance.Config.Bind<float>(
+                new ConfigDefinition("Skills", "Every Moment Matters: Attack Speed to Movespeed Percent"),
+                0.4f,
+                new ConfigDescription(CreateOptionDesc("How much of Jhin's bonus Attack Speed to convert into bonus Movement Speed (given by the movespeed buff gained from critical strikes)", 0.4f)));
+
+            passiveBuffDuration = JhinPlugin.instance.Config.Bind<float>(
                 new ConfigDefinition("Skills", "Every Moment Matters: Buff Duration"),
                 2f,
                 new ConfigDescription(CreateOptionDesc("How long the movement speed buff gained from critical strikes lasts", 2f)));
@@ -95,8 +113,13 @@ namespace JhinMod.Modules
             //Whisper
             primaryDamageCoefficient = JhinPlugin.instance.Config.Bind<float>(
                 new ConfigDefinition("Skills", "Whisper: Damage Coefficient"), 
-                8f, 
-                new ConfigDescription(CreateOptionDesc("", 8f)));
+                6f, 
+                new ConfigDescription(CreateOptionDesc("", 6f)));
+
+            primaryAutoReloadTime = JhinPlugin.instance.Config.Bind<float>(
+                new ConfigDefinition("Skills", "Whisper: Auto Reload Time"),
+                10f,
+                new ConfigDescription(CreateOptionDesc("How long to wait (in seconds) before attempting an auto-reload", 10f)));
 
             primaryExecuteMissingHealthPercentage = JhinPlugin.instance.Config.Bind<float>(
                 new ConfigDefinition("Skills", "Whisper: Execute Damage Coefficient"), 
@@ -121,24 +144,39 @@ namespace JhinMod.Modules
 
             secondaryDamageCoefficient = JhinPlugin.instance.Config.Bind<float>(
                 new ConfigDefinition("Skills", "Dancing Grenade: Damage Coefficient"), 
-                6f, 
-                new ConfigDescription(CreateOptionDesc("", 6f)));
+                4.44f, 
+                new ConfigDescription(CreateOptionDesc("", 4.44f)));
 
             secondaryDamageBounceCoefficient = JhinPlugin.instance.Config.Bind<float>(
                 new ConfigDefinition("Skills", "Dancing Grenade: Bounce Damage Coefficient"), 
-                0.35f, 
-                new ConfigDescription(CreateOptionDesc("Percent of Dancing Grenade's current damage to add when a bounce kills an enemy", 0.35f)));
+                0.3f, 
+                new ConfigDescription(CreateOptionDesc("Percent of Dancing Grenade's current damage to add when a bounce kills an enemy", 0.3f)));
 
             //Deadly Flourish
             utilityCD = JhinPlugin.instance.Config.Bind<float>(
                 new ConfigDefinition("Skills", "Deadly Flourish: Cooldown"), 
-                4f, 
-                new ConfigDescription(CreateOptionDesc("", 4f)));
+                5f, 
+                new ConfigDescription(CreateOptionDesc("", 5f)));
 
             utilityDamageCoefficient = JhinPlugin.instance.Config.Bind<float>(
                 new ConfigDefinition("Skills", "Deadly Flourish: Damage Coefficient"), 
-                5f, 
-                new ConfigDescription(CreateOptionDesc("", 5f)));
+                8f, 
+                new ConfigDescription(CreateOptionDesc("", 8f))); 
+            
+            utilityBuffMultiplier = JhinPlugin.instance.Config.Bind<float>(
+                new ConfigDefinition("Skills", "Deadly Flourish: Buff Duration Multiplier"),
+                2f,
+                new ConfigDescription(CreateOptionDesc("Multiplier for the duration of Every Moment Matter's speed boost when triggered by Deadly Flourish", 2f)));
+
+            utilityMarkDuration = JhinPlugin.instance.Config.Bind<float>(
+                new ConfigDefinition("Skills", "Deadly Flourish: Mark Duration"),
+                4f,
+                new ConfigDescription(CreateOptionDesc("", 4f)));
+
+            utilityRootDuration = JhinPlugin.instance.Config.Bind<float>(
+                new ConfigDefinition("Skills", "Deadly Flourish: Root Duration"),
+                2f,
+                new ConfigDescription(CreateOptionDesc("", 2f)));
 
             //CurtainCall
             specialCD = JhinPlugin.instance.Config.Bind<float>(
@@ -148,8 +186,8 @@ namespace JhinMod.Modules
 
             specialDamageCoefficient = JhinPlugin.instance.Config.Bind<float>(
                 new ConfigDefinition("Skills", "Curtain Call: Damage Coefficient"), 
-                16f, 
-                new ConfigDescription(CreateOptionDesc("", 16f)));
+                9f, 
+                new ConfigDescription(CreateOptionDesc("", 9f)));
 
             specialExecutePercentage = JhinPlugin.instance.Config.Bind<float>(
                 new ConfigDefinition("Skills", "Curtain Call: Execute Damage Coefficient"), 
@@ -224,9 +262,12 @@ namespace JhinMod.Modules
             CreateOptionEntry(attackSpeedBase, restartRequired: true);
             CreateOptionEntry(attackSpeedGrowth, restartRequired: true);
 
-            CreateOptionEntry(passiveDuration, restartRequired: true);
+            CreateOptionEntry(passiveDamageConversion, restartRequired: true);
+            CreateOptionEntry(passiveMovespeedConversion, restartRequired: true);
+            CreateOptionEntry(passiveBuffDuration, restartRequired: true);
 
             CreateOptionEntry(primaryDamageCoefficient, restartRequired: true);
+            CreateOptionEntry(primaryAutoReloadTime, restartRequired: true);
             CreateOptionEntry(primaryExecuteMissingHealthPercentage, restartRequired: true);
             CreateOptionEntry(primaryExecuteDamageCap, restartRequired: true);
             CreateOptionEntry(primaryInstantShot, restartRequired: true);
@@ -237,6 +278,9 @@ namespace JhinMod.Modules
 
             CreateOptionEntry(utilityCD, restartRequired: true);
             CreateOptionEntry(utilityDamageCoefficient, restartRequired: true);
+            CreateOptionEntry(utilityBuffMultiplier, restartRequired: true);
+            CreateOptionEntry(utilityMarkDuration, restartRequired: true);
+            CreateOptionEntry(utilityRootDuration, restartRequired: true);
 
             CreateOptionEntry(specialCD, restartRequired: true);
             CreateOptionEntry(specialDamageCoefficient, restartRequired: true);

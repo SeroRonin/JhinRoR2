@@ -29,6 +29,7 @@ Since markdown doesn't support embedding youtube videos, the showcase can be fou
 * Animations from League, with custom animations to bridge the difference in game styles
 * SFX based on which skin you use[^skinSFX]
 * Item Display support up to SOTV[^itemDisplay]
+* Highly configurable, change most values of the mod to your liking!
 
 ### Planned Features
 > Features I would like to add, should I have the motivation to continue working on this
@@ -71,57 +72,62 @@ Please note that skill values and effects may change over the course of this mod
 
 #
 
-![Passive](https://user-images.githubusercontent.com/8404018/227687730-699d33f8-4600-4c5f-8b23-0a9fe804f999.png)
+![Passive](https://user-images.githubusercontent.com/8404018/230709520-79a582e6-462b-4c6f-951b-4082b7bda6a9.png)
 
 <details>
 <summary> Passive </summary>
-Jhin has a unique interaction with Attack Speed. Unlike other survivors, he gains attack speed with levels, but he CANNOT gain any from other sources. Instead, bonus attack speed increases his base damage, as well as increasing the movespeed bonus he gains from landing critical hits. Speaking of which, critical hits grant bonus movespeed for 2 seconds.
+Jhin has a unique interaction with Attack Speed. Unlike other survivors, he gains attack speed with levels, but he CANNOT gain any from other sources. Instead, bonus attack speed increases his base damage, as well as granting Jhin additional movespeed when he lands a critical hit.
 </details>
 
 #
 
-![Primary](https://user-images.githubusercontent.com/8404018/227687917-98b7b76e-0619-4720-9201-f7d44f52bace.png)
+![Primary](https://user-images.githubusercontent.com/8404018/230709524-f699f6a2-c95b-4212-b7df-4aef63810f4b.png)
 
 <details>
 <summary> Primary </summary>
 
-![ammoUIpreview](https://user-images.githubusercontent.com/8404018/228163857-ed99db22-ca2a-4aaf-bde1-d749ae322fe5.gif)
-  
-Whisper has a unique ammo and reload system, utilizing shots represented by the tally marks and a reload timer represented by the ring. Jhin reloads after the 4th shot, or after 10 seconds without firing. Casting any skill will reset the automatic reload timer and interrupt an active reload.
+<img src="https://user-images.githubusercontent.com/8404018/230709599-4f66ea02-56ec-4e78-b545-3919725a9525.png" width="30%" />
 
-Execute as a keyword means the ability has special effects and modifiers based on the enemies missing health. I don't have a readily available screenshot, but this effect differs between skills and is listed ingame like other keywords with the specifics.
+![ammoUIpreview](https://user-images.githubusercontent.com/8404018/228163857-ed99db22-ca2a-4aaf-bde1-d749ae322fe5.gif)
+
+Whisper has a unique ammo and reload system, utilizing shots represented by the tally marks and a reload timer represented by the ring. Jhin reloads after the 4th shot, or after 10 seconds without firing. Casting any skill will reset the automatic reload timer and interrupt a reload when you have bullets left.
 </details>
 
 #
- 
-![Secondary](https://user-images.githubusercontent.com/8404018/227687928-de015921-986f-4886-96b0-a3eff4b96cb1.png)
+
+![Secondary](https://user-images.githubusercontent.com/8404018/230709534-978b6487-57ec-457a-84b3-f44407873e28.png)
 
 <details>
 <summary> Secondary </summary>
-Dancing Grenade functions similarly to Huntress' Glaive, but it cannot bounce to enemies it has already hit. Instead of gaining a small percentage of base damage per bounce, Dancing Grenade gains %35 TOTAL damage for each kill it gets.
+Dancing Grenade functions similarly to Huntress' Glaive, but it prioritizes new enemies over enemies it has already hit.
 </details>
 
 #
 
-![Utility](https://user-images.githubusercontent.com/8404018/227687935-c44c2ba0-e6d8-478b-9788-2496a45a78e4.png)
- 
+![Utility](https://user-images.githubusercontent.com/8404018/230709539-6bbd4916-2176-46a6-9819-983a8a9fd220.png)
+
 <details>
 <summary> Utility </summary>
-Deadly Flourish is a simple beam attack that stuns every enemy it hits. It triggers Jhin's passive as if he had landed a crit, with double the duration.
+
+<img src="https://user-images.githubusercontent.com/8404018/230709609-37c47ac1-56b2-460c-b738-5a40c25b7cd4.png" width="30%" />
+
+Deadly Flourish is a simple beam attack that stuns every enemy it hits. It triggers Jhin's passive as if he had landed a crit, with double the duration. Additionally, any marked enemies are rooted.
 </details>
 
 #
 
-![Special](https://user-images.githubusercontent.com/8404018/227687962-42b5dfea-f03f-4e7d-b432-884f8ecb7e0a.png)
- 
+![Special](https://user-images.githubusercontent.com/8404018/230709542-86e810bd-c1d1-408b-93d5-df88b502ec04.png)
+
 <details>
 <summary> Special </summary>
+
+
+<img src="https://user-images.githubusercontent.com/8404018/230709638-344d781a-3f30-4f1f-a235-6998d9be7ce1.png" width="30%" />
 
 ![ammoUIpreview2](https://user-images.githubusercontent.com/8404018/228164250-abe1fa86-4619-4044-81b1-d824592ad9f2.gif)
 
 Curtain Call is a primary skill override, like that of Railgunner's scope. For 10 seconds, it replaces Whisper with 4 shots that deal massive AOE damage. It automatically reloads Whisper as well, so you don't have to worry about reloading after firing all 4 shots.
 
-Execute as a keyword means the ability has special effects and modifiers based on the enemies missing health. I don't have a readily available screenshot, but this effect differs between skills and is listed ingame like other keywords with the specifics.
 </details>
 
 ---
@@ -178,16 +184,14 @@ Execute as a keyword means the ability has special effects and modifiers based o
 * (Unknown, happened once) Skin gets set to default randomly, but SFX stays intact, meaning skin index does not change
 
 ## To Do
-* Balancing
-* Better Movespeed Buff Icon?
-* Deadly Flourish Root Mechanic
+* Better Movespeed Buff Icon
 * Custom Indicator for Dancing Grenade
 * Make Ult Execute group with base damage
 * Ult rocket jumping?
 * Hopoo-eqsue/RoR2-friendly skin
 * Achievments + Unlockable criteria (other abilties, skins, etc)
-* Test multiplayer functionality
 
+<!-- > See the github page for footnotes that don't properly render here on Thunderstore -->
 
 [^skinSFX]:
     There is also the option to override which set of SFX to use in the config. This does not require a restart.
