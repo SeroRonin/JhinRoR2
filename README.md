@@ -37,7 +37,7 @@ Since markdown doesn't support embedding youtube videos, the showcase can be fou
 * VO and Emotes built off of LemonLust's designs
 * An alternate ability based off of Captive Audience[^altAbility]
 
-### Stats[^armorFootnote] 
+### Stats[^armorFootnote]
 <table>
   <tr>
     <th></th>
@@ -174,7 +174,7 @@ Curtain Call is a primary skill override, like that of Railgunner's scope. For 1
 
 #### Incompatible
 > Currently have issues or otherwise break when used with this mod. Will generally need to be fixed in patches.
-* None so far
+* Synergies By Dragonyck: Causes Curtain Call's projectile to explode repeatedly after impact 
 
 ## Known Issues
 > Bugs can be reported under Github Issues, or through my Discord: [https://discord.gg/RSs2kA7yRu](https://discord.gg/RSs2kA7yRu)
@@ -190,8 +190,6 @@ Curtain Call is a primary skill override, like that of Railgunner's scope. For 1
 * Ult rocket jumping?
 * Hopoo-eqsue/RoR2-friendly skin
 * Achievments + Unlockable criteria (other abilties, skins, etc)
-
-<!-- > See the github page for footnotes that don't properly render here on Thunderstore -->
 
 [^skinSFX]:
     There is also the option to override which set of SFX to use in the config. This does not require a restart.
