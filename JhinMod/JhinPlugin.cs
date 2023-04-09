@@ -189,7 +189,7 @@ namespace JhinMod
             {
                 if (NetworkServer.active)
                 {
-                    self.body.RemoveBuff(Modules.Buffs.jhinMarkDebuff);
+                    self.body.ClearTimedBuffs(Modules.Buffs.jhinMarkDebuff);
                     self.body.AddTimedBuff(RoR2Content.Buffs.Nullified, Modules.Config.utilityRootDuration.Value);
                 }
             }
