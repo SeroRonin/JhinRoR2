@@ -72,7 +72,7 @@ namespace JhinMod.Content.Components
                 if (healthComponent)
                 {
                     var currentHigh = damage;
-                    var missingHealthPercent = healthComponent.combinedHealthFraction;
+                    var missingHealthPercent = 1 - healthComponent.combinedHealthFraction;
                     damage = blastAttack.baseDamage * (missingHealthPercent * Config.specialExecutePercentage.Value);
 
                     //ChatMessage.Send($"ult base {blastAttack.baseDamage}");

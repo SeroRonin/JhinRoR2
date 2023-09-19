@@ -77,6 +77,9 @@ namespace JhinMod.Modules
                 UnityEngine.Object.Destroy(akgo);
             }
 
+            //Component to compensate for fast missile speed
+            rocketPrefab.AddComponent<ProjectileSpeedCompensator>();
+
             /*
             rocketPrefab.AddComponent<AddToRocketTrackerComponent>();
             BlastJumpComponent bjc = rocketPrefab.AddComponent<BlastJumpComponent>();

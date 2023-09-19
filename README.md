@@ -122,11 +122,13 @@ Deadly Flourish is a simple beam attack that stuns every enemy it hits. It trigg
 <summary> Special </summary>
 
 
-<img src="https://user-images.githubusercontent.com/8404018/230709638-344d781a-3f30-4f1f-a235-6998d9be7ce1.png" width="30%" />
+<img src="https://user-images.githubusercontent.com/8404018/230709638-344d781a-3f30-4f1f-a235-6998d9be7ce1.png" width="30%" /> **
 
 ![ammoUIpreview2](https://user-images.githubusercontent.com/8404018/228164250-abe1fa86-4619-4044-81b1-d824592ad9f2.gif)
 
 Curtain Call is a primary skill override, like that of Railgunner's scope. For 10 seconds, it replaces Whisper with 4 shots that deal massive AOE damage. It automatically reloads Whisper as well, so you don't have to worry about reloading after firing all 4 shots.
+
+**The wording on the execute is wrong, and has since been fixed (up to 300% bonus damage based on missing health, or 3% per 1%)
 
 </details>
 
@@ -174,11 +176,10 @@ Curtain Call is a primary skill override, like that of Railgunner's scope. For 1
 
 #### Incompatible
 > Currently have issues or otherwise break when used with this mod. Will generally need to be fixed in patches.
-* Synergies By Dragonyck: Causes Curtain Call's projectile to explode repeatedly after impact 
+* Synergies By Dragonyck: Causes Curtain Call's projectile to explode repeatedly after impact. This is not something I can fix on my end. 
 
 ## Known Issues
 > Bugs can be reported under Github Issues, or through my Discord: [https://discord.gg/RSs2kA7yRu](https://discord.gg/RSs2kA7yRu)
-* **[Skill]** Ult projectile sometimes passes through enemies due to its speed
 * **[Skill]** Ult applies execute damage as an additional instance of damage (this is due to explosions not supporting post-hit pre-damage modifications)
 * **[Item]** Shuriken is triggered very sparsely, rather than on every primary attack. Likely due to custom ammo system?
 * (Unknown, happened once) Skin gets set to default randomly, but SFX stays intact, meaning skin index does not change
