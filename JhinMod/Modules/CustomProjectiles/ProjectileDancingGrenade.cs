@@ -27,7 +27,7 @@ namespace JhinMod.Modules.CustomProjectiles
             base.duration = base.distanceToTarget / this.speed;
             base.canBounceOnSameTarget = false;
 
-            ghostPrefab = Assets.dancingGrenadeEffect;
+            ghostPrefab = Helpers.GetVFXDynamic("Grenade", this.attacker);
 
             bounceVis = ghostPrefab.GetComponent<BounceVisualizer>();
             bounceVis.projectileSpeed = this.speed;

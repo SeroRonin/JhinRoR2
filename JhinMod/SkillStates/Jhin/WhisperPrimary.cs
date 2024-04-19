@@ -11,6 +11,9 @@ using R2API.Utils;
 using JhinMod.Content.Components;
 using static RoR2.DotController;
 using JhinMod.Modules;
+using System.Collections.Generic;
+using System.Net.Mail;
+using System.ComponentModel;
 
 namespace JhinMod.SkillStates
 {
@@ -144,7 +147,7 @@ namespace JhinMod.SkillStates
                     bulletAttack.Fire();
                     this.OnFireBulletAuthority(aimRay);
                 }
-
+                
                 jhinStateController.TakeAmmo(1);
             }
         }
@@ -188,19 +191,18 @@ namespace JhinMod.SkillStates
             if (shotIndex ==  4)
             {
                 Helpers.PlaySoundDynamic("PassiveCritFire", base.gameObject);
-                //Util.PlaySound("Play_Seroronin_Jhin_PassiveCritFire", base.gameObject);
             }
             else if (this.isCrit)
             {
                 Helpers.PlaySoundDynamic("AttackCritFire", base.gameObject);
-                //Util.PlaySound("Play_Seroronin_Jhin_AttackCritFire", base.gameObject);
             }
             else
             {
                 Helpers.PlaySoundDynamic($"AttackFire{shotIndex}", base.gameObject);
-                //Util.PlaySound($"Play_Seroronin_Jhin_AttackFire{shotIndex}", base.gameObject);
             }
-            EffectManager.SimpleMuzzleFlash(EntityStates.Commando.CommandoWeapon.FirePistol2.muzzleEffectPrefab, base.gameObject, this.muzzleString, false);
+
+            Helpers.PlayVFXDynamic("MuzzleFlash", base.gameObject, this.muzzleString);
+            //Helpers.PlayVFXDynamic("Tracer", base.gameObject, this.muzzleString);
         }
 
         protected virtual void OnFireBulletAuthority(Ray aimRay)
@@ -212,7 +214,49 @@ namespace JhinMod.SkillStates
             
             var result = BulletAttack.defaultHitCallback(bulletAttack, ref hitInfo);
             HealthComponent healthComponent = hitInfo.hitHurtBox ? hitInfo.hitHurtBox.healthComponent : null;
-            
+
+            //TO DO: REPLACE WITH LESS REDUNDANT CODE
+            var effectPrefab = Helpers.GetVFXDynamic("Tracer", base.gameObject);
+
+            if (effectPrefab != null)
+            {
+                var tracerComp = effectPrefab.GetComponent<CustomTracer>();
+                tracerComp.origin = bulletAttack.origin;
+                tracerComp.target = hitInfo.point;
+                tracerComp.projectileSpeed = 250f;
+                tracerComp.maxDistance = hitInfo.distance;
+
+                var trailRender = effectPrefab.gameObject.transform.GetChild(0).Find("Trail").gameObject.GetComponent<TrailRenderer>();
+                var materials = trailRender.materials;
+
+                foreach (var material in materials)
+                {
+                    ChatMessage.Send("Setting Texture Scale");
+                    material.SetTextureScale("_Texture0", new Vector2(0.01f, 1));
+                }
+
+                ModelLocator component = base.gameObject.GetComponent<ModelLocator>();
+                if (component && component.modelTransform)
+                {
+                    ChildLocator component2 = component.modelTransform.GetComponent<ChildLocator>();
+                    if (component2)
+                    {
+                        int childIndex = component2.FindChildIndex(this.muzzleString);
+                        Transform transform = component2.FindChild(childIndex);
+                        if (transform)
+                        {
+                            EffectData effectData = new EffectData
+                            {
+                                origin = transform.position
+                            };
+                            effectData.SetChildLocatorTransformReference(base.gameObject, childIndex);
+                            EffectManager.SpawnEffect(effectPrefab, effectData, false);
+                        }
+                    }
+                }
+
+                tracerComp.isActive = true;
+            }
             /*
             if (jhinStateController.ammoCount == 1 && healthComponent && hitInfo.hitHurtBox.teamIndex != base.teamComponent.teamIndex)
             {

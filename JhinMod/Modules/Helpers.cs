@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Reflection;
 using UnityEngine;
 using RoR2;
+using System.Linq;
+using R2API.Utils;
 
 namespace JhinMod.Modules
 {
@@ -110,6 +112,85 @@ namespace JhinMod.Modules
             int skinIndex = (int)player.GetComponent<CharacterBody>().skinIndex;
             Util.PlaySound($"Stop_Seroronin_{GetSkinName(skinIndex)}_{soundID}", parent);
         }
+
+        /// <summary>
+        /// Spawns a unique VFX prefab, using string and a skin name generated from GetSkinName()
+        /// </summary>
+        /// <param name="vfxString"></param>
+        /// <param name="player"></param>
+        /// <param name="attachmentName"></param>
+        /// <param name="parent"></param>
+        /// <param name="transmit"></param>
+        public static void PlayVFXDynamic(string vfxString, GameObject player, string attachmentName, GameObject parent = null, bool transmit = false)
+        {
+            GameObject effectPrefab = null;
+
+            //Use the player if target parent goes null
+            if (parent == null) parent = player;
+            if (!player)
+            {
+                return;
+            }
+
+            int skinIndex = (int)player.GetComponent<CharacterBody>().skinIndex;
+            string skinName = GetSkinName(skinIndex);
+
+            //Search table for matching key, otherwise use default skin
+            if (Assets.vfxPrefabs.ContainsKey( $"{skinName}_{vfxString}" ))
+            {
+                effectPrefab = Assets.vfxPrefabs[$"{skinName}_{vfxString}"];
+            }
+            else if ( Assets.vfxPrefabs.ContainsKey($"Jhin_{vfxString}" ) ) //Redunant ContainsKey check, but neccessary to prevent NREs stopping future code
+            {
+                effectPrefab = Assets.vfxPrefabs[$"Jhin_{vfxString}"];
+            }
+            if (effectPrefab == null)
+            {
+                return;
+            }
+
+            //Spawn Effect
+            ModelLocator component = parent.GetComponent<ModelLocator>();
+            if (component && component.modelTransform)
+            {
+                ChildLocator component2 = component.modelTransform.GetComponent<ChildLocator>();
+                if (component2)
+                {
+                    int childIndex = component2.FindChildIndex(attachmentName);
+                    Transform transform = component2.FindChild(childIndex);
+                    if (transform)
+                    {
+                        EffectData effectData = new EffectData
+                        {
+                            origin = transform.position
+                        };
+                        effectData.SetChildLocatorTransformReference(parent, childIndex);
+                        EffectManager.SpawnEffect(effectPrefab, effectData, transmit);
+                    }
+                }
+            }
+        }
+
+        public static GameObject GetVFXDynamic(string vfxString, GameObject player)
+        {
+            GameObject effectPrefab = null;
+
+            int skinIndex = (int)player.GetComponent<CharacterBody>().skinIndex;
+            string skinName = GetSkinName(skinIndex);
+
+            //Search table for matching key, otherwise use default skin
+            if (Assets.vfxPrefabs.ContainsKey($"{skinName}_{vfxString}"))
+            {
+                effectPrefab = Assets.vfxPrefabs[$"{skinName}_{vfxString}"];
+            }
+            else if (Assets.vfxPrefabs.ContainsKey($"Jhin_{vfxString}")) //Redunant ContainsKey check, but neccessary to prevent NREs stopping future code
+            {
+                effectPrefab = Assets.vfxPrefabs[$"Jhin_{vfxString}"];
+            }
+            
+            return effectPrefab;
+        }
+
         public static string GetSkinName(int skinIndex)
         {
             var index = skinIndex;

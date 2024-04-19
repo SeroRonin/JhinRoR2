@@ -27,8 +27,17 @@ namespace JhinMod.Modules
 
         #region Jhin's Stuff
         // particle effects
+
+        //Base
         internal static GameObject deadlyFlourishEffect;
         internal static GameObject dancingGrenadeEffect;
+
+        //Project
+        internal static GameObject projectMuzzleflashEffect;
+        internal static GameObject projectTracerEffect;
+
+        //Dynamic VFX Prefab Tables
+        public static Dictionary<string, GameObject> vfxPrefabs = new Dictionary<string, GameObject>{};
 
         // networked hit sounds
         #endregion
@@ -130,9 +139,22 @@ namespace JhinMod.Modules
                 };
             }
 
-            deadlyFlourishEffect = Assets.LoadEffect("DeadlyFlourishBeam", false);
+            //Base
+            deadlyFlourishEffect = Assets.LoadEffect("Jhin_Base_DeadlyFlourishBeam", false);
+            vfxPrefabs.Add("Jhin_DeadlyFlourishBeam", deadlyFlourishEffect);
             dancingGrenadeEffect = Assets.CreateDancingGrenadeEffect("JhinGrenadeGhost");
+            vfxPrefabs.Add("Jhin_Grenade", dancingGrenadeEffect);
 
+            //REPLACE, using commando muzzlefalsh
+            vfxPrefabs.Add("Jhin_MuzzleFlash", EntityStates.Commando.CommandoWeapon.FirePistol2.muzzleEffectPrefab);
+            
+            //Project
+            projectMuzzleflashEffect = Assets.LoadEffect("Jhin_Project_Muzzleflash", false);
+            vfxPrefabs.Add("ProjectJhin_MuzzleFlash", projectMuzzleflashEffect);
+            projectTracerEffect = Assets.CreateTracerEffect("Jhin_Project_Tracer");
+            vfxPrefabs.Add("ProjectJhin_Tracer", projectTracerEffect);
+
+            //Henry Leftover
             swordSwingEffect = Assets.LoadEffect("JhinSwordSwingEffect", true);
             swordHitImpactEffect = Assets.LoadEffect("ImpactJhinSlash");
         }
@@ -159,6 +181,33 @@ namespace JhinMod.Modules
             rotateComponent.rotationSpeed = new Vector3(360, 100, 20);
 
             AddNewEffectDef(newEffect, "");
+
+            return newEffect;
+        }
+
+        private static GameObject CreateTracerEffect(string resourceName, string soundName = null, bool parentToTransform = false)
+        {
+            GameObject newEffect = mainAssetBundle.LoadAsset<GameObject>(resourceName);
+
+            if (!newEffect)
+            {
+                Log.Error("Failed to load effect: " + resourceName + " because it does not exist in the AssetBundle");
+                return null;
+            }
+
+            newEffect.AddComponent<DestroyOnTimer>().duration = 12;
+            newEffect.AddComponent<NetworkIdentity>();
+            newEffect.AddComponent<VFXAttributes>().vfxPriority = VFXAttributes.VFXPriority.Always;
+            var effect = newEffect.AddComponent<EffectComponent>();
+            effect.applyScale = false;
+            effect.effectIndex = EffectIndex.Invalid;
+            effect.parentToReferencedTransform = parentToTransform;
+            effect.positionAtReferencedTransform = true;
+            effect.soundName = soundName;
+
+            var tracerComponent = newEffect.AddComponent<CustomTracer>();
+
+            AddNewEffectDef(newEffect, soundName);
 
             return newEffect;
         }
