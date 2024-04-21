@@ -5,6 +5,7 @@ using UnityEngine;
 using RoR2;
 using System.Linq;
 using R2API.Utils;
+using BepInEx;
 
 namespace JhinMod.Modules
 {
@@ -121,7 +122,7 @@ namespace JhinMod.Modules
         /// <param name="attachmentName"></param>
         /// <param name="parent"></param>
         /// <param name="transmit"></param>
-        public static void PlayVFXDynamic(string vfxString, GameObject player, string attachmentName, GameObject parent = null, bool transmit = false)
+        public static void PlayVFXDynamic(string vfxString, GameObject player, string attachmentName = "", bool useAim = false, Ray aimRay = new Ray(), GameObject parent = null, bool transmit = false)
         {
             GameObject effectPrefab = null;
 
@@ -149,26 +150,37 @@ namespace JhinMod.Modules
                 return;
             }
 
-            //Spawn Effect
-            ModelLocator component = parent.GetComponent<ModelLocator>();
-            if (component && component.modelTransform)
+            //Generate Effect transform info
+            EffectData effectData = new EffectData
             {
-                ChildLocator component2 = component.modelTransform.GetComponent<ChildLocator>();
-                if (component2)
+                origin = parent.gameObject.transform.position
+            };
+
+            //Find attachment
+            if (attachmentName != "")
+            {
+                ModelLocator component = parent.GetComponent<ModelLocator>();
+                if (component && component.modelTransform)
                 {
-                    int childIndex = component2.FindChildIndex(attachmentName);
-                    Transform transform = component2.FindChild(childIndex);
-                    if (transform)
+                    ChildLocator component2 = component.modelTransform.GetComponent<ChildLocator>();
+                    if (component2)
                     {
-                        EffectData effectData = new EffectData
+                        int childIndex = component2.FindChildIndex(attachmentName);
+                        Transform transform = component2.FindChild(childIndex);
+                        if (transform)
                         {
-                            origin = transform.position
-                        };
-                        effectData.SetChildLocatorTransformReference(parent, childIndex);
-                        EffectManager.SpawnEffect(effectPrefab, effectData, transmit);
+                            effectData.origin = transform.position;
+                        }
                     }
                 }
             }
+            if (useAim)
+            {
+                effectData.rotation = Util.QuaternionSafeLookRotation(aimRay.direction);
+            }
+
+            //Spawn Effect
+            EffectManager.SpawnEffect(effectPrefab, effectData, transmit);
         }
 
         public static GameObject GetVFXDynamic(string vfxString, GameObject player)

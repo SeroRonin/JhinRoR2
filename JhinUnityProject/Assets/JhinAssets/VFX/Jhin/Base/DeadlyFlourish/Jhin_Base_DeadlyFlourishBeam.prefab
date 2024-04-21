@@ -4884,7 +4884,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2306632907410569675
 Transform:
   m_ObjectHideFlags: 0
@@ -14560,7 +14560,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &4175070772914171586
 Transform:
   m_ObjectHideFlags: 0
@@ -29096,7 +29096,7 @@ GameObject:
   - component: {fileID: 3500306997789835354}
   - component: {fileID: 480941123376215107}
   m_Layer: 0
-  m_Name: DeadlyFlourishBeam
+  m_Name: Jhin_Base_DeadlyFlourishMuzzleFX
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -38740,7 +38740,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &8590880390272426270
 Transform:
   m_ObjectHideFlags: 0

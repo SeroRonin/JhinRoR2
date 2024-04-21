@@ -20,7 +20,6 @@ namespace JhinMod.SkillStates
         public static float recoil = 3f;
         public static float range = 256f;
         public static GameObject tracerEffectPrefab = RoR2.LegacyResourcesAPI.Load<GameObject>("Prefabs/Effects/Tracers/TracerGoldGat");
-        public static GameObject beamEffectPrefab = Assets.deadlyFlourishEffect;
 
         private float duration;
         private float fireTime;
@@ -49,7 +48,6 @@ namespace JhinMod.SkillStates
             }
 
             Helpers.PlaySoundDynamic("WCast", base.gameObject);
-            //Util.PlaySound("Play_Seroronin_Jhin_WCast", base.gameObject);
 
             base.PlayAnimation("FullBody, Override", "DeadlyFlourish");
         }
@@ -75,29 +73,8 @@ namespace JhinMod.SkillStates
 
                     base.AddRecoil(-1f * DeadlyFlourish.recoil, -2f * DeadlyFlourish.recoil, -0.5f * DeadlyFlourish.recoil, 0.5f * DeadlyFlourish.recoil);
 
-                    ModelLocator component = this.gameObject.GetComponent<ModelLocator>();
-                    if (component && component.modelTransform)
-                    {
-                        ChildLocator component2 = component.modelTransform.GetComponent<ChildLocator>();
-                        if (component2)
-                        {
-                            int childIndex = component2.FindChildIndex(muzzleString);
-                            Transform transform = component2.FindChild(childIndex);
-
-                            Quaternion rot2 = Quaternion.FromToRotation(this.inputBank.aimOrigin, this.inputBank.aimDirection);
-
-                            if (transform)
-                            {
-                                EffectData effectData = new EffectData
-                                {
-                                    origin = transform.position,
-                                    rotation = Util.QuaternionSafeLookRotation(base.inputBank.aimDirection)
-                                };
-                                //effectData.SetChildLocatorTransformReference(this.gameObject, childIndex);
-                                EffectManager.SpawnEffect(DeadlyFlourish.beamEffectPrefab, effectData, true);
-                            }
-                        }
-                    }
+                    Helpers.PlayVFXDynamic("DeadlyFlourishBeam", base.gameObject, muzzleString, true, aimRay);
+                    Helpers.PlayVFXDynamic("DeadlyFlourishMuzzle", base.gameObject, muzzleString, true, aimRay);
 
                     new BulletAttack
                     {
@@ -172,11 +149,6 @@ namespace JhinMod.SkillStates
                     base.characterDirection.moveVector = base.inputBank.aimDirection;
                 }
             }
-            /*
-            else
-            {
-                base.characterDirection.moveVector = base.inputBank.moveVector;
-            }*/
 
             HandleMovements();
             

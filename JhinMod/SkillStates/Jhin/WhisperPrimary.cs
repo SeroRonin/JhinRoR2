@@ -14,6 +14,7 @@ using JhinMod.Modules;
 using System.Collections.Generic;
 using System.Net.Mail;
 using System.ComponentModel;
+using static UnityEngine.SendMouseEvents;
 
 namespace JhinMod.SkillStates
 {
@@ -185,24 +186,84 @@ namespace JhinMod.SkillStates
                 modifyOutgoingDamageCallback = ModifyDamage
             };
         }
+
+        public virtual void CreateTracer( string tracerName, Ray aimRay )
+        {
+            //Fake/psuedo bullet raycast
+            LayerMask mask = BulletAttack.defaultHitMask;
+            RaycastHit raycastHit;
+            Physics.SphereCast(aimRay.origin, 0.25f, aimRay.direction, out raycastHit, WhisperPrimary.range, mask, QueryTriggerInteraction.Ignore);
+            
+            //Create prefab
+            var effectPrefab = Helpers.GetVFXDynamic(tracerName, base.gameObject);
+            if (effectPrefab != null)
+            {
+                //Assign variables to custom component
+                var tracerComp = effectPrefab.GetComponent<CustomTracer>();
+                tracerComp.origin = aimRay.origin;
+                tracerComp.target = raycastHit.collider != null ? raycastHit.point : aimRay.origin + (aimRay.direction * WhisperPrimary.range); //Use raycast hit or max range
+                tracerComp.projectileSpeed = 250f;
+                tracerComp.maxDistance = raycastHit.collider != null ? raycastHit.distance : WhisperPrimary.range; //Use raycast hit or max range
+
+                //Update trail renderer material, does not use Unity tiling values for some reason
+                //var trailRender = effectPrefab.gameObject.transform.GetChild(0).Find("Trail").gameObject.GetComponent<TrailRenderer>();
+                //var materials = trailRender.materials;
+                //foreach (var material in materials)
+                //{
+                //   material.SetTextureScale("_Texture0", new Vector2(0.05f, 1));
+                //}
+
+                //Create Effect from position data
+                ModelLocator component = base.gameObject.GetComponent<ModelLocator>();
+                if (component && component.modelTransform)
+                {
+                    ChildLocator component2 = component.modelTransform.GetComponent<ChildLocator>();
+                    if (component2)
+                    {
+                        int childIndex = component2.FindChildIndex(this.muzzleString);
+                        Transform transform = component2.FindChild(childIndex);
+                        if (transform)
+                        {
+                            EffectData effectData = new EffectData
+                            {
+                                origin = transform.position,
+                                rotation = Util.QuaternionSafeLookRotation(aimRay.direction)
+                            };
+                            effectData.SetChildLocatorTransformReference(base.gameObject, childIndex);
+                            EffectManager.SpawnEffect(effectPrefab, effectData, false);
+                        }
+                    }
+                }
+
+                //Initiate tracer movement now that all variables are set
+                tracerComp.isActive = true;
+            }
+        }
+
         protected virtual void DoFireEffects()
         {
             var shotIndex = this.jhinStateController.ammoMax - (this.jhinStateController.ammoCount - 1);
+            var aimRay = base.GetAimRay();
             if (shotIndex ==  4)
             {
                 Helpers.PlaySoundDynamic("PassiveCritFire", base.gameObject);
+                this.CreateTracer("TracerFourth", aimRay);
+                Helpers.PlayVFXDynamic("MuzzleFlashFourth", base.gameObject, this.muzzleString, true, aimRay);
             }
-            else if (this.isCrit)
+            else 
             {
-                Helpers.PlaySoundDynamic("AttackCritFire", base.gameObject);
-            }
-            else
-            {
-                Helpers.PlaySoundDynamic($"AttackFire{shotIndex}", base.gameObject);
-            }
+                if (this.isCrit)
+                {
+                    Helpers.PlaySoundDynamic("AttackCritFire", base.gameObject);
+                }
+                else
+                {
+                    Helpers.PlaySoundDynamic($"AttackFire{shotIndex}", base.gameObject);
+                }
 
-            Helpers.PlayVFXDynamic("MuzzleFlash", base.gameObject, this.muzzleString);
-            //Helpers.PlayVFXDynamic("Tracer", base.gameObject, this.muzzleString);
+                this.CreateTracer("Tracer", aimRay);
+                Helpers.PlayVFXDynamic("MuzzleFlash", base.gameObject, this.muzzleString, true, aimRay);
+            }
         }
 
         protected virtual void OnFireBulletAuthority(Ray aimRay)
@@ -216,47 +277,7 @@ namespace JhinMod.SkillStates
             HealthComponent healthComponent = hitInfo.hitHurtBox ? hitInfo.hitHurtBox.healthComponent : null;
 
             //TO DO: REPLACE WITH LESS REDUNDANT CODE
-            var effectPrefab = Helpers.GetVFXDynamic("Tracer", base.gameObject);
-
-            if (effectPrefab != null)
-            {
-                var tracerComp = effectPrefab.GetComponent<CustomTracer>();
-                tracerComp.origin = bulletAttack.origin;
-                tracerComp.target = hitInfo.point;
-                tracerComp.projectileSpeed = 250f;
-                tracerComp.maxDistance = hitInfo.distance;
-
-                var trailRender = effectPrefab.gameObject.transform.GetChild(0).Find("Trail").gameObject.GetComponent<TrailRenderer>();
-                var materials = trailRender.materials;
-
-                foreach (var material in materials)
-                {
-                    ChatMessage.Send("Setting Texture Scale");
-                    material.SetTextureScale("_Texture0", new Vector2(0.01f, 1));
-                }
-
-                ModelLocator component = base.gameObject.GetComponent<ModelLocator>();
-                if (component && component.modelTransform)
-                {
-                    ChildLocator component2 = component.modelTransform.GetComponent<ChildLocator>();
-                    if (component2)
-                    {
-                        int childIndex = component2.FindChildIndex(this.muzzleString);
-                        Transform transform = component2.FindChild(childIndex);
-                        if (transform)
-                        {
-                            EffectData effectData = new EffectData
-                            {
-                                origin = transform.position
-                            };
-                            effectData.SetChildLocatorTransformReference(base.gameObject, childIndex);
-                            EffectManager.SpawnEffect(effectPrefab, effectData, false);
-                        }
-                    }
-                }
-
-                tracerComp.isActive = true;
-            }
+            
             /*
             if (jhinStateController.ammoCount == 1 && healthComponent && hitInfo.hitHurtBox.teamIndex != base.teamComponent.teamIndex)
             {

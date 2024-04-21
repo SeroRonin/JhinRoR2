@@ -87,6 +87,16 @@ namespace JhinMod.Modules.CustomProjectiles
                 //Did we kill the target we hit?
                 this.failedToKill |= (!healthComponent || healthComponent.alive);
 
+                if (this.failedToKill) 
+                {
+                    Helpers.PlayVFXDynamic("GrenadeImpact", this.attacker.gameObject, parent: healthComponent.gameObject);
+                }
+                else
+                {
+                    Helpers.PlayVFXDynamic("GrenadeImpactKill", this.attacker.gameObject, parent: healthComponent.gameObject);
+                }
+
+
                 if (this.bouncesRemaining > 0)
                 {
                     for (int i = 0; i < this.targetsToFindPerBounce; i++)

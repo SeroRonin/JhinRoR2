@@ -1,12 +1,15 @@
+// Upgrade NOTE: upgraded instancing buffer 'SeroRoninVFXjhinVFX_Project_RingShader' to new syntax.
+
 // Made with Amplify Shader Editor
 // Available at the Unity Asset Store - http://u3d.as/y3X 
 Shader "SeroRonin/VFX/jhinVFX_Project_RingShader"
 {
 	Properties
 	{
-		_TextureSample0("Texture Sample 0", 2D) = "white" {}
-		[HideInInspector] _texcoord2( "", 2D ) = "white" {}
+		_Texture0("Texture 0", 2D) = "white" {}
+		_EmissionScale("Emission Scale", Float) = 1
 		[HideInInspector] _texcoord( "", 2D ) = "white" {}
+		[HideInInspector] _texcoord2( "", 2D ) = "white" {}
 		[HideInInspector] __dirty( "", Int ) = 1
 	}
 
@@ -18,15 +21,23 @@ Shader "SeroRonin/VFX/jhinVFX_Project_RingShader"
 		#include "UnityPBSLighting.cginc"
 		#include "Lighting.cginc"
 		#pragma target 3.0
+		#pragma multi_compile_instancing
 		#undef TRANSFORM_TEX
 		#define TRANSFORM_TEX(tex,name) float4(tex.xy * name##_ST.xy + name##_ST.zw, tex.z, tex.w)
 		struct Input
 		{
-			float4 uv2_texcoord2;
+			float4 vertexColor : COLOR;
 			float4 uv_texcoord;
+			float2 uv2_texcoord2;
 		};
 
-		uniform sampler2D _TextureSample0;
+		uniform sampler2D _Texture0;
+		uniform float4 _Texture0_ST;
+
+		UNITY_INSTANCING_BUFFER_START(SeroRoninVFXjhinVFX_Project_RingShader)
+			UNITY_DEFINE_INSTANCED_PROP(float, _EmissionScale)
+#define _EmissionScale_arr SeroRoninVFXjhinVFX_Project_RingShader
+		UNITY_INSTANCING_BUFFER_END(SeroRoninVFXjhinVFX_Project_RingShader)
 
 		inline half4 LightingUnlit( SurfaceOutput s, half3 lightDir, half atten )
 		{
@@ -35,11 +46,12 @@ Shader "SeroRonin/VFX/jhinVFX_Project_RingShader"
 
 		void surf( Input i , inout SurfaceOutput o )
 		{
-			o.Emission = i.uv2_texcoord2.xyz;
+			float _EmissionScale_Instance = UNITY_ACCESS_INSTANCED_PROP(_EmissionScale_arr, _EmissionScale);
+			o.Emission = ( i.vertexColor * _EmissionScale_Instance ).rgb;
 			float2 appendResult9 = (float2(i.uv_texcoord.w , 0.0));
 			float2 uvs_TexCoord10 = i.uv_texcoord;
-			uvs_TexCoord10.xy = i.uv_texcoord.xy + appendResult9;
-			o.Alpha = ( tex2D( _TextureSample0, uvs_TexCoord10.xy ).a * i.uv_texcoord.z );
+			uvs_TexCoord10.xy = i.uv_texcoord.xy * _Texture0_ST.xy + ( _Texture0_ST.zw + appendResult9 );
+			o.Alpha = ( i.vertexColor.a * ( tex2D( _Texture0, uvs_TexCoord10.xy ).a * i.uv_texcoord.z * i.uv2_texcoord2.x ) );
 		}
 
 		ENDCG
@@ -71,8 +83,9 @@ Shader "SeroRonin/VFX/jhinVFX_Project_RingShader"
 			{
 				V2F_SHADOW_CASTER;
 				float4 customPack1 : TEXCOORD1;
-				float4 customPack2 : TEXCOORD2;
+				float2 customPack2 : TEXCOORD2;
 				float3 worldPos : TEXCOORD3;
+				half4 color : COLOR0;
 				UNITY_VERTEX_INPUT_INSTANCE_ID
 				UNITY_VERTEX_OUTPUT_STEREO
 			};
@@ -86,12 +99,13 @@ Shader "SeroRonin/VFX/jhinVFX_Project_RingShader"
 				Input customInputData;
 				float3 worldPos = mul( unity_ObjectToWorld, v.vertex ).xyz;
 				half3 worldNormal = UnityObjectToWorldNormal( v.normal );
-				o.customPack1.xyzw = customInputData.uv2_texcoord2;
-				o.customPack1.xyzw = v.texcoord1;
-				o.customPack2.xyzw = customInputData.uv_texcoord;
-				o.customPack2.xyzw = v.texcoord;
+				o.customPack1.xyzw = customInputData.uv_texcoord;
+				o.customPack1.xyzw = v.texcoord;
+				o.customPack2.xy = customInputData.uv2_texcoord2;
+				o.customPack2.xy = v.texcoord1;
 				o.worldPos = worldPos;
 				TRANSFER_SHADOW_CASTER_NORMALOFFSET( o )
+				o.color = v.color;
 				return o;
 			}
 			half4 frag( v2f IN
@@ -103,10 +117,11 @@ Shader "SeroRonin/VFX/jhinVFX_Project_RingShader"
 				UNITY_SETUP_INSTANCE_ID( IN );
 				Input surfIN;
 				UNITY_INITIALIZE_OUTPUT( Input, surfIN );
-				surfIN.uv2_texcoord2 = IN.customPack1.xyzw;
-				surfIN.uv_texcoord = IN.customPack2.xyzw;
+				surfIN.uv_texcoord = IN.customPack1.xyzw;
+				surfIN.uv2_texcoord2 = IN.customPack2.xy;
 				float3 worldPos = IN.worldPos;
 				half3 worldViewDir = normalize( UnityWorldSpaceViewDir( worldPos ) );
+				surfIN.vertexColor = IN.color;
 				SurfaceOutput o;
 				UNITY_INITIALIZE_OUTPUT( SurfaceOutput, o )
 				surf( surfIN, o );
@@ -125,20 +140,37 @@ Shader "SeroRonin/VFX/jhinVFX_Project_RingShader"
 }
 /*ASEBEGIN
 Version=18935
-486;81;1188;769;1805.936;126.584;1.65175;True;True
-Node;AmplifyShaderEditor.TexCoordVertexDataNode;8;-640.185,426.0003;Inherit;False;0;4;0;5;FLOAT4;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
-Node;AmplifyShaderEditor.DynamicAppendNode;9;-921.0167,445.057;Inherit;False;FLOAT2;4;0;FLOAT;0;False;1;FLOAT;0;False;2;FLOAT;0;False;3;FLOAT;0;False;1;FLOAT2;0
-Node;AmplifyShaderEditor.TextureCoordinatesNode;10;-901.5002,266.7899;Inherit;False;0;-1;2;3;2;SAMPLER2D;;False;0;FLOAT2;1,1;False;1;FLOAT2;0,0;False;5;FLOAT2;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
-Node;AmplifyShaderEditor.SamplerNode;7;-641.9482,215.0317;Inherit;True;Property;_TextureSample0;Texture Sample 0;0;0;Create;True;0;0;0;False;0;False;-1;f7d8d86f8163777498e75d101b665195;f7d8d86f8163777498e75d101b665195;True;0;False;white;Auto;False;Object;-1;Auto;Texture2D;8;0;SAMPLER2D;;False;1;FLOAT2;0,0;False;2;FLOAT;0;False;3;FLOAT2;0,0;False;4;FLOAT2;0,0;False;5;FLOAT;1;False;6;FLOAT;0;False;7;SAMPLERSTATE;;False;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
-Node;AmplifyShaderEditor.TexCoordVertexDataNode;15;-628.1302,-158.0323;Inherit;False;1;4;0;5;FLOAT4;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
-Node;AmplifyShaderEditor.SimpleMultiplyOpNode;13;-298.8411,407.7471;Inherit;False;2;2;0;FLOAT;0;False;1;FLOAT;0;False;1;FLOAT;0
-Node;AmplifyShaderEditor.StandardSurfaceOutputNode;6;0,0;Float;False;True;-1;2;ASEMaterialInspector;0;0;Unlit;SeroRonin/VFX/jhinVFX_Project_RingShader;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;False;False;False;False;False;False;Off;0;False;-1;0;False;-1;False;0;False;-1;0;False;-1;False;0;Transparent;0.5;True;True;0;False;Transparent;;Transparent;All;18;all;True;True;True;True;0;False;-1;False;0;False;-1;255;False;-1;255;False;-1;0;False;-1;0;False;-1;0;False;-1;0;False;-1;0;False;-1;0;False;-1;0;False;-1;0;False;-1;False;2;15;10;25;False;0.5;True;2;5;False;-1;10;False;-1;0;0;False;-1;0;False;-1;0;False;-1;0;False;-1;0;False;0;0,0,0,0;VertexOffset;True;False;Cylindrical;False;True;Relative;0;;-1;-1;-1;-1;0;False;0;0;False;-1;-1;0;False;-1;0;0;0;False;0.1;False;-1;0;False;-1;False;15;0;FLOAT3;0,0,0;False;1;FLOAT3;0,0,0;False;2;FLOAT3;0,0,0;False;3;FLOAT;0;False;4;FLOAT;0;False;6;FLOAT3;0,0,0;False;7;FLOAT3;0,0,0;False;8;FLOAT;0;False;9;FLOAT;0;False;10;FLOAT;0;False;13;FLOAT3;0,0,0;False;11;FLOAT3;0,0,0;False;12;FLOAT3;0,0,0;False;14;FLOAT4;0,0,0,0;False;15;FLOAT3;0,0,0;False;0
+486;81;1218;759;1707.799;171.3248;1;True;False
+Node;AmplifyShaderEditor.TexCoordVertexDataNode;8;-1392,320;Inherit;False;0;4;0;5;FLOAT4;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
+Node;AmplifyShaderEditor.TexturePropertyNode;19;-1392,0;Inherit;True;Property;_Texture0;Texture 0;0;0;Create;True;0;0;0;False;0;False;None;None;False;white;Auto;Texture2D;-1;0;2;SAMPLER2D;0;SAMPLERSTATE;1
+Node;AmplifyShaderEditor.DynamicAppendNode;9;-1392,192;Inherit;False;FLOAT2;4;0;FLOAT;0;False;1;FLOAT;0;False;2;FLOAT;0;False;3;FLOAT;0;False;1;FLOAT2;0
+Node;AmplifyShaderEditor.TextureTransformNode;25;-1104,0;Inherit;False;-1;False;1;0;SAMPLER2D;;False;2;FLOAT2;0;FLOAT2;1
+Node;AmplifyShaderEditor.SimpleAddOpNode;26;-915.7993,258.6752;Inherit;False;2;2;0;FLOAT2;0,0;False;1;FLOAT2;0,0;False;1;FLOAT2;0
+Node;AmplifyShaderEditor.TextureCoordinatesNode;10;-749,182;Inherit;False;0;-1;2;3;2;SAMPLER2D;;False;0;FLOAT2;1,1;False;1;FLOAT2;0,0;False;5;FLOAT2;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
+Node;AmplifyShaderEditor.SamplerNode;7;-512,160;Inherit;True;Property;_TextureSample0;Texture Sample 0;0;0;Create;True;0;0;0;False;0;False;-1;f7d8d86f8163777498e75d101b665195;f7d8d86f8163777498e75d101b665195;True;0;False;white;Auto;False;Object;-1;Auto;Texture2D;8;0;SAMPLER2D;;False;1;FLOAT2;0,0;False;2;FLOAT;0;False;3;FLOAT2;0,0;False;4;FLOAT2;0,0;False;5;FLOAT;1;False;6;FLOAT;0;False;7;SAMPLERSTATE;;False;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
+Node;AmplifyShaderEditor.TexCoordVertexDataNode;22;-1392,496;Inherit;False;1;2;0;5;FLOAT2;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
+Node;AmplifyShaderEditor.RangedFloatNode;17;-512,64;Inherit;False;InstancedProperty;_EmissionScale;Emission Scale;1;0;Create;True;0;0;0;False;0;False;1;1;0;0;0;1;FLOAT;0
+Node;AmplifyShaderEditor.SimpleMultiplyOpNode;13;-224,368;Inherit;False;3;3;0;FLOAT;0;False;1;FLOAT;0;False;2;FLOAT;0;False;1;FLOAT;0
+Node;AmplifyShaderEditor.VertexColorNode;21;-512,-128;Inherit;False;0;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
+Node;AmplifyShaderEditor.SimpleMultiplyOpNode;18;-304,48;Inherit;False;2;2;0;COLOR;0,0,0,0;False;1;FLOAT;0;False;1;COLOR;0
+Node;AmplifyShaderEditor.SimpleMultiplyOpNode;20;-64,368;Inherit;False;2;2;0;FLOAT;0;False;1;FLOAT;0;False;1;FLOAT;0
+Node;AmplifyShaderEditor.StandardSurfaceOutputNode;6;192,0;Float;False;True;-1;2;ASEMaterialInspector;0;0;Unlit;SeroRonin/VFX/jhinVFX_Project_RingShader;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;False;False;False;False;False;False;Off;0;False;-1;0;False;-1;False;0;False;-1;0;False;-1;False;0;Transparent;0.5;True;True;0;False;Transparent;;Transparent;All;18;all;True;True;True;True;0;False;-1;False;0;False;-1;255;False;-1;255;False;-1;0;False;-1;0;False;-1;0;False;-1;0;False;-1;0;False;-1;0;False;-1;0;False;-1;0;False;-1;False;2;15;10;25;False;0.5;True;2;5;False;-1;10;False;-1;0;0;False;-1;0;False;-1;0;False;-1;0;False;-1;0;False;0;0,0,0,0;VertexOffset;True;False;Cylindrical;False;True;Relative;0;;-1;-1;-1;-1;0;False;0;0;False;-1;-1;0;False;-1;0;0;0;False;0.1;False;-1;0;False;-1;False;15;0;FLOAT3;0,0,0;False;1;FLOAT3;0,0,0;False;2;FLOAT3;0,0,0;False;3;FLOAT;0;False;4;FLOAT;0;False;6;FLOAT3;0,0,0;False;7;FLOAT3;0,0,0;False;8;FLOAT;0;False;9;FLOAT;0;False;10;FLOAT;0;False;13;FLOAT3;0,0,0;False;11;FLOAT3;0,0,0;False;12;FLOAT3;0,0,0;False;14;FLOAT4;0,0,0,0;False;15;FLOAT3;0,0,0;False;0
 WireConnection;9;0;8;4
-WireConnection;10;1;9;0
+WireConnection;25;0;19;0
+WireConnection;26;0;25;1
+WireConnection;26;1;9;0
+WireConnection;10;0;25;0
+WireConnection;10;1;26;0
+WireConnection;7;0;19;0
 WireConnection;7;1;10;0
 WireConnection;13;0;7;4
 WireConnection;13;1;8;3
-WireConnection;6;2;15;0
-WireConnection;6;9;13;0
+WireConnection;13;2;22;1
+WireConnection;18;0;21;0
+WireConnection;18;1;17;0
+WireConnection;20;0;21;4
+WireConnection;20;1;13;0
+WireConnection;6;2;18;0
+WireConnection;6;9;20;0
 ASEEND*/
-//CHKSM=9491F61E4901232A09467AF8358D8A2BC00636AB
+//CHKSM=9FCEB95DBBA182701D91214637F68AE714581505

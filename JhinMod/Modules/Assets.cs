@@ -29,12 +29,18 @@ namespace JhinMod.Modules
         // particle effects
 
         //Base
-        internal static GameObject deadlyFlourishEffect;
-        internal static GameObject dancingGrenadeEffect;
+        internal static GameObject baseDeadlyFlourishBeamEffect;
+        internal static GameObject baseDeadlyFlourishMuzzleEffect;
+        internal static GameObject baseDancingGrenadeEffect;
 
         //Project
         internal static GameObject projectMuzzleflashEffect;
+        internal static GameObject projectMuzzleflashFourthEffect;
         internal static GameObject projectTracerEffect;
+        internal static GameObject projectTracerFourthEffect;
+        internal static GameObject projectDeadlyFlourishMuzzleEffect;
+        internal static GameObject projectGrenadeImpact;
+        internal static GameObject projectGrenadeImpactKill;
 
         //Dynamic VFX Prefab Tables
         public static Dictionary<string, GameObject> vfxPrefabs = new Dictionary<string, GameObject>{};
@@ -140,10 +146,12 @@ namespace JhinMod.Modules
             }
 
             //Base
-            deadlyFlourishEffect = Assets.LoadEffect("Jhin_Base_DeadlyFlourishBeam", false);
-            vfxPrefabs.Add("Jhin_DeadlyFlourishBeam", deadlyFlourishEffect);
-            dancingGrenadeEffect = Assets.CreateDancingGrenadeEffect("JhinGrenadeGhost");
-            vfxPrefabs.Add("Jhin_Grenade", dancingGrenadeEffect);
+            baseDeadlyFlourishBeamEffect = Assets.LoadEffect("Jhin_Base_DeadlyFlourishBeam", false);
+            vfxPrefabs.Add("Jhin_DeadlyFlourishBeam", baseDeadlyFlourishBeamEffect);
+            baseDeadlyFlourishMuzzleEffect = Assets.LoadEffect("Jhin_Base_DeadlyFlourishMuzzleFX", false);
+            vfxPrefabs.Add("Jhin_DeadlyFlourishMuzzle", baseDeadlyFlourishMuzzleEffect);
+            baseDancingGrenadeEffect = Assets.CreateDancingGrenadeEffect("JhinGrenadeGhost");
+            vfxPrefabs.Add("Jhin_Grenade", baseDancingGrenadeEffect);
 
             //REPLACE, using commando muzzlefalsh
             vfxPrefabs.Add("Jhin_MuzzleFlash", EntityStates.Commando.CommandoWeapon.FirePistol2.muzzleEffectPrefab);
@@ -151,8 +159,21 @@ namespace JhinMod.Modules
             //Project
             projectMuzzleflashEffect = Assets.LoadEffect("Jhin_Project_Muzzleflash", false);
             vfxPrefabs.Add("ProjectJhin_MuzzleFlash", projectMuzzleflashEffect);
+            projectMuzzleflashFourthEffect = Assets.LoadEffect("Jhin_Project_MuzzleflashFourth", false);
+            vfxPrefabs.Add("ProjectJhin_MuzzleFlashFourth", projectMuzzleflashFourthEffect);
+
             projectTracerEffect = Assets.CreateTracerEffect("Jhin_Project_Tracer");
             vfxPrefabs.Add("ProjectJhin_Tracer", projectTracerEffect);
+            projectTracerFourthEffect = Assets.CreateTracerEffect("Jhin_Project_TracerFourth");
+            vfxPrefabs.Add("ProjectJhin_TracerFourth", projectTracerFourthEffect);
+
+            projectDeadlyFlourishMuzzleEffect = Assets.LoadEffect("Jhin_Project_DeadlyFlourish_MuzzleFX");
+            vfxPrefabs.Add("ProjectJhin_DeadlyFlourishMuzzle", projectDeadlyFlourishMuzzleEffect);
+
+            projectGrenadeImpact = Assets.LoadEffect("Jhin_Project_GrenadeImpact");
+            vfxPrefabs.Add("ProjectJhin_GrenadeImpact", projectGrenadeImpact); 
+            projectGrenadeImpactKill = Assets.LoadEffect("Jhin_Project_GrenadeImpactKill");
+            vfxPrefabs.Add("ProjectJhin_GrenadeImpactKill", projectGrenadeImpactKill);
 
             //Henry Leftover
             swordSwingEffect = Assets.LoadEffect("JhinSwordSwingEffect", true);
@@ -195,6 +216,7 @@ namespace JhinMod.Modules
                 return null;
             }
 
+            newEffect.AddComponent<CustomTracer>();
             newEffect.AddComponent<DestroyOnTimer>().duration = 12;
             newEffect.AddComponent<NetworkIdentity>();
             newEffect.AddComponent<VFXAttributes>().vfxPriority = VFXAttributes.VFXPriority.Always;
@@ -204,8 +226,6 @@ namespace JhinMod.Modules
             effect.parentToReferencedTransform = parentToTransform;
             effect.positionAtReferencedTransform = true;
             effect.soundName = soundName;
-
-            var tracerComponent = newEffect.AddComponent<CustomTracer>();
 
             AddNewEffectDef(newEffect, soundName);
 

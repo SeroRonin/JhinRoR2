@@ -13,25 +13,28 @@ namespace JhinMod.Content.Components
     /// </summary>
     public class CustomTracer : MonoBehaviour
     {
-        public float initialDistance;
-        public float projectileSpeed;
-        public float timeActive;
-
         public float maxDistance = 1000f;
-        public float maxLifetime = 50f;
+        public float projectileSpeed = 100f;
 
-        public bool isActive;
+        public Vector3 origin = new Vector3();
+        public Vector3 target = new Vector3();
+        public Vector3 moveVector = new Vector3();
+        public Vector3 velocity = new Vector3();
 
-        public Vector3 origin;
-        public Vector3 target;
-        public Vector3 moveVector;
-        public Vector3 velocity;
+        public float timeActive;
+        public bool isActive = true;
 
         private void Awake()
         {
+            UpdateTracer();
         }
 
         private void Start()
+        {
+            UpdateTracer();
+        }
+
+        public virtual void UpdateTracer()
         {
             timeActive = 0f;
             moveVector = (target - origin).normalized;
@@ -47,13 +50,7 @@ namespace JhinMod.Content.Components
 
             timeActive += Time.deltaTime;
 
-            // Destroy self if max life or distance reached
-            if (timeActive > maxLifetime)
-            {
-                Destroy(gameObject, 2f);
-                StopParticles();
-            }
-
+            // Destroy self if distance reached
             var distanceTravelled = Vector3.Distance(gameObject.transform.position, origin);
             if (distanceTravelled > maxDistance)
             {

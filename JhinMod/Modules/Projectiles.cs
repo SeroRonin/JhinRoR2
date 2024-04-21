@@ -64,6 +64,7 @@ namespace JhinMod.Modules
             custompie.lifetimeAfterImpact = 0f;
             custompie.blastAttackerFiltering = AttackerFiltering.NeverHitSelf;
             custompie.falloffModel = BlastAttack.FalloffModel.Linear;
+            custompie.blastRadius = 4f;
 
             //Remove built-in sounds
             AkEvent[] akEvents = rocketPrefab.GetComponentsInChildren<AkEvent>();

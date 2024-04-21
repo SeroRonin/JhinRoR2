@@ -141,7 +141,7 @@ Shader "SeroRonin/VFX/jhinVFX_Project_UnlitSelectFrame"
 }
 /*ASEBEGIN
 Version=18935
-486;81;1250;769;1857.224;631.3979;1.774628;True;False
+486;81;1218;759;848.2711;488.219;1.474628;True;False
 Node;AmplifyShaderEditor.Vector2Node;82;-1278.609,131.1936;Inherit;False;InstancedProperty;_SelectFrame;Select Frame;1;0;Create;True;0;0;0;False;0;False;0,0;0,0;0;3;FLOAT2;0;FLOAT;1;FLOAT;2
 Node;AmplifyShaderEditor.Vector2Node;83;-1279.433,-126.9756;Inherit;False;Property;_NumCells;Num Cells;2;0;Create;True;0;0;0;False;0;False;1,1;0,0;0;3;FLOAT2;0;FLOAT;1;FLOAT;2
 Node;AmplifyShaderEditor.SimpleDivideOpNode;31;-1024,128;Inherit;False;2;0;FLOAT;1;False;1;FLOAT;0;False;1;FLOAT;0
@@ -181,4 +181,4 @@ WireConnection;80;1;79;0
 WireConnection;0;2;77;0
 WireConnection;0;9;80;0
 ASEEND*/
-//CHKSM=95343CC792818744EB2F7985F3F7C3BCA1322DBF
+//CHKSM=D5CCC79CDC05CCAB9211A96A3AEB0C170B4DEE98
