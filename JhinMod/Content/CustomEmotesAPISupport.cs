@@ -29,7 +29,7 @@ namespace JhinMod.Content
             {
                 if (item.bodyPrefab.name == "JhinBody")
                 {
-                    var skele = Modules.Assets.mainAssetBundle.LoadAsset<GameObject>("emoteJhin");
+                    var skele = Modules.Asset.mainAssetBundle.LoadAsset<GameObject>("emoteJhin");
                     CustomEmotesAPI.ImportArmature(item.bodyPrefab, skele);
                     skele.GetComponentInChildren<BoneMapper>().scale = 1.1f;
                 }

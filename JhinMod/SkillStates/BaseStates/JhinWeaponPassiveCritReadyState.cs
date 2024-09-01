@@ -39,7 +39,7 @@ namespace JhinMod.SkillStates.BaseStates
                 skillName = prefix + "PRIMARY_WHISPER_NAME",
                 skillNameToken = prefix + "PRIMARY_WHISPER_NAME",
                 skillDescriptionToken = prefix + "PRIMARY_WHISPER_CRIT_DESCRIPTION",
-                skillIcon = Modules.Assets.mainAssetBundle.LoadAsset<Sprite>("texPrimaryCritIcon"),
+                skillIcon = Modules.Asset.mainAssetBundle.LoadAsset<Sprite>("texPrimaryCritIcon"),
 
                 activationState = new EntityStates.SerializableEntityStateType(typeof(SkillStates.WhisperPrimary)),
                 activationStateMachineName = "Weapon",

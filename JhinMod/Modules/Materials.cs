@@ -19,7 +19,7 @@ namespace JhinMod.Modules
             if (tempMat)
                 return tempMat;
 
-            tempMat = Assets.mainAssetBundle.LoadAsset<Material>(materialName);
+            tempMat = Asset.mainAssetBundle.LoadAsset<Material>(materialName);
 
             if (!tempMat)
             {

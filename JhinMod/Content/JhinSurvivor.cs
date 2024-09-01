@@ -32,10 +32,10 @@ namespace JhinMod.Modules.Survivors
             bodyNameToken = JHIN_PREFIX + "NAME",
             subtitleNameToken = JHIN_PREFIX + "SUBTITLE",
 
-            characterPortrait = Assets.mainAssetBundle.LoadAsset<Texture>("texJhinIcon"),
+            characterPortrait = Asset.mainAssetBundle.LoadAsset<Texture>("texJhinIcon"),
             bodyColor = new Color(1f, 0f, 0.44f),
 
-            crosshair = Modules.Assets.LoadCrosshair("Standard"),
+            crosshair = Modules.Asset.LoadCrosshair("Standard"),
             podPrefab = RoR2.LegacyResourcesAPI.Load<GameObject>("Prefabs/NetworkedObjects/SurvivorPod"),
 
             //Stats
@@ -129,7 +129,7 @@ namespace JhinMod.Modules.Survivors
             skillloc.passiveSkill.enabled = true;
             skillloc.passiveSkill.skillNameToken = JHIN_PREFIX + "PASSIVE_NAME";
             skillloc.passiveSkill.skillDescriptionToken = JHIN_PREFIX + "PASSIVE_DESCRIPTION";
-            skillloc.passiveSkill.icon = Modules.Assets.mainAssetBundle.LoadAsset<Sprite>("texPassiveIcon");
+            skillloc.passiveSkill.icon = Modules.Asset.mainAssetBundle.LoadAsset<Sprite>("texPassiveIcon");
             #endregion
 
             #region Primary
@@ -148,7 +148,7 @@ namespace JhinMod.Modules.Survivors
                 skillName = JHIN_PREFIX + "PRIMARY_WHISPER_NAME",
                 skillNameToken = JHIN_PREFIX + "PRIMARY_WHISPER_NAME",
                 skillDescriptionToken = JHIN_PREFIX + "PRIMARY_WHISPER_DESCRIPTION",
-                skillIcon = Modules.Assets.mainAssetBundle.LoadAsset<Sprite>("texPrimaryIcon"),
+                skillIcon = Modules.Asset.mainAssetBundle.LoadAsset<Sprite>("texPrimaryIcon"),
 
                 activationState = new EntityStates.SerializableEntityStateType(typeof(SkillStates.WhisperPrimary)),
                 activationStateMachineName = "Weapon",
@@ -174,7 +174,7 @@ namespace JhinMod.Modules.Survivors
                 skillName = JHIN_PREFIX + "SECONDARY_GRENADE_NAME",
                 skillNameToken = JHIN_PREFIX + "SECONDARY_GRENADE_NAME",
                 skillDescriptionToken = JHIN_PREFIX + "SECONDARY_GRENADE_DESCRIPTION",
-                skillIcon = Modules.Assets.mainAssetBundle.LoadAsset<Sprite>("texSecondaryIcon"),
+                skillIcon = Modules.Asset.mainAssetBundle.LoadAsset<Sprite>("texSecondaryIcon"),
                 activationState = new EntityStates.SerializableEntityStateType(typeof(SkillStates.DancingGrenade)),
                 activationStateMachineName = "Slide",
                 baseMaxStock = 1,
@@ -203,7 +203,7 @@ namespace JhinMod.Modules.Survivors
                 skillName = JHIN_PREFIX + "UTILITY_FLOURISH_NAME",
                 skillNameToken = JHIN_PREFIX + "UTILITY_FLOURISH_NAME",
                 skillDescriptionToken = JHIN_PREFIX + "UTILITY_FLOURISH_DESCRIPTION",
-                skillIcon = Modules.Assets.mainAssetBundle.LoadAsset<Sprite>("texUtilityIcon"),
+                skillIcon = Modules.Asset.mainAssetBundle.LoadAsset<Sprite>("texUtilityIcon"),
                 activationState = new EntityStates.SerializableEntityStateType(typeof(SkillStates.DeadlyFlourish)),
                 activationStateMachineName = "Body",
                 baseMaxStock = 1,
@@ -232,7 +232,7 @@ namespace JhinMod.Modules.Survivors
                 skillName = JHIN_PREFIX + "SPECIAL_ULT_NAME",
                 skillNameToken = JHIN_PREFIX + "SPECIAL_ULT_NAME",
                 skillDescriptionToken = JHIN_PREFIX + "SPECIAL_ULT_DESCRIPTION",
-                skillIcon = Modules.Assets.mainAssetBundle.LoadAsset<Sprite>("texSpecialIcon"),
+                skillIcon = Modules.Asset.mainAssetBundle.LoadAsset<Sprite>("texSpecialIcon"),
                 activationState = new EntityStates.SerializableEntityStateType(typeof(SkillStates.CurtainCall)),
                 activationStateMachineName = "Slide",
                 baseMaxStock = 1,
@@ -272,7 +272,7 @@ namespace JhinMod.Modules.Survivors
             #region DefaultSkin
             //this creates a SkinDef with all default fields
             SkinDef defaultSkin = Modules.Skins.CreateSkinDef(JHIN_PREFIX + "DEFAULT_SKIN_NAME",
-                Assets.mainAssetBundle.LoadAsset<Sprite>("texMainSkinIcon"),
+                Asset.mainAssetBundle.LoadAsset<Sprite>("texMainSkinIcon"),
                 defaultRendererinfos,
                 prefabCharacterModel.gameObject);
 
@@ -289,7 +289,7 @@ namespace JhinMod.Modules.Survivors
 
             //creating a new skindef as we did before
             SkinDef highnoonSkin = Modules.Skins.CreateSkinDef(JHIN_PREFIX + "HIGHNOON_SKIN_NAME",
-                Assets.mainAssetBundle.LoadAsset<Sprite>("texHighNoonSkinIcon"),
+                Asset.mainAssetBundle.LoadAsset<Sprite>("texHighNoonSkinIcon"),
                 defaultRendererinfos,
                 prefabCharacterModel.gameObject);
 
@@ -315,7 +315,7 @@ namespace JhinMod.Modules.Survivors
 
             //Create SkinDef
             SkinDef bloodmoonSkin = Modules.Skins.CreateSkinDef(JHIN_PREFIX + "BLOODMOON_SKIN_NAME",
-                Assets.mainAssetBundle.LoadAsset<Sprite>("texBloodMoonSkinIcon"),
+                Asset.mainAssetBundle.LoadAsset<Sprite>("texBloodMoonSkinIcon"),
                 defaultRendererinfos,
                 prefabCharacterModel.gameObject);
 
@@ -336,7 +336,7 @@ namespace JhinMod.Modules.Survivors
 
             //Create SkinDef
             SkinDef sktt1Skin = Modules.Skins.CreateSkinDef(JHIN_PREFIX + "SKTT1_SKIN_NAME",
-                Assets.mainAssetBundle.LoadAsset<Sprite>("texSKTT1SkinIcon"),
+                Asset.mainAssetBundle.LoadAsset<Sprite>("texSKTT1SkinIcon"),
                 defaultRendererinfos,
                 prefabCharacterModel.gameObject);
 
@@ -357,7 +357,7 @@ namespace JhinMod.Modules.Survivors
 
             //Create SkinDef
             SkinDef projectSkin = Modules.Skins.CreateSkinDef(JHIN_PREFIX + "PROJECT_SKIN_NAME",
-                Assets.mainAssetBundle.LoadAsset<Sprite>("texProjectSkinIcon"),
+                Asset.mainAssetBundle.LoadAsset<Sprite>("texProjectSkinIcon"),
                 defaultRendererinfos,
                 prefabCharacterModel.gameObject);
 
@@ -378,7 +378,7 @@ namespace JhinMod.Modules.Survivors
 
             //Create SkinDef
             SkinDef shanhaiSkin = Modules.Skins.CreateSkinDef(JHIN_PREFIX + "SHANHAI_SKIN_NAME",
-                Assets.mainAssetBundle.LoadAsset<Sprite>("texShanHaiSkinIcon"),
+                Asset.mainAssetBundle.LoadAsset<Sprite>("texShanHaiSkinIcon"),
                 defaultRendererinfos,
                 prefabCharacterModel.gameObject);
 
@@ -399,7 +399,7 @@ namespace JhinMod.Modules.Survivors
 
             //Create SkinDef
             SkinDef dwgSkin = Modules.Skins.CreateSkinDef(JHIN_PREFIX + "DWG_SKIN_NAME",
-                Assets.mainAssetBundle.LoadAsset<Sprite>("texDWGSkinIcon"),
+                Asset.mainAssetBundle.LoadAsset<Sprite>("texDWGSkinIcon"),
                 defaultRendererinfos,
                 prefabCharacterModel.gameObject);
 
@@ -420,7 +420,7 @@ namespace JhinMod.Modules.Survivors
 
             //Create SkinDef
             SkinDef empyreanSkin = Modules.Skins.CreateSkinDef(JHIN_PREFIX + "EMPYREAN_SKIN_NAME",
-                Assets.mainAssetBundle.LoadAsset<Sprite>("texEmpyreanSkinIcon"),
+                Asset.mainAssetBundle.LoadAsset<Sprite>("texEmpyreanSkinIcon"),
                 defaultRendererinfos,
                 prefabCharacterModel.gameObject);
 

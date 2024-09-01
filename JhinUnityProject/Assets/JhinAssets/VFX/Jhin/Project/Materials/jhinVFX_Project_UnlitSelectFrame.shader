@@ -9,6 +9,7 @@ Shader "SeroRonin/VFX/jhinVFX_Project_UnlitSelectFrame"
 		_Texture0("Texture 0", 2D) = "white" {}
 		_SelectFrame("Select Frame", Vector) = (0,0,0,0)
 		_NumCells("Num Cells", Vector) = (1,1,0,0)
+		_UseOpacityCurve("Use Opacity Curve", Int) = 0
 		[HideInInspector] _texcoord( "", 2D ) = "white" {}
 		[HideInInspector] _texcoord2( "", 2D ) = "white" {}
 		[HideInInspector] __dirty( "", Int ) = 1
@@ -38,6 +39,8 @@ Shader "SeroRonin/VFX/jhinVFX_Project_UnlitSelectFrame"
 		UNITY_INSTANCING_BUFFER_START(SeroRoninVFXjhinVFX_Project_UnlitSelectFrame)
 			UNITY_DEFINE_INSTANCED_PROP(float2, _SelectFrame)
 #define _SelectFrame_arr SeroRoninVFXjhinVFX_Project_UnlitSelectFrame
+			UNITY_DEFINE_INSTANCED_PROP(int, _UseOpacityCurve)
+#define _UseOpacityCurve_arr SeroRoninVFXjhinVFX_Project_UnlitSelectFrame
 		UNITY_INSTANCING_BUFFER_END(SeroRoninVFXjhinVFX_Project_UnlitSelectFrame)
 
 		inline half4 LightingUnlit( SurfaceOutput s, half3 lightDir, half atten )
@@ -52,7 +55,8 @@ Shader "SeroRonin/VFX/jhinVFX_Project_UnlitSelectFrame"
 			float2 _SelectFrame_Instance = UNITY_ACCESS_INSTANCED_PROP(_SelectFrame_arr, _SelectFrame);
 			float2 appendResult25 = (float2(( 1.0 - ( 1.0 / _SelectFrame_Instance.x ) ) , ( 1.0 - ( 1.0 / _SelectFrame_Instance.y ) )));
 			float2 uv_TexCoord6 = i.uv_texcoord * appendResult51 + appendResult25;
-			o.Alpha = ( i.vertexColor.a * ( tex2D( _Texture0, uv_TexCoord6 ).a * i.uv2_texcoord2.x ) );
+			int _UseOpacityCurve_Instance = UNITY_ACCESS_INSTANCED_PROP(_UseOpacityCurve_arr, _UseOpacityCurve);
+			o.Alpha = ( i.vertexColor.a * ( tex2D( _Texture0, uv_TexCoord6 ).a * ( _UseOpacityCurve_Instance == 1 ? i.uv2_texcoord2.z : 1.0 ) ) );
 		}
 
 		ENDCG
@@ -141,9 +145,9 @@ Shader "SeroRonin/VFX/jhinVFX_Project_UnlitSelectFrame"
 }
 /*ASEBEGIN
 Version=18935
-486;81;1218;759;848.2711;488.219;1.474628;True;False
-Node;AmplifyShaderEditor.Vector2Node;82;-1278.609,131.1936;Inherit;False;InstancedProperty;_SelectFrame;Select Frame;1;0;Create;True;0;0;0;False;0;False;0,0;0,0;0;3;FLOAT2;0;FLOAT;1;FLOAT;2
-Node;AmplifyShaderEditor.Vector2Node;83;-1279.433,-126.9756;Inherit;False;Property;_NumCells;Num Cells;2;0;Create;True;0;0;0;False;0;False;1,1;0,0;0;3;FLOAT2;0;FLOAT;1;FLOAT;2
+487;81;1217;759;558.5947;35.52484;1;True;False
+Node;AmplifyShaderEditor.Vector2Node;82;-1278.609,131.1936;Inherit;False;InstancedProperty;_SelectFrame;Select Frame;1;0;Create;True;0;0;0;False;0;False;0,0;1,1;0;3;FLOAT2;0;FLOAT;1;FLOAT;2
+Node;AmplifyShaderEditor.Vector2Node;83;-1279.433,-126.9756;Inherit;False;Property;_NumCells;Num Cells;2;0;Create;True;0;0;0;False;0;False;1,1;2,2;0;3;FLOAT2;0;FLOAT;1;FLOAT;2
 Node;AmplifyShaderEditor.SimpleDivideOpNode;31;-1024,128;Inherit;False;2;0;FLOAT;1;False;1;FLOAT;0;False;1;FLOAT;0
 Node;AmplifyShaderEditor.SimpleDivideOpNode;37;-1024,256;Inherit;False;2;0;FLOAT;1;False;1;FLOAT;0;False;1;FLOAT;0
 Node;AmplifyShaderEditor.SimpleDivideOpNode;50;-896,-128;Inherit;False;2;0;FLOAT;1;False;1;FLOAT;0;False;1;FLOAT;0
@@ -152,10 +156,12 @@ Node;AmplifyShaderEditor.SimpleSubtractOpNode;62;-896,128;Inherit;False;2;0;FLOA
 Node;AmplifyShaderEditor.SimpleSubtractOpNode;74;-896,256;Inherit;False;2;0;FLOAT;1;False;1;FLOAT;0;False;1;FLOAT;0
 Node;AmplifyShaderEditor.DynamicAppendNode;25;-704,128;Inherit;False;FLOAT2;4;0;FLOAT;0;False;1;FLOAT;0;False;2;FLOAT;0;False;3;FLOAT;0;False;1;FLOAT2;0
 Node;AmplifyShaderEditor.DynamicAppendNode;51;-704,0;Inherit;False;FLOAT2;4;0;FLOAT;0;False;1;FLOAT;0;False;2;FLOAT;0;False;3;FLOAT;0;False;1;FLOAT2;0
-Node;AmplifyShaderEditor.TexturePropertyNode;8;-256,-192;Inherit;True;Property;_Texture0;Texture 0;0;0;Create;True;0;0;0;False;0;False;96024c08522e567458679a30cd70ab15;96024c08522e567458679a30cd70ab15;False;white;Auto;Texture2D;-1;0;2;SAMPLER2D;0;SAMPLERSTATE;1
+Node;AmplifyShaderEditor.IntNode;84;-256,368;Inherit;False;InstancedProperty;_UseOpacityCurve;Use Opacity Curve;3;0;Create;True;0;0;0;False;0;False;0;0;False;0;1;INT;0
+Node;AmplifyShaderEditor.TexturePropertyNode;8;-256,-192;Inherit;True;Property;_Texture0;Texture 0;0;0;Create;True;0;0;0;False;0;False;96024c08522e567458679a30cd70ab15;8b67af1b7657f194794e2c34b0ceb9c7;False;white;Auto;Texture2D;-1;0;2;SAMPLER2D;0;SAMPLERSTATE;1
 Node;AmplifyShaderEditor.TextureCoordinatesNode;6;-512,0;Inherit;False;0;-1;2;3;2;SAMPLER2D;;False;0;FLOAT2;1,1;False;1;FLOAT2;0,0;False;5;FLOAT2;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
-Node;AmplifyShaderEditor.SamplerNode;1;-256,0;Inherit;True;Property;_TextureSample0;Texture Sample 0;0;0;Create;True;0;0;0;False;0;False;-1;None;None;True;0;False;white;Auto;False;Object;-1;Auto;Texture2D;8;0;SAMPLER2D;;False;1;FLOAT2;0,0;False;2;FLOAT;0;False;3;FLOAT2;0,0;False;4;FLOAT2;0,0;False;5;FLOAT;1;False;6;FLOAT;0;False;7;SAMPLERSTATE;;False;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
 Node;AmplifyShaderEditor.TexCoordVertexDataNode;78;-256,192;Inherit;False;1;4;0;5;FLOAT4;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
+Node;AmplifyShaderEditor.SamplerNode;1;-256,0;Inherit;True;Property;_TextureSample0;Texture Sample 0;0;0;Create;True;0;0;0;False;0;False;-1;None;None;True;0;False;white;Auto;False;Object;-1;Auto;Texture2D;8;0;SAMPLER2D;;False;1;FLOAT2;0,0;False;2;FLOAT;0;False;3;FLOAT2;0,0;False;4;FLOAT2;0,0;False;5;FLOAT;1;False;6;FLOAT;0;False;7;SAMPLERSTATE;;False;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
+Node;AmplifyShaderEditor.Compare;85;-32,368;Inherit;False;0;4;0;INT;0;False;1;INT;1;False;2;FLOAT;0;False;3;FLOAT;1;False;1;FLOAT;0
 Node;AmplifyShaderEditor.VertexColorNode;77;-128,-384;Inherit;False;0;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
 Node;AmplifyShaderEditor.SimpleMultiplyOpNode;79;48,192;Inherit;False;2;2;0;FLOAT;0;False;1;FLOAT;0;False;1;FLOAT;0
 Node;AmplifyShaderEditor.SimpleMultiplyOpNode;80;192,192;Inherit;False;2;2;0;FLOAT;1;False;1;FLOAT;0;False;1;FLOAT;0
@@ -174,11 +180,13 @@ WireConnection;6;0;51;0
 WireConnection;6;1;25;0
 WireConnection;1;0;8;0
 WireConnection;1;1;6;0
+WireConnection;85;0;84;0
+WireConnection;85;2;78;3
 WireConnection;79;0;1;4
-WireConnection;79;1;78;1
+WireConnection;79;1;85;0
 WireConnection;80;0;77;4
 WireConnection;80;1;79;0
 WireConnection;0;2;77;0
 WireConnection;0;9;80;0
 ASEEND*/
-//CHKSM=D5CCC79CDC05CCAB9211A96A3AEB0C170B4DEE98
+//CHKSM=119EF3D602254EEFCE884A3CE013F5A7BF2B8BFE

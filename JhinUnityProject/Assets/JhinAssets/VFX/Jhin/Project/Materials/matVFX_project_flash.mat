@@ -73,6 +73,7 @@ Material:
     - _GlossyReflections: 1
     - _GlowBrightness: 1
     - _Metallic: 0
+    - _MixColorwithTex: 0
     - _Mode: 0
     - _OcclusionStrength: 1
     - _Parallax: 0.02
@@ -81,6 +82,7 @@ Material:
     - _SrcBlend: 1
     - _UVSec: 0
     - _UseAlphaCurve: 1
+    - _UseTexRGB: 0
     - _ZWrite: 1
     - __dirty: 0
     m_Colors:

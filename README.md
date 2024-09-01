@@ -1,8 +1,8 @@
-If you like my mods, consider supporting me!
+ If you like my mods, consider supporting me!
 
 [![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/V7V7JC77Y)
 
-[![Patreon](https://c5.patreon.com/external/logo/become_a_patron_button.png)](https://www.patreon.com/SeroRonin)
+[![Patreon](https://c5.patreon.com/external/logo/become_a_patron_button.png)](https://www.patreon.com/SeroRonin) 
 ---
 
 ### This mod was created under Riot Games' "Legal Jibber Jabber" policy using assets owned by Riot Games.  Riot Games does not endorse or sponsor this project.
@@ -16,8 +16,9 @@ If you like my mods, consider supporting me!
 
 ###### Jhin is a meticulous criminal psychopath who believes murder is art. Once an Ionian prisoner, but freed by shadowy elements within Ionia's ruling council, the serial killer now works as their cabal's assassin. Using his gun gun as his paintbrush, Jhin creates works of artistic brutality, horrifying victims and onlookers. He gains a cruel pleasure from putting on his gruesome theater, making him the ideal choice to send the most powerful of messages: terror.
 
-Jhin as a survivor is meant to deliver a low APM, high damage experience. He has high damage scaling, but lacks sufficient means to deal with large groups of enemies. This is my first mod for a RoR2, so it's likely to be either under or overpowered. If you have any concerns or feedback, please feel free to reach out via a discord channel I made specifically for things like this: [https://discord.gg/RSs2kA7yRu](https://discord.gg/RSs2kA7yRu)
+Jhin as a survivor is meant to deliver a low APM, high damage experience. He has high damage scaling, but lacks sufficient means to deal with large groups of enemies. 
 
+I am by no means a RoR2 Guru, so things are likely to be either under or overpowered. If you have any concerns or feedback, please feel free to reach out via a discord channel I made specifically for things like this: [https://discord.gg/RSs2kA7yRu](https://discord.gg/RSs2kA7yRu)
 
 ### Video Showcase 
 Since markdown doesn't support embedding youtube videos, the showcase can be found on youtube directly from [this link](https://www.youtube.com/watch?v=rlJhe3pvIV8), or by clicking the icon below
@@ -27,46 +28,25 @@ Since markdown doesn't support embedding youtube videos, the showcase can be fou
 ### Features
 * Unique scaling and ammo system iconic to Jhin's playstyle in League of Legends
 * Animations from League, with custom animations to bridge the difference in game styles
-* SFX based on which skin you use[^skinSFX]
+* Dynamic SFX and VFX based on which skin you use[^skinDynamics]
 * Item Display support up to SOTV[^itemDisplay]
 * Highly configurable, change most values of the mod to your liking!
 
 ### Planned Features
 > Features I would like to add, should I have the motivation to continue working on this
-* Custom VFX, with skin-dependancy if possible
+* More Custom VFX with skin-dependancy
 * VO and Emotes built off of LemonLust's designs
 * An alternate ability based off of Captive Audience[^altAbility]
 
-### Stats[^armorFootnote]
-<table>
-  <tr>
-    <th></th>
-    <th>Health</th>
-    <th>Regen</th>
-    <th>Armor</th>
-    <th>Damage</th>
-    <th>Attack Speed</th>
-  </tr>
-  <tr>
-    <th>Base</th>
-    <td>110</td>
-    <td>1.5</td>
-    <td>0</td>
-    <td>12</td>
-    <td>0.625</td>
-  </tr>
-   <tr>
-    <th>Growth</th>
-    <td>33</td>
-    <td>0.2</td>
-    <td>0</td>
-    <td>2.4</td>
-    <td>0.019</td>
-  </tr>
-</table>
-
 ---
-# Skills
+
+### Stats[^armorFootnote]
+|            | Health | Regen | Armor | Damage | Attack Speed |
+|:-----------|--------|-------|-------|--------|--------------|
+| **Base**   | 110 	  | 1.5	  | 0	  | 12	   | 0.625		  |
+| **Growth** | 33  	  | 0.2	  | 0	  | 2.4    | 0.019		  |
+
+### Skills
 
 Please note that skill values and effects may change over the course of this mod's lifespan, and the images displayed here may not reflect those changes.
 
@@ -132,21 +112,46 @@ Curtain Call is a primary skill override, like that of Railgunner's scope. For 1
 
 </details>
 
+#
+
+### Skins
+> Each skin supports unique SFX and VFX. Creating these assets for each is a painfully tedious process, and as such, only a few skins will have support. The others will only be added if I find the motivation to do so.
+
+| Skin              |Available           | Unique SFX         | Unique VFX	       |
+|:------------------|:------------------:|:------------------:|:------------------:|
+| High Noon  		| <img src="https://em-content.zobj.net/source/microsoft/74/heavy-check-mark_2714.png" width="15px" /> 	| <img src="https://em-content.zobj.net/source/microsoft/74/heavy-check-mark_2714.png" width="15px" /> 	| <img src="https://em-content.zobj.net/source/microsoft/74/cross-mark_274c.png" width="15px" /> |
+| Blood Moon 		| <img src="https://em-content.zobj.net/source/microsoft/74/heavy-check-mark_2714.png" width="15px" /> 	| <img src="https://em-content.zobj.net/source/microsoft/74/heavy-check-mark_2714.png" width="15px" /> 	| <img src="https://em-content.zobj.net/source/microsoft/74/cross-mark_274c.png" width="15px" /> |
+| SKT T1  	 		| <img src="https://em-content.zobj.net/source/microsoft/74/heavy-check-mark_2714.png" width="15px" /> 	| <img src="https://em-content.zobj.net/source/microsoft/74/cross-mark_274c.png" width="15px" /> 	  	| <img src="https://em-content.zobj.net/source/microsoft/74/cross-mark_274c.png" width="15px" /> |
+| Project    		| <img src="https://em-content.zobj.net/source/microsoft/74/heavy-check-mark_2714.png" width="15px" /> 	| <img src="https://em-content.zobj.net/source/microsoft/74/heavy-check-mark_2714.png" width="15px" /> 	| <img src="https://em-content.zobj.net/source/microsoft/74/heavy-check-mark_2714.png" width="15px" /> |
+| Dark Cosmic		| <img src="https://em-content.zobj.net/source/microsoft/74/cross-mark_274c.png" width="15px" />[^darkcosmic]	   	| <img src="https://em-content.zobj.net/source/microsoft/74/cross-mark_274c.png" width="15px" /> 		| <img src="https://em-content.zobj.net/source/microsoft/74/cross-mark_274c.png" width="15px" /> |
+| Shan Hai Scrolls 	| <img src="https://em-content.zobj.net/source/microsoft/74/heavy-check-mark_2714.png" width="15px" /> 	| <img src="https://em-content.zobj.net/source/microsoft/74/cross-mark_274c.png" width="15px" /> 		| <img src="https://em-content.zobj.net/source/microsoft/74/cross-mark_274c.png" width="15px" /> |
+| DWG 				| <img src="https://em-content.zobj.net/source/microsoft/74/heavy-check-mark_2714.png" width="15px" /> 	| <img src="https://em-content.zobj.net/source/microsoft/74/cross-mark_274c.png" width="15px" /> 		| <img src="https://em-content.zobj.net/source/microsoft/74/cross-mark_274c.png" width="15px" /> |
+| Empyrean			| <img src="https://em-content.zobj.net/source/microsoft/74/heavy-check-mark_2714.png" width="15px" /> 	| <img src="https://em-content.zobj.net/source/microsoft/74/cross-mark_274c.png" width="15px" /> 		| <img src="https://em-content.zobj.net/source/microsoft/74/cross-mark_274c.png" width="15px" /> |
+| Soul Fighter		| <img src="https://em-content.zobj.net/source/microsoft/74/cross-mark_274c.png" width="15px" /> 		| <img src="https://em-content.zobj.net/source/microsoft/74/cross-mark_274c.png" width="15px" /> 		| <img src="https://em-content.zobj.net/source/microsoft/74/cross-mark_274c.png" width="15px" /> |
+
 ---
 
-## Skins
-> Each skin has it's own unique SFX, and if possible, VFX (when implemented). Creating the soundbanks for each is a painfully tedious process, and as such, only a few skins will have unique SFX at launch. Others are not planned, and will be added only if I have the motivation to do so.
-### Available
-* High Noon
-* Blood Moon
-* SKT T1 [SFX not planned]
-* Project
-* Shan Hai Scrolls [SFX not planned]
-* DWG [SFX not planned]
-* Empyrean [SFX not planned]
 
-### Not Available
-* Dark Cosmic [Not Possbile?][^darkcosmic]
+## Mod Compatibility
+> Suggest and report compatibility issues under Github Issues, or through my Discord: [https://discord.gg/RSs2kA7yRu](https://discord.gg/RSs2kA7yRu)
+
+| Mod 			  | Compatibility | Notes |
+|:----------------|-------------- |--------------------|
+| Risk of Options | <img src="https://em-content.zobj.net/source/microsoft/74/heavy-check-mark_2714.png" width="15px" /> | |
+| CustomEmoteAPI  | <img src="https://em-content.zobj.net/source/microsoft/74/heavy-check-mark_2714.png" width="15px" /> | Emotes look a little janky on skins with cloaks. I might try adding dynamics bones in the future to lessen the severity. |
+
+## Known Issues
+> Bugs can be reported under Github Issues, or through my Discord: [https://discord.gg/RSs2kA7yRu](https://discord.gg/RSs2kA7yRu)
+* **[Skill]** Ult applies execute damage as an additional instance of damage (this is due to explosions not supporting post-hit pre-damage modifications)
+* **[Item]** Shuriken is triggered very sparsely, rather than on every primary attack. Likely due to custom ammo system?
+
+## To Do
+* Better Movespeed Buff Icon
+* Custom Indicator for Dancing Grenade
+* Make Ult Execute group with base damage
+* Ult rocket jumping?
+* Hopoo-eqsue/RoR2-friendly skin
+* Achievments + Unlockable criteria (other abilties, skins, etc)
 
 
 ## Special Credits and Thanks
@@ -161,39 +166,12 @@ Curtain Call is a primary skill override, like that of Railgunner's scope. For 1
 * **Violet Chaolan**: Shader Help
   * Helped with some shader plugins that allowed me to experiment with VFX
 
-## Mod Compatibility
-> Suggest compatibilities and report compatibility issues under Github Issues, or through my Discord: [https://discord.gg/RSs2kA7yRu](https://discord.gg/RSs2kA7yRu)
 
-#### Compatible
-> Built-in functionality support
-* Risk Of Options
-* CustomEmoteAPI
-
-#### To be considered
-> No direct functionality support, but also don't break the game. May be added later.
-* None so far
+> See the github page for footnotes that don't properly render here on Thunderstore
 
 
-#### Incompatible
-> Currently have issues or otherwise break when used with this mod. Will generally need to be fixed in patches.
-* Synergies By Dragonyck: Causes Curtain Call's projectile to explode repeatedly after impact. This is not something I can fix on my end. 
-
-## Known Issues
-> Bugs can be reported under Github Issues, or through my Discord: [https://discord.gg/RSs2kA7yRu](https://discord.gg/RSs2kA7yRu)
-* **[Skill]** Ult applies execute damage as an additional instance of damage (this is due to explosions not supporting post-hit pre-damage modifications)
-* **[Item]** Shuriken is triggered very sparsely, rather than on every primary attack. Likely due to custom ammo system?
-* (Unknown, happened once) Skin gets set to default randomly, but SFX stays intact, meaning skin index does not change
-
-## To Do
-* Better Movespeed Buff Icon
-* Custom Indicator for Dancing Grenade
-* Make Ult Execute group with base damage
-* Ult rocket jumping?
-* Hopoo-eqsue/RoR2-friendly skin
-* Achievments + Unlockable criteria (other abilties, skins, etc)
-
-[^skinSFX]:
-    There is also the option to override which set of SFX to use in the config. This does not require a restart.
+[^skinDynamics]:
+    There is also config options to override which set of SFX or VFX to use in the config. This does not require a restart.
 [^itemDisplay]:
     Some items with minimal or lackluster visuals, such as Leeching Seed, are simply hidden. I simply could not find extra space to place certain items without non-sensically placing them around the cloak.
 [^altAbility]:
@@ -202,4 +180,4 @@ Curtain Call is a primary skill override, like that of Railgunner's scope. For 1
 [^armorFootnote]:
     Jhin does not have any armor at the moment, but I may add some later, should his lack of mobility be too punishing. All stats can be modified via Config, but require a restart to take effect
 [^darkcosmic]:
-    As far as I know, skins in RoR2 do not support custom animation overrides, so unfortunately Dark Cosmic Jhin with its unique animations is not possible without a duplicate survivor. It may be possible to create a custom version that uses the default animations, but it may not look very appealing and as such will not be entertained until there is nothing else to do
+    As far as I know, skins in RoR2 do not support custom animation overrides, so unfortunately Dark Cosmic Jhin is not possible without a duplicate survivor, due to it's unique animation set. It may be possible to create a custom version that uses the default animations, but it may not look very appealing and as such will not be entertained until there is nothing else to do

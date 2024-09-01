@@ -26,10 +26,10 @@ namespace JhinMod.SkillStates.Henry
             swingSoundString = "JhinSwordSwing";
             hitSoundString = "";
             muzzleString = swingIndex % 2 == 0 ? "SwingLeft" : "SwingRight";
-            swingEffectPrefab = Modules.Assets.swordSwingEffect;
-            hitEffectPrefab = Modules.Assets.swordHitImpactEffect;
+            swingEffectPrefab = Modules.Asset.swordSwingEffect;
+            hitEffectPrefab = Modules.Asset.swordHitImpactEffect;
 
-            impactSound = Modules.Assets.swordHitSoundEvent.index;
+            impactSound = Modules.Asset.swordHitSoundEvent.index;
 
             base.OnEnter();
         }

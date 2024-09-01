@@ -42,7 +42,7 @@ namespace JhinMod
     {
         public const string MODUID = "com.seroronin.JhinMod";
         public const string MODNAME = "JhinMod";
-        public const string MODVERSION = "1.2.2";
+        public const string MODVERSION = "1.3.0";
 
         public const string DEVELOPER_PREFIX = "SERORONIN";
 
@@ -56,7 +56,7 @@ namespace JhinMod
             instance = this;
 
             Log.Init(Logger);
-            Modules.Assets.Initialize(); // load assets and read config
+            Modules.Asset.Initialize(); // load assets and read config
             Modules.Config.ReadConfig();
 
             if (BepInEx.Bootstrap.Chainloader.PluginInfos.ContainsKey("com.rune580.riskofoptions"))
@@ -361,7 +361,7 @@ namespace JhinMod
                     ammoUI = hud.mainUIPanel.GetComponentInChildren<JhinAmmoUI>();
                     if (!ammoUI)
                     {
-                        var ammoUIinstance = Instantiate(Modules.Assets.mainAssetBundle.LoadAsset<GameObject>("JhinAmmoUI"));
+                        var ammoUIinstance = Instantiate(Modules.Asset.mainAssetBundle.LoadAsset<GameObject>("JhinAmmoUI"));
                         ammoUI = ammoUIinstance.AddComponent<JhinAmmoUI>();
                         ammoUIinstance.transform.SetParent(hud.mainUIPanel.transform);
 
@@ -392,17 +392,20 @@ namespace JhinMod
             {
                 var ammoComponent = obj.targetBodyObject.GetComponent<JhinStateController>();
                 var skillLocator = obj.targetBodyObject.GetComponent<SkillLocator>();
+                var ultActiveStateMachine = Helpers.GetEntityStateMachine(obj.targetBodyObject, "WeaponMode");
                 if (ammoComponent)
                 {
                     ammoUI.gameObject.SetActive(true);
                     ammoUI.ammoComponent = ammoComponent;
                     ammoUI.skillLocator = skillLocator;
+                    ammoUI.ultActiveStateMachine = ultActiveStateMachine;
                 }
                 else
                 {
                     ammoUI.gameObject.SetActive(false);
                     ammoUI.ammoComponent = null;
                     ammoUI.skillLocator = null;
+                    ammoUI.ultActiveStateMachine = null;
                 }
             }
         }

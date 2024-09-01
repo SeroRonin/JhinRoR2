@@ -40,10 +40,6 @@ namespace JhinMod.SkillStates
 
         public override void OnExit()
         {
-            jhinStateController.isUlting = false;
-
-            Helpers.StopSoundDynamic("UltMusic", base.gameObject);
-
             base.OnExit();
         }
 
@@ -52,9 +48,9 @@ namespace JhinMod.SkillStates
             base.FixedUpdate();
             if (base.isAuthority && ( !jhinStateController.isUlting || this.fixedAge > this.duration ))
             {
-                this.ultStateMachine.SetNextStateToMain();
-                this.outer.SetNextStateToMain();
-                jhinStateController.ResetUlt();
+                //this.ultStateMachine.SetNextStateToMain();
+                //this.outer.SetNextStateToMain();
+                //jhinStateController.ResetUlt();
             }
         }
 

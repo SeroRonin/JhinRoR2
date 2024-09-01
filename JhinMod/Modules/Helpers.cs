@@ -6,6 +6,7 @@ using RoR2;
 using System.Linq;
 using R2API.Utils;
 using BepInEx;
+using BepInEx.Configuration;
 
 namespace JhinMod.Modules
 {
@@ -76,6 +77,7 @@ namespace JhinMod.Modules
             }
             return comp as T;
         }
+
         public static T AddComponent<T>(this GameObject go, T toAdd) where T : Component
         {
             return go.AddComponent<T>().GetCopyOf(toAdd) as T;
@@ -101,17 +103,19 @@ namespace JhinMod.Modules
 
             return (float)((a * squared) + c);
         }
+
         public static void PlaySoundDynamic(string soundID, GameObject player, GameObject parent = null)
         {
             if ( parent == null) parent = player;
             int skinIndex = (int)player.GetComponent<CharacterBody>().skinIndex;
-            Util.PlaySound($"Play_Seroronin_{GetSkinName(skinIndex)}_{soundID}", parent);
+            Util.PlaySound($"Play_Seroronin_{GetSkinNameSFX(skinIndex)}_{soundID}", parent);
         }
+
         public static void StopSoundDynamic(string soundID, GameObject player, GameObject parent = null)
         {
             if (parent == null) parent = player;
             int skinIndex = (int)player.GetComponent<CharacterBody>().skinIndex;
-            Util.PlaySound($"Stop_Seroronin_{GetSkinName(skinIndex)}_{soundID}", parent);
+            Util.PlaySound($"Stop_Seroronin_{GetSkinNameSFX(skinIndex)}_{soundID}", parent);
         }
 
         /// <summary>
@@ -134,17 +138,18 @@ namespace JhinMod.Modules
             }
 
             int skinIndex = (int)player.GetComponent<CharacterBody>().skinIndex;
-            string skinName = GetSkinName(skinIndex);
+            string skinName = GetSkinNameVFX(skinIndex);
 
             //Search table for matching key, otherwise use default skin
-            if (Assets.vfxPrefabs.ContainsKey( $"{skinName}_{vfxString}" ))
+            if (Asset.vfxPrefabs.ContainsKey( $"{skinName}_{vfxString}" ))
             {
-                effectPrefab = Assets.vfxPrefabs[$"{skinName}_{vfxString}"];
+                effectPrefab = Asset.vfxPrefabs[$"{skinName}_{vfxString}"];
             }
-            else if ( Assets.vfxPrefabs.ContainsKey($"Jhin_{vfxString}" ) ) //Redunant ContainsKey check, but neccessary to prevent NREs stopping future code
+            else if ( Asset.vfxPrefabs.ContainsKey($"Jhin_{vfxString}" ) ) //Redunant ContainsKey check, but neccessary to prevent NREs stopping future code
             {
-                effectPrefab = Assets.vfxPrefabs[$"Jhin_{vfxString}"];
+                effectPrefab = Asset.vfxPrefabs[$"Jhin_{vfxString}"];
             }
+
             if (effectPrefab == null)
             {
                 return;
@@ -188,16 +193,16 @@ namespace JhinMod.Modules
             GameObject effectPrefab = null;
 
             int skinIndex = (int)player.GetComponent<CharacterBody>().skinIndex;
-            string skinName = GetSkinName(skinIndex);
+            string skinName = GetSkinNameVFX(skinIndex);
 
             //Search table for matching key, otherwise use default skin
-            if (Assets.vfxPrefabs.ContainsKey($"{skinName}_{vfxString}"))
+            if (Asset.vfxPrefabs.ContainsKey($"{skinName}_{vfxString}"))
             {
-                effectPrefab = Assets.vfxPrefabs[$"{skinName}_{vfxString}"];
+                effectPrefab = Asset.vfxPrefabs[$"{skinName}_{vfxString}"];
             }
-            else if (Assets.vfxPrefabs.ContainsKey($"Jhin_{vfxString}")) //Redunant ContainsKey check, but neccessary to prevent NREs stopping future code
+            else if (Asset.vfxPrefabs.ContainsKey($"Jhin_{vfxString}")) //Redunant ContainsKey check, but neccessary to prevent NREs stopping future code
             {
-                effectPrefab = Assets.vfxPrefabs[$"Jhin_{vfxString}"];
+                effectPrefab = Asset.vfxPrefabs[$"Jhin_{vfxString}"];
             }
             
             return effectPrefab;
@@ -210,15 +215,36 @@ namespace JhinMod.Modules
 
             //returns skin String based on Enum found in Modules.Config
             //if we don't get a match, just use the base name
+            //unimplemented ones are commented out because SFX cannot determine whether or not it exists in the soundbank
+            //we simply ignore them
+            //VFX doesn't care because it CAN check if they exist before calling them
+            switch (index) 
+            {
+                case 1: return "HighNoonJhin";
+                case 2: return "BloodMoonJhin";
+                //case 3: return "SKTT1Jhin";
+                case 4: return "ProjectJhin";
+                //case 5: return "ShanHaiJhin";
+                //case 6: return "DWGJhin";
+                //case 7: return "EmpyreanJhin";
+                default: return "Jhin";
+            }
+        }
 
-            if (index == 1) return "HighNoonJhin";
-            if (index == 2) return "BloodMoonJhin";
-            //if (index == 3) return "SKTT1Jhin";
-            if (index == 4) return "ProjectJhin";
-            //if (index == 5) return "ShanHaiJhin";
-            //if (index == 6) return "DWGJhin";
-            //if (index == 7) return "EmpyreanJhin";
-            return "Jhin";
+        public static string GetSkinNameSFX(int skinIndex)
+        {
+            var index = skinIndex;
+            if (Config.sfxChoice.Value != Config.SFXChoice.SkinDependent) index = (int)Config.sfxChoice.Value;
+
+            return GetSkinName(index);
+        }
+
+        public static string GetSkinNameVFX( int skinIndex)
+        {
+            var index = skinIndex;
+            if (Config.vfxChoice.Value != Config.VFXChoice.SkinDependent) index = (int)Config.vfxChoice.Value;
+
+            return GetSkinName(index);
         }
     }
 }

@@ -57,6 +57,7 @@ namespace JhinMod.Modules
         public static ConfigEntry<float> specialExecutePercentage;
 
         public static ConfigEntry<SFXChoice> sfxChoice;
+        public static ConfigEntry<VFXChoice> vfxChoice;
 
         //Unused atm, may use Lemonlust-based emote and VO code
         public static ConfigEntry<KeyCode> tauntKeybind;
@@ -197,9 +198,13 @@ namespace JhinMod.Modules
 
             //Other
             sfxChoice = JhinPlugin.instance.Config.Bind<SFXChoice>(
-                new ConfigDefinition("Audio", "SFX Choice"),
+                new ConfigDefinition("Skins", "SFX Choice"),
                 SFXChoice.SkinDependent,
-                new ConfigDescription(CreateOptionDesc("If set, forces the mod to use SFX from a specific skin. Otherwise uses SFX from the player's respestive skin" + Environment.NewLine + Environment.NewLine + "Currently not implemented (use base SFX): SKTT1, ShanHai, DWG, Empyrean", SFXChoice.SkinDependent)));
+                new ConfigDescription(CreateOptionDesc("If set, forces the mod to use SFX from a specific skin. Otherwise uses SFX from the player's respective skin, or base if none are available" + Environment.NewLine + Environment.NewLine + "Currently implemented: High Noon, Bloodmoon, Project", SFXChoice.SkinDependent)));
+            vfxChoice = JhinPlugin.instance.Config.Bind<VFXChoice>(
+                new ConfigDefinition("Skins", "VFX Choice"),
+                VFXChoice.SkinDependent,
+                new ConfigDescription(CreateOptionDesc("If set, forces the mod to use VFX from a specific skin. Otherwise uses VFX from the player's respective skin, or base if none are available" + Environment.NewLine + Environment.NewLine + "Currently implemented: Project (partial)", (float)VFXChoice.SkinDependent)));
 
             //Not Implemented
             /*
@@ -249,7 +254,7 @@ namespace JhinMod.Modules
         internal static void CreateRiskofOptionsCompat()
         {
             ModSettingsManager.SetModDescription("Jhin Survivor Mod Configuration.");
-            ModSettingsManager.SetModIcon(Assets.mainAssetBundle.LoadAsset<Sprite>("texJhinIcon"));
+            ModSettingsManager.SetModIcon(Asset.mainAssetBundle.LoadAsset<Sprite>("texJhinIcon"));
 
             CreateOptionEntry(healthBase, restartRequired: true);
             CreateOptionEntry(healthGrowth, restartRequired: true);
@@ -351,6 +356,18 @@ namespace JhinMod.Modules
             return JhinPlugin.instance.Config.Bind<bool>(new ConfigDefinition(characterName, "Enabled"), true, new ConfigDescription("Set to false to disable this enemy"));
         }
         public enum SFXChoice
+        {
+            Base,
+            HighNoon,
+            BloodMoon,
+            SKTT1,
+            Project,
+            ShanHai,
+            DWG,
+            Empyrean,
+            SkinDependent
+        }
+        public enum VFXChoice
         {
             Base,
             HighNoon,

@@ -33,6 +33,7 @@ namespace JhinMod.Modules
             Modules.Content.AddEntityState(typeof(CurtainCall));
             Modules.Content.AddEntityState(typeof(CurtainCallShoot));
             Modules.Content.AddEntityState(typeof(CurtainCallShootCrit));
+            Modules.Content.AddEntityState(typeof(CurtainCallCancel));
 
             Modules.Content.AddEntityState(typeof(JhinWeaponMainState));
             Modules.Content.AddEntityState(typeof(JhinWeaponPassiveCritReadyState));

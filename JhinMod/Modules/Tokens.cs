@@ -68,7 +68,8 @@ namespace JhinMod.Modules
             #region Special
             LanguageAPI.Add(prefix + "SPECIAL_ULT_NAME", "Curtain Call");
             LanguageAPI.Add(prefix + "SPECIAL_ULT_DESCRIPTION", Helpers.executingPrefix + $"Instantly <style=cIsUtility>reload</style> and empower your primary skill. For the next <style=cIsUtility>10 seconds</style>, using your primary skill fires <style=cIsDamage>explosive</style> rounds for <style=cIsDamage>{100f * Config.specialDamageCoefficient.Value}% damage</style>. This lasts for up to <style=cIsDamage>4</style> shots. <style=cDeath>The fourth shot critically strikes</style>.");
-
+            
+            LanguageAPI.Add(prefix + "SPECIAL_ULT_CANCEL_DESCRIPTION", Helpers.executingPrefix + $"End Curtain Call early.");
             LanguageAPI.Add(prefix + "SPECIAL_ULT_SHOT_DESCRIPTION", Helpers.executingPrefix + $"Fire an <style=cIsDamage>explosive</style> round for <style=cIsDamage>{100f * Config.specialDamageCoefficient.Value}% damage</style>.");
             LanguageAPI.Add(prefix + "SPECIAL_ULT_SHOT_CRIT_DESCRIPTION", Helpers.executingPrefix + $"Fire an <style=cIsDamage>explosive</style> round for <style=cIsDamage>{100f * Config.specialDamageCoefficient.Value}% damage</style>. <style=cDeath>This shot critically strikes</style>.");
 

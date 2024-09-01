@@ -10,10 +10,11 @@ using System;
 using IL.RoR2.Orbs;
 using RoR2.Orbs;
 using JhinMod.Content.Components;
+using static RoR2.VFXAttributes;
 
 namespace JhinMod.Modules
 {
-    internal static class Assets
+    internal static class Asset
     {
         #region Henry's Stuff
         // particle effects
@@ -146,38 +147,38 @@ namespace JhinMod.Modules
             }
 
             //Base
-            baseDeadlyFlourishBeamEffect = Assets.LoadEffect("Jhin_Base_DeadlyFlourishBeam", false);
+            baseDeadlyFlourishBeamEffect = Asset.LoadEffect("Jhin_Base_DeadlyFlourishBeam", false);
             vfxPrefabs.Add("Jhin_DeadlyFlourishBeam", baseDeadlyFlourishBeamEffect);
-            baseDeadlyFlourishMuzzleEffect = Assets.LoadEffect("Jhin_Base_DeadlyFlourishMuzzleFX", false);
+            baseDeadlyFlourishMuzzleEffect = Asset.LoadEffect("Jhin_Base_DeadlyFlourishMuzzleFX", false);
             vfxPrefabs.Add("Jhin_DeadlyFlourishMuzzle", baseDeadlyFlourishMuzzleEffect);
-            baseDancingGrenadeEffect = Assets.CreateDancingGrenadeEffect("JhinGrenadeGhost");
+            baseDancingGrenadeEffect = Asset.CreateDancingGrenadeEffect("JhinGrenadeGhost");
             vfxPrefabs.Add("Jhin_Grenade", baseDancingGrenadeEffect);
 
             //REPLACE, using commando muzzlefalsh
             vfxPrefabs.Add("Jhin_MuzzleFlash", EntityStates.Commando.CommandoWeapon.FirePistol2.muzzleEffectPrefab);
             
             //Project
-            projectMuzzleflashEffect = Assets.LoadEffect("Jhin_Project_Muzzleflash", false);
+            projectMuzzleflashEffect = Asset.LoadEffect("Jhin_Project_Muzzleflash", false);
             vfxPrefabs.Add("ProjectJhin_MuzzleFlash", projectMuzzleflashEffect);
-            projectMuzzleflashFourthEffect = Assets.LoadEffect("Jhin_Project_MuzzleflashFourth", false);
+            projectMuzzleflashFourthEffect = Asset.LoadEffect("Jhin_Project_MuzzleflashFourth", false);
             vfxPrefabs.Add("ProjectJhin_MuzzleFlashFourth", projectMuzzleflashFourthEffect);
 
-            projectTracerEffect = Assets.CreateTracerEffect("Jhin_Project_Tracer");
+            projectTracerEffect = Asset.CreateTracerEffect("Jhin_Project_Tracer");
             vfxPrefabs.Add("ProjectJhin_Tracer", projectTracerEffect);
-            projectTracerFourthEffect = Assets.CreateTracerEffect("Jhin_Project_TracerFourth");
+            projectTracerFourthEffect = Asset.CreateTracerEffect("Jhin_Project_TracerFourth");
             vfxPrefabs.Add("ProjectJhin_TracerFourth", projectTracerFourthEffect);
 
-            projectDeadlyFlourishMuzzleEffect = Assets.LoadEffect("Jhin_Project_DeadlyFlourish_MuzzleFX");
+            projectDeadlyFlourishMuzzleEffect = Asset.LoadEffect("Jhin_Project_DeadlyFlourish_MuzzleFX");
             vfxPrefabs.Add("ProjectJhin_DeadlyFlourishMuzzle", projectDeadlyFlourishMuzzleEffect);
 
-            projectGrenadeImpact = Assets.LoadEffect("Jhin_Project_GrenadeImpact");
+            projectGrenadeImpact = Asset.LoadEffect("Jhin_Project_GrenadeImpact");
             vfxPrefabs.Add("ProjectJhin_GrenadeImpact", projectGrenadeImpact); 
-            projectGrenadeImpactKill = Assets.LoadEffect("Jhin_Project_GrenadeImpactKill");
+            projectGrenadeImpactKill = Asset.LoadEffect("Jhin_Project_GrenadeImpactKill");
             vfxPrefabs.Add("ProjectJhin_GrenadeImpactKill", projectGrenadeImpactKill);
 
             //Henry Leftover
-            swordSwingEffect = Assets.LoadEffect("JhinSwordSwingEffect", true);
-            swordHitImpactEffect = Assets.LoadEffect("ImpactJhinSlash");
+            swordSwingEffect = Asset.LoadEffect("JhinSwordSwingEffect", true);
+            swordHitImpactEffect = Asset.LoadEffect("ImpactJhinSlash");
         }
 
         private static GameObject CreateDancingGrenadeEffect(string resourceName)
@@ -193,7 +194,9 @@ namespace JhinMod.Modules
             string path = "Prefabs/Effects/OrbEffects/HuntressGlaiveOrbEffect";
             GameObject huntressEffect = LegacyResourcesAPI.Load<GameObject>(path).InstantiateClone("DancingGrenadeEffect");
 
-            newEffect.AddComponent<VFXAttributes>().vfxPriority = VFXAttributes.VFXPriority.Always;
+            VFXAttributes newEffectVFX = newEffect.AddComponent<VFXAttributes>();
+            newEffectVFX.vfxPriority = VFXAttributes.VFXPriority.Always;
+            newEffectVFX.DoNotPool = true;
             newEffect.AddComponent<BounceVisualizer>();
             newEffect.AddComponent<EffectComponent>(huntressEffect.GetComponent<EffectComponent>());
             newEffect.AddComponent<RoR2.Orbs.OrbEffect>(huntressEffect.GetComponent<RoR2.Orbs.OrbEffect>());

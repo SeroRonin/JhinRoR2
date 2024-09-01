@@ -1,23 +1,38 @@
 # Delete your config files!
 Every time there is an update to configurable numbers, you need to delete your config files so that the game can generate a new one with the right default values and sliders. If there are no new config changes, you do not need to worry about this.
 
+## 1.3.0
+Updates the mod to work with Seekers of the Storm, as well as small changes and some WiP VFX for the Project skin. 
+Because of the nature of SotS's bug severity, please let me know if there are any new bugs I missed.
+CONFIG CHANGE: Delete your config to get new options and updated values!
+
+#### *General*
+* **[Bugfix]** Fixed issues caused by SotS that made the mod not work properly
+* **[Addition]** Implementation of skin-based VFX systems, with some VFX for the Project skin
+> This does NOT fix any issues caused by the FPS-related issues from SotS. I do not see a need to make workaround changes when this bug should be fixed by Gearbox themselves soon.
+> VFX has an override option like the SFX, allowing you to use any available VFX set on any skin if you would like
+ 
+#### *Curtain Call*
+* **[QoL]** Added the ability to cancel Curtain Call by using the skill again
+* **[Nerf]** Reduced explosion radius by about half
+> The ult was way too good at clearing enemies, this change intends to reduce its effectiveness at doing so
+
 ## 1.2.2
 
-This update includes some wording fixes and some fixes targeted towards the ult, which accidentally had inverted scaling making it LESS strong as the target lost health
+This update includes some wording fixes and some fixes targeted towards the special, which accidentally had inverted scaling making it LESS strong as the target lost health. I had accidentally forget to invert a fraction calculation, so the special was doing max damage on the first shot and less as enemy lost health, which is the opposite of the intended effect. That should be fixed with this update.
+
+Additionally, I added a new component to the missile that checks between the last known position and the current one for any enemies inbetween. This should fix edge-cases where the missile would pass enemies, most notably golems. This is a rather experimental component so please let me know if it has any unintended effects or bugs.
 
 #### *Curtain Call*
 * **[Bugfix]** Fixed Curtain Call's execute scaling
 * **[Bugfix]** Changed Curtain Call's execute description from `300% per 1% of target's missing health` to `up to 300% based on the target's missing health` (damage unchanged, I just typed it incorrectly, the actual ratio is 3:1)
 * **[QoL]** Added new code that should fix the projectile skipping over enemies
 
-I had accidentally forget to invert a fraction calculation, so the ult was doing max damage on the first shot and less as enemy lost health, which is the opposite of the intended effect. That should be fixed with this update.
-
-Additionally, I added a new component to the missile that checks between the last known position and the current one for any enemies inbetween. This should fix edge-cases where the missile would pass enemies, most notably golems. This is a rather experimental component so please let me know if it has any unintended effects or bugs.
 
 ## 1.2.1
 
 #### *General*
-* **[Incompatibilty]** Syngergies mod causes Ult to rapidly explode after impact
+* **[Incompatibilty]** Syngergies mod causes Special to rapidly explode after impact
 
 #### *Deadly Flourish*
 * **[Bugfix]** Fixed marks not re-applying to targets that have been rooted

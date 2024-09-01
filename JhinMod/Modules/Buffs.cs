@@ -35,7 +35,7 @@ namespace JhinMod.Modules
                 false);
 
             jhinMarkDebuff = AddNewBuff("Marked",
-                Modules.Assets.mainAssetBundle.LoadAsset<Sprite>("texBuffPassiveIcon"),
+                Modules.Asset.mainAssetBundle.LoadAsset<Sprite>("texBuffPassiveIcon"),
                 new Color(1f, 0f, 0.44f),
                 false,
                 true);

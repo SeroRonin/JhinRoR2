@@ -8,6 +8,8 @@ using UnityEngine.UI;
 using R2API.Utils;
 using RoR2;
 using JhinMod.SkillStates;
+using JhinMod.Modules;
+using JhinMod.SkillStates.BaseStates;
 
 namespace JhinMod.Content.UI
 {
@@ -25,6 +27,7 @@ namespace JhinMod.Content.UI
         private Color critBGColor = new Color(0.5f, 0f, 0.2f);
 
         public  JhinStateController ammoComponent { get; set; }
+        public EntityStateMachine ultActiveStateMachine { get; set; }
         public SkillLocator skillLocator { get; set; }
 
         public void Update()
@@ -40,6 +43,7 @@ namespace JhinMod.Content.UI
             Shot2 = this.gameObject.GetComponentInChildren<Transform>().Find("shot2").GetComponent<Image>();
             Shot3 = this.gameObject.GetComponentInChildren<Transform>().Find("shot3").GetComponent<Image>();
             Shot4 = this.gameObject.GetComponentInChildren<Transform>().Find("shot4").GetComponent<Image>();
+            
         }
 
         private void Start()
@@ -106,12 +110,13 @@ namespace JhinMod.Content.UI
                 //Display remaining ult time
                 if ( ammoComponent.isUlting )
                 {
-                    var ultSkill = skillLocator.special.stateMachine.state as CurtainCall;
+                    var ultSkill = ultActiveStateMachine.state as JhinWeaponUltActiveState;
                     if (ultSkill != null)
                     {
                         Circle.fillAmount = (ultSkill.duration - ultSkill.fixedAge) / ultSkill.duration;
                     }
                 }
+
                 //Display remaining auto-reload time
                 else if ( ammoComponent.CanStartReload() )
                 {
@@ -124,6 +129,7 @@ namespace JhinMod.Content.UI
                         Circle.fillAmount = 0f;
                     }
                 }
+
                 //Display reload duration
                 else if ( ammoComponent.startedReload )
                 {
