@@ -54,8 +54,7 @@ namespace JhinMod.Modules
             Modules.Content.AddEffectDef(new EffectDef(explosionEffect));
             //EntityStates.RocketSurvivorSkills.Primary.FireRocket.explosionEffectPrefab = explosionEffect;
 
-            custompie.blastDamageCoefficient = 1f;
-            custompie.blastRadius = 8f;
+            custompie.blastDamageCoefficient = 1f; 
             custompie.destroyOnEnemy = true;
             custompie.destroyOnWorld = true;
             custompie.lifetime = 12f;

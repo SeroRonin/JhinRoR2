@@ -437,6 +437,27 @@ namespace JhinMod.Modules.Survivors
 
             #endregion
 
+            #region Soul Fighter
+
+            //Create SkinDef
+            SkinDef soulfighterSkin = Modules.Skins.CreateSkinDef(JHIN_PREFIX + "SOULFIGHTER_SKIN_NAME",
+                Asset.mainAssetBundle.LoadAsset<Sprite>("texSoulFighterSkinIcon"),
+                defaultRendererinfos,
+                prefabCharacterModel.gameObject);
+
+            //Replace mesh
+            soulfighterSkin.meshReplacements = Modules.Skins.getMeshReplacements(defaultRendererinfos,
+                "jhinMeshSoulFighter",
+                "jhinMeshSoulFighter_weapon");
+
+            //Replace material
+            soulfighterSkin.rendererInfos[0].defaultMaterial = Modules.Materials.CreateHopooMaterial("matJhinSoulFighter");
+            soulfighterSkin.rendererInfos[1].defaultMaterial = Modules.Materials.CreateHopooMaterial("matJhinSoulFighter");
+
+            skins.Add(soulfighterSkin);
+
+            #endregion
+
             //uncomment this when you have a mastery skin
             #region MasterySkin
             /*

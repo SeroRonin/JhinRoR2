@@ -1,6 +1,16 @@
 # Delete your config files!
 Every time there is an update to configurable numbers, you need to delete your config files so that the game can generate a new one with the right default values and sliders. If there are no new config changes, you do not need to worry about this.
 
+## 1.4.0 WiP
+This update adds in the Soul Fighter skin, as well as fixes a missing config option
+Currently WiP, so those who check the github :)
+CONFIG CHANGE: Delete your config to get new options and updated values!
+
+#### *General*
+* **[Addition]** Added the Soul Fighter skin
+* **[Bugfix]** Fixed missing VFX config option
+* **[Adjustment]** Renamed SFX/VFX Choice to SFX/VFX Override, and renamed "SkinDependant" option to "Dynamic"
+
 ## 1.3.0
 Updates the mod to work with Seekers of the Storm, as well as small changes and some WiP VFX for the Project skin. 
 Because of the nature of SotS's bug severity, please let me know if there are any new bugs I missed.

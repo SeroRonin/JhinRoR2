@@ -108,7 +108,11 @@ namespace JhinMod.Modules
         {
             if ( parent == null) parent = player;
             int skinIndex = (int)player.GetComponent<CharacterBody>().skinIndex;
-            Util.PlaySound($"Play_Seroronin_{GetSkinNameSFX(skinIndex)}_{soundID}", parent);
+            var soundUID = Util.PlaySound($"Play_Seroronin_{GetSkinNameSFX(skinIndex)}_{soundID}", parent);
+            if ( soundUID == AkSoundEngine.AK_INVALID_PLAYING_ID )
+            {
+                Util.PlaySound($"Play_Seroronin_{GetSkinNameSFX(0)}_{soundID}", parent);
+            }
         }
 
         public static void StopSoundDynamic(string soundID, GameObject player, GameObject parent = null)
@@ -211,7 +215,10 @@ namespace JhinMod.Modules
         public static string GetSkinName(int skinIndex)
         {
             var index = skinIndex;
-            if (Config.sfxChoice.Value != Config.SFXChoice.SkinDependent) index = (int)Config.sfxChoice.Value;
+
+            //var skinName = ((Config.SkinOptions)index).ToString("f");
+            //if (string.IsNullOrEmpty(skinName)) return "Jhin";
+            //else return skinName;
 
             //returns skin String based on Enum found in Modules.Config
             //if we don't get a match, just use the base name
@@ -220,13 +227,15 @@ namespace JhinMod.Modules
             //VFX doesn't care because it CAN check if they exist before calling them
             switch (index) 
             {
+                case 0: return "Jhin";
                 case 1: return "HighNoonJhin";
                 case 2: return "BloodMoonJhin";
-                //case 3: return "SKTT1Jhin";
+                case 3: return "SKTT1Jhin";
                 case 4: return "ProjectJhin";
-                //case 5: return "ShanHaiJhin";
-                //case 6: return "DWGJhin";
-                //case 7: return "EmpyreanJhin";
+                case 5: return "ShanHaiJhin";
+                case 6: return "DWGJhin";
+                case 7: return "EmpyreanJhin";
+                case 8: return "SoulFighterJhin";
                 default: return "Jhin";
             }
         }
@@ -234,7 +243,7 @@ namespace JhinMod.Modules
         public static string GetSkinNameSFX(int skinIndex)
         {
             var index = skinIndex;
-            if (Config.sfxChoice.Value != Config.SFXChoice.SkinDependent) index = (int)Config.sfxChoice.Value;
+            if (Config.sfxOverride.Value != Config.SkinOptions.Dynamic) index = (int)Config.sfxOverride.Value;
 
             return GetSkinName(index);
         }
@@ -242,7 +251,7 @@ namespace JhinMod.Modules
         public static string GetSkinNameVFX( int skinIndex)
         {
             var index = skinIndex;
-            if (Config.vfxChoice.Value != Config.VFXChoice.SkinDependent) index = (int)Config.vfxChoice.Value;
+            if (Config.vfxOverride.Value != Config.SkinOptions.Dynamic) index = (int)Config.vfxOverride.Value;
 
             return GetSkinName(index);
         }

@@ -56,8 +56,8 @@ namespace JhinMod.Modules
         public static ConfigEntry<float> specialDamageCoefficient;
         public static ConfigEntry<float> specialExecutePercentage;
 
-        public static ConfigEntry<SFXChoice> sfxChoice;
-        public static ConfigEntry<VFXChoice> vfxChoice;
+        public static ConfigEntry<SkinOptions> sfxOverride;
+        public static ConfigEntry<SkinOptions> vfxOverride;
 
         //Unused atm, may use Lemonlust-based emote and VO code
         public static ConfigEntry<KeyCode> tauntKeybind;
@@ -197,14 +197,14 @@ namespace JhinMod.Modules
             #endregion
 
             //Other
-            sfxChoice = JhinPlugin.instance.Config.Bind<SFXChoice>(
-                new ConfigDefinition("Skins", "SFX Choice"),
-                SFXChoice.SkinDependent,
-                new ConfigDescription(CreateOptionDesc("If set, forces the mod to use SFX from a specific skin. Otherwise uses SFX from the player's respective skin, or base if none are available" + Environment.NewLine + Environment.NewLine + "Currently implemented: High Noon, Bloodmoon, Project", SFXChoice.SkinDependent)));
-            vfxChoice = JhinPlugin.instance.Config.Bind<VFXChoice>(
-                new ConfigDefinition("Skins", "VFX Choice"),
-                VFXChoice.SkinDependent,
-                new ConfigDescription(CreateOptionDesc("If set, forces the mod to use VFX from a specific skin. Otherwise uses VFX from the player's respective skin, or base if none are available" + Environment.NewLine + Environment.NewLine + "Currently implemented: Project (partial)", (float)VFXChoice.SkinDependent)));
+            sfxOverride = JhinPlugin.instance.Config.Bind<SkinOptions>(
+                new ConfigDefinition("Skins", "SFX Override"),
+                SkinOptions.Dynamic,
+                new ConfigDescription(CreateOptionDesc("If set, forces the mod to use SFX from a specific skin. Otherwise uses SFX from the player's respective skin, or base if none are available" + Environment.NewLine + Environment.NewLine + "Currently implemented: High Noon, Bloodmoon, Project", SkinOptions.Dynamic)));
+            vfxOverride = JhinPlugin.instance.Config.Bind<SkinOptions>(
+                new ConfigDefinition("Skins", "VFX Override"),
+                SkinOptions.Dynamic,
+                new ConfigDescription(CreateOptionDesc("If set, forces the mod to use VFX from a specific skin. Otherwise uses VFX from the player's respective skin, or base if none are available" + Environment.NewLine + Environment.NewLine + "Currently implemented: Project (partial)", SkinOptions.Dynamic)));
 
             //Not Implemented
             /*
@@ -246,7 +246,7 @@ namespace JhinMod.Modules
         /// <param name="desc"></param>
         /// <param name="defaultVal"></param>
         /// <returns></returns>
-        internal static String CreateOptionDesc(string desc, SFXChoice defaultVal)
+        internal static String CreateOptionDesc(string desc, SkinOptions defaultVal)
         {
             return desc + Environment.NewLine + Environment.NewLine + $"Default: {defaultVal}";
         }
@@ -292,7 +292,8 @@ namespace JhinMod.Modules
             CreateOptionEntry(specialExecutePercentage, restartRequired: true);
 
 
-            CreateOptionEntry(sfxChoice);
+            CreateOptionEntry(sfxOverride);
+            CreateOptionEntry(vfxOverride);
         }
 
         /// <summary>
@@ -307,7 +308,7 @@ namespace JhinMod.Modules
             var maxOut = max;
             var incrementOut = increment;
 
-            if (configEntry.DefaultValue.GetType() == typeof(SFXChoice))
+            if (configEntry.DefaultValue.GetType() == typeof(SkinOptions))
             {
                 ModSettingsManager.AddOption(new ChoiceOption(configEntry, restartRequired));
                 return;
@@ -355,7 +356,8 @@ namespace JhinMod.Modules
         {
             return JhinPlugin.instance.Config.Bind<bool>(new ConfigDefinition(characterName, "Enabled"), true, new ConfigDescription("Set to false to disable this enemy"));
         }
-        public enum SFXChoice
+
+        public enum SkinOptions
         {
             Base,
             HighNoon,
@@ -365,19 +367,8 @@ namespace JhinMod.Modules
             ShanHai,
             DWG,
             Empyrean,
-            SkinDependent
-        }
-        public enum VFXChoice
-        {
-            Base,
-            HighNoon,
-            BloodMoon,
-            SKTT1,
-            Project,
-            ShanHai,
-            DWG,
-            Empyrean,
-            SkinDependent
+            SoulFighter,
+            Dynamic
         }
     }
 }

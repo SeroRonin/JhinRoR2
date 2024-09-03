@@ -41,6 +41,7 @@ namespace JhinMod.Modules
             LanguageAPI.Add(prefix + "SHANHAI_SKIN_NAME", "Shan Hai Scrolls Jhin");
             LanguageAPI.Add(prefix + "DWG_SKIN_NAME", "DWG Jhin");
             LanguageAPI.Add(prefix + "EMPYREAN_SKIN_NAME", "Empyrean Jhin");
+            LanguageAPI.Add(prefix + "SOULFIGHTER_SKIN_NAME", "Soul Fighter Jhin");
             LanguageAPI.Add(prefix + "MASTERY_SKIN_NAME", "Alternate");
             #endregion
 
