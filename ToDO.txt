@@ -11,8 +11,7 @@ Experiment: Alternate Abilty - Traps, trigger when enemy approaches, slows and m
 - Idea: Death explosions on elites
 - Idea: Traps can be shot to detonate immediately
 - Idea: Traps can be used to blast jump
-Refine Dynamic Bones for Custom Emotes
-Fix Custom Emote Icon
+Refine Dynamic Bones for Custom Emotes (cloak tails are jittery, wrong axis alignment?)
 Experiment: Dark Cosmic
 
 SFX:
