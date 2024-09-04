@@ -32,17 +32,24 @@ namespace JhinMod.Content
                     var skele = Modules.Asset.mainAssetBundle.LoadAsset<GameObject>("emoteJhin");
                     CustomEmotesAPI.ImportArmature(item.bodyPrefab, skele);
                     skele.GetComponentInChildren<BoneMapper>().scale = 1.1f;
+                    BoneMapper boneMapper = skele.GetComponentInChildren<BoneMapper>();
+                    boneMapper.scale = 1.1f;
                 }
             }
         }
 
         internal static void CustomEmotesAPI_animChanged(string newAnimation, BoneMapper mapper)
         {
+            var dynBones = mapper.transform.parent.GetComponentsInChildren<DynamicBone>();
             if (newAnimation != "none")
             {
                 if (mapper.transform.name == "emoteJhin")
                 {
                     mapper.transform.parent.Find("JhinMeshWeapon").gameObject.SetActive(false);
+                    foreach (var dynBone in dynBones)
+                    {
+                        dynBone.enabled = true;
+                    }
                 }
             }
             else
@@ -50,6 +57,10 @@ namespace JhinMod.Content
                 if (mapper.transform.name == "emoteJhin")
                 {
                     mapper.transform.parent.Find("JhinMeshWeapon").gameObject.SetActive(true);
+                    foreach (var dynBone in dynBones)
+                    {
+                        dynBone.enabled = false;
+                    }
                 }
             }
         }

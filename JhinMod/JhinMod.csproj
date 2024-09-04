@@ -16,7 +16,14 @@
     <None Remove="SoundBanks\JhinBank.bnk" />
 	<None Remove="SoundBanks\HighNoonJhinBank.bnk" />
 	<None Remove="SoundBanks\BloodMoonJhinBank.bnk" />
+	<None Remove="SoundBanks\SKTT1JhinBank.bnk" />
     <None Remove="SoundBanks\ProjectJhinBank.bnk" />
+    <None Remove="SoundBanks\ShanHaiJhinBank.bnk" />
+	<!--
+	<None Remove="SoundBanks\DWGJhinBank.bnk" />
+	<None Remove="SoundBanks\EmpyreanJhinBank.bnk" />
+	-->
+	<None Remove="SoundBanks\SoulFighterJhinBank.bnk" />
     <None Remove="Modules\Characters\Jhin.cs~RF6221a098.TMP" />
     <None Remove="jhinassetbundle" />
   </ItemGroup>
@@ -34,7 +41,14 @@
     <EmbeddedResource Include="SoundBanks\JhinBank.bnk" />
 	<EmbeddedResource Include="SoundBanks\HighNoonJhinBank.bnk" />
 	<EmbeddedResource Include="SoundBanks\BloodMoonJhinBank.bnk" />
+	<EmbeddedResource Include="SoundBanks\SKTT1JhinBank.bnk" />
     <EmbeddedResource Include="SoundBanks\ProjectJhinBank.bnk" />
+	<EmbeddedResource Include="SoundBanks\ShanHaiJhinBank.bnk" />
+	<!--
+	<EmbeddedResource Include="SoundBanks\DWGJhinBank.bnk" />
+	<EmbeddedResource Include="SoundBanks\EmpyreanJhinBank.bnk" />
+	-->
+	<EmbeddedResource Include="SoundBanks\SoulFighterJhinBank.bnk" />
     <EmbeddedResource Include="jhinassetbundle" />
   </ItemGroup>
 

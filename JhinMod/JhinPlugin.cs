@@ -123,6 +123,7 @@ namespace JhinMod
             if ( CustomEmotesActive )
             {
                 Content.CustomEmotesAPISupport.HookCustomEmoteAPI();
+                CustomEmotesAPI.CreateNameTokenSpritePair("SERORONIN_JHIN_BODY_NAME", Asset.mainAssetBundle.LoadAsset<Sprite>("texMainSkinIcon"));
             }
 
             //MP testings, disable when not testing on local machine

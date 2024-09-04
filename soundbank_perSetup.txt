@@ -1,0 +1,5 @@
+Fade ult music 1.5s, s-curve
+Fade passive music 1s
+Delay empty reload 0.8s
+Adjust volume -5% for single audio files
+Set sequence playlists (Q Hit, passive Crit music)

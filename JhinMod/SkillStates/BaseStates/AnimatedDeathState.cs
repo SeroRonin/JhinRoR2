@@ -24,7 +24,7 @@ namespace JhinMod.SkillStates.BaseStates
         {
             base.OnEnter();
 
-            Helpers.PlaySoundDynamic("DeathSFX", base.gameObject);
+            Helpers.PlaySound("DeathSFX", base.gameObject);
 
             Animator modelAnimator = base.GetModelAnimator();
             if (modelAnimator)

@@ -67,7 +67,7 @@ namespace JhinMod.SkillStates
 
             base.PlayAnimation("UpperBody, Override", "DancingGrenade");
 
-            Helpers.PlaySoundDynamic("QCast", base.gameObject);
+            Helpers.PlaySound("QCast", base.gameObject);
         }
 
         public override void OnExit()
@@ -129,7 +129,7 @@ namespace JhinMod.SkillStates
                 OrbManager.instance.AddOrb(dancingGrenade);
             }
 
-            Helpers.PlaySoundDynamic("QFire", base.gameObject);
+            Helpers.PlaySound("QFire", base.gameObject);
         }
 
         public override InterruptPriority GetMinimumInterruptPriority()

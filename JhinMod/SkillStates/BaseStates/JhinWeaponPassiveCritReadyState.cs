@@ -56,8 +56,8 @@ namespace JhinMod.SkillStates.BaseStates
                 keywordTokens = new string[] { "KEYWORD_AGILE", "KEYWORD_EXECUTING" }
             });
 
-            Helpers.PlaySoundDynamic("PassiveCritSpin", base.gameObject);
-            Helpers.PlaySoundDynamic("PassiveCritMusic", base.gameObject);
+            Helpers.PlaySound("PassiveCritSpin", base.gameObject);
+            Helpers.PlaySound("PassiveCritMusic", base.gameObject);
 
             if (animatorComponent)
             {
@@ -73,8 +73,8 @@ namespace JhinMod.SkillStates.BaseStates
         }
         public override void OnExit()
         {
-            Helpers.StopSoundDynamic("PassiveCritSpin", base.gameObject);
-            Helpers.StopSoundDynamic("PassiveCritMusic", base.gameObject);
+            Helpers.StopSound("PassiveCritSpin", base.gameObject);
+            Helpers.StopSound("PassiveCritMusic", base.gameObject);
 
             if (animatorComponent)
             {

@@ -119,19 +119,19 @@ Curtain Call is a primary skill override, like that of Railgunner's scope. For 1
 #
 
 ### Skins
-> Each skin may have its own unique SFX and VFX. Creating these assets for each is a painfully tedious process, and as such, only a few skins will have support. The others will only be added if I find the motivation to do so.
+> Each skin may have its own unique SFX and VFX. Creating these assets for each is a painfully tedious process, and as such, only some skins will have support. The others are currently WiP, though VFX is a more long term project on its own.
 
 | Skin              |Available           | Unique SFX         | Unique VFX	       |
 |:------------------|:------------------:|:------------------:|:------------------:|
 | High Noon  		| <img src="https://em-content.zobj.net/source/microsoft/74/heavy-check-mark_2714.png" width="15px" /> 	| <img src="https://em-content.zobj.net/source/microsoft/74/heavy-check-mark_2714.png" width="15px" /> 	| <img src="https://em-content.zobj.net/source/microsoft/74/cross-mark_274c.png" width="15px" /> |
 | Blood Moon 		| <img src="https://em-content.zobj.net/source/microsoft/74/heavy-check-mark_2714.png" width="15px" /> 	| <img src="https://em-content.zobj.net/source/microsoft/74/heavy-check-mark_2714.png" width="15px" /> 	| <img src="https://em-content.zobj.net/source/microsoft/74/cross-mark_274c.png" width="15px" /> |
-| SKT T1  	 		| <img src="https://em-content.zobj.net/source/microsoft/74/heavy-check-mark_2714.png" width="15px" /> 	| <img src="https://em-content.zobj.net/source/microsoft/74/cross-mark_274c.png" width="15px" /> 	  	| <img src="https://em-content.zobj.net/source/microsoft/74/cross-mark_274c.png" width="15px" /> |
+| SKT T1  	 		| <img src="https://em-content.zobj.net/source/microsoft/74/heavy-check-mark_2714.png" width="15px" /> 	| <img src="https://em-content.zobj.net/source/microsoft/74/heavy-check-mark_2714.png" width="15px" /> 	| <img src="https://em-content.zobj.net/source/microsoft/74/cross-mark_274c.png" width="15px" /> |
 | Project    		| <img src="https://em-content.zobj.net/source/microsoft/74/heavy-check-mark_2714.png" width="15px" /> 	| <img src="https://em-content.zobj.net/source/microsoft/74/heavy-check-mark_2714.png" width="15px" /> 	| <img src="https://em-content.zobj.net/source/microsoft/74/heavy-check-mark_2714.png" width="15px" /> |
 | Dark Cosmic		| <img src="https://em-content.zobj.net/source/microsoft/74/cross-mark_274c.png" width="15px" /> 	   	| <img src="https://em-content.zobj.net/source/microsoft/74/cross-mark_274c.png" width="15px" /> 		| <img src="https://em-content.zobj.net/source/microsoft/74/cross-mark_274c.png" width="15px" /> |
-| Shan Hai Scrolls 	| <img src="https://em-content.zobj.net/source/microsoft/74/heavy-check-mark_2714.png" width="15px" /> 	| <img src="https://em-content.zobj.net/source/microsoft/74/cross-mark_274c.png" width="15px" /> 		| <img src="https://em-content.zobj.net/source/microsoft/74/cross-mark_274c.png" width="15px" /> |
+| Shan Hai Scrolls 	| <img src="https://em-content.zobj.net/source/microsoft/74/heavy-check-mark_2714.png" width="15px" /> 	| <img src="https://em-content.zobj.net/source/microsoft/74/heavy-check-mark_2714.png" width="15px" /> 	| <img src="https://em-content.zobj.net/source/microsoft/74/cross-mark_274c.png" width="15px" /> |
 | DWG 				| <img src="https://em-content.zobj.net/source/microsoft/74/heavy-check-mark_2714.png" width="15px" /> 	| <img src="https://em-content.zobj.net/source/microsoft/74/cross-mark_274c.png" width="15px" /> 		| <img src="https://em-content.zobj.net/source/microsoft/74/cross-mark_274c.png" width="15px" /> |
 | Empyrean			| <img src="https://em-content.zobj.net/source/microsoft/74/heavy-check-mark_2714.png" width="15px" /> 	| <img src="https://em-content.zobj.net/source/microsoft/74/cross-mark_274c.png" width="15px" /> 		| <img src="https://em-content.zobj.net/source/microsoft/74/cross-mark_274c.png" width="15px" /> |
-| Soul Fighter		| <img src="https://em-content.zobj.net/source/microsoft/74/heavy-check-mark_2714.png" width="15px" />  | <img src="https://em-content.zobj.net/source/microsoft/74/cross-mark_274c.png" width="15px" /> 		| <img src="https://em-content.zobj.net/source/microsoft/74/cross-mark_274c.png" width="15px" /> |
+| Soul Fighter		| <img src="https://em-content.zobj.net/source/microsoft/74/heavy-check-mark_2714.png" width="15px" />  | <img src="https://em-content.zobj.net/source/microsoft/74/heavy-check-mark_2714.png" width="15px" />	| <img src="https://em-content.zobj.net/source/microsoft/74/cross-mark_274c.png" width="15px" /> |
 
 Dark Cosmic as a skin is not possible as far as I am aware, at least not with the setup I have right now. If I get curious, I may look into it.
 
@@ -144,7 +144,7 @@ Dark Cosmic as a skin is not possible as far as I am aware, at least not with th
 | Mod 			  | Compatibility | Notes |
 |:----------------|-------------- |--------------------|
 | Risk of Options | <img src="https://em-content.zobj.net/source/microsoft/74/heavy-check-mark_2714.png" width="15px" /> | |
-| CustomEmoteAPI  | <img src="https://em-content.zobj.net/source/microsoft/74/heavy-check-mark_2714.png" width="15px" /> | Emotes look a little janky on skins with cloaks. I might try adding dynamics bones in the future to lessen the severity. |
+| CustomEmoteAPI  | <img src="https://em-content.zobj.net/source/microsoft/74/heavy-check-mark_2714.png" width="15px" /> | |
 
 ## Known Issues
 > Bugs can be reported under Github Issues, or through my Discord: [https://discord.gg/RSs2kA7yRu](https://discord.gg/RSs2kA7yRu)

@@ -120,7 +120,7 @@ namespace JhinMod.SkillStates.BaseStates
             jhinStateController.isUlting = false;
             jhinStateController.ResetUlt();
 
-            Helpers.StopSoundDynamic("UltMusic", base.gameObject);
+            Helpers.StopSound("UltMusic", base.gameObject);
 
             if (animatorComponent)
             {

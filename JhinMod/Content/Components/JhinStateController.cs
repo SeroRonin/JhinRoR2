@@ -170,7 +170,7 @@ namespace JhinMod.Content.Components
 
         public void ResetReload( bool interrupt = false, float delay = 1f)
         {
-            Helpers.StopSoundDynamic("Reloads", base.gameObject);
+            Helpers.StopSound("Reloads", base.gameObject);
 
             this.startedReload = false;
             this.reloadGraceDelay = delay;

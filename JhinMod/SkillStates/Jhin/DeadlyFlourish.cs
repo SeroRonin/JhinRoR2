@@ -47,7 +47,7 @@ namespace JhinMod.SkillStates
                 base.characterDirection.moveVector = base.characterDirection.forward;
             }
 
-            Helpers.PlaySoundDynamic("WCast", base.gameObject);
+            Helpers.PlaySound("WCast", base.gameObject);
 
             base.PlayAnimation("FullBody, Override", "DeadlyFlourish");
         }

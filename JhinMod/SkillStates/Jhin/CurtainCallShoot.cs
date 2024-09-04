@@ -40,7 +40,7 @@ namespace JhinMod.SkillStates
             base.characterBody.SetAimTimer(2f);
             this.muzzleString = "Muzzle";
 
-            Helpers.PlaySoundDynamic("UltLoadShot", base.gameObject);
+            Helpers.PlaySound("UltLoadShot", base.gameObject);
             //Util.PlaySound("Play_Seroronin_Jhin_UltLoadShot", base.gameObject);
 
             base.PlayAnimation("UpperBody, Override", "CurtainCallAttack");
@@ -66,7 +66,7 @@ namespace JhinMod.SkillStates
 
                 base.characterBody.AddSpreadBloom(1.5f);
                 EffectManager.SimpleMuzzleFlash(EntityStates.Commando.CommandoWeapon.FirePistol2.muzzleEffectPrefab, base.gameObject, this.muzzleString, false);
-                Helpers.PlaySoundDynamic("UltFire", base.gameObject);
+                Helpers.PlaySound("UltFire", base.gameObject);
 
                 if (base.isAuthority)
                 {

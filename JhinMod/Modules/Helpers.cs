@@ -7,6 +7,7 @@ using System.Linq;
 using R2API.Utils;
 using BepInEx;
 using BepInEx.Configuration;
+using System.Collections;
 
 namespace JhinMod.Modules
 {
@@ -104,22 +105,43 @@ namespace JhinMod.Modules
             return (float)((a * squared) + c);
         }
 
-        public static void PlaySoundDynamic(string soundID, GameObject player, GameObject parent = null)
+        public static uint PlaySound(string soundID, GameObject player, GameObject parent = null, string skinName = "", bool defaultToBase = true)
         {
             if ( parent == null) parent = player;
             int skinIndex = (int)player.GetComponent<CharacterBody>().skinIndex;
-            var soundUID = Util.PlaySound($"Play_Seroronin_{GetSkinNameSFX(skinIndex)}_{soundID}", parent);
-            if ( soundUID == AkSoundEngine.AK_INVALID_PLAYING_ID )
+
+            // Use dynamic skin unless specified
+            if (skinName == "")
+                skinName = GetSkinNameSFX(skinIndex);
+
+            var soundUID = Util.PlaySound($"Play_Seroronin_{skinName}_{soundID}", parent);
+
+            //We didn't get a sound event, try to use base sound
+            if ( soundUID == AkSoundEngine.AK_INVALID_PLAYING_ID && defaultToBase)
             {
-                Util.PlaySound($"Play_Seroronin_{GetSkinNameSFX(0)}_{soundID}", parent);
+                soundUID = Util.PlaySound($"Play_Seroronin_Jhin_{soundID}", parent);
             }
+
+            return soundUID;
         }
 
-        public static void StopSoundDynamic(string soundID, GameObject player, GameObject parent = null)
+        public static uint StopSound(string soundID, GameObject player, GameObject parent = null, string skinName = "", bool defaultToBase = true)
         {
             if (parent == null) parent = player;
             int skinIndex = (int)player.GetComponent<CharacterBody>().skinIndex;
-            Util.PlaySound($"Stop_Seroronin_{GetSkinNameSFX(skinIndex)}_{soundID}", parent);
+
+            // Use dynamic skin unless specified
+            if (skinName == "")
+                skinName = GetSkinNameSFX(skinIndex);
+            var soundUID = Util.PlaySound($"Stop_Seroronin_{skinName}_{soundID}", parent);
+
+            //We didn't get a sound event, try to use base sound
+            if (soundUID == AkSoundEngine.AK_INVALID_PLAYING_ID)
+            {
+                soundUID = Util.PlaySound($"Stop_Seroronin_Jhin_{soundID}", parent);
+            }
+
+            return soundUID;
         }
 
         /// <summary>

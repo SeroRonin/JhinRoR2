@@ -21,9 +21,9 @@ namespace JhinMod.SkillStates
             var recentlyEmpty = this.jhinStateController.ammoCount == 0 && this.jhinStateController.timeSinceFire < 0.5f;
             base.PlayCrossfade("UpperBody, Override", recentlyEmpty ? "Reload_FromFireEmpty" : "Reload", "", this.duration, 0.2f);
 
-            Helpers.PlaySoundDynamic(recentlyEmpty ? "ReloadEmpty" : "Reload", base.gameObject);
-            Helpers.StopSoundDynamic("PassiveCritSpin", base.gameObject);
-            Helpers.StopSoundDynamic("PassiveCritMusic", base.gameObject);
+            Helpers.PlaySound(recentlyEmpty ? "ReloadEmpty" : "Reload", base.gameObject);
+            Helpers.StopSound("PassiveCritSpin", base.gameObject);
+            Helpers.StopSound("PassiveCritMusic", base.gameObject);
         }
 
         public override void OnExit()

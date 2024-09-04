@@ -1,0 +1,31 @@
+Fix Shuriken interaction
+Implement Ult Rocketjumping
+Implement Ult VFX models (Project Gun Overlay, SKTT1 Wings, DWG Wings)
+Implement Dynamic SFX for bullet hits, W hits, and Ult projectile (travel and explosion)
+Implement Character/Skin VFX models and materials (Project Mask, ShanHai cloak, Empyrean RGB, Soul Fighter wisps)
+Brainstorm on how to make Deadly Flourish better
+- Idea: Passes through small enemies, stops on large ones. More damage to balance out
+- Experiment: Moving while casting Deadly Flourish
+Experiment: Alternate Abilty - Traps, trigger when enemy approaches, slows and marks, then explodes
+- Idea: Traps arm after set time, allowing them to be thrown into the air. If they hit a surface, they attach to it. If they are triggered midair, they attach to the creature that triggered them. 
+- Idea: Death explosions on elites
+- Idea: Traps can be shot to detonate immediately
+- Idea: Traps can be used to blast jump
+Refine Dynamic Bones for Custom Emotes
+Fix Custom Emote Icon
+Experiment: Dark Cosmic
+
+SFX:
+- DWG
+- Empyrean
+
+VFX:
+- Base (Gun firing FX, Better Q Trail, Q hit particle, Better W beam, Ult fire, Ult Explosion, Ult Trail)
+- High Noon ( Tan-ish Recolors of base for starters, more advanced later )
+- Blood Moon ( Purple-ish Recolors, same ^ )
+- SKTT1 ( Tan-ish Recolors, ^ )
+- Project ( Q ghost, Q trail, Ult fire, Ult Explosion, Ult Trail )
+- Shan Hai ( Red-ish Recolors, ^ )
+- DWG ( Blue-ish Recolors, ^ )
+- Empyrean ( Dark-ish Recolors, ^ )
+- DWG ( Cyan-ish Recolors, ^ )

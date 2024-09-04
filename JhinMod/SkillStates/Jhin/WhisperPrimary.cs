@@ -45,8 +45,8 @@ namespace JhinMod.SkillStates
             jhinStateController.timeSinceFire = 0f;
             jhinStateController.ResetReload();
 
-            Helpers.StopSoundDynamic("PassiveCritSpin", base.gameObject);
-            Helpers.StopSoundDynamic("PassiveCritMusic", base.gameObject);
+            Helpers.StopSound("PassiveCritSpin", base.gameObject, skinName: "Jhin");
+            Helpers.StopSound("PassiveCritMusic", base.gameObject, skinName: "Jhin");
 
             base.characterBody.SetAimTimer(3f);
             
@@ -65,7 +65,11 @@ namespace JhinMod.SkillStates
             }
             else
             {
-                Helpers.PlaySoundDynamic(shotIndex == 4 ? "PassiveCritCast" : $"AttackCast{shotIndex}", base.gameObject);
+                var soundUID = Helpers.PlaySound(shotIndex == 4 ? "PassiveCritCast" : $"AttackCast{shotIndex}", base.gameObject, defaultToBase: false);
+
+                //We didn't get a sound for the current variant, attempt using first variant for this skin before defaulting to base skin audio
+                if (soundUID == AkSoundEngine.AK_INVALID_PLAYING_ID)
+                    Helpers.PlaySound("AttackCast1", base.gameObject);
             }
 
             this.PlayFireAnimation();
@@ -187,7 +191,7 @@ namespace JhinMod.SkillStates
             };
         }
 
-        public virtual void CreateTracer( string tracerName, Ray aimRay )
+        public virtual bool CreateTracer( string tracerName, Ray aimRay )
         {
             //Fake/psuedo bullet raycast
             LayerMask mask = BulletAttack.defaultHitMask;
@@ -237,7 +241,11 @@ namespace JhinMod.SkillStates
 
                 //Initiate tracer movement now that all variables are set
                 tracerComp.isActive = true;
+                return true;
             }
+
+            //If we got here, prefab retrieval failed
+            return false;
         }
 
         protected virtual void DoFireEffects()
@@ -246,19 +254,30 @@ namespace JhinMod.SkillStates
             var aimRay = base.GetAimRay();
             if (shotIndex ==  4)
             {
-                Helpers.PlaySoundDynamic("PassiveCritFire", base.gameObject);
-                this.CreateTracer("TracerFourth", aimRay);
+                Helpers.PlaySound("PassiveCritFire", base.gameObject);
+                if ( !this.CreateTracer("TracerFourth", aimRay) )
+                {
+                    //Failed to create Fourth Shot Tracer, look for regular tracer
+                    this.CreateTracer("Tracer", aimRay);
+                }
                 Helpers.PlayVFXDynamic("MuzzleFlashFourth", base.gameObject, this.muzzleString, true, aimRay);
             }
             else 
             {
+                uint soundUID;
                 if (this.isCrit)
                 {
-                    Helpers.PlaySoundDynamic("AttackCritFire", base.gameObject);
+                    soundUID = Helpers.PlaySound("AttackCritFire", base.gameObject);
                 }
                 else
                 {
-                    Helpers.PlaySoundDynamic($"AttackFire{shotIndex}", base.gameObject);
+                    soundUID = Helpers.PlaySound($"AttackFire{shotIndex}", base.gameObject, defaultToBase: false);
+                }
+
+                //We didn't get a sound for the current variant, attempt using first variant for this skin before defaulting to base skin audio
+                if (soundUID == AkSoundEngine.AK_INVALID_PLAYING_ID)
+                {
+                    Helpers.PlaySound("AttackFire1", base.gameObject);
                 }
 
                 this.CreateTracer("Tracer", aimRay);
@@ -323,6 +342,7 @@ namespace JhinMod.SkillStates
             {
                 this.Fire();
             }
+            //TODO Replace this, breaks shuriken
             if ( hasFired && base.fixedAge >= this.earlyExitTime)
             {
                 if (this.inputBank.skill1.down)

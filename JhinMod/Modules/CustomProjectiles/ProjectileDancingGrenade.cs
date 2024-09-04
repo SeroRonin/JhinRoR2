@@ -43,10 +43,18 @@ namespace JhinMod.Modules.CustomProjectiles
             effectData.SetHurtBoxReference(this.target);
             EffectManager.SpawnEffect(ghostPrefab, effectData, true);
 
+            uint soundUID;
             if (this.bouncesRemaining < 3)
-                Helpers.PlaySoundDynamic("QTravelBounce", this.attacker, this.target.gameObject);
+            {
+                soundUID = Helpers.PlaySound("QTravelBounce", this.attacker, this.target.gameObject, defaultToBase: false);
+                // Play default travel sound if we don't have a bounce variant
+                if (soundUID == AkSoundEngine.AK_INVALID_PLAYING_ID)
+                {
+                    Helpers.PlaySound("QTravel", this.attacker, this.target.gameObject);
+                }
+            }
             else
-                Helpers.PlaySoundDynamic("QTravel", this.attacker, this.target.gameObject);
+                Helpers.PlaySound("QTravel", this.attacker, this.target.gameObject);
         }
 
         public override void OnArrival()
@@ -81,7 +89,7 @@ namespace JhinMod.Modules.CustomProjectiles
                     GlobalEventManager.instance.OnHitEnemy(damageInfo, healthComponent.gameObject);
                     GlobalEventManager.instance.OnHitAll(damageInfo, healthComponent.gameObject);
 
-                    Helpers.PlaySoundDynamic("QHit", this.attacker, this.target.gameObject);
+                    Helpers.PlaySound("QHit", this.attacker, this.target.gameObject);
                 }
 
                 //Did we kill the target we hit?
@@ -147,13 +155,22 @@ namespace JhinMod.Modules.CustomProjectiles
                         }
                         else
                         {
-                            Helpers.PlaySoundDynamic("QHitLast", this.attacker, this.target.gameObject);
+                            uint soundUID = Helpers.PlaySound("QHitLast", this.attacker, this.target.gameObject);
+                            // Play default hit sound if we don't have a last hit variant
+                            if (soundUID == AkSoundEngine.AK_INVALID_PLAYING_ID)
+                            {
+                                Helpers.PlaySound("QHit", this.attacker, this.target.gameObject);
+                            }
                         }
                     }
                 }
                 else if (this.bouncesRemaining == 0)
                 {
-                    Helpers.PlaySoundDynamic("QHitLast", this.attacker, this.target.gameObject);
+                    uint soundUID = Helpers.PlaySound("QHitLast", this.attacker, this.target.gameObject);
+                    if (soundUID == AkSoundEngine.AK_INVALID_PLAYING_ID)
+                    {
+                        Helpers.PlaySound("QHit", this.attacker, this.target.gameObject);
+                    }
                 }
             }
         }

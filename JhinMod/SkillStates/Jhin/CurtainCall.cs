@@ -32,8 +32,8 @@ namespace JhinMod.SkillStates
             jhinStateController.Reload(true);
             jhinStateController.isUlting= true;
 
-            Helpers.PlaySoundDynamic("UltCast",base.gameObject);
-            Helpers.PlaySoundDynamic("UltMusic", base.gameObject);
+            Helpers.PlaySound("UltCast",base.gameObject);
+            Helpers.PlaySound("UltMusic", base.gameObject);
 
             this.ultStateMachine.SetNextState( new JhinWeaponUltActiveState() );
         }
