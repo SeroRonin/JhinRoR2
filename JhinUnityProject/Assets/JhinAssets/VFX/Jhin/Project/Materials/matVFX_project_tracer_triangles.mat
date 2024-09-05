@@ -2,14 +2,15 @@
 %TAG !u! tag:unity3d.com,2011:
 --- !u!21 &2100000
 Material:
-  serializedVersion: 6
+  serializedVersion: 8
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: matVFX_project_tracer_triangles
-  m_Shader: {fileID: 4800000, guid: 3b3ba687960e49044a0b6ecf19e96e9d, type: 3}
-  m_ShaderKeywords: 
+  m_Shader: {fileID: 4800000, guid: d5f0cd77d1ad35c4cb6a3133f6e33bc6, type: 3}
+  m_ValidKeywords: []
+  m_InvalidKeywords: []
   m_LightmapFlags: 0
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -19,6 +20,10 @@ Material:
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
+    - _AlphaUVMask:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _BumpMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -71,6 +76,15 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _texcoord3:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _texcoord4:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Ints: []
     m_Floats:
     - _AddFramesX: 1
     - _AddFramesY: 0
@@ -93,11 +107,29 @@ Material:
     - _SpecularHighlights: 1
     - _SrcBlend: 1
     - _TestFramesX: 0
+    - _TexRGBWeight: 1
     - _UVSec: 0
+    - _UseAlphaCutoff: 0
+    - _UseAnimatedOffset: 1
+    - _UseOffsetTiling: 0
     - _UseOpacityCurve: 1
+    - _UseParticleTiling: 1
+    - _UseRandomFrame: 1
+    - _UseVSOffsetTiling: 1
+    - _UseVertexColor: 1
+    - _VSUseAlphaCutoff: 0
+    - _VSUseOffsetTiling: 1
+    - _VSUseOpacityCurve: 0
+    - _VertexColorOverride: 1
     - _ZWrite: 1
     - __dirty: 0
     m_Colors:
+    - _BackfaceColor: {r: 0, g: 0, b: 0, a: 0}
+    - _BackfaceColorOptions: {r: 0, g: 180, b: 0, a: 0}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
+    - _NumCells: {r: 2, g: 1, b: 0, a: 0}
+    - _SelectFrame: {r: 1, g: 1, b: 0, a: 0}
     - _TilingCustom: {r: 0, g: 0, b: 0, a: 0}
+    - _Vector1: {r: 1, g: 1, b: 0, a: 0}
+  m_BuildTextureStacks: []

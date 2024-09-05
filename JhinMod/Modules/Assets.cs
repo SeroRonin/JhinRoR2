@@ -32,7 +32,7 @@ namespace JhinMod.Modules
         //Base
         internal static GameObject baseDeadlyFlourishBeamEffect;
         internal static GameObject baseDeadlyFlourishMuzzleEffect;
-        internal static GameObject baseDancingGrenadeEffect;
+        internal static GameObject baseGrenadeGhost;
 
         //Project
         internal static GameObject projectMuzzleflashEffect;
@@ -40,6 +40,7 @@ namespace JhinMod.Modules
         internal static GameObject projectTracerEffect;
         internal static GameObject projectTracerFourthEffect;
         internal static GameObject projectDeadlyFlourishMuzzleEffect;
+        internal static GameObject projectGrenadeGhost;
         internal static GameObject projectGrenadeImpact;
         internal static GameObject projectGrenadeImpactKill;
 
@@ -178,32 +179,35 @@ namespace JhinMod.Modules
 
             //Base
             baseDeadlyFlourishBeamEffect = Asset.LoadEffect("Jhin_Base_DeadlyFlourishBeam", false);
-            vfxPrefabs.Add("Jhin_DeadlyFlourishBeam", baseDeadlyFlourishBeamEffect);
             baseDeadlyFlourishMuzzleEffect = Asset.LoadEffect("Jhin_Base_DeadlyFlourishMuzzleFX", false);
+            vfxPrefabs.Add("Jhin_DeadlyFlourishBeam", baseDeadlyFlourishBeamEffect);
             vfxPrefabs.Add("Jhin_DeadlyFlourishMuzzle", baseDeadlyFlourishMuzzleEffect);
-            baseDancingGrenadeEffect = Asset.CreateDancingGrenadeEffect("JhinGrenadeGhost");
-            vfxPrefabs.Add("Jhin_Grenade", baseDancingGrenadeEffect);
+
+            baseGrenadeGhost = Asset.CreateDancingGrenadeGhost("JhinGrenadeGhost");
+            vfxPrefabs.Add("Jhin_Grenade", baseGrenadeGhost);
 
             //REPLACE, using commando muzzlefalsh
             vfxPrefabs.Add("Jhin_MuzzleFlash", EntityStates.Commando.CommandoWeapon.FirePistol2.muzzleEffectPrefab);
             
             //Project
             projectMuzzleflashEffect = Asset.LoadEffect("Jhin_Project_Muzzleflash", false);
-            vfxPrefabs.Add("ProjectJhin_MuzzleFlash", projectMuzzleflashEffect);
             projectMuzzleflashFourthEffect = Asset.LoadEffect("Jhin_Project_MuzzleflashFourth", false);
+            vfxPrefabs.Add("ProjectJhin_MuzzleFlash", projectMuzzleflashEffect);
             vfxPrefabs.Add("ProjectJhin_MuzzleFlashFourth", projectMuzzleflashFourthEffect);
 
             projectTracerEffect = Asset.CreateTracerEffect("Jhin_Project_Tracer");
-            vfxPrefabs.Add("ProjectJhin_Tracer", projectTracerEffect);
             projectTracerFourthEffect = Asset.CreateTracerEffect("Jhin_Project_TracerFourth");
+            vfxPrefabs.Add("ProjectJhin_Tracer", projectTracerEffect);
             vfxPrefabs.Add("ProjectJhin_TracerFourth", projectTracerFourthEffect);
 
             projectDeadlyFlourishMuzzleEffect = Asset.LoadEffect("Jhin_Project_DeadlyFlourish_MuzzleFX");
             vfxPrefabs.Add("ProjectJhin_DeadlyFlourishMuzzle", projectDeadlyFlourishMuzzleEffect);
 
+            projectGrenadeGhost = Asset.CreateDancingGrenadeGhost("ProjectJhinGrenadeGhost");
             projectGrenadeImpact = Asset.LoadEffect("Jhin_Project_GrenadeImpact");
-            vfxPrefabs.Add("ProjectJhin_GrenadeImpact", projectGrenadeImpact); 
             projectGrenadeImpactKill = Asset.LoadEffect("Jhin_Project_GrenadeImpactKill");
+            vfxPrefabs.Add("ProjectJhin_GrenadeImpact", projectGrenadeImpact);
+            vfxPrefabs.Add("ProjectJhin_Grenade", projectGrenadeGhost);
             vfxPrefabs.Add("ProjectJhin_GrenadeImpactKill", projectGrenadeImpactKill);
 
             //Henry Leftover
@@ -211,7 +215,7 @@ namespace JhinMod.Modules
             swordHitImpactEffect = Asset.LoadEffect("ImpactJhinSlash");
         }
 
-        private static GameObject CreateDancingGrenadeEffect(string resourceName)
+        private static GameObject CreateDancingGrenadeGhost(string resourceName)
         {
             GameObject newEffect = mainAssetBundle.LoadAsset<GameObject>(resourceName);
 
@@ -367,7 +371,9 @@ namespace JhinMod.Modules
 
             newEffect.AddComponent<DestroyOnTimer>().duration = 12;
             newEffect.AddComponent<NetworkIdentity>();
-            newEffect.AddComponent<VFXAttributes>().vfxPriority = VFXAttributes.VFXPriority.Always;
+            VFXAttributes newEffectVFX = newEffect.AddComponent<VFXAttributes>();
+            newEffectVFX.vfxPriority = VFXAttributes.VFXPriority.Always;
+            newEffectVFX.DoNotPool = true;
             var effect = newEffect.AddComponent<EffectComponent>();
             effect.applyScale = false;
             effect.effectIndex = EffectIndex.Invalid;
