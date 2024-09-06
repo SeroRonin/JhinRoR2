@@ -3,6 +3,7 @@ Implement Ult Rocketjumping
 Implement Ult VFX models (Project Gun Overlay, SKTT1 Wings, DWG Wings)
 Implement Dynamic SFX for bullet hits, W hits, and Ult projectile (travel and explosion)
 Implement Character/Skin VFX models and materials (Project Mask, ShanHai cloak, Empyrean RGB, Soul Fighter wisps)
+- Modifications to base hopoo shader? ShanHai cloak would probably need it
 Brainstorm on how to make Deadly Flourish better
 - Idea: Passes through small enemies, stops on large ones. More damage to balance out
 - Experiment: Moving while casting Deadly Flourish
