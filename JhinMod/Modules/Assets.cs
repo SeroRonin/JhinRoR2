@@ -35,6 +35,7 @@ namespace JhinMod.Modules
         internal static GameObject baseGrenadeGhost;
 
         //Project
+        internal static GameObject projectMaskEffect;
         internal static GameObject projectMuzzleflashEffect;
         internal static GameObject projectMuzzleflashFourthEffect;
         internal static GameObject projectTracerEffect;
@@ -188,8 +189,11 @@ namespace JhinMod.Modules
 
             //REPLACE, using commando muzzlefalsh
             vfxPrefabs.Add("Jhin_MuzzleFlash", EntityStates.Commando.CommandoWeapon.FirePistol2.muzzleEffectPrefab);
-            
+
             //Project
+            projectMaskEffect = CreateProjectMask();
+            vfxPrefabs.Add("ProjectJhin_ModelFX", projectMaskEffect);
+
             projectMuzzleflashEffect = Asset.LoadEffect("Jhin_Project_Muzzleflash", false);
             projectMuzzleflashFourthEffect = Asset.LoadEffect("Jhin_Project_MuzzleflashFourth", false);
             vfxPrefabs.Add("ProjectJhin_MuzzleFlash", projectMuzzleflashEffect);
@@ -213,6 +217,18 @@ namespace JhinMod.Modules
             //Henry Leftover
             swordSwingEffect = Asset.LoadEffect("JhinSwordSwingEffect", true);
             swordHitImpactEffect = Asset.LoadEffect("ImpactJhinSlash");
+        }
+
+        private static GameObject CreateProjectMask()
+        {
+            var prefab = mainAssetBundle.LoadAsset<GameObject>("Jhin_Project_MaskVFX");
+            var glitchComp = prefab.AddComponent<ProjectMaskGlitchFX>();
+            glitchComp.maskRenderer = prefab.GetComponent<MeshRenderer>();
+
+            var bindPairLoc = prefab.AddComponent<BindPairLocator>();
+            bindPairLoc.AddBindPair("Root","Head");
+
+            return prefab;
         }
 
         private static GameObject CreateDancingGrenadeGhost(string resourceName)

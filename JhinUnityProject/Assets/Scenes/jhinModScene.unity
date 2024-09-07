@@ -123,6 +123,117 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1001 &279346307
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 3956837426037435001, guid: 972212e0f4f421e45803c3b04536cec6,
+        type: 3}
+      propertyPath: m_Name
+      value: Jhin_Project_MaskVFX
+      objectReference: {fileID: 0}
+    - target: {fileID: 4441202343137964227, guid: 972212e0f4f421e45803c3b04536cec6,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4441202343137964227, guid: 972212e0f4f421e45803c3b04536cec6,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4441202343137964227, guid: 972212e0f4f421e45803c3b04536cec6,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4441202343137964227, guid: 972212e0f4f421e45803c3b04536cec6,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4441202343137964227, guid: 972212e0f4f421e45803c3b04536cec6,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4441202343137964227, guid: 972212e0f4f421e45803c3b04536cec6,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.00000003774895
+      objectReference: {fileID: 0}
+    - target: {fileID: 4441202343137964227, guid: 972212e0f4f421e45803c3b04536cec6,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4441202343137964227, guid: 972212e0f4f421e45803c3b04536cec6,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4441202343137964227, guid: 972212e0f4f421e45803c3b04536cec6,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4441202343137964227, guid: 972212e0f4f421e45803c3b04536cec6,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4441202343137964227, guid: 972212e0f4f421e45803c3b04536cec6,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 972212e0f4f421e45803c3b04536cec6, type: 3}
+--- !u!1 &606964419 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3956837426037435001, guid: 972212e0f4f421e45803c3b04536cec6,
+    type: 3}
+  m_PrefabInstance: {fileID: 279346307}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &606964420
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 606964419}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 55967cf3a07d7c444860f9000a2a3a97, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maskRenderer: {fileID: 606964422}
+  minimumStableTime: 2
+  maximumStableTime: 15
+  timeBetweenAttempts: 0.2
+  maskFrameHoldMin: 0.1
+  maskFrameHoldMax: 0.3
+  maskFrameHoldTime: 0.2
+  glitchFrameHoldMin: 0.1
+  glitchFrameHoldMax: 0.3
+  glitchFrameHoldTime: 0.2
+  timeSinceTry: 0
+  timeSinceMask: 0
+  timeSinceGlitch: 0
+  maskGlitchChance: 5
+  maskGlitchMultipleChance: 30
+  maskFrame: 0
+  glitchActive: 0
+  possibleMaskFrames: 010000000200000003000000
+--- !u!23 &606964422 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 3308314886957763500, guid: 972212e0f4f421e45803c3b04536cec6,
+    type: 3}
+  m_PrefabInstance: {fileID: 279346307}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &649229576
 GameObject:
   m_ObjectHideFlags: 0

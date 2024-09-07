@@ -39,6 +39,8 @@ namespace JhinMod.Content.Components
         private EntityStateMachine jhinStateMachine;
         private Animator modelAnimator;
 
+        public GameObject modelFX;
+
         private void Awake()
         {
             jhinStateMachine = Helpers.GetEntityStateMachine(this.gameObject, "WeaponMode");
@@ -50,6 +52,18 @@ namespace JhinMod.Content.Components
         {
             this.ammoCount = ammoMax;
             this.reloadStopwatch = 0f;
+
+            if (modelFX == null)
+            {
+                var modelFXprefab = Helpers.GetVFXDynamic("ModelFX", this.gameObject);
+                if (modelFXprefab != null)
+                {
+                    modelFX = UnityEngine.Object.Instantiate<GameObject>(modelFXprefab, this.gameObject.transform); 
+                    var bindPairComp = modelFX.GetComponent<BindPairLocator>();
+                    bindPairComp.target = this.gameObject.GetComponent<ModelLocator>().gameObject;
+                    bindPairComp.BindPairs();
+                }
+            }
         }
 
         private void FixedUpdate()

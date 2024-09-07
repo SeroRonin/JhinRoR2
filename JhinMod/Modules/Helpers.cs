@@ -214,11 +214,10 @@ namespace JhinMod.Modules
             EffectManager.SpawnEffect(effectPrefab, effectData, transmit);
         }
 
-        public static GameObject GetVFXDynamic(string vfxString, GameObject player)
+        public static GameObject GetVFXDynamic(string vfxString, int skinIndex)
         {
             GameObject effectPrefab = null;
 
-            int skinIndex = (int)player.GetComponent<CharacterBody>().skinIndex;
             string skinName = GetSkinNameVFX(skinIndex);
 
             //Search table for matching key, otherwise use default skin
@@ -230,8 +229,48 @@ namespace JhinMod.Modules
             {
                 effectPrefab = Asset.vfxPrefabs[$"Jhin_{vfxString}"];
             }
-            
+
             return effectPrefab;
+        }
+
+        public static GameObject GetVFXDynamic(string vfxString, GameObject player)
+        {
+            int skinIndex = (int)player.GetComponent<CharacterBody>().skinIndex;
+            return GetVFXDynamic(vfxString, skinIndex);
+        }
+
+
+
+        public static GameObject SpawnVFXDynamic(string vfxString, GameObject player, bool shouldParent)
+        {
+            var prefab = GetVFXDynamic(vfxString, player);
+
+            if (prefab == null) { return null; }
+
+            if (shouldParent)
+            {
+                return UnityEngine.Object.Instantiate<GameObject>(prefab, player.transform);
+            }
+            else
+            {
+                return UnityEngine.Object.Instantiate<GameObject>(prefab, player.transform.position, player.transform.rotation);
+            }
+        }
+
+        public static GameObject SpawnVFXDynamic(string vfxString, int index, Transform parent)
+        {
+            var prefab = GetVFXDynamic(vfxString, index);
+
+            if (prefab == null) { return null; }
+
+            if (parent)
+            {
+                return UnityEngine.Object.Instantiate<GameObject>(prefab, parent);
+            }
+            else
+            {
+                return UnityEngine.Object.Instantiate<GameObject>(prefab);
+            }
         }
 
         public static string GetSkinName(int skinIndex)

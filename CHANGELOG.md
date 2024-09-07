@@ -3,12 +3,12 @@ Every time there is an update to configurable numbers, you need to delete your c
 
 ## 1.4.0 WiP
 So far, this update adds in the Soul Fighter skin, SFX for some of the skins (remaining skins WiP), as well as fixes a missing config option
-Currently WiP, so those who check the github :)
+Currently WiP, for those who check the github :)
 CONFIG CHANGE: Delete your config to get new options and updated values!
 
 #### *General*
 * **[Addition]** Added the Soul Fighter skin
-* **[Addition]** Added Unique SFX for the following skins: SKTT1, Shan Hai Scrolls, Soul Fighter
+* **[Addition]** Added Unique SFX for the following skins: SKTT1, Shan Hai Scrolls, DWG, Empyrean, Soul Fighter
 * **[Bugfix]** Fixed missing VFX config option
 * **[Adjustment]** Renamed SFX/VFX Choice to SFX/VFX Override, and renamed "SkinDependant" option to "Dynamic"
 

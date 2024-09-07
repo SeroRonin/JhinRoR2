@@ -102,6 +102,8 @@ namespace JhinMod
 
         private void Hook()
         {
+            //On.RoR2.SurvivorMannequins.SurvivorMannequinSlotController.ApplyLoadoutToMannequinInstance += SurvivorMannequinSlotController_ApplyLoadoutToMannequinInstance;
+
             On.RoR2.GlobalEventManager.OnHitEnemy += GlobalEventManager_OnHitEnemy;
             On.RoR2.HealthComponent.TakeDamage += HealthComponent_OnTakeDamage;
             On.RoR2.CharacterBody.RecalculateStats += CharacterBody_RecalculateStats;
@@ -132,6 +134,8 @@ namespace JhinMod
 
         private void UnHooks()
         {
+            //On.RoR2.SurvivorMannequins.SurvivorMannequinSlotController.ApplyLoadoutToMannequinInstance -= SurvivorMannequinSlotController_ApplyLoadoutToMannequinInstance;
+
             On.RoR2.GlobalEventManager.OnHitEnemy -= GlobalEventManager_OnHitEnemy;
             On.RoR2.CharacterBody.RecalculateStats -= CharacterBody_RecalculateStats;
             On.RoR2.UI.HUD.Awake -= HUD_Awake;
@@ -149,11 +153,31 @@ namespace JhinMod
             On.EntityStates.FrozenState.OnEnter -= FrozenState_OnEnter;
             On.EntityStates.FrozenState.OnExit -= FrozenState_OnExit;
 
+
             if ( CustomEmotesActive )
             {
                 Content.CustomEmotesAPISupport.UnhookCustomEmoteAPI();
             }
         }
+
+        //private void SurvivorMannequinSlotController_ApplyLoadoutToMannequinInstance(On.RoR2.SurvivorMannequins.SurvivorMannequinSlotController.orig_ApplyLoadoutToMannequinInstance orig, RoR2.SurvivorMannequins.SurvivorMannequinSlotController self)
+        //{
+        //    orig(self);
+
+        //    if (!self.mannequinInstanceTransform)
+        //    {
+        //        return;
+        //    }
+        //    var displayPrefab = self.mannequinInstanceTransform;
+        //    BodyIndex bodyIndexFromSurvivorIndex = SurvivorCatalog.GetBodyIndexFromSurvivorIndex(self.currentSurvivorDef.survivorIndex);
+        //    int skinIndex = (int)self.currentLoadout.bodyLoadoutManager.GetSkinIndex(bodyIndexFromSurvivorIndex);
+        //    if (displayPrefab.gameObject.name == "JhinDisplay")
+        //    {
+        //        var vfx = Helpers.SpawnVFXDynamic("ModelFx", skinIndex, displayPrefab);
+        //        BindPairModifier mod = vfx.GetComponent<BindPairModifier>();
+        //        mod.BindPairs();
+        //    }
+        //}
 
         //Handles passive speed boost on crit
         private void GlobalEventManager_OnHitEnemy(On.RoR2.GlobalEventManager.orig_OnHitEnemy orig, GlobalEventManager self, DamageInfo damageInfo, GameObject victim)
