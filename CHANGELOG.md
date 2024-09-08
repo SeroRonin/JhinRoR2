@@ -2,15 +2,30 @@
 Every time there is an update to configurable numbers, you need to delete your config files so that the game can generate a new one with the right default values and sliders. If there are no new config changes, you do not need to worry about this.
 
 ## 1.4.0 WiP
-So far, this update adds in the Soul Fighter skin, SFX for some of the skins (remaining skins WiP), as well as fixes a missing config option
+This major update notably adds in the Soul Fighter skin, SFX for rest of the skins, and some VFX support systems I am currently working on!
+These VFX changes include Project Jhin's mask, Project Jhin's Ult Overlay, and DWG's Wings (with animations)
+
 Currently WiP, for those who check the github :)
 CONFIG CHANGE: Delete your config to get new options and updated values!
 
 #### *General*
 * **[Addition]** Added the Soul Fighter skin
 * **[Addition]** Added Unique SFX for the following skins: SKTT1, Shan Hai Scrolls, DWG, Empyrean, Soul Fighter
+* **[Addition]** Added glitch visuals to Project Jhin's Mask
 * **[Bugfix]** Fixed missing VFX config option
 * **[Adjustment]** Renamed SFX/VFX Choice to SFX/VFX Override, and renamed "SkinDependant" option to "Dynamic"
+* **[Adjustment]** Added Dynamic Bones to cloak for CustomEmoteAPI Emotes
+> A bunch of visual and audio changes were added in this patch, too much to cover indivudally. The current plan is to create a set of particles for the base skin, then use thoses to create color swaps for all the other skins, until get around to creating unique VFX for each.
+> Dynamic bones are only active when emoting, and should alleviate a lot of clipping when using custom emotes
+
+#### *Whisper*
+* **[Bugfix]** Fixed Shuriken interaction
+> Whisper should now trigger Shuriken each time you attack. It's still not the best item for jhin's attackspeed, but hey at least it works properly!
+
+#### *Curtain Call*
+* **[Addition]** Added support for certain VFX features during the ult
+* **[Adjustment]** Curtain Call now has an exit time
+> Currently the only skins using the VFX features are Project and DWG. The exit time is a necessary feature added to support blending out VFX as well as certain animations, but it's a very short time so it should barely be noticeable
 
 ## 1.3.0
 Updates the mod to work with Seekers of the Storm, as well as small changes and some WiP VFX for the Project skin. 

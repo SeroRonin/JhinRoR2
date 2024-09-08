@@ -127,7 +127,7 @@ Curtain Call is a primary skill override, like that of Railgunner's scope. For 1
 | Blood Moon 		| <img src="https://em-content.zobj.net/source/microsoft/74/heavy-check-mark_2714.png" width="15px" /> 	| <img src="https://em-content.zobj.net/source/microsoft/74/heavy-check-mark_2714.png" width="15px" /> 	| <img src="https://em-content.zobj.net/source/microsoft/74/cross-mark_274c.png" width="15px" /> |
 | SKT T1  	 		| <img src="https://em-content.zobj.net/source/microsoft/74/heavy-check-mark_2714.png" width="15px" /> 	| <img src="https://em-content.zobj.net/source/microsoft/74/heavy-check-mark_2714.png" width="15px" /> 	| <img src="https://em-content.zobj.net/source/microsoft/74/cross-mark_274c.png" width="15px" /> |
 | Project    		| <img src="https://em-content.zobj.net/source/microsoft/74/heavy-check-mark_2714.png" width="15px" /> 	| <img src="https://em-content.zobj.net/source/microsoft/74/heavy-check-mark_2714.png" width="15px" /> 	| <img src="https://em-content.zobj.net/source/microsoft/74/heavy-check-mark_2714.png" width="15px" /> |
-| Dark Cosmic		| <img src="https://em-content.zobj.net/source/microsoft/74/cross-mark_274c.png" width="15px" /> 	   	| <img src="https://em-content.zobj.net/source/microsoft/74/cross-mark_274c.png" width="15px" /> 		| <img src="https://em-content.zobj.net/source/microsoft/74/cross-mark_274c.png" width="15px" /> |
+| Dark Cosmic		| <img src="https://em-content.zobj.net/source/microsoft/74/cross-mark_274c.png" width="15px" />[darkcosmic]| <img src="https://em-content.zobj.net/source/microsoft/74/cross-mark_274c.png" width="15px" /> 		| <img src="https://em-content.zobj.net/source/microsoft/74/cross-mark_274c.png" width="15px" /> |
 | Shan Hai Scrolls 	| <img src="https://em-content.zobj.net/source/microsoft/74/heavy-check-mark_2714.png" width="15px" /> 	| <img src="https://em-content.zobj.net/source/microsoft/74/heavy-check-mark_2714.png" width="15px" /> 	| <img src="https://em-content.zobj.net/source/microsoft/74/cross-mark_274c.png" width="15px" /> |
 | DWG 				| <img src="https://em-content.zobj.net/source/microsoft/74/heavy-check-mark_2714.png" width="15px" /> 	| <img src="https://em-content.zobj.net/source/microsoft/74/heavy-check-mark_2714.png" width="15px" /> 	| <img src="https://em-content.zobj.net/source/microsoft/74/cross-mark_274c.png" width="15px" /> |
 | Empyrean			| <img src="https://em-content.zobj.net/source/microsoft/74/heavy-check-mark_2714.png" width="15px" /> 	| <img src="https://em-content.zobj.net/source/microsoft/74/heavy-check-mark_2714.png" width="15px" /> 	| <img src="https://em-content.zobj.net/source/microsoft/74/cross-mark_274c.png" width="15px" /> |
@@ -149,7 +149,6 @@ Dark Cosmic as a skin is not possible as far as I am aware, at least not with th
 ## Known Issues
 > Bugs can be reported under Github Issues, or through my Discord: [https://discord.gg/RSs2kA7yRu](https://discord.gg/RSs2kA7yRu)
 * **[Skill]** Ult applies execute damage as an additional instance of damage (this is due to explosions not supporting post-hit pre-damage modifications)
-* **[Item]** Shuriken is triggered very sparsely, rather than on every primary attack. Likely due to custom ammo system?
 
 ## To Do
 * Better Movespeed Buff Icon

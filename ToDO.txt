@@ -1,8 +1,7 @@
-Fix Shuriken interaction
 Implement Ult Rocketjumping
-Implement Ult VFX models (Project Gun Overlay, SKTT1 Wings, DWG Wings)
+Implement Ult VFX models (system done, Project Gun Overlay done, SKTT1 Wings, DWG Wings done)
 Implement Dynamic SFX for bullet hits, W hits, and Ult projectile (travel and explosion)
-Implement Character/Skin VFX models and materials (Project Mask, ShanHai cloak, Empyrean RGB, Soul Fighter wisps)
+Implement Character/Skin VFX models and materials (Project Mask done, ShanHai cloak, Empyrean RGB, Soul Fighter wisps)
 - Modifications to base hopoo shader? ShanHai cloak would probably need it
 Brainstorm on how to make Deadly Flourish better
 - Idea: Passes through small enemies, stops on large ones. More damage to balance out
@@ -12,12 +11,7 @@ Experiment: Alternate Abilty - Traps, trigger when enemy approaches, slows and m
 - Idea: Death explosions on elites
 - Idea: Traps can be shot to detonate immediately
 - Idea: Traps can be used to blast jump
-Refine Dynamic Bones for Custom Emotes (cloak tails are jittery, wrong axis alignment?)
 Experiment: Dark Cosmic
-
-SFX:
-- DWG
-- Empyrean
 
 VFX:
 - Base (Gun firing FX, Better Q Trail, Q hit particle, Better W beam, Ult fire, Ult Explosion, Ult Trail)
@@ -29,3 +23,9 @@ VFX:
 - DWG ( Blue-ish Recolors, ^ )
 - Empyrean ( Dark-ish Recolors, ^ )
 - DWG ( Cyan-ish Recolors, ^ )
+
+
+TODO Before 1.4:
+- Add Soulfighter ModelVFX
+- Add missing project mask in lobby
+- Add rocket jumping?
