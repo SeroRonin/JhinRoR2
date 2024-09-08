@@ -25,7 +25,13 @@ namespace JhinMod.SkillStates
         public override void OnEnter()
         {
             jhinStateController = base.GetComponent<JhinStateController>();
-            jhinStateController.isUlting = false;
+            ultStateMachine = Helpers.GetEntityStateMachine( base.gameObject, "WeaponMode" );
+            if ( ultStateMachine.state is JhinWeaponUltActiveState )
+            { 
+                var state = (ultStateMachine.state as JhinWeaponUltActiveState);
+                state.duration = state.fixedAge + state.exitDuration + 0.25f;
+            }
+            //jhinStateController.isUlting = false;
         }
 
         public override void OnExit()

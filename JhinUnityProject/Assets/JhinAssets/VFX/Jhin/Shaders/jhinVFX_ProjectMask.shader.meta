@@ -3,8 +3,10 @@ guid: 4aa98e5f0971d684693e53f85d9c16f5
 ShaderImporter:
   externalObjects: {}
   defaultTextures:
-  - _Texture0: {fileID: 2800000, guid: a2068a9ea9e575c49b30f9f4f0d426b8, type: 3}
-  - _Texture1: {fileID: 2800000, guid: 6052590aed7737041950eac485bf603a, type: 3}
+  - _MaskBaseTex: {fileID: 2800000, guid: d39a40aec07a07645b4b29f1ebdb863b, type: 3}
+  - _MaskEmissionTex: {fileID: 2800000, guid: a2068a9ea9e575c49b30f9f4f0d426b8, type: 3}
+  - _MaskGlitchTex: {fileID: 2800000, guid: 6052590aed7737041950eac485bf603a, type: 3}
+  - _MaskStaticTex: {fileID: 2800000, guid: 8c37af5f6c26d96428e939f67d902381, type: 3}
   nonModifiableTextures: []
   preprocessorOverride: 0
   userData: 

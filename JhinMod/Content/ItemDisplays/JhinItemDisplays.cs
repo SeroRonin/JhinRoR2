@@ -230,13 +230,14 @@ localScale = new Vector3(0.75F, 0.75F, 0.75F),
                     {
                         new ItemDisplayRule
                         {
+
                             ruleType = ItemDisplayRuleType.ParentedPrefab,
                             followerPrefab = ItemDisplays.LoadDisplay("DisplayHoof"),
-childName = "KneeR",
-localPos = new Vector3(0.00001F, 0.40535F, -0.09662F),
-localAngles = new Vector3(78.00002F, 0F, 0F),
-localScale = new Vector3(0.0846F, 0.0846F, 0.10451F),
-                            limbMask = LimbFlags.None
+                            childName = "KneeR",
+                            localPos = new Vector3(-0.00692F, 0.48656F, -0.06586F),
+                            localAngles = new Vector3(70.04605F, 347.9467F, 1.30867F),
+                            localScale = new Vector3(0.09F, 0.09F, 0.07F),
+                            limbMask = LimbFlags.RightCalf //TODO REPLACE
                         }
                     }
                 }
@@ -3551,6 +3552,31 @@ localScale = new Vector3(0.01F, 0.01F, 0.01F),
                 }
             });
 
+            #endregion
+            #region DLC2Content Items
+            //
+            // SAMPLE ENTRY
+            //
+            //itemDisplayRules.Add(new ItemDisplayRuleSet.KeyAssetRuleGroup
+            //{
+            //    keyAsset = RoR2Content.Equipment.TeamWarCry,
+            //    displayRuleGroup = new DisplayRuleGroup
+            //    {
+            //        rules = new ItemDisplayRule[]
+            //        {
+            //            new ItemDisplayRule
+            //            {
+            //                ruleType = ItemDisplayRuleType.ParentedPrefab,
+            //                followerPrefab = ItemDisplays.LoadDisplay("DisplayTeamWarCry"), //HIDDEN
+            //                childName = "Pelvis",
+            //                localPos = new Vector3(0F, 0F, 0F),
+            //                localAngles = new Vector3(0F, 0F, 0F),
+            //                localScale = new Vector3(0.01F, 0.01F, 0.01F),
+            //                limbMask = LimbFlags.None
+            //            }
+            //        }
+            //    }
+            //});
             #endregion
         }
     }

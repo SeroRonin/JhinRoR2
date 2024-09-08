@@ -32,7 +32,7 @@ namespace JhinMod.SkillStates
 
         private JhinStateController jhinStateController;
         private float duration;
-        private float earlyExitTime;
+        private float durationAnimation; //Used to get the right animation speed
         private float fireTime;
         private bool hasFired;
         private bool isCrit;
@@ -54,11 +54,12 @@ namespace JhinMod.SkillStates
 
             var shotIndex = this.jhinStateController.ammoMax - (this.jhinStateController.ammoCount - 1);
 
-            this.duration = WhisperPrimary.baseDuration * (this.characterBody.baseAttackSpeed / this.characterBody.attackSpeed);
-            this.fireTime = WhisperPrimary.baseFireDelayPercent * this.duration;
+            this.durationAnimation = WhisperPrimary.baseDuration * (this.characterBody.baseAttackSpeed / this.characterBody.attackSpeed);
+            this.duration = 1 / this.characterBody.attackSpeed;
+            this.fireTime = WhisperPrimary.baseFireDelayPercent * this.durationAnimation;
             this.muzzleString = "Muzzle";
             this.isCrit = RollCrit();
-            this.earlyExitTime = 1 / this.characterBody.attackSpeed;
+            //this.earlyExitTime = 1 / this.characterBody.attackSpeed;
 
             if (Config.primaryInstantShot.Value == true && shotIndex != 4 )
             {
@@ -82,7 +83,7 @@ namespace JhinMod.SkillStates
             var shotIndex = this.jhinStateController.ammoMax - (this.jhinStateController.ammoCount - 1 );
             var animatorComponent = this.GetModelAnimator();
 
-            var mult = WhisperPrimary.baseDuration / this.duration;
+            var mult = WhisperPrimary.baseDuration / this.durationAnimation;
             var cycleOffset = Config.primaryInstantShot.Value == true ? 0.15625f * mult : 0f;
 
             if (shotIndex == 4)
@@ -90,16 +91,16 @@ namespace JhinMod.SkillStates
                 
                 var layerIndex = animatorComponent.GetLayerIndex("UpperBody, Override");
                 animatorComponent.SetLayerWeight(layerIndex, 0f);
-                base.PlayAnimation("FullBody Passive Crit, Override", "AttackPassiveCrit", "ShootGun.playbackRate", duration);
+                base.PlayAnimation("FullBody Passive Crit, Override", "AttackPassiveCrit", "ShootGun.playbackRate", durationAnimation);
             }
             else if (this.isCrit)
             {
                     
-                PlayAnimationOnAnimatorCustom(animatorComponent, "UpperBody, Override", "AttackCrit", "ShootGun.playbackRate", duration, cycleOffset);
+                PlayAnimationOnAnimatorCustom(animatorComponent, "UpperBody, Override", "AttackCrit", "ShootGun.playbackRate", durationAnimation, cycleOffset);
             }
             else
             {
-                PlayAnimationOnAnimatorCustom(animatorComponent, "UpperBody, Override", $"Attack{shotIndex}", "ShootGun.playbackRate", duration, cycleOffset);
+                PlayAnimationOnAnimatorCustom(animatorComponent, "UpperBody, Override", $"Attack{shotIndex}", "ShootGun.playbackRate", durationAnimation, cycleOffset);
             }
 
         }
@@ -345,13 +346,13 @@ namespace JhinMod.SkillStates
                 this.Fire();
             }
             //TODO Replace this, breaks shuriken
-            if ( hasFired && base.fixedAge >= this.earlyExitTime)
-            {
-                if (this.inputBank.skill1.down)
-                {
-                    //this.outer.SetNextState(new WhisperPrimary());
-                }
-            }
+            //if ( hasFired && base.fixedAge >= this.earlyExitTime)
+            //{
+            //    if (this.inputBank.skill1.down)
+            //    {
+            //          this.outer.SetNextState(new WhisperPrimary());
+            //    }
+            //}
 
             if (base.fixedAge >= this.duration && base.isAuthority)
             {
