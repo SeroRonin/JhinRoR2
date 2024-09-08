@@ -6,8 +6,9 @@ using System.Collections.Generic;
 namespace JhinMod.Content.Components
 {
     /// <summary>
-    /// Component that adds the arcing motion seen on Dancing Grenade bounces
+    /// Component that allows binding multiple transforms, instead of just one
     /// </summary>
+    [RequireComponent(typeof(ChildLocator))]
     public class BindPairLocator : MonoBehaviour
     {
         [Serializable]
@@ -47,7 +48,7 @@ namespace JhinMod.Content.Components
             }
 
             if ( child1 != null ) 
-            { 
+            {
                 bindPair.selfTransform = child1;
             }
             if ( child2 != null )

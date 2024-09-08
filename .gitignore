@@ -262,6 +262,7 @@ __pycache__/
 *.pyc
 
 # Custom assets and such
+JhinUnityProject/RoR2/
 JhinAssetsRaw/
 JhinLeagueExtract/
 JhinSound/My Project/

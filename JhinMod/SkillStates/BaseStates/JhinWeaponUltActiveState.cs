@@ -12,7 +12,12 @@ namespace JhinMod.SkillStates.BaseStates
 {
     public class JhinWeaponUltActiveState : BaseState
     {
+        public float baseDuration = 10f;
         public float duration = 10f;
+
+        public bool startedExit = false;
+        public bool startedExitEffects = false;
+        public float exitDuration = 0.5f;
 
         [SerializeField]
         public SkillDef primaryOverrideSkillDef;
@@ -99,6 +104,12 @@ namespace JhinMod.SkillStates.BaseStates
                 stockToConsume = 1
             });
 
+            SetOverride(primaryOverrideSkillDef, "primary");
+
+            var sm = Helpers.GetEntityStateMachine(this.gameObject, "Slide");
+            sm.SetNextStateToMain();
+            SetOverride(specialCancelSkillDef, "special");
+
             if (animatorComponent)
             {
                 var layerIndex = animatorComponent.GetLayerIndex("UpperBody Ult, Override");
@@ -107,11 +118,17 @@ namespace JhinMod.SkillStates.BaseStates
 
             base.PlayAnimation("UpperBody, Override", "CurtainCallStart");
 
-            SetOverride(primaryOverrideSkillDef, "primary" );
-
-            var sm = Helpers.GetEntityStateMachine(this.gameObject, "Slide");
-            sm.SetNextStateToMain();
-            SetOverride(specialCancelSkillDef, "special");
+            var ultFXprefab = Helpers.GetVFXDynamic("UltModelFX", this.gameObject);
+            if (jhinStateController.ultFX == null)
+            {
+                if (ultFXprefab)
+                {
+                    jhinStateController.ultFX = UnityEngine.Object.Instantiate<GameObject>(ultFXprefab, this.gameObject.transform);
+                    var bindPairComp = jhinStateController.ultFX.GetComponent<BindPairLocator>();
+                    bindPairComp.target = base.gameObject;
+                    bindPairComp.BindPairs();
+                }
+            }
         }
 
         public override void OnExit()
@@ -128,7 +145,6 @@ namespace JhinMod.SkillStates.BaseStates
                 animatorComponent.SetLayerWeight(layerIndex, 0f);
             }
 
-            base.PlayAnimation("UpperBody, Override", "CurtainCallEnd");
 
             if (base.isAuthority && base.skillLocator)
             {
@@ -171,6 +187,22 @@ namespace JhinMod.SkillStates.BaseStates
             return InterruptPriority.Any;
         }
 
+        public virtual void DoExitEffects() 
+        {
+            base.PlayAnimation("UpperBody, Override", "CurtainCallEnd");
+
+            if (jhinStateController.ultFX != null)
+            {
+                Animator ultAnimator = jhinStateController.ultFX.GetComponent<Animator>();
+                if (ultAnimator)
+                {
+                    ultAnimator.SetTrigger("End");
+                }
+
+                GameObject.Destroy(jhinStateController.ultFX, this.exitDuration);
+            }
+        }
+
         public override void FixedUpdate()
         {
             base.FixedUpdate();
@@ -181,12 +213,30 @@ namespace JhinMod.SkillStates.BaseStates
                 SetOverride( primaryOverrideCritSkillDef, "primary" );
             }
 
-            if (jhinStateController.ultHasSetLastShot && jhinStateController.ultHasFiredLastShot)
+            //Do only once check
+            if ( !this.startedExit )
+            {
+                // Start early exit via last shot
+                if ( jhinStateController.ultHasSetLastShot && jhinStateController.ultHasFiredLastShot )
+                {
+                    this.duration = this.fixedAge + this.exitDuration + 0.25f; //0.25 is curtain call shoot animation duration
+                    this.startedExit = true;
+                }
+            }
+
+            // Start exit effects
+            if (this.fixedAge > (this.duration - this.exitDuration) && !startedExitEffects)
+            {
+                startedExitEffects = true;
+                DoExitEffects();
+            }
+
+            if ( this.fixedAge > this.duration )
             {
                 jhinStateController.isUlting = false;
             }
 
-            if (base.isAuthority && (!jhinStateController.isUlting || this.fixedAge > this.duration))
+            if (base.isAuthority && ( !jhinStateController.isUlting ) )
             {
                 this.outer.SetNextStateToMain();
             }

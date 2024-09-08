@@ -113,7 +113,7 @@ namespace JhinMod.Content.UI
                     var ultSkill = ultActiveStateMachine.state as JhinWeaponUltActiveState;
                     if (ultSkill != null)
                     {
-                        Circle.fillAmount = (ultSkill.duration - ultSkill.fixedAge) / ultSkill.duration;
+                        Circle.fillAmount = (ultSkill.baseDuration - ultSkill.fixedAge) / ultSkill.baseDuration;
                     }
                 }
 

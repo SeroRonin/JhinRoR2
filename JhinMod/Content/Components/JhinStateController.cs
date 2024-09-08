@@ -24,6 +24,8 @@ namespace JhinMod.Content.Components
         public float reloadStopwatch;
         public float timeSinceFire;
 
+        public bool isAttacking;
+
         public bool passiveCritArmed;
 
         public bool startedReload;
@@ -40,6 +42,7 @@ namespace JhinMod.Content.Components
         private Animator modelAnimator;
 
         public GameObject modelFX;
+        public GameObject ultFX;
 
         private void Awake()
         {
@@ -60,7 +63,7 @@ namespace JhinMod.Content.Components
                 {
                     modelFX = UnityEngine.Object.Instantiate<GameObject>(modelFXprefab, this.gameObject.transform); 
                     var bindPairComp = modelFX.GetComponent<BindPairLocator>();
-                    bindPairComp.target = this.gameObject.GetComponent<ModelLocator>().gameObject;
+                    bindPairComp.target = this.gameObject;
                     bindPairComp.BindPairs();
                 }
             }
@@ -70,29 +73,30 @@ namespace JhinMod.Content.Components
         {
             this.UpdateTimers();
 
-            //Start reload from autoreload timer
-            if (!this.startedReload && this.reloadStopwatch >= this.reloadAutoDelay )
-            {
-                this.EnterReloadState();
-            }
-
-            //Start reload from empty criteria
-            if (!this.startedReload && this.ammoCount <= 0 )
-            {
-                //Start reload from last bullet fired
-                if (!this.interrupted && this.timeSinceFire < 0.5f)
-                {
-                    this.EnterReloadState();
-                }
-                //Start reload from grace delay, used to adjust how long to wait after interrupting reload with another skill
-                else if (this.reloadStopwatch > this.reloadGraceDelay)
-                {
-                    this.EnterReloadState();
-                }
-            }
+            
 
             if (!isUlting)
             {
+                //Start reload from autoreload timer
+                if (!this.startedReload && this.reloadStopwatch >= this.reloadAutoDelay)
+                {
+                    this.EnterReloadState();
+                }
+
+                //Start reload from empty criteria
+                if (!this.startedReload && this.ammoCount <= 0)
+                {
+                    //Start reload from last bullet fired
+                    if (!this.interrupted && this.timeSinceFire < 0.5f)
+                    {
+                        this.EnterReloadState();
+                    }
+                    //Start reload from grace delay, used to adjust how long to wait after interrupting reload with another skill
+                    else if (this.reloadStopwatch > this.reloadGraceDelay)
+                    {
+                        this.EnterReloadState();
+                    }
+                }
                 if ( this.ammoCount == 1 )
                 {
                     if ( !passiveCritArmed )

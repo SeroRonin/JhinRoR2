@@ -43,6 +43,15 @@ namespace JhinMod.SkillStates
             Helpers.PlaySound("UltLoadShot", base.gameObject);
             //Util.PlaySound("Play_Seroronin_Jhin_UltLoadShot", base.gameObject);
 
+            if (jhinStateController.ultFX != null)
+            {
+                Animator ultAnimator = jhinStateController.ultFX.GetComponent<Animator>();
+                if (ultAnimator)
+                {
+                    EntityState.PlayAnimationOnAnimator( ultAnimator, "Base Layer", "Fire");
+                }
+            }
+
             base.PlayAnimation("UpperBody, Override", "CurtainCallAttack");
         }
 

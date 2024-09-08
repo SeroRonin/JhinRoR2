@@ -161,7 +161,8 @@ namespace JhinMod.Modules.Survivors
                 stockToConsume = 0,
 
                 cancelSprintingOnActivation = false,
-                
+                mustKeyPress = false,
+
                 keywordTokens = new string[] { "KEYWORD_AGILE", "KEYWORD_EXECUTING_WHISPER", "KEYWORD_RELOAD" }
             });
 

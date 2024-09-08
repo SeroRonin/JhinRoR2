@@ -43,6 +43,7 @@ namespace JhinMod.SkillStates
             base.OnEnter();
             jhinStateController = base.GetComponent<JhinStateController>();
             jhinStateController.timeSinceFire = 0f;
+            jhinStateController.isAttacking = true;
             jhinStateController.ResetReload();
 
             Helpers.StopSound("PassiveCritSpin", base.gameObject, skinName: "Jhin");
@@ -154,6 +155,7 @@ namespace JhinMod.SkillStates
                 }
                 
                 jhinStateController.TakeAmmo(1);
+                jhinStateController.isAttacking = false;
             }
         }
 
@@ -347,7 +349,7 @@ namespace JhinMod.SkillStates
             {
                 if (this.inputBank.skill1.down)
                 {
-                    this.outer.SetNextState(new WhisperPrimary());
+                    //this.outer.SetNextState(new WhisperPrimary());
                 }
             }
 

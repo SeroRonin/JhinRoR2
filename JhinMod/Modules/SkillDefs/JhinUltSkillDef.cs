@@ -27,15 +27,20 @@ namespace JhinMod.Modules.SkillDefs
             JhinStateController jhinAmmoComponent = ((InstanceData)skillSlot.skillInstanceData).jhinAmmoComponent;
             return jhinAmmoComponent.isUlting;
         }
+        private static bool IsAttacking([NotNull] GenericSkill skillSlot)
+        {
+            JhinStateController jhinAmmoComponent = ((InstanceData)skillSlot.skillInstanceData).jhinAmmoComponent;
+            return jhinAmmoComponent.isAttacking;
+        }
 
         public override bool CanExecute([NotNull] GenericSkill skillSlot)
         {
-            return !IsUlting(skillSlot) && base.CanExecute(skillSlot);
+            return base.CanExecute(skillSlot) && !IsUlting(skillSlot) && !IsAttacking(skillSlot);
         }
 
         public override bool IsReady([NotNull] GenericSkill skillSlot)
         {
-            return base.IsReady(skillSlot) && !IsUlting(skillSlot);
+            return base.IsReady(skillSlot) && !IsUlting(skillSlot) && !IsAttacking(skillSlot);
         }
 
         protected class InstanceData : BaseSkillInstanceData

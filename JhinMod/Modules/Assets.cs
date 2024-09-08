@@ -42,8 +42,12 @@ namespace JhinMod.Modules
         internal static GameObject projectTracerFourthEffect;
         internal static GameObject projectDeadlyFlourishMuzzleEffect;
         internal static GameObject projectGrenadeGhost;
-        internal static GameObject projectGrenadeImpact;
-        internal static GameObject projectGrenadeImpactKill;
+        internal static GameObject projectGrenadeImpactEffect;
+        internal static GameObject projectGrenadeImpactKillEffect;
+        internal static GameObject projectUltModelEffect;
+
+        //DWG
+        internal static GameObject DWGUltModelEffect;
 
         //Dynamic VFX Prefab Tables
         public static Dictionary<string, GameObject> vfxPrefabs = new Dictionary<string, GameObject>{};
@@ -191,7 +195,11 @@ namespace JhinMod.Modules
             vfxPrefabs.Add("Jhin_MuzzleFlash", EntityStates.Commando.CommandoWeapon.FirePistol2.muzzleEffectPrefab);
 
             //Project
-            projectMaskEffect = CreateProjectMask();
+            BindPairLocator projectMaskBPL;
+            projectMaskEffect = CreateBindPairEffect("Jhin_Project_MaskVFX", out projectMaskBPL);
+            var glitchComp = projectMaskEffect.AddComponent<ProjectMaskGlitchFX>();
+            glitchComp.maskRenderer = projectMaskEffect.GetComponent<MeshRenderer>();
+            projectMaskBPL.AddBindPair("Root", "Head");
             vfxPrefabs.Add("ProjectJhin_ModelFX", projectMaskEffect);
 
             projectMuzzleflashEffect = Asset.LoadEffect("Jhin_Project_Muzzleflash", false);
@@ -208,11 +216,22 @@ namespace JhinMod.Modules
             vfxPrefabs.Add("ProjectJhin_DeadlyFlourishMuzzle", projectDeadlyFlourishMuzzleEffect);
 
             projectGrenadeGhost = Asset.CreateDancingGrenadeGhost("ProjectJhinGrenadeGhost");
-            projectGrenadeImpact = Asset.LoadEffect("Jhin_Project_GrenadeImpact");
-            projectGrenadeImpactKill = Asset.LoadEffect("Jhin_Project_GrenadeImpactKill");
-            vfxPrefabs.Add("ProjectJhin_GrenadeImpact", projectGrenadeImpact);
+            projectGrenadeImpactEffect = Asset.LoadEffect("Jhin_Project_GrenadeImpact");
+            projectGrenadeImpactKillEffect = Asset.LoadEffect("Jhin_Project_GrenadeImpactKill");
+            vfxPrefabs.Add("ProjectJhin_GrenadeImpact", projectGrenadeImpactEffect);
             vfxPrefabs.Add("ProjectJhin_Grenade", projectGrenadeGhost);
-            vfxPrefabs.Add("ProjectJhin_GrenadeImpactKill", projectGrenadeImpactKill);
+            vfxPrefabs.Add("ProjectJhin_GrenadeImpactKill", projectGrenadeImpactKillEffect);
+
+            BindPairLocator projectUltBPL;
+            projectUltModelEffect = Asset.CreateBindPairEffect("Jhin_Project_UltModelFX", out projectUltBPL);
+            projectUltBPL.AddBindPair("Root","Barrel");
+            vfxPrefabs.Add("ProjectJhin_UltModelFX", projectUltModelEffect);
+
+            //DWG
+            BindPairLocator dwgUltBPL;
+            DWGUltModelEffect = Asset.CreateBindPairEffect("Jhin_DWG_UltModelFX", out dwgUltBPL);
+            dwgUltBPL.AddBindPair("Root", "Spine2");
+            vfxPrefabs.Add("DWGJhin_UltModelFX", DWGUltModelEffect);
 
             //Henry Leftover
             swordSwingEffect = Asset.LoadEffect("JhinSwordSwingEffect", true);
@@ -227,6 +246,14 @@ namespace JhinMod.Modules
 
             var bindPairLoc = prefab.AddComponent<BindPairLocator>();
             bindPairLoc.AddBindPair("Root","Head");
+
+            return prefab;
+        }
+
+        private static GameObject CreateBindPairEffect( string effectName, out BindPairLocator bindPairLocator )
+        {
+            var prefab = mainAssetBundle.LoadAsset<GameObject>( effectName );
+            bindPairLocator = prefab.AddComponent<BindPairLocator>();
 
             return prefab;
         }

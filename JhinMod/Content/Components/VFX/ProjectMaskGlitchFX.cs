@@ -10,23 +10,16 @@ using UnityEngine;
         [SerializeField]
         public MeshRenderer maskRenderer;
 
-        [SerializeField]
         public float minimumStableTime = 2;
-        [SerializeField]
         public float maximumStableTime = 15;
 
-        [SerializeField]
         public float timeBetweenAttempts = 0.2f;
 
-        [SerializeField]
         public float maskFrameHoldMin = 0.1f;
-        [SerializeField]
         public float maskFrameHoldMax = 0.3f;
         public float maskFrameHoldTime = 0.2f;
 
-        [SerializeField]
         public float glitchFrameHoldMin = 0.1f;
-        [SerializeField]
         public float glitchFrameHoldMax = 0.3f;
         public float glitchFrameHoldTime = 0.2f;
 
@@ -34,9 +27,7 @@ using UnityEngine;
         public float timeSinceMask;
         public float timeSinceGlitch;
 
-        [SerializeField]
         public float maskGlitchChance = 5f;
-        [SerializeField]
         public float maskGlitchMultipleChance = 30f;
 
         public int maskFrame = 0;
