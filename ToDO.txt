@@ -27,5 +27,4 @@ VFX:
 
 TODO Before 1.4:
 - Add Soulfighter ModelVFX
-- Add missing project mask in lobby
 - Add rocket jumping?

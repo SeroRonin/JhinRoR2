@@ -20,11 +20,12 @@ namespace JhinMod.Content.Components
             public Transform targetTransform;
         }
 
-        [SerializeField]
         public GameObject target;
 
         [SerializeField]
         public List<BindPair> bindPairs = new List<BindPair>();
+
+        private bool enableDebug = false;
 
         public void SetTransforms( BindPair bindPair )
         {
@@ -37,23 +38,21 @@ namespace JhinMod.Content.Components
                 child1 = selfComp.FindChild(bindPair.selfLocatorString);
             }
 
-            ModelLocator tarComp = target.GetComponent<ModelLocator>();
-            if (tarComp && tarComp.modelTransform)
+            ChildLocator tarComp = target.GetComponentInChildren<ChildLocator>();
+            if ( tarComp )
             {
-                var tarComp2 = tarComp.modelTransform.GetComponent<ChildLocator>();
-                if (tarComp2)
-                {
-                    child2 = tarComp2.FindChild(bindPair.targetLocatorString);
-                }
+                    child2 = tarComp.FindChild(bindPair.targetLocatorString);
             }
 
             if ( child1 != null ) 
             {
                 bindPair.selfTransform = child1;
+                DebugPrint($"child1 found {child1}");
             }
             if ( child2 != null )
             {
                 bindPair.targetTransform = child2;
+                DebugPrint($"child2 found {child2}");
             }
         }
 
@@ -90,6 +89,14 @@ namespace JhinMod.Content.Components
                     pair.selfTransform.rotation = pair.targetTransform.rotation;
                     pair.selfTransform.localScale = pair.targetTransform.localScale;
                 }
+            }
+        }
+
+        public void DebugPrint(string text)
+        {
+            if (enableDebug)
+            {
+                Log.Warning(text);
             }
         }
     }

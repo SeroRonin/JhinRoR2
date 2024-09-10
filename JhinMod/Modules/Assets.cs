@@ -238,18 +238,6 @@ namespace JhinMod.Modules
             swordHitImpactEffect = Asset.LoadEffect("ImpactJhinSlash");
         }
 
-        private static GameObject CreateProjectMask()
-        {
-            var prefab = mainAssetBundle.LoadAsset<GameObject>("Jhin_Project_MaskVFX");
-            var glitchComp = prefab.AddComponent<ProjectMaskGlitchFX>();
-            glitchComp.maskRenderer = prefab.GetComponent<MeshRenderer>();
-
-            var bindPairLoc = prefab.AddComponent<BindPairLocator>();
-            bindPairLoc.AddBindPair("Root","Head");
-
-            return prefab;
-        }
-
         private static GameObject CreateBindPairEffect( string effectName, out BindPairLocator bindPairLocator )
         {
             var prefab = mainAssetBundle.LoadAsset<GameObject>( effectName );

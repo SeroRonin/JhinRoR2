@@ -102,7 +102,7 @@ namespace JhinMod
 
         private void Hook()
         {
-            //On.RoR2.SurvivorMannequins.SurvivorMannequinSlotController.ApplyLoadoutToMannequinInstance += SurvivorMannequinSlotController_ApplyLoadoutToMannequinInstance;
+            On.RoR2.SurvivorMannequins.SurvivorMannequinSlotController.ApplyLoadoutToMannequinInstance += SurvivorMannequinSlotController_ApplyLoadoutToMannequinInstance;
 
             On.RoR2.GlobalEventManager.OnHitEnemy += GlobalEventManager_OnHitEnemy;
             On.RoR2.HealthComponent.TakeDamage += HealthComponent_OnTakeDamage;
@@ -134,7 +134,7 @@ namespace JhinMod
 
         private void UnHooks()
         {
-            //On.RoR2.SurvivorMannequins.SurvivorMannequinSlotController.ApplyLoadoutToMannequinInstance -= SurvivorMannequinSlotController_ApplyLoadoutToMannequinInstance;
+            On.RoR2.SurvivorMannequins.SurvivorMannequinSlotController.ApplyLoadoutToMannequinInstance -= SurvivorMannequinSlotController_ApplyLoadoutToMannequinInstance;
 
             On.RoR2.GlobalEventManager.OnHitEnemy -= GlobalEventManager_OnHitEnemy;
             On.RoR2.CharacterBody.RecalculateStats -= CharacterBody_RecalculateStats;
@@ -160,24 +160,53 @@ namespace JhinMod
             }
         }
 
-        //private void SurvivorMannequinSlotController_ApplyLoadoutToMannequinInstance(On.RoR2.SurvivorMannequins.SurvivorMannequinSlotController.orig_ApplyLoadoutToMannequinInstance orig, RoR2.SurvivorMannequins.SurvivorMannequinSlotController self)
-        //{
-        //    orig(self);
+        public static Dictionary<Transform, GameObject> playerLobbyModelFX = new Dictionary<Transform, GameObject>();
 
-        //    if (!self.mannequinInstanceTransform)
-        //    {
-        //        return;
-        //    }
-        //    var displayPrefab = self.mannequinInstanceTransform;
-        //    BodyIndex bodyIndexFromSurvivorIndex = SurvivorCatalog.GetBodyIndexFromSurvivorIndex(self.currentSurvivorDef.survivorIndex);
-        //    int skinIndex = (int)self.currentLoadout.bodyLoadoutManager.GetSkinIndex(bodyIndexFromSurvivorIndex);
-        //    if (displayPrefab.gameObject.name == "JhinDisplay")
-        //    {
-        //        var vfx = Helpers.SpawnVFXDynamic("ModelFx", skinIndex, displayPrefab);
-        //        BindPairModifier mod = vfx.GetComponent<BindPairModifier>();
-        //        mod.BindPairs();
-        //    }
-        //}
+        private void SurvivorMannequinSlotController_ApplyLoadoutToMannequinInstance(On.RoR2.SurvivorMannequins.SurvivorMannequinSlotController.orig_ApplyLoadoutToMannequinInstance orig, RoR2.SurvivorMannequins.SurvivorMannequinSlotController self)
+        {
+            orig(self);
+
+            if (!self.mannequinInstanceTransform)
+            {
+                return;
+            }
+            var displayPrefab = self.mannequinInstanceTransform;
+            BodyIndex bodyIndexFromSurvivorIndex = SurvivorCatalog.GetBodyIndexFromSurvivorIndex(self.currentSurvivorDef.survivorIndex);
+            int skinIndex = (int)self.currentLoadout.bodyLoadoutManager.GetSkinIndex(bodyIndexFromSurvivorIndex);
+
+            Log.Warning($"Attempting mannequin VFX check on {displayPrefab}");
+
+            if (displayPrefab.gameObject.name.Contains("JhinDisplay"))
+            {
+                if ( JhinPlugin.playerLobbyModelFX.ContainsKey( self.mannequinInstanceTransform ) )
+                {
+                    if ( JhinPlugin.playerLobbyModelFX[self.mannequinInstanceTransform] != null )
+                    {
+                        Log.Warning($"Destroying mannequin VFX {displayPrefab}");
+                        GameObject.Destroy(JhinPlugin.playerLobbyModelFX[self.mannequinInstanceTransform]);
+                        JhinPlugin.playerLobbyModelFX.Remove( self.mannequinInstanceTransform );
+                    }
+                }
+                if ( !JhinPlugin.playerLobbyModelFX.ContainsKey( self.mannequinInstanceTransform ) )
+                {
+                    Log.Warning($"Attempting mannequin VFX {displayPrefab}");
+                    var modelFXprefab = Helpers.GetVFXDynamic("ModelFX", skinIndex);
+                    if (modelFXprefab != null)
+                    {
+                        Log.Warning($"Creating mannequin VFX {modelFXprefab}");
+                        var modelFX = UnityEngine.Object.Instantiate<GameObject>(modelFXprefab, self.mannequinInstanceTransform);
+                        var bindPairComp = modelFX.GetComponent<BindPairLocator>();
+                        bindPairComp.target = self.mannequinInstanceTransform.gameObject;
+                        bindPairComp.BindPairs();
+                        JhinPlugin.playerLobbyModelFX[self.mannequinInstanceTransform] = modelFX;
+                    }
+                    else
+                    {
+                        Log.Warning($"Failed creating mannequin VFX");
+                    }
+                }
+            }
+        }
 
         //Handles passive speed boost on crit
         private void GlobalEventManager_OnHitEnemy(On.RoR2.GlobalEventManager.orig_OnHitEnemy orig, GlobalEventManager self, DamageInfo damageInfo, GameObject victim)

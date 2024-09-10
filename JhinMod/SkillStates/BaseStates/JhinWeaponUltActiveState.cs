@@ -125,7 +125,7 @@ namespace JhinMod.SkillStates.BaseStates
                 {
                     jhinStateController.ultFX = UnityEngine.Object.Instantiate<GameObject>(ultFXprefab, this.gameObject.transform);
                     var bindPairComp = jhinStateController.ultFX.GetComponent<BindPairLocator>();
-                    bindPairComp.target = base.gameObject;
+                    bindPairComp.target = base.gameObject.GetComponent<ModelLocator>()?.modelTransform.gameObject;
                     bindPairComp.BindPairs();
                 }
             }

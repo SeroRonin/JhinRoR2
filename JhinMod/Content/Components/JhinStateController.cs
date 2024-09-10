@@ -63,7 +63,7 @@ namespace JhinMod.Content.Components
                 {
                     modelFX = UnityEngine.Object.Instantiate<GameObject>(modelFXprefab, this.gameObject.transform); 
                     var bindPairComp = modelFX.GetComponent<BindPairLocator>();
-                    bindPairComp.target = this.gameObject;
+                    bindPairComp.target = base.gameObject.GetComponent<ModelLocator>()?.modelTransform.gameObject;
                     bindPairComp.BindPairs();
                 }
             }
