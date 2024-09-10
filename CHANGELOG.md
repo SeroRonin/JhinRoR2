@@ -10,8 +10,8 @@ CONFIG CHANGE: Delete your config to get new options and updated values!
 
 #### *General*
 * **[Addition]** Added the Soul Fighter skin
-* **[Addition]** Added Unique SFX for the following skins: SKTT1, Shan Hai Scrolls, DWG, Empyrean, Soul Fighter
-* **[Addition]** Added glitch visuals to Project Jhin's Mask
+* **[Addition]** Added Unique SFX for the remaining implemented skins: SKTT1, Shan Hai Scrolls, DWG, Empyrean, Soul Fighter
+* **[Addition]** Added some model VFX ( Project mask, Soul Fighter flames)
 * **[Bugfix]** Fixed missing VFX config option
 * **[Adjustment]** Renamed SFX/VFX Choice to SFX/VFX Override, and renamed "SkinDependant" option to "Dynamic"
 * **[Adjustment]** Added Dynamic Bones to cloak for CustomEmoteAPI Emotes
@@ -23,9 +23,9 @@ CONFIG CHANGE: Delete your config to get new options and updated values!
 > Whisper should now trigger Shuriken each time you attack. It's still not the best item for jhin's attackspeed, but hey at least it works properly!
 
 #### *Curtain Call*
-* **[Addition]** Added support for certain VFX features during the ult
+* **[Addition]** Added model VFX for the following skins: Project, DWG
 * **[Adjustment]** Curtain Call now has an exit time
-> Currently the only skins using the VFX features are Project and DWG. The exit time is a necessary feature added to support blending out VFX as well as certain animations, but it's a very short time so it should barely be noticeable
+> The model VFX are only for visuals that appear during the ult, not for the ult shots yet. The exit time is a necessary feature added to support blending out VFX as well as certain animations, but it's a very short time so it should barely be noticeable
 
 ## 1.3.0
 Updates the mod to work with Seekers of the Storm, as well as small changes and some WiP VFX for the Project skin. 

@@ -42,7 +42,7 @@ namespace JhinMod
     {
         public const string MODUID = "com.seroronin.JhinMod";
         public const string MODNAME = "JhinMod";
-        public const string MODVERSION = "1.3.0";
+        public const string MODVERSION = "1.4.0";
 
         public const string DEVELOPER_PREFIX = "SERORONIN";
 
@@ -112,7 +112,7 @@ namespace JhinMod
 
             //Hooks of Heresy
             On.EntityStates.Mage.Weapon.BaseChargeBombState.OnEnter += SlicingMaelstrom_Charge_OnEnter;
-            On.EntityStates.Mage.Weapon.BaseThrowBombState.OnEnter += SlicingMaelstrom_Throw_OnEnter;
+            On.EntityStates.Mage.Weapon.BaseChargeBombState.OnExit += SlicingMaelstrom_Charge_OnExit;
             //Strides of Heresy
             On.EntityStates.GhostUtilitySkillState.OnEnter += Shadowfade_OnEnter;
             On.EntityStates.GhostUtilitySkillState.OnExit += Shadowfade_OnExit;
@@ -143,7 +143,7 @@ namespace JhinMod
             
             //Hooks of Heresy
             On.EntityStates.Mage.Weapon.BaseChargeBombState.OnEnter -= SlicingMaelstrom_Charge_OnEnter;
-            On.EntityStates.Mage.Weapon.BaseThrowBombState.OnEnter -= SlicingMaelstrom_Throw_OnEnter;
+            On.EntityStates.Mage.Weapon.BaseChargeBombState.OnExit -= SlicingMaelstrom_Charge_OnExit;
             //Strides of Heresy
             On.EntityStates.GhostUtilitySkillState.OnEnter -= Shadowfade_OnEnter;
             On.EntityStates.GhostUtilitySkillState.OnExit -= Shadowfade_OnExit;
@@ -170,11 +170,10 @@ namespace JhinMod
             {
                 return;
             }
+
             var displayPrefab = self.mannequinInstanceTransform;
             BodyIndex bodyIndexFromSurvivorIndex = SurvivorCatalog.GetBodyIndexFromSurvivorIndex(self.currentSurvivorDef.survivorIndex);
             int skinIndex = (int)self.currentLoadout.bodyLoadoutManager.GetSkinIndex(bodyIndexFromSurvivorIndex);
-
-            Log.Warning($"Attempting mannequin VFX check on {displayPrefab}");
 
             if (displayPrefab.gameObject.name.Contains("JhinDisplay"))
             {
@@ -182,27 +181,20 @@ namespace JhinMod
                 {
                     if ( JhinPlugin.playerLobbyModelFX[self.mannequinInstanceTransform] != null )
                     {
-                        Log.Warning($"Destroying mannequin VFX {displayPrefab}");
                         GameObject.Destroy(JhinPlugin.playerLobbyModelFX[self.mannequinInstanceTransform]);
                         JhinPlugin.playerLobbyModelFX.Remove( self.mannequinInstanceTransform );
                     }
                 }
                 if ( !JhinPlugin.playerLobbyModelFX.ContainsKey( self.mannequinInstanceTransform ) )
                 {
-                    Log.Warning($"Attempting mannequin VFX {displayPrefab}");
                     var modelFXprefab = Helpers.GetVFXDynamic("ModelFX", skinIndex);
                     if (modelFXprefab != null)
                     {
-                        Log.Warning($"Creating mannequin VFX {modelFXprefab}");
                         var modelFX = UnityEngine.Object.Instantiate<GameObject>(modelFXprefab, self.mannequinInstanceTransform);
                         var bindPairComp = modelFX.GetComponent<BindPairLocator>();
                         bindPairComp.target = self.mannequinInstanceTransform.gameObject;
                         bindPairComp.BindPairs();
                         JhinPlugin.playerLobbyModelFX[self.mannequinInstanceTransform] = modelFX;
-                    }
-                    else
-                    {
-                        Log.Warning($"Failed creating mannequin VFX");
                     }
                 }
             }
@@ -340,11 +332,11 @@ namespace JhinMod
                 }
             }
         }
-        private void SlicingMaelstrom_Throw_OnEnter(On.EntityStates.Mage.Weapon.BaseThrowBombState.orig_OnEnter orig, EntityStates.Mage.Weapon.BaseThrowBombState self)
+        private void SlicingMaelstrom_Charge_OnExit(On.EntityStates.Mage.Weapon.BaseChargeBombState.orig_OnExit orig, EntityStates.Mage.Weapon.BaseChargeBombState self)
         {
             orig(self);
 
-            if (self is EntityStates.GlobalSkills.LunarNeedle.ThrowLunarSecondary)
+            if (self is EntityStates.GlobalSkills.LunarNeedle.ChargeLunarSecondary)
             {
                 var ammoComponent = self.GetComponent<JhinStateController>();
                 if ( ammoComponent )
@@ -353,28 +345,58 @@ namespace JhinMod
                 }
             }
         }
+
         private void Shadowfade_OnEnter(On.EntityStates.GhostUtilitySkillState.orig_OnEnter orig, EntityStates.GhostUtilitySkillState self)
         {
             var ammoComponent = self.GetComponent<JhinStateController>();
-            if (ammoComponent != null && ammoComponent.ammoCount != 0 )
+            if ( ammoComponent != null )
             {
-                ammoComponent.PauseReload();
+                if ( ammoComponent.ammoCount != 0 )
+                {
+                    ammoComponent.PauseReload();
+                }
+
+                var modelFx = ammoComponent.modelFX;
+                if ( modelFx )
+                {
+                    modelFx.SetActive( false );
+                }
+                var ultFX = ammoComponent.ultFX;
+                if ( ultFX )
+                {
+                    ultFX.SetActive( false );
+                }
             }
             orig(self);
         }
         private void Shadowfade_OnExit(On.EntityStates.GhostUtilitySkillState.orig_OnExit orig, EntityStates.GhostUtilitySkillState self)
         {
             var ammoComponent = self.GetComponent<JhinStateController>();
-            if (ammoComponent != null && ammoComponent.ammoCount != 0 )
+            if ( ammoComponent != null )
             {
-                ammoComponent.StopReload();
+                if ( ammoComponent.ammoCount != 0)
+                {
+                    ammoComponent.StopReload();
+                }
+
+                var modelFx = ammoComponent.modelFX;
+                if ( modelFx )
+                {
+                    modelFx.SetActive( true );
+                }
+                var ultFX = ammoComponent.ultFX;
+                if ( ultFX )
+                {
+                    ultFX.SetActive( true );
+                }
             }
             orig(self);
         }
+
         private void Ruin_OnEnter(On.EntityStates.GlobalSkills.LunarDetonator.Detonate.orig_OnEnter orig, EntityStates.GlobalSkills.LunarDetonator.Detonate self)
         {
             var ammoComponent = self.GetComponent<JhinStateController>();
-            if (ammoComponent != null && ammoComponent.ammoCount != 0)
+            if ( ammoComponent != null && ammoComponent.ammoCount != 0 )
             {
                 ammoComponent.StopReload();
             }
@@ -395,7 +417,7 @@ namespace JhinMod
         public void FrozenState_OnExit(On.EntityStates.FrozenState.orig_OnExit orig, EntityStates.FrozenState self)
         {
             var ammoComponent = self.GetComponent<JhinStateController>();
-            if (ammoComponent)
+            if ( ammoComponent )
             {
                 ammoComponent.StopReload();
             }

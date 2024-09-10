@@ -1,7 +1,7 @@
 Implement Ult Rocketjumping
-Implement Ult VFX models (system done, Project Gun Overlay done, SKTT1 Wings, DWG Wings done)
+Implement remaining Ult VFX models ( SKTT1 Wings )
 Implement Dynamic SFX for bullet hits, W hits, and Ult projectile (travel and explosion)
-Implement Character/Skin VFX models and materials (Project Mask done, ShanHai cloak, Empyrean RGB, Soul Fighter wisps)
+Implement remaining Character/Skin VFX models and materials (ShanHai cloak, Empyrean RGB)
 - Modifications to base hopoo shader? ShanHai cloak would probably need it
 Brainstorm on how to make Deadly Flourish better
 - Idea: Passes through small enemies, stops on large ones. More damage to balance out
@@ -26,5 +26,4 @@ VFX:
 
 
 TODO Before 1.4:
-- Add Soulfighter ModelVFX
 - Add rocket jumping?

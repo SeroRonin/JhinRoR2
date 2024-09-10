@@ -55,6 +55,8 @@ namespace JhinMod.SkillStates
             this.childLocator = this.modelTransform.GetComponent<ChildLocator>();
             this.jhinStateController = GetComponent<JhinStateController>();
 
+            this.jhinStateController.isAttacking = false;
+
             if (this.tracker && base.isAuthority)
             {
                 this.initialOrbTarget = this.tracker.GetTrackingTarget();

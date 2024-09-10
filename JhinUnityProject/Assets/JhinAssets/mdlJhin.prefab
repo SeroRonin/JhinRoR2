@@ -406,6 +406,14 @@ MonoBehaviour:
     transform: {fileID: 1249892034741540975}
   - name: JhinMeshWeapon
     transform: {fileID: 2387391777215458822}
+  - name: Shell1
+    transform: {fileID: 7499345995309229496}
+  - name: Shell2
+    transform: {fileID: 5143171376680665628}
+  - name: Shell3
+    transform: {fileID: 7345439378947712317}
+  - name: Shell4
+    transform: {fileID: 2315244542452625533}
 --- !u!1 &900885512824132082
 GameObject:
   m_ObjectHideFlags: 0

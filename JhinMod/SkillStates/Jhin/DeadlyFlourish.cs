@@ -31,6 +31,7 @@ namespace JhinMod.SkillStates
             base.OnEnter();
 
             this.jhinStateController = GetComponent<JhinStateController>();
+            this.jhinStateController.isAttacking = false;
 
             if (jhinStateController.ammoCount != 0)
             {

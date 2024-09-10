@@ -76,6 +76,21 @@ namespace JhinMod.Content.Components
             this.bindPairs.Add( newBindPair );
         }
 
+        public void AddBindPair(string locatorString)
+        {
+            var newBindPair = CreateBindPair(locatorString, locatorString);
+            this.bindPairs.Add(newBindPair);
+        }
+
+        public void AddBindPairs( string[] locatorStrings)
+        {
+            foreach (var locatorString in locatorStrings)
+            {
+                var newBindPair = CreateBindPair(locatorString, locatorString);
+                this.bindPairs.Add(newBindPair);
+            }
+        }
+
         public void BindPairs()
         {
             this.SetTransforms();

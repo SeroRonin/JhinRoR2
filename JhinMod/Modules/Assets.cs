@@ -49,6 +49,9 @@ namespace JhinMod.Modules
         //DWG
         internal static GameObject DWGUltModelEffect;
 
+        //Soul Fighter
+        internal static GameObject SoulFighterModelEffect;
+
         //Dynamic VFX Prefab Tables
         public static Dictionary<string, GameObject> vfxPrefabs = new Dictionary<string, GameObject>{};
 
@@ -161,7 +164,7 @@ namespace JhinMod.Modules
 
             // feel free to delete everything in here and load in your own assets instead
             // it should work fine even if left as is- even if the assets aren't in the bundle
-            
+
             swordHitSoundEvent = CreateNetworkSoundEventDef("JhinSwordHit");
 
             bombExplosionEffect = LoadEffect("BombExplosionEffect", "HenryBombExplosion");
@@ -224,7 +227,7 @@ namespace JhinMod.Modules
 
             BindPairLocator projectUltBPL;
             projectUltModelEffect = Asset.CreateBindPairEffect("Jhin_Project_UltModelFX", out projectUltBPL);
-            projectUltBPL.AddBindPair("Root","Barrel");
+            projectUltBPL.AddBindPair("Root", "Barrel");
             vfxPrefabs.Add("ProjectJhin_UltModelFX", projectUltModelEffect);
 
             //DWG
@@ -232,6 +235,13 @@ namespace JhinMod.Modules
             DWGUltModelEffect = Asset.CreateBindPairEffect("Jhin_DWG_UltModelFX", out dwgUltBPL);
             dwgUltBPL.AddBindPair("Root", "Spine2");
             vfxPrefabs.Add("DWGJhin_UltModelFX", DWGUltModelEffect);
+
+            //Soul Fighter
+            BindPairLocator SoulFighterFlamesBPL;
+            SoulFighterModelEffect = CreateBindPairEffect("Jhin_SoulFighter_FlamesVFX", out SoulFighterFlamesBPL);
+            string[] testList = { "Barrel", "Pistol", "ClavicleR", "ShoulderR", "ElbowR", "Shell1", "Shell2", "Shell3", "Shell4" };
+            SoulFighterFlamesBPL.AddBindPairs( testList );
+            vfxPrefabs.Add("SoulFighterJhin_ModelFX", SoulFighterModelEffect);
 
             //Henry Leftover
             swordSwingEffect = Asset.LoadEffect("JhinSwordSwingEffect", true);
