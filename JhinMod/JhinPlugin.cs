@@ -55,6 +55,9 @@ namespace JhinMod
         {
             instance = this;
 
+            //Multiplayer testing, do not release with this
+            //On.RoR2.Networking.NetworkManagerSystemSteam.OnClientConnect += (s, u, t) => { };
+
             Log.Init(Logger);
             Modules.Asset.Initialize(); // load assets and read config
             Modules.Config.ReadConfig();
@@ -213,7 +216,7 @@ namespace JhinMod
                 //If we are the right survivor, add the movespeed buff
                 if (attackerBody && attackerBody.baseNameToken == JhinPlugin.DEVELOPER_PREFIX + "_JHIN_BODY_NAME" )
                 {
-                    if (NetworkServer.active)
+                    if ( NetworkServer.active )
                     {
                         attackerBody.AddTimedBuff(Modules.Buffs.jhinCritMovespeedBuff, Modules.Config.passiveBuffDuration.Value);
                     }

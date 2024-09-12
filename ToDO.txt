@@ -23,7 +23,3 @@ VFX:
 - DWG ( Blue-ish Recolors, ^ )
 - Empyrean ( Dark-ish Recolors, ^ )
 - DWG ( Cyan-ish Recolors, ^ )
-
-
-TODO Before 1.4:
-- Add rocket jumping?

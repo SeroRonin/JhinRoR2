@@ -5,6 +5,8 @@ Every time there is an update to configurable numbers, you need to delete your c
 This major update notably adds in the Soul Fighter skin, SFX for rest of the skins, and some VFX support systems I am currently working on!
 These VFX changes include Project Jhin's mask, Project Jhin's Ult Overlay, and DWG's Wings (with animations)
 
+The next update will likely be centered around fixing some multiplayer bugs
+
 Currently WiP, for those who check the github :)
 CONFIG CHANGE: Delete your config to get new options and updated values!
 
