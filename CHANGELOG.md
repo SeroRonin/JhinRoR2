@@ -2,14 +2,17 @@
 Every time there is an update to configurable numbers, you need to delete your config files so that the game can generate a new one with the right default values and sliders. If there are no new config changes, you do not need to worry about this.
 
 ## 1.4.0
-This major update notably adds in the Soul Fighter skin, SFX for rest of the skins, and some VFX support systems I am currently working on!
-These VFX changes include Project Jhin's mask, Project Jhin's Ult Overlay, and DWG's Wings (with animations)
+This major update notably cuts down file size, adds in the Soul Fighter skin, SFX for rest of the skins, and some code changes including some more VFX!
+
+The biggest thing is compressed audio, which brings the mod down to 1/3rd the filesize of the previous patch, even with all the new audio added (the file size doubled before I compressed everything :skull:) If you notice any issues with the audio because of this, please let me know!
+The currently implemeted VFX changes include Project Jhin's mask and ult overlay, as well as DWG's wngs (with animations). The current plan for other VFX is to create a set of particles for the base skin, then use thoses to create color swaps for all the other skins, until I bother to create unique VFX for each.
 
 The next update will likely be centered around fixing some multiplayer bugs
 
 CONFIG CHANGE: Delete your config to get new options and updated values!
 
 #### *General*
+* **[QoL]** Converted/Compressed all audio from WAV to OGG
 * **[Addition]** Added the Soul Fighter skin
 * **[Addition]** Added Unique SFX for the remaining implemented skins: SKTT1, Shan Hai Scrolls, DWG, Empyrean, Soul Fighter
 * **[Addition]** Added some model VFX ( Project mask, Soul Fighter flames)
@@ -17,7 +20,6 @@ CONFIG CHANGE: Delete your config to get new options and updated values!
 * **[Bugfix]** Fixed missing VFX config option
 * **[Adjustment]** Renamed SFX/VFX Choice to SFX/VFX Override, and renamed "SkinDependant" option to "Dynamic"
 * **[Adjustment]** Added Dynamic Bones to cloak for CustomEmoteAPI Emotes
-> A bunch of visual and audio changes were added in this patch, too much to cover indivudally. The current plan is to create a set of particles for the base skin, then use thoses to create color swaps for all the other skins, until get around to creating unique VFX for each.
 > Dynamic bones are only active when emoting, and should alleviate a lot of clipping when using custom emotes
 
 #### *Whisper*
