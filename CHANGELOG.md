@@ -1,6 +1,9 @@
 # Delete your config files!
 Every time there is an update to configurable numbers, you need to delete your config files so that the game can generate a new one with the right default values and sliders. If there are no new config changes, you do not need to worry about this.
 
+## 1.4.1
+Updated changelog on Thunderstore
+
 ## 1.4.0
 This major update notably cuts down file size, adds in the Soul Fighter skin, SFX for rest of the skins, and some code changes including some more VFX!
 
