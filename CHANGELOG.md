@@ -1,19 +1,19 @@
 # Delete your config files!
 Every time there is an update to configurable numbers, you need to delete your config files so that the game can generate a new one with the right default values and sliders. If there are no new config changes, you do not need to worry about this.
 
-## 1.4.0 WiP
+## 1.4.0
 This major update notably adds in the Soul Fighter skin, SFX for rest of the skins, and some VFX support systems I am currently working on!
 These VFX changes include Project Jhin's mask, Project Jhin's Ult Overlay, and DWG's Wings (with animations)
 
 The next update will likely be centered around fixing some multiplayer bugs
 
-Currently WiP, for those who check the github :)
 CONFIG CHANGE: Delete your config to get new options and updated values!
 
 #### *General*
 * **[Addition]** Added the Soul Fighter skin
 * **[Addition]** Added Unique SFX for the remaining implemented skins: SKTT1, Shan Hai Scrolls, DWG, Empyrean, Soul Fighter
 * **[Addition]** Added some model VFX ( Project mask, Soul Fighter flames)
+* **[Addition]** Added Lobby Select SFX
 * **[Bugfix]** Fixed missing VFX config option
 * **[Adjustment]** Renamed SFX/VFX Choice to SFX/VFX Override, and renamed "SkinDependant" option to "Dynamic"
 * **[Adjustment]** Added Dynamic Bones to cloak for CustomEmoteAPI Emotes
@@ -22,7 +22,11 @@ CONFIG CHANGE: Delete your config to get new options and updated values!
 
 #### *Whisper*
 * **[Bugfix]** Fixed Shuriken interaction
-> Whisper should now trigger Shuriken each time you attack. It's still not the best item for jhin's attackspeed, but hey at least it works properly!
+* **[Buff]** Proc Coefficient now scales with bonus attack speed
+> Whisper's Proc coefficient now benefits from attack speed bonuses, +100% attack speed is converted into +100% proc coefficient. Whisper should also now trigger Shuriken each time you attack. It's still not the best item for jhin's attackspeed, but hey at least it works properly!
+
+#### *Dancing Grenade*
+* **[Bugfix]** Fixed grenade not bouncing off of targets who died before arrival
 
 #### *Curtain Call*
 * **[Addition]** Added model VFX for the following skins: Project, DWG

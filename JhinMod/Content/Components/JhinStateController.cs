@@ -17,26 +17,25 @@ namespace JhinMod.Content.Components
         public int ammoCount;     //How much ammo do we currently have?
         public int ammoMax = 4;  //How much ammo can we store? DON'T CHANGE, GAME IS NOT SET UP TO SUPPORT MORE
 
+        public float preModAtkSpeed = 0f;
+
+        public bool isAttacking;
+        public bool passiveCritArmed;
+        public float timeSinceFire;
+
+        public SerializableEntityStateType reloadState;
+
+        public float reloadStopwatch;
         public float reloadTime = 2.5f; //How long does our reload take?
         public float reloadGraceDelay = 1f; //How long after emptying our ammo do we attempt a reload?
         public float reloadAutoDelay = Config.primaryAutoReloadTime.Value; //How long after doing nothing do we attempt a reload?
-
-        public float reloadStopwatch;
-        public float timeSinceFire;
-
-        public bool isAttacking;
-
-        public bool passiveCritArmed;
 
         public bool startedReload;
         public bool interrupted;
         public bool paused;
         public bool isUlting;
-
         public bool ultHasSetLastShot;
         public bool ultHasFiredLastShot;
-
-        public SerializableEntityStateType reloadState;
 
         private EntityStateMachine jhinStateMachine;
         private Animator modelAnimator;
@@ -72,8 +71,6 @@ namespace JhinMod.Content.Components
         private void FixedUpdate()
         {
             this.UpdateTimers();
-
-            
 
             if (!isUlting)
             {

@@ -54,7 +54,7 @@ namespace JhinMod.Content.Components
             var distanceTravelled = Vector3.Distance(gameObject.transform.position, origin);
             if (distanceTravelled > maxDistance)
             {
-                Destroy(gameObject, 2f);
+                Destroy(gameObject, 5f);
                 StopParticles();
             }
             else

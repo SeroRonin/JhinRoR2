@@ -11,7 +11,6 @@ using System.Security;
 using System.Security.Permissions;
 using UnityEngine;
 using UnityEngine.Networking;
-using JhinMod.Content.UI;
 using JhinMod.Content.Components;
 using JhinMod.Modules;
 using EntityStates;
@@ -165,6 +164,7 @@ namespace JhinMod
 
         public static Dictionary<Transform, GameObject> playerLobbyModelFX = new Dictionary<Transform, GameObject>();
 
+        //Creates Dictionary entries for each lobby display, and adds model FX for those if needed
         private void SurvivorMannequinSlotController_ApplyLoadoutToMannequinInstance(On.RoR2.SurvivorMannequins.SurvivorMannequinSlotController.orig_ApplyLoadoutToMannequinInstance orig, RoR2.SurvivorMannequins.SurvivorMannequinSlotController self)
         {
             orig(self);
@@ -252,7 +252,7 @@ namespace JhinMod
 
             if (self)
             {
-                //If we are the right survivor, recalculate our states
+                //If we are the right survivor, recalculate our stats
                 if (self.baseNameToken == JhinPlugin.DEVELOPER_PREFIX + "_JHIN_BODY_NAME")
                 {
                     var premodDam = self.damage;
@@ -262,6 +262,12 @@ namespace JhinMod
                     var atkSpdLocked = self.baseAttackSpeed + (self.levelAttackSpeed * self.level);
                     var atkSpdBonus = Mathf.Max(premodAtkSpd - atkSpdLocked, 0);
                     var damBonus = CalculateDamageBonus(premodDam, atkSpdBonus, atkSpdLocked);
+
+                    var jhinStateController = self.GetComponent<JhinStateController>();
+                    if (jhinStateController)
+                    {
+                        jhinStateController.preModAtkSpeed = premodAtkSpd;
+                    }
 
                     /*
                     ChatMessage.Send($"Damage Premod: {premodDam}");

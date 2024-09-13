@@ -68,6 +68,7 @@ namespace AK
         static const AkUniqueID PLAY_SERORONIN_JHIN_QHIT = 2313832258U;
         static const AkUniqueID PLAY_SERORONIN_JHIN_QHITLAST = 1809449902U;
         static const AkUniqueID PLAY_SERORONIN_JHIN_QTRAVEL = 498058263U;
+        static const AkUniqueID PLAY_SERORONIN_JHIN_RECALLOUT = 1825008115U;
         static const AkUniqueID PLAY_SERORONIN_JHIN_RELOAD = 569618501U;
         static const AkUniqueID PLAY_SERORONIN_JHIN_RELOADEMPTY = 56827156U;
         static const AkUniqueID PLAY_SERORONIN_JHIN_ULTCAST = 3405698154U;

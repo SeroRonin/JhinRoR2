@@ -14,7 +14,8 @@ namespace JhinMod.Modules.CustomProjectiles
         public delegate void ModifyOutgoingDamageCallback(CustomBlastAttack blastAttack, CustomBlastAttack.HitPoint hitInfo, BlastAttack.BlastAttackDamageInfo damageInfo);
 
         public CustomBlastAttack.ModifyOutgoingDamageCallback modifyOutgoingDamageCallback = null;
-        private void HandleHits(BlastAttack.HitPoint[] hitPoints)
+
+        private new void HandleHits(BlastAttack.HitPoint[] hitPoints)
         {
             var executeDam = 0f;
             //Custom, calculate maximum execute damage based on highest health

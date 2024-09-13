@@ -26,11 +26,12 @@ namespace JhinMod.Modules
             LanguageAPI.Add(prefix + "OUTRO_FLAVOR", outro);
             LanguageAPI.Add(prefix + "OUTRO_FAILURE", outroFailure);
 
-            //LanguageAPI.Add("KEYWORD_EXECUTING", Helpers.KeywordText("Executing", $"Deals <style=cIsDamage>bonus damage</style> based on <style=cIsHealth> target's missing health</style>."));
             LanguageAPI.Add("KEYWORD_EXECUTING_WHISPER", Helpers.KeywordText("Executing: Primary", $"Deals <style=cIsDamage>bonus damage</style> equal to <style=cIsHealth>{100f * Config.primaryExecuteMissingHealthPercentage.Value}% of the target's missing health</style>. This bonus caps at <style=cIsDamage>{100f * Config.primaryExecuteDamageCap.Value}% of the original damage</style>."));
+            LanguageAPI.Add("KEYWORD_SCALING_WHISPER", Helpers.KeywordText("Every Moment Matters", $"Gains additional proc coefficient based on <style=cIsDamage>100% pre-conversion bonus attack speed</style>."));
             LanguageAPI.Add("KEYWORD_EXECUTING_SPECIAL", Helpers.KeywordText("Executing: Special", $"Deals up to <style=cIsDamage>{100f * Config.specialExecutePercentage.Value}% bonus damage</style> based on the <style=cIsHealth>target's missing health</style>."));
             LanguageAPI.Add("KEYWORD_RELOAD", Helpers.KeywordText("Reload", $"Enter a reload state after firing 4 <color=#ff5078>Whisper</color> shots, or after <style=cIsUtility>{Config.primaryAutoReloadTime.Value}</style> seconds. <i>The timer is reset after using any skill.</i>"));
             LanguageAPI.Add("KEYWORD_CAPTIVATING", Helpers.KeywordText("Captivating", $"Jhin's other skills <style=cDeath>mark</style> enemies for <style=cIsUtility>{Config.utilityMarkDuration.Value}</style> seconds. Hitting a marked enemy with <color=#ff5078>Deadly Flourish</color> consumes the mark, <style=cIsDamage>rooting</style> them for <style=cIsUtility>{Config.utilityRootDuration.Value}</style> seconds."));
+
 
             #region Skins
             LanguageAPI.Add(prefix + "DEFAULT_SKIN_NAME", "Jhin");
@@ -47,7 +48,7 @@ namespace JhinMod.Modules
 
             #region Passive
             LanguageAPI.Add(prefix + "PASSIVE_NAME", "Every Moment Matters");
-            LanguageAPI.Add(prefix + "PASSIVE_DESCRIPTION", $"Jhin can only gain <style=cIsDamage>Attack Speed</style> from level growth. <style=cIsDamage>{100 * Modules.Config.passiveDamageConversion.Value}% of additional Attack Speed</style> is instead converted into <style=cDeath>Percent Bonus Damage</style>. Addtionally, <style=cDeath>critical hits</style> grant <style=cIsUtility>10%</style> + (<style=cIsUtility>{Modules.Config.passiveMovespeedConversion.Value}%</style> per <style=cIsDamage>1% bonus attack speed</style>) <style=cIsUtility>bonus movement speed</style> for <style=cIsUtility>{Config.passiveBuffDuration.Value}</style> seconds.");
+            LanguageAPI.Add(prefix + "PASSIVE_DESCRIPTION", $"Jhin only gains <style=cIsDamage>Attack Speed</style> from level growth. <style=cIsDamage>{100 * Modules.Config.passiveDamageConversion.Value}% of Attack Speed</style> gained from other sources is instead converted into <style=cDeath>Percent Bonus Damage</style>. Addtionally, <style=cDeath>critical hits</style> grant <style=cIsUtility>10%</style> + (<style=cIsUtility>{Modules.Config.passiveMovespeedConversion.Value}%</style> per <style=cIsDamage>1% bonus attack speed</style>) <style=cIsUtility>bonus movement speed</style> for <style=cIsUtility>{Config.passiveBuffDuration.Value}</style> seconds.");
             #endregion
 
             #region Primary

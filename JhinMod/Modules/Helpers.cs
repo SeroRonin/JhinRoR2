@@ -105,10 +105,14 @@ namespace JhinMod.Modules
             return (float)((a * squared) + c);
         }
 
-        public static uint PlaySound(string soundID, GameObject player, GameObject parent = null, string skinName = "", bool defaultToBase = true)
+        public static uint PlaySound(string soundID, GameObject player, GameObject parent = null, string skinName = "", bool defaultToBase = true, string fallback = "")
         {
             if ( parent == null) parent = player;
-            int skinIndex = (int)player.GetComponent<CharacterBody>().skinIndex;
+            int skinIndex = 0;
+            if ( player.GetComponent<CharacterBody>() )
+            {
+                skinIndex = (int)player.GetComponent<CharacterBody>().skinIndex;
+            }
 
             // Use dynamic skin unless specified
             if (skinName == "")
@@ -116,10 +120,17 @@ namespace JhinMod.Modules
 
             var soundUID = Util.PlaySound($"Play_Seroronin_{skinName}_{soundID}", parent);
 
-            //We didn't get a sound event, try to use base sound
-            if ( soundUID == AkSoundEngine.AK_INVALID_PLAYING_ID && defaultToBase)
+            //We didn't get a sound event
+            //Try to get fallback sound first
+            if ( soundUID == AkSoundEngine.AK_INVALID_PLAYING_ID && !String.IsNullOrEmpty(fallback) )
             {
-                soundUID = Util.PlaySound($"Play_Seroronin_Jhin_{soundID}", parent);
+                soundUID = PlaySound( fallback, player, parent, skinName, defaultToBase: false );
+            }
+
+            // Sound still not found or no fallback declared, try base skin sounds
+            if ( soundUID == AkSoundEngine.AK_INVALID_PLAYING_ID && defaultToBase )
+            {
+                soundUID = PlaySound( soundID, parent, skinName: "Jhin", defaultToBase: false, fallback: fallback);
             }
 
             return soundUID;
@@ -131,12 +142,12 @@ namespace JhinMod.Modules
             int skinIndex = (int)player.GetComponent<CharacterBody>().skinIndex;
 
             // Use dynamic skin unless specified
-            if (skinName == "")
+            if ( skinName == "" )
                 skinName = GetSkinNameSFX(skinIndex);
             var soundUID = Util.PlaySound($"Stop_Seroronin_{skinName}_{soundID}", parent);
 
             //We didn't get a sound event, try to use base sound
-            if (soundUID == AkSoundEngine.AK_INVALID_PLAYING_ID)
+            if ( soundUID == AkSoundEngine.AK_INVALID_PLAYING_ID && defaultToBase )
             {
                 soundUID = Util.PlaySound($"Stop_Seroronin_Jhin_{soundID}", parent);
             }
@@ -152,7 +163,7 @@ namespace JhinMod.Modules
         /// <param name="attachmentName"></param>
         /// <param name="parent"></param>
         /// <param name="transmit"></param>
-        public static void PlayVFXDynamic(string vfxString, GameObject player, string attachmentName = "", bool useAim = false, Ray aimRay = new Ray(), GameObject parent = null, bool transmit = false)
+        public static void PlayVFXDynamic(string vfxString, GameObject player, string attachmentName = "", bool useAim = false, Ray aimRay = new Ray(), GameObject parent = null, bool transmit = false, bool defaultToBase = true, string fallback = "")
         {
             GameObject effectPrefab = null;
 
@@ -166,17 +177,37 @@ namespace JhinMod.Modules
             int skinIndex = (int)player.GetComponent<CharacterBody>().skinIndex;
             string skinName = GetSkinNameVFX(skinIndex);
 
-            //Search table for matching key, otherwise use default skin
+            //Search table for matching key, otherwise use fallback if given
             if (Asset.vfxPrefabs.ContainsKey( $"{skinName}_{vfxString}" ))
             {
                 effectPrefab = Asset.vfxPrefabs[$"{skinName}_{vfxString}"];
             }
-            else if ( Asset.vfxPrefabs.ContainsKey($"Jhin_{vfxString}" ) ) //Redunant ContainsKey check, but neccessary to prevent NREs stopping future code
+            else if ( !String.IsNullOrEmpty(fallback))
             {
-                effectPrefab = Asset.vfxPrefabs[$"Jhin_{vfxString}"];
+                if (Asset.vfxPrefabs.ContainsKey($"{skinName}_{fallback}"))
+                {
+                    effectPrefab = Asset.vfxPrefabs[$"{skinName}_{fallback}"];
+                }
             }
 
-            if (effectPrefab == null)
+            //Didn't get skin-based VFX yet, try to use base skin
+            if ( !effectPrefab && defaultToBase ) 
+            {
+                if ( Asset.vfxPrefabs.ContainsKey($"Jhin_{vfxString}" ) )
+                {
+                    effectPrefab = Asset.vfxPrefabs[$"Jhin_{vfxString}"];
+                }
+                else if ( !String.IsNullOrEmpty(fallback) )
+                {
+                    if (Asset.vfxPrefabs.ContainsKey($"{skinName}_{fallback}"))
+                    {
+                        effectPrefab = Asset.vfxPrefabs[$"{skinName}_{fallback}"];
+                    }
+                }
+            }
+
+
+            if ( !effectPrefab )
             {
                 return;
             }

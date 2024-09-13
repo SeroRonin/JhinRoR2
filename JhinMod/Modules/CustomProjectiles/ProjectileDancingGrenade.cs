@@ -13,7 +13,7 @@ using JhinMod.Content.Components;
 
 namespace JhinMod.Modules.CustomProjectiles
 {
-    public class ProjectileDancingGrenade : LightningOrb
+    public class ProjectileDancingGrenade : LightningOrb, IOrbFixedUpdateBehavior
     {
         public float damageCoefficientOnBounceKill;
         public float initialDistance;
@@ -21,6 +21,10 @@ namespace JhinMod.Modules.CustomProjectiles
 
         public GameObject ghostPrefab;
         public BounceVisualizer bounceVis;
+
+        public Vector3 targetLastPosition;
+        public bool lostTarget;
+        public GameObject fakeTarget;
 
         public override void Begin()
         {
@@ -43,15 +47,9 @@ namespace JhinMod.Modules.CustomProjectiles
             effectData.SetHurtBoxReference(this.target);
             EffectManager.SpawnEffect(ghostPrefab, effectData, true);
 
-            uint soundUID;
             if (this.bouncesRemaining < 3)
             {
-                soundUID = Helpers.PlaySound("QTravelBounce", this.attacker, this.target.gameObject, defaultToBase: false);
-                // Play default travel sound if we don't have a bounce variant
-                if (soundUID == AkSoundEngine.AK_INVALID_PLAYING_ID)
-                {
-                    Helpers.PlaySound("QTravel", this.attacker, this.target.gameObject);
-                }
+                Helpers.PlaySound("QTravelBounce", this.attacker, this.target.gameObject, fallback: "QTravel");
             }
             else
                 Helpers.PlaySound("QTravel", this.attacker, this.target.gameObject);
@@ -88,83 +86,76 @@ namespace JhinMod.Modules.CustomProjectiles
 
                     GlobalEventManager.instance.OnHitEnemy(damageInfo, healthComponent.gameObject);
                     GlobalEventManager.instance.OnHitAll(damageInfo, healthComponent.gameObject);
-
-                    Helpers.PlaySound("QHit", this.attacker, this.target.gameObject);
                 }
-
                 //Did we kill the target we hit?
                 this.failedToKill |= (!healthComponent || healthComponent.alive);
 
                 var vfxString = this.failedToKill ? "GrenadeImpact" : "GrenadeImpactKill"; 
                 Helpers.PlayVFXDynamic(vfxString, this.attacker.gameObject, parent: healthComponent.gameObject);
+            }
 
-                if (this.bouncesRemaining > 0)
+            if (this.bouncesRemaining > 0)
+            {
+                for (int i = 0; i < this.targetsToFindPerBounce; i++)
                 {
-                    for (int i = 0; i < this.targetsToFindPerBounce; i++)
+                    if ( this.bouncedObjects != null && this.target )
                     {
-                        if (this.bouncedObjects != null)
+                        this.bouncedObjects.Add(this.target.healthComponent);
+                    }
+
+                    HurtBox hurtBox = this.PickNextTargetWithNewPriority(this.targetLastPosition);
+                    if (hurtBox)
+                    {
+                        ProjectileDancingGrenade lightningOrb = new ProjectileDancingGrenade();
+                        lightningOrb.search = this.search;
+                        lightningOrb.origin = this.targetLastPosition;
+                        lightningOrb.target = hurtBox;
+                        lightningOrb.attacker = this.attacker;
+                        lightningOrb.inflictor = this.inflictor;
+                        lightningOrb.teamIndex = this.teamIndex;
+                        lightningOrb.damageValue = this.damageValue;
+
+                        var speedModif = 3f;
+                        var speedSet = Math.Min(lightningOrb.distanceToTarget * speedModif, JhinMod.SkillStates.DancingGrenade.projectileTravelSpeed);
+
+                        lightningOrb.bouncesRemaining = this.bouncesRemaining - 1;
+                        lightningOrb.isCrit = this.isCrit;
+                        lightningOrb.bouncedObjects = this.bouncedObjects;
+                        lightningOrb.deadObjects = this.deadObjects;
+                        lightningOrb.lightningType = this.lightningType;
+                        lightningOrb.procChainMask = this.procChainMask;
+                        lightningOrb.procCoefficient = this.procCoefficient;
+                        lightningOrb.damageColorIndex = this.damageColorIndex;
+                        lightningOrb.damageCoefficientOnBounceKill = this.damageCoefficientOnBounceKill;
+                        lightningOrb.speed = speedSet;
+                        lightningOrb.range = this.range;
+                        lightningOrb.damageType = this.damageType;
+                        lightningOrb.duration = speedSet;
+                        lightningOrb.initialDistance = distanceToTarget;
+
+                        //If we killed, add a percentage of current damage on top
+                        if (!this.failedToKill)
                         {
-                            this.bouncedObjects.Add(this.target.healthComponent);
+                            lightningOrb.damageValue += this.damageValue * this.damageCoefficientOnBounceKill;
                         }
 
-                        HurtBox hurtBox = this.PickNextTargetWithNewPriority(this.target.transform.position);
-                        if (hurtBox)
-                        {
-                            ProjectileDancingGrenade lightningOrb = new ProjectileDancingGrenade();
-                            lightningOrb.search = this.search;
-                            lightningOrb.origin = this.target.transform.position;
-                            lightningOrb.target = hurtBox;
-                            lightningOrb.attacker = this.attacker;
-                            lightningOrb.inflictor = this.inflictor;
-                            lightningOrb.teamIndex = this.teamIndex;
-                            lightningOrb.damageValue = this.damageValue;
-
-                            var speedModif = 3f;
-                            var speedSet = Math.Min(lightningOrb.distanceToTarget * speedModif, JhinMod.SkillStates.DancingGrenade.projectileTravelSpeed);
-
-                            lightningOrb.bouncesRemaining = this.bouncesRemaining - 1;
-                            lightningOrb.isCrit = this.isCrit;
-                            lightningOrb.bouncedObjects = this.bouncedObjects;
-                            lightningOrb.deadObjects = this.deadObjects;
-                            lightningOrb.lightningType = this.lightningType;
-                            lightningOrb.procChainMask = this.procChainMask;
-                            lightningOrb.procCoefficient = this.procCoefficient;
-                            lightningOrb.damageColorIndex = this.damageColorIndex;
-                            lightningOrb.damageCoefficientOnBounceKill = this.damageCoefficientOnBounceKill;
-                            lightningOrb.speed = speedSet;
-                            lightningOrb.range = this.range;
-                            lightningOrb.damageType = this.damageType;
-                            lightningOrb.duration = speedSet;
-                            lightningOrb.initialDistance = distanceToTarget;
-
-                            //If we killed, add a percentage of current damage on top
-                            if (!this.failedToKill)
-                            {
-                                lightningOrb.damageValue += this.damageValue * this.damageCoefficientOnBounceKill;
-                            }
-
-                            OrbManager.instance.AddOrb(lightningOrb);
-
-                        }
-                        else
-                        {
-                            uint soundUID = Helpers.PlaySound("QHitLast", this.attacker, this.target.gameObject);
-                            // Play default hit sound if we don't have a last hit variant
-                            if (soundUID == AkSoundEngine.AK_INVALID_PLAYING_ID)
-                            {
-                                Helpers.PlaySound("QHit", this.attacker, this.target.gameObject);
-                            }
-                        }
+                        OrbManager.instance.AddOrb(lightningOrb);
+                        Helpers.PlaySound("QHit", this.attacker, this.target ? this.target.gameObject : this.fakeTarget);
+                    }
+                    else
+                    {
+                        Helpers.PlaySound("QHitLast", this.attacker, this.target ? this.target.gameObject : this.fakeTarget, fallback: "QHit");
                     }
                 }
-                else if (this.bouncesRemaining == 0)
-                {
-                    uint soundUID = Helpers.PlaySound("QHitLast", this.attacker, this.target.gameObject);
-                    if (soundUID == AkSoundEngine.AK_INVALID_PLAYING_ID)
-                    {
-                        Helpers.PlaySound("QHit", this.attacker, this.target.gameObject);
-                    }
-                }
+            }
+            else if (this.bouncesRemaining == 0)
+            {
+                Helpers.PlaySound("QHitLast", this.attacker, this.target ? this.target.gameObject : this.fakeTarget, fallback: "QHit");
+            }
+
+            if ( this.fakeTarget )
+            {
+                GameObject.Destroy( this.fakeTarget, 1f );
             }
         }
 
@@ -219,6 +210,20 @@ namespace JhinMod.Modules.CustomProjectiles
             }
 
             return outputHurtbox;
+        }
+
+        public void FixedUpdate()
+        {
+            if ( this.target )
+            {
+                this.targetLastPosition = this.target.gameObject.transform.position;
+            }
+            if ( !this.lostTarget && !this.target )
+            {
+                this.fakeTarget = new GameObject();
+                fakeTarget.transform.position = this.targetLastPosition;
+                this.lostTarget = true;
+            }
         }
     }
 }

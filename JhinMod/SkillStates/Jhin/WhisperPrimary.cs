@@ -67,11 +67,7 @@ namespace JhinMod.SkillStates
             }
             else
             {
-                var soundUID = Helpers.PlaySound(shotIndex == 4 ? "PassiveCritCast" : $"AttackCast{shotIndex}", base.gameObject, defaultToBase: false);
-
-                //We didn't get a sound for the current variant, attempt using first variant for this skin before defaulting to base skin audio
-                if (soundUID == AkSoundEngine.AK_INVALID_PLAYING_ID)
-                    Helpers.PlaySound("AttackCast1", base.gameObject);
+                Helpers.PlaySound(shotIndex == 4 ? "PassiveCritCast" : ( this.isCrit? "AttackCastCrit" : $"AttackCast{shotIndex}"), base.gameObject, fallback: "AttackCast1");
             }
 
             this.PlayFireAnimation();
@@ -88,19 +84,13 @@ namespace JhinMod.SkillStates
 
             if (shotIndex == 4)
             {
-                
                 var layerIndex = animatorComponent.GetLayerIndex("UpperBody, Override");
                 animatorComponent.SetLayerWeight(layerIndex, 0f);
                 base.PlayAnimation("FullBody Passive Crit, Override", "AttackPassiveCrit", "ShootGun.playbackRate", durationAnimation);
             }
-            else if (this.isCrit)
-            {
-                    
-                PlayAnimationOnAnimatorCustom(animatorComponent, "UpperBody, Override", "AttackCrit", "ShootGun.playbackRate", durationAnimation, cycleOffset);
-            }
             else
             {
-                PlayAnimationOnAnimatorCustom(animatorComponent, "UpperBody, Override", $"Attack{shotIndex}", "ShootGun.playbackRate", durationAnimation, cycleOffset);
+                PlayAnimationOnAnimatorCustom(animatorComponent, "UpperBody, Override", this.isCrit ? "AttackCrit" : $"Attack{shotIndex}", "ShootGun.playbackRate", durationAnimation, cycleOffset);
             }
 
         }
@@ -176,7 +166,7 @@ namespace JhinMod.SkillStates
                 force = WhisperPrimary.force,
                 HitEffectNormal = false,
                 procChainMask = default(ProcChainMask),
-                procCoefficient = WhisperPrimary.procCoefficient,
+                procCoefficient = CalculateProcCoefficient(),
                 maxDistance = WhisperPrimary.range,
                 radius = 0.25f,
                 isCrit = isCrit,
@@ -194,7 +184,22 @@ namespace JhinMod.SkillStates
             };
         }
 
-        public virtual bool CreateTracer( string tracerName, Ray aimRay )
+        public virtual float CalculateProcCoefficient()
+        {
+            var outProc = WhisperPrimary.procCoefficient;
+            var jhinStateController = this.GetComponent<JhinStateController>();
+            var jhinCharacterBody = this.GetComponent<CharacterBody>();
+
+            //These should always be present, but just in case
+            if ( jhinStateController && jhinCharacterBody )
+            {
+                outProc *= jhinStateController.preModAtkSpeed / ( jhinCharacterBody.baseAttackSpeed + ( jhinCharacterBody.levelAttackSpeed * (jhinCharacterBody.level - 1) ) );
+            }
+
+            return outProc;
+        }
+
+        public virtual bool CreateTracer( string tracerName, Ray aimRay, string fallback = "" )
         {
             //Fake/psuedo bullet raycast
             LayerMask mask = BulletAttack.defaultHitMask;
@@ -203,6 +208,11 @@ namespace JhinMod.SkillStates
             
             //Create prefab
             var effectPrefab = Helpers.GetVFXDynamic(tracerName, base.gameObject);
+            if ( effectPrefab == null )
+            {
+                effectPrefab = Helpers.GetVFXDynamic(fallback, base.gameObject);
+            }
+
             if (effectPrefab != null)
             {
                 //Assign variables to custom component
@@ -255,37 +265,22 @@ namespace JhinMod.SkillStates
         {
             var shotIndex = this.jhinStateController.ammoMax - (this.jhinStateController.ammoCount - 1);
             var aimRay = base.GetAimRay();
-            if (shotIndex ==  4)
-            {
-                Helpers.PlaySound("PassiveCritFire", base.gameObject);
-                if ( !this.CreateTracer("TracerFourth", aimRay) )
-                {
-                    //Failed to create Fourth Shot Tracer, look for regular tracer
-                    this.CreateTracer("Tracer", aimRay);
-                }
-                Helpers.PlayVFXDynamic("MuzzleFlashFourth", base.gameObject, this.muzzleString, true, aimRay);
-            }
-            else 
-            {
-                uint soundUID;
-                if (this.isCrit)
-                {
-                    soundUID = Helpers.PlaySound("AttackCritFire", base.gameObject);
-                }
-                else
-                {
-                    soundUID = Helpers.PlaySound($"AttackFire{shotIndex}", base.gameObject, defaultToBase: false);
-                }
+            //if (shotIndex ==  4)
+            //{
+            //    Helpers.PlaySound("PassiveCritFire", base.gameObject);
+            //    this.CreateTracer("TracerFourth", aimRay, "Tracer");
+            //    Helpers.PlayVFXDynamic("MuzzleFlashFourth", base.gameObject, this.muzzleString, true, aimRay);
+            //}
+            //else 
+            //{
+            //    Helpers.PlaySound(this.isCrit ? "AttackCritFire" : $"AttackFire{shotIndex}", base.gameObject, fallback: "AttackFire1");
+            //    this.CreateTracer("Tracer", aimRay);
+            //    Helpers.PlayVFXDynamic("MuzzleFlash", base.gameObject, this.muzzleString, true, aimRay);
+            //}
 
-                //We didn't get a sound for the current variant, attempt using first variant for this skin before defaulting to base skin audio
-                if (soundUID == AkSoundEngine.AK_INVALID_PLAYING_ID)
-                {
-                    Helpers.PlaySound("AttackFire1", base.gameObject);
-                }
-
-                this.CreateTracer("Tracer", aimRay);
-                Helpers.PlayVFXDynamic("MuzzleFlash", base.gameObject, this.muzzleString, true, aimRay);
-            }
+            Helpers.PlaySound(shotIndex == 4 ? "PassiveCritFire" : (this.isCrit ? "AttackCritFire" : $"AttackFire{shotIndex}"), base.gameObject, fallback: "AttackFire1");
+            Helpers.PlayVFXDynamic(shotIndex == 4 ? "MuzzleFlashFourth" : "MuzzleFlash", base.gameObject, this.muzzleString, true, aimRay, fallback: "MuzzleFlash");
+            this.CreateTracer(shotIndex == 4 ? "TracerFourth" : "Tracer", aimRay, "Tracer");
         }
 
         protected virtual void OnFireBulletAuthority(Ray aimRay)
@@ -345,14 +340,6 @@ namespace JhinMod.SkillStates
             {
                 this.Fire();
             }
-            //TODO Replace this, breaks shuriken
-            //if ( hasFired && base.fixedAge >= this.earlyExitTime)
-            //{
-            //    if (this.inputBank.skill1.down)
-            //    {
-            //          this.outer.SetNextState(new WhisperPrimary());
-            //    }
-            //}
 
             if (base.fixedAge >= this.duration && base.isAuthority)
             {

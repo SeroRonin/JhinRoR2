@@ -122,7 +122,6 @@ namespace JhinMod.Modules.Survivors
         public override void InitializeSkills()
         {
             Modules.Skills.CreateSkillFamilies(bodyPrefab);
-            string prefix = JhinPlugin.DEVELOPER_PREFIX;
 
             #region Passive
             SkillLocator skillloc = bodyPrefab.GetComponent<SkillLocator>();
@@ -163,7 +162,7 @@ namespace JhinMod.Modules.Survivors
                 cancelSprintingOnActivation = false,
                 mustKeyPress = false,
 
-                keywordTokens = new string[] { "KEYWORD_AGILE", "KEYWORD_EXECUTING_WHISPER", "KEYWORD_RELOAD" }
+                keywordTokens = new string[] { "KEYWORD_AGILE", "KEYWORD_EXECUTING_WHISPER", "KEYWORD_RELOAD", "KEYWORD_SCALING_WHISPER" }
             });
 
             Modules.Skills.AddPrimarySkills(bodyPrefab, primarySkillDef);
@@ -259,6 +258,12 @@ namespace JhinMod.Modules.Survivors
             #region Non-selectable
 
             #endregion
+        }
+
+        protected override void InitializeDisplayPrefab()
+        {
+            displayPrefab = Modules.Prefabs.CreateDisplayPrefab(prefabBodyName + "Display", bodyPrefab, bodyInfo);
+            displayPrefab.AddComponent<LobbySoundPlayer>();
         }
 
         public override void InitializeSkins()

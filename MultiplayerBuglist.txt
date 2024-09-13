@@ -1,4 +1,4 @@
-For host, other client ults don't exit via all shots used, only via time (ult plays exit animation, but character remains in ult idle animation afterwards until 10s timer is up)
-For host, other clients often have desynced ammo counts, resulting in multiple visual bugs (mechanically everything works fine, including 4th crit)
-For host, other clients don't spawn W VFX (tested with project skin only)
-For clients, Custom emotes do not play for self, but play fine for host (unknown if client viewing host/other clients work yet)
+Visual - For host, other client ults don't exit via all shots used, only via time (ult plays exit animation, but character remains in ult idle animation afterwards until 10s timer is up)
+Visual - For host, other clients often have desynced ammo counts, resulting in multiple visual bugs (mechanically everything works fine, including 4th crit)
+Visual - For host, other clients don't spawn W VFX (tested with project skin only)
+Visual - For clients, Custom emotes do not play for self, but play fine for host (unknown if client viewing host/other clients work yet)
