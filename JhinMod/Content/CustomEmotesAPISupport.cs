@@ -6,6 +6,7 @@ using UnityEngine;
 using RoR2;
 using JhinMod.Content.Components;
 using System.Linq;
+using JhinMod.Modules;
 
 namespace JhinMod.Content
 {
@@ -15,14 +16,13 @@ namespace JhinMod.Content
         {
             On.RoR2.SurvivorCatalog.Init += SurvivorCatalog_Init;
             CustomEmotesAPI.animChanged += CustomEmotesAPI_animChanged;
-            
+            CustomEmotesAPI.CreateNameTokenSpritePair("SERORONIN_JHIN_BODY_NAME", Asset.mainAssetBundle.LoadAsset<Sprite>("texCustomEmotes_JhinIcon"));
         }
 
         internal static void UnhookCustomEmoteAPI()
         {
             On.RoR2.SurvivorCatalog.Init -= SurvivorCatalog_Init;
             CustomEmotesAPI.animChanged -= CustomEmotesAPI_animChanged;
-
         }
 
         internal static void SurvivorCatalog_Init(On.RoR2.SurvivorCatalog.orig_Init orig)

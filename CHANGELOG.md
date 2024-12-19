@@ -1,6 +1,14 @@
 # Delete your config files!
 Every time there is an update to configurable numbers, you need to delete your config files so that the game can generate a new one with the right default values and sliders. If there are no new config changes, you do not need to worry about this.
 
+## 1.4.2
+I messsed up my dependency safety check for CustomEmoteAPI which created an NRE if it wasn't installed, breaking some of the mod
+I'm looking into an issue involving multiplayer, but currently the mod breaks character assignement for clients. I think this only affect crossplay but I don't have the means to properly test multiplayer, so be aware that until I fix it, you may have to disable the mod whenever you want to play multiplayer.
+
+#### *General*
+* **[Bugfix]** Fixed issue an involving a depedency on CustomEmoteAPI
+* **[Issue]** Added new known issue to list, involving a strange bug in multiplayer that breaks character assignment for connected clients
+
 ## 1.4.1
 Updated changelog on Thunderstore
 

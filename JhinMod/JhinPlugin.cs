@@ -41,21 +41,19 @@ namespace JhinMod
     {
         public const string MODUID = "com.seroronin.JhinMod";
         public const string MODNAME = "JhinMod";
-        public const string MODVERSION = "1.4.1";
+        public const string MODVERSION = "1.4.2";
 
         public const string DEVELOPER_PREFIX = "SERORONIN";
 
         public static JhinPlugin instance;
         public bool emoteSetup;
 
-        public bool CustomEmotesActive;
+        public bool CustomEmotesActive = false;
 
         private void Awake()
         {
             instance = this;
 
-            //Multiplayer testing, do not release with this
-            //On.RoR2.Networking.NetworkManagerSystemSteam.OnClientConnect += (s, u, t) => { };
 
             Log.Init(Logger);
             Modules.Asset.Initialize(); // load assets and read config
@@ -65,15 +63,9 @@ namespace JhinMod
             {
                 Modules.Config.CreateRiskofOptionsCompat();
             }
-            if (BepInEx.Bootstrap.Chainloader.PluginInfos.ContainsKey("com.weliveinasociety.CustomEmotesAPI"))
-            {
-                Log.Warning("EMOTES ACTIVE");
-                CustomEmotesActive = true;
-            }
-            else
-            {
-                Log.Warning("EMOTES INACTIVE");
-            }
+
+            CustomEmotesActive = BepInEx.Bootstrap.Chainloader.PluginInfos.ContainsKey("com.weliveinasociety.CustomEmotesAPI");
+            Log.Warning( CustomEmotesActive ? "Emotes active" : "Emotes inactive" );
 
             Modules.States.RegisterStates(); // register states for networking
             Modules.Buffs.RegisterBuffs(); // add and register custom buffs/debuffs
@@ -127,7 +119,6 @@ namespace JhinMod
             if ( CustomEmotesActive )
             {
                 Content.CustomEmotesAPISupport.HookCustomEmoteAPI();
-                CustomEmotesAPI.CreateNameTokenSpritePair("SERORONIN_JHIN_BODY_NAME", Asset.mainAssetBundle.LoadAsset<Sprite>("texCustomEmotes_JhinIcon"));
             }
 
             //MP testings, disable when not testing on local machine
