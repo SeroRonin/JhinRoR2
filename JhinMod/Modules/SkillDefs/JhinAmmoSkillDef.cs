@@ -10,7 +10,7 @@ namespace JhinMod.Modules.SkillDefs
     /// <summary>
     /// This SkillDef is used to disable the primary skill when we run out of ammo via JhinStateController
     /// </summary>
-    [CreateAssetMenu(menuName = "RoR2/SkillDef/JhinAmmoSkillDefSkillDef")]
+    [CreateAssetMenu(menuName = "RoR2/SkillDef/JhinAmmoSkillDef")]
     public class JhinAmmoSkillDef : SkillDef
     {
         public override BaseSkillInstanceData OnAssigned([NotNull] GenericSkill skillSlot)

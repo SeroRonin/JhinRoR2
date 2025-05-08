@@ -41,7 +41,7 @@ namespace JhinMod
     {
         public const string MODUID = "com.seroronin.JhinMod";
         public const string MODNAME = "JhinMod";
-        public const string MODVERSION = "1.4.2";
+        public const string MODVERSION = "1.4.3";
 
         public const string DEVELOPER_PREFIX = "SERORONIN";
 
