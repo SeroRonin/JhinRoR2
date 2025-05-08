@@ -1,6 +1,10 @@
 # Delete your config files!
 Every time there is an update to configurable numbers, you need to delete your config files so that the game can generate a new one with the right default values and sliders. If there are no new config changes, you do not need to worry about this.
 
+## 1.4.3
+#### *General*
+* **[Bugfix]** Fixed an issue introduced with SotS Phase 3 where Jhin would not show up in the character selection menu
+
 ## 1.4.2
 I messsed up my dependency safety check for CustomEmoteAPI which created an NRE if it wasn't installed, breaking some of the mod
 I'm looking into an issue involving multiplayer, but currently the mod breaks character assignement for clients. I think this only affect crossplay but I don't have the means to properly test multiplayer, so be aware that until I fix it, you may have to disable the mod whenever you want to play multiplayer.
@@ -18,7 +22,7 @@ This major update notably cuts down file size, adds in the Soul Fighter skin, SF
 The biggest thing is compressed audio, which brings the mod down to 1/3rd the filesize of the previous patch, even with all the new audio added (the file size doubled before I compressed everything :skull:) If you notice any issues with the audio because of this, please let me know!
 The currently implemeted VFX changes include Project Jhin's mask and ult overlay, as well as DWG's wngs (with animations). The current plan for other VFX is to create a set of particles for the base skin, then use thoses to create color swaps for all the other skins, until I bother to create unique VFX for each.
 
-The next update will likely be centered around fixing some multiplayer bugs
+The next major update will likely be centered around fixing some multiplayer bugs
 
 CONFIG CHANGE: Delete your config to get new options and updated values!
 

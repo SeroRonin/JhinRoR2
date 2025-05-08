@@ -127,11 +127,12 @@ Curtain Call is a primary skill override, like that of Railgunner's scope. For 1
 | Blood Moon 		| <img src="https://em-content.zobj.net/source/microsoft/74/heavy-check-mark_2714.png" width="15px" /> 	| <img src="https://em-content.zobj.net/source/microsoft/74/heavy-check-mark_2714.png" width="15px" /> 	| <img src="https://em-content.zobj.net/source/microsoft/74/cross-mark_274c.png" width="15px" /> |
 | SKT T1  	 		| <img src="https://em-content.zobj.net/source/microsoft/74/heavy-check-mark_2714.png" width="15px" /> 	| <img src="https://em-content.zobj.net/source/microsoft/74/heavy-check-mark_2714.png" width="15px" />	| <img src="https://em-content.zobj.net/source/microsoft/74/cross-mark_274c.png" width="15px" /> |
 | Project    		| <img src="https://em-content.zobj.net/source/microsoft/74/heavy-check-mark_2714.png" width="15px" /> 	| <img src="https://em-content.zobj.net/source/microsoft/74/heavy-check-mark_2714.png" width="15px" /> 	| <img src="https://em-content.zobj.net/source/microsoft/74/heavy-check-mark_2714.png" width="15px" /> |
-| Dark Cosmic		| <img src="https://em-content.zobj.net/source/microsoft/74/cross-mark_274c.png" width="15px" />[^darkcosmic] | <img src="https://em-content.zobj.net/source/microsoft/74/cross-mark_274c.png" width="15px" /> 		| <img src="https://em-content.zobj.net/source/microsoft/74/cross-mark_274c.png" width="15px" /> |
+| Dark Cosmic		| <img src="https://em-content.zobj.net/source/microsoft/74/cross-mark_274c.png" width="15px" />[^legendary] | <img src="https://em-content.zobj.net/source/microsoft/74/cross-mark_274c.png" width="15px" /> 		| <img src="https://em-content.zobj.net/source/microsoft/74/cross-mark_274c.png" width="15px" /> |
 | Shan Hai Scrolls 	| <img src="https://em-content.zobj.net/source/microsoft/74/heavy-check-mark_2714.png" width="15px" /> 	| <img src="https://em-content.zobj.net/source/microsoft/74/heavy-check-mark_2714.png" width="15px" />	| <img src="https://em-content.zobj.net/source/microsoft/74/cross-mark_274c.png" width="15px" /> |
 | DWG 				| <img src="https://em-content.zobj.net/source/microsoft/74/heavy-check-mark_2714.png" width="15px" /> 	| <img src="https://em-content.zobj.net/source/microsoft/74/heavy-check-mark_2714.png" width="15px" /> 	| <img src="https://em-content.zobj.net/source/microsoft/74/cross-mark_274c.png" width="15px" /> |
 | Empyrean			| <img src="https://em-content.zobj.net/source/microsoft/74/heavy-check-mark_2714.png" width="15px" /> 	| <img src="https://em-content.zobj.net/source/microsoft/74/heavy-check-mark_2714.png" width="15px" /> 	| <img src="https://em-content.zobj.net/source/microsoft/74/cross-mark_274c.png" width="15px" /> |
 | Soul Fighter		| <img src="https://em-content.zobj.net/source/microsoft/74/heavy-check-mark_2714.png" width="15px" />  | <img src="https://em-content.zobj.net/source/microsoft/74/heavy-check-mark_2714.png" width="15px" />	| <img src="https://em-content.zobj.net/source/microsoft/74/cross-mark_274c.png" width="15px" /> |
+| Mythmaker		    | <img src="https://em-content.zobj.net/source/microsoft/74/cross-mark_274c.png" width="15px" />[^legendary] | <img src="https://em-content.zobj.net/source/microsoft/74/cross-mark_274c.png" width="15px" /> 		| <img src="https://em-content.zobj.net/source/microsoft/74/cross-mark_274c.png" width="15px" /> |
 
 Dark Cosmic as a skin is not possible as far as I am aware, at least not with the setup I have right now. If I get curious, I may look into it.
 
@@ -156,7 +157,7 @@ Dark Cosmic as a skin is not possible as far as I am aware, at least not with th
 * Custom Indicator for Dancing Grenade
 * Make Ult Execute group with base damage
 * Ult rocket jumping?
-* Hopoo-eqsue/RoR2-friendly skin
+* Hopoo-eqsue/RoR2-friendly asset variants
 * Achievments + Unlockable criteria (other abilties, skins, etc)
 
 
@@ -172,14 +173,19 @@ Dark Cosmic as a skin is not possible as far as I am aware, at least not with th
 * **Violet Chaolan**: Shader Help
   * Helped with some shader plugins that allowed me to experiment with VFX
 
+
+> See the github page for footnotes that don't properly render here on Thunderstore
+
+
 [^skinSFX]:
     There is also the option to override which set of SFX or VFX to use in the config. These do not require a restart, but may cause issues with model FX
 [^itemDisplay]:
-    Some items with minimal or lackluster visuals, such as Leeching Seed, are simply hidden. I simply could not find extra space to place certain items without non-sensically placing them around the cloak.
+    SotS not supported yet, I don't own the DLC. Some items with minimal or lackluster visuals, such as Leeching Seed, are simply hidden. I simply could not find extra space to place certain items without non-sensically placing them around the cloak.
 [^altAbility]:
     The planned ability would have jhin place down his traps, which would function as expected.
     Additionally, I want to implement shooting the traps to detonate the instantly, pushing the player back if they are close enough.
 [^armorFootnote]:
     Jhin does not have any armor at the moment, but I may add some later, should his lack of mobility be too punishing. All stats can be modified via Config, but require a restart to take effect
-[^darkcosmic]:
-    As far as I know, skins in RoR2 do not support custom animation overrides, so unfortunately Dark Cosmic Jhin with its unique animations is not possible without a duplicate survivor. It may be possible to create a custom version that uses the default animations, but it may not look very appealing and as such will not be entertained until there is nothing else to do
+[^legendary]:
+    As far as I know, skins in RoR2 do not support custom animation overrides, so unfortunately Legendary skins are not possible without a duplicate survivor. It may be possible with some custom code, but at the moment there is nothing in the works.
+

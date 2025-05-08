@@ -15,7 +15,7 @@ namespace JhinMod.Content.Components
     public class JhinStateController : NetworkBehaviour
     {
         public int ammoCount;     //How much ammo do we currently have?
-        public int ammoMax = 4;  //How much ammo can we store? DON'T CHANGE, GAME IS NOT SET UP TO SUPPORT MORE
+        public int ammoMax { get; private set; } = 4;  //How much ammo can we store? DON'T CHANGE, GAME IS NOT SET UP TO SUPPORT MORE
 
         public float preModAtkSpeed = 0f;
 
